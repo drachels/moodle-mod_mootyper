@@ -49,14 +49,6 @@ function xmldb_mootyper_upgrade($oldversion) {
     // upgrade code.
 
     // First example, some fields were added to install.xml on 2007/04/01.
-    if ($oldversion < 2013012100) {
-        $table = new xmldb_table('mootyper_grades');
-        $field = new xmldb_field('wpm', XMLDB_TYPE_NUMBER, '10', XMLDB_UNSIGNED, XMLDB_NOTNULL, null, '0', 'attemptid');
-        if (!$dbman->field_exists($table, $field)) {
-            $dbman->add_field($table, $field);
-        }
-        upgrade_mod_savepoint(true, 2013012100, 'mootyper');
-    }
 
     if ($oldversion < 2007040100) {
 
@@ -130,7 +122,15 @@ function xmldb_mootyper_upgrade($oldversion) {
         // Another save point reached.
         upgrade_mod_savepoint(true, 2007040101, 'mootyper');
     }
-
+    // Attempid modified.
+    if ($oldversion < 2013012100) {
+        $table = new xmldb_table('mootyper_grades');
+        $field = new xmldb_field('wpm', XMLDB_TYPE_NUMBER, '10', XMLDB_UNSIGNED, XMLDB_NOTNULL, null, '0', 'attemptid');
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+        upgrade_mod_savepoint(true, 2013012100, 'mootyper');
+    }
     // New field usepassword added after timeclose for version 3.1.2.
     if ($oldversion < 2016080700) {
 

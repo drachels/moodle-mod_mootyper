@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * This file adds grade and performance info to an exercise page while the user is typing.
+ * This file adds grade and performance info to mdl_mootyper_grades after an exam.
  *
  * @package    mod_mootyper
  * @copyright  2012 Jaka Luthar (jaka.luthar@gmail.com)
@@ -42,7 +42,7 @@ $record->timetaken = time();
 $record->exercise = $_POST['rpExercise'];
 $record->pass = 0;
 $record->attemptid = $_POST['rpAttId'];
-// Modification needed to prevent negative WPM entries.
+// Modification needed to prevent negative WPM entries for exams.
 $record->wpm = (max(0, (($record->hitsperminute / 5) - $record->mistakes)));
 $DB->insert_record('mootyper_grades', $record, false);
 $webdir = $CFG->wwwroot . '/course/view.php?id='.$_POST['rpCourseId'];

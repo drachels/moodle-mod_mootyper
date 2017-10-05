@@ -37,7 +37,7 @@ echo (isset($displaynone) && ($displaynone == true)) ? 'display:none;' : '';
 <span id="jkey4" class="normal"><span class="textup">$</span> 4</span>
 <span id="jkey5" class="normal"><span class="textup">%</span> 5</span>
 <span id="jkey6" class="normal"><span class="textup">^</span> 6</span>
-<span id="jkey7" class="normal"><span class="textup">&</span> 7</span>
+<span id="jkey7" class="normal"><span class="textup">& </span> 7</span>
 <span id="jkey8" class="normal"><span class="textup">*</span> 8</span>
 <span id="jkey9" class="normal"><span class="textup">(</span> 9</span>
 <span id="jkey0" class="normal"><span class="textup">)</span> 0</span>

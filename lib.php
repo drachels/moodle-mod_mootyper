@@ -756,7 +756,6 @@ function mootyper_grade_item_update(stdClass $mootyper) {
     $params['grademax']  = $mootyper->grade;
     $params['grademin']  = 0;
 
-
     if (!$mootyper->assessed or $mootyper->scale == 0) {
         $params['gradetype'] = GRADE_TYPE_NONE;
     } else if ($mootyper->scale > 0) {
@@ -768,11 +767,10 @@ function mootyper_grade_item_update(stdClass $mootyper) {
         $params['scaleid']   = -$mootyper->scale;
     }
 
-    if ($grades  === 'reset') {
+    if ($grades === 'reset') {
         $params['reset'] = true;
-        $grades = NULL;
+        $grades = null;
     }
-
 
     // return grade_update('mod/mootyper', $mootyper->course, 'mod', 'mootyper', $mootyper->id, 0, null, $params);
     return grade_update('mod/mootyper', $mootyper->course, 'mod', 'mootyper', $mootyper->id, 0, $grades, $params);
@@ -794,7 +792,7 @@ function mootyper_grade_item_update(stdClass $mootyper) {
  *    $grades = array(); // Populate array of grade objects indexed by userid.
  *
  *    grade_update('mod/mootyper', $mootyper->course, 'mod', 'mootyper', $mootyper->id, 0, $grades);
- *}
+ *    }
  */
 
 // New version to replace the above.
@@ -811,7 +809,7 @@ function mootyper_update_grades($mootyper, $userid=0, $nullifnone=true) {
     } else if ($userid and $nullifnone) {
         $grade = new stdClass();
         $grade->userid   = $userid;
-        $grade->rawgrade = NULL;
+        $grade->rawgrade = null;
         mootyper_grade_item_update($mootyper, $grade);
 
     } else {

@@ -475,7 +475,7 @@ function updTimeSpeed() {
 
     $('#jsAcc2').html(calculateAccuracy(fullText, mistakes).toFixed(2));
 
-    var gwpm = (calculateSpeed(secs)/ 5);
-    var nwpm = ((calculateSpeed(secs)/ 5) - (mistakes / (secs / 60)));
+    var gwpm = (calculateSpeed(secs) / 5);
+    var nwpm = ((calculateSpeed(secs) / 5) - (mistakes / (secs / 60)));
     $('#jsWpm2').html((gwpm.toFixed(1)) + " | " + (nwpm.toFixed(1)));
 }

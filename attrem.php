@@ -37,7 +37,7 @@ $mtmode = optional_param('mtmode', 0, PARAM_INT);
 
 if (isset($gradeid)) {
     $dbgrade = $DB->get_record('mootyper_grades', array('id' => $gradeid));
-    $DB->delete_records('mootyper_attempts', array('id' => $dbgrade->attempt_id));
+    $DB->delete_records('mootyper_attempts', array('id' => $dbgrade->attemptid));
     $DB->delete_records('mootyper_grades', array('id' => $dbgrade->id));
 }
 // Need to add grade removed event here.

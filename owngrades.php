@@ -151,10 +151,10 @@ if (!has_capability('mod/mootyper:viewmygrades', context_module::instance($cm->i
                         .'</td><td>'.format_float($gr->hitsperminute).'</td><td>'.$gr->fullhits
                         .'</td><td>'.format_float($gr->precisionfield).'%</td><td>'
                         .date(get_config('mod_mootyper', 'dateformat'), $gr->timetaken)
-                        .'</td><td>'.$gr->wpm.'</td><td>'.$removelnk.'</td></tr>';
+                        .'</td><td>'.format_float($gr->wpm).'</td><td>'.$removelnk.'</td></tr>';
             $labels[] = 'Ex-'.$fcol;  // This gets the exercise number.
-            $serieshitsperminute[] = format_float($gr->hitsperminute); // Get the hits per minute value.
-            $seriesprecision[] = format_float($gr->precisionfield);  // Get the precision percentage value.
+            $serieshitsperminute[] = $gr->hitsperminute; // Get the hits per minute value.
+            $seriesprecision[] = $gr->precisionfield;  // Get the precision percentage value.
             $serieswpm[] = $gr->wpm; // Get the corrected words per minute rate.
         }
         $avg = get_grades_avg($grds);

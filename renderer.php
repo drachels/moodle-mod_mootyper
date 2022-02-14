@@ -41,7 +41,7 @@ class mod_mootyper_renderer extends plugin_renderer_base {
      * @return string.
      */
     public function header($mootyper, $cm, $extrapagetitle = null) {
-        global $CFG;
+        global $CFG, $USER;
 
         $activityname = format_string($mootyper->name, true);
 
@@ -63,6 +63,12 @@ class mod_mootyper_renderer extends plugin_renderer_base {
         } else {
             $output .= $this->output->heading($activityname);
         }
+
+        $cminfo = cm_info::create($cm);
+        $completiondetails = \core_completion\cm_completion_details::get_instance($cminfo, $USER->id);
+        $activitydates = \core\activity_dates::get_dates_for_module($cminfo, $USER->id);
+        $output .= $this->output->activity_information($cminfo, $completiondetails, $activitydates);
+
         return $output;
     }
 

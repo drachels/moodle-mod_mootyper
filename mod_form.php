@@ -345,7 +345,7 @@ class mod_mootyper_mod_form extends moodleform_mod {
     private function validation_mootyper_grade(array $data, array $files, array $errors) {
         global $COURSE;
 
-        $mform = $this->_form;
+        $mform =& $this->_form;
 
         $component = "mod_mootyper";
         $itemname = 'mootyper';
@@ -418,44 +418,55 @@ class mod_mootyper_mod_form extends moodleform_mod {
      * @return array Array of string IDs of added items, empty array if none.
      */
     public function add_completion_rules() {
-        $mform = $this->_form;
+        $mform =& $this->_form;
 
-        // Add setting for completion exercise.
+        // Need to change the exercise setting as fill in box is NOT needed.
         $group = array();
-        $group[] = $mform->createElement('checkbox', 'completionexerciseenabled', '', get_string('completionexercise', 'mootyper'));
+        $group[] =& $mform->createElement('checkbox', 'completionexerciseenabled', '', get_string('completionexercise', 'mootyper'));
+        $group[] =& $mform->createElement('text', 'completionexercise', '', array('size' => 3));
+        $mform->setType('completionexercise', PARAM_INT);
         $mform->addGroup($group, 'completionexercisegroup', get_string('completionexercisegroup', 'mootyper'), array(' '), false);
         $mform->disabledIf('completionexercise', 'completionexerciseenabled', 'notchecked');
 
-        // Add setting for completion lesson.
+        // Need to change the lesson setting as fill in box is NOT needed.
         $group = array();
-        $group[] = $mform->createElement('checkbox', 'completionlessonenabled', '', get_string('completionlesson', 'mootyper'));
+        $group[] =& $mform->createElement('checkbox', 'completionlessonenabled', '', get_string('completionlesson', 'mootyper'));
+        //$group[] =& $mform->createElement('text', 'completionlesson', '', array('size' => 3));
+        $mform->setType('completionlesson', PARAM_INT);
         $mform->addGroup($group, 'completionlessongroup', get_string('completionlessongroup', 'mootyper'), array(' '), false);
         $mform->disabledIf('completionlesson', 'completionlessonenabled', 'notchecked');
 
-        // Add setting for completion precision.
         $group = array();
-        $group[] = $mform->createElement('checkbox', 'completionprecisionenabled', '', get_string('completionprecision', 'mootyper'));
-        $group[] = $mform->createElement('text', 'completionprecision', '', array('size' => 3));
+        $group[] =& $mform->createElement('checkbox', 'completionprecisiontenabled', '', get_string('completionprecision', 'mootyper'));
+        $group[] =& $mform->createElement('text', 'completionprecision', '', array('size' => 3));
         $mform->setType('completionprecision', PARAM_INT);
         $mform->addGroup($group, 'completionprecisiongroup', get_string('completionprecisiongroup', 'mootyper'), array(' '), false);
         $mform->disabledIf('completionprecision', 'completionprecisionenabled', 'notchecked');
 
-        // Add setting for completion wpm.
         $group = array();
-        $group[] = $mform->createElement('checkbox', 'completionwpmenabled', '', get_string('completionwpm', 'mootyper'));
-        $group[] = $mform->createElement('text', 'completionwpm', '', array('size' => 3));
+        $group[] =& $mform->createElement('checkbox', 'completionwpmenabled', '', get_string('completionwpm', 'mootyper'));
+        $group[] =& $mform->createElement('text', 'completionwpm', '', array('size' => 3));
         $mform->setType('completionwpm', PARAM_INT);
         $mform->addGroup($group, 'completionwpmgroup', get_string('completionwpmgroup', 'mootyper'), array(' '), false);
         $mform->disabledIf('completionwpm', 'completionwpmenabled', 'notchecked');
-
-        // Add setting for completion mootyper grade.
+/*
+        // Need to add code for completionpass, here.
         $group = array();
-        $group[] = $mform->createElement('checkbox', 'completionmootypergradeenabled', '', get_string('completionmootypergrade', 'mootyper'));
-        $group[] = $mform->createElement('text', 'completionmootypergrade', '', array('size' => 3));
+        $group[] =& $mform->createElement('checkbox', 'completionpassenabled', '', get_string('completionpass', 'mootyper'));
+        $group[] =& $mform->createElement('text', 'completionpass', '', array('size' => 3));
+        $mform->setType('completionpass', PARAM_INT);
+        $mform->addGroup($group, 'completionpassgroup', get_string('completionpassgroup', 'mootyper'), array(' '), false);
+        $mform->disabledIf('completionpass', 'completionpassenabled', 'notchecked');
+*/
+        // Need to add code for completionmootypergrade, here.
+        $group = array();
+        $group[] =& $mform->createElement('checkbox', 'completionmootypergradeenabled', '', get_string('completionmootypergrade', 'mootyper'));
+        $group[] =& $mform->createElement('text', 'completionmootypergrade', '', array('size' => 3));
         $mform->setType('completionmootypergrade', PARAM_INT);
         $mform->addGroup($group, 'completionmootypergradegroup', get_string('completionmootypergradegroup', 'mootyper'), array(' '), false);
         $mform->disabledIf('completionmootypergrade', 'completionmootypergradeenabled', 'notchecked');
 
+        //return array('completionexercisegroup', 'completionlessongroup', 'completionprecisiongroup', 'completionwpmgroup', 'completionpassgroup');
         return array('completionexercisegroup', 'completionlessongroup', 'completionprecisiongroup', 'completionwpmgroup', 'completionmootypergradegroup');
     }
 
@@ -470,7 +481,7 @@ class mod_mootyper_mod_form extends moodleform_mod {
             || (!empty($data['completionexlessonenabled']) && $data['completionlesson'] != 0)
             || (!empty($data['completionprecisiontenabled']) && $data['completionprecision'] != 0)
             || (!empty($data['completionwpmenabled']) && $data['completionwpm'] != 0)
-            || (!empty($data['completionmootypergradeenabled']) && $data['completionmootypergrade'] != 0)
+            || (!empty($data['completionpassenabled']) && $data['completionpass'] != 0)
             ;
     }
 
@@ -503,8 +514,8 @@ class mod_mootyper_mod_form extends moodleform_mod {
         // Set up the completion checkboxes which aren't part of standard data.
         // We also make the default value (if you turn on the checkbox) for those
         // numbers to be 1, this will not apply unless checkbox is ticked.
-        $defaultvalues['completionexerciseenabled'] =
-            !empty($defaultvalues['completionexercise']) ? 1 : 0;
+        $defaultvalues['completionpostenabled'] =
+            !empty($defaultvalues['completionexerciseenabled']) ? 1 : 0;
         if (empty($defaultvalues['completionexercise'])) {
             $defaultvalues['completionexercise'] = 1;
         }
@@ -523,10 +534,10 @@ class mod_mootyper_mod_form extends moodleform_mod {
         if (empty($defaultvalues['completionwpm'])) {
             $defaultvalues['completionwpm'] = 1;
         }
-        $defaultvalues['completionmootypergradeenabled'] =
-            !empty($defaultvalues['completionmootypergrade']) ? 1 : 0;
-        if (empty($defaultvalues['completionmootypergrade'])) {
-            $defaultvalues['completionmootypergrade'] = 1;
+        $defaultvalues['completionpassenabled'] =
+            !empty($defaultvalues['completionpass']) ? 1 : 0;
+        if (empty($defaultvalues['completionpass'])) {
+            $defaultvalues['completionpass'] = 1;
         }
     }
 }

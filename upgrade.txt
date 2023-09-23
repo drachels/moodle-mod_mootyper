@@ -50,25 +50,23 @@ sending an email, leave a comment at
     https://moodle.org/plugins/mod_mootyper
 ===============
 === Deferred to next version. ===
-
+20201006 MooTyper_629 - Request for Home Row Keys color settings. Have applied a
+    one-off method to new French(BelgianFRBV5) layout. 
 
 
 
 Moodle Versions
 ===============
-=== 4.2.4 === pending 2023072800 BETA
+=== 4.2.4 === pending 2023051100
 20230215 MooTyper_1011 - Need to add an on/off toggle or check box for each bar
     on the grade charts. Added need code to ownview.php. Did a copy and paste for gview.php.
     ***Need to fix dropdowns to NOT have one blank line as an option.
 20230510 MooTyper_1040 - Deprecated: Implicit conversion from float 1674064081.5 to int
     loses precision owngrades.php. Added round() to owngrades.php line 264 and to gview.php
     line 365.
-
 20230513 MooTyper_645 - Need Completion tracking based on Precision, WPM, exercises,
-    lesson, and MooTyper grade. Added required new completion fields to mdl_mootyper table.
-    20230730 Finall got all the new completions working.
-
-
+    lesson, and grade. Got it working, but may need further development. Added
+    required new completion fields to mdl_mootyper table.
 20230515 MooTyper_1044 - In Lesson mode, when anyone removes a grade, the Moodle Gradebook
     is not updated. In attrem.php, I added a new call to mootyper_update_grades() in lib.php.
 20230613 MooTyper_1054 - MooTyper Backup and Restore seems to be broken. Backup/restore only
@@ -79,14 +77,13 @@ Moodle Versions
     It seems to be working correctly now.
 20230707 MooTyper_1057 - MooTyper - Deleting a MooTyper activity does not delete related attempts.
 
-20230707 MooTyper_1058 - MooTyper - Reset MooTyper Instance does not delete checks. 
+20230707 MooTyper_1058 - MooTyper - Reset MooTyper Instance does not delete checks.
 
 20230708 MooTyper_1059 - MooTyper - Backup does not include teacher created lessons and exercises.
     The code to fix this was developed and included as part of MooTyper_1054.
-
-20230729 MooTyper_1063 - The mdl_mootyper_grades, mistakedetails field size of 255 is too small. 
-    Don't know why my database is not able to do what it should. I was limited to making the
-    mistakedetails filed varchar(1333).
+20230920 MooTyper_1074 - Grade pages need the Completed column moved two places to the right.
+    20230920 Completed the moves in owngrades.php and being tested. 20230920 Made the same
+    code moves in gview.php. 20230920 Made the needed changes in the csvexport.php file.
 
 === 4.2.3 === 20230420
 20230105 MooTyper_982v - Need to enable new, Grade, bar to the chart. Added a new

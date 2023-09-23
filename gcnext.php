@@ -161,6 +161,13 @@ $params = array(
 // If exam or just an exercise is completed, log the appropriate event.
 if ($mtmode === 1) {
     $event = exam_completed::create($params);
+    // 20230910 If an exam is completed, so is completionexercises and and lesson.
+    $mootyper->completionexercise <= 1;
+    $mootyper->completionlesson <= 1;
+    //$mootyper->completionprecision <= 1;
+    //$mootyper->completionwpm <= 1;
+    //$mootyper->completionpass <= 1;
+
 } else {
     $event = exercise_completed::create($params);
 }
@@ -177,6 +184,9 @@ if (!($mtmode === 1) && ($exercisename === $count)) {
             'activity' => $cm->name
         )
     );
+    // 20230910 If all the exercises are completed, so is completionexercise and and completionlesson.
+    $mootyper->completionexercise <= $count;
+    $mootyper->completionlesson <= 1;
     $event = lesson_completed::create($params);
     $event->trigger();
 }

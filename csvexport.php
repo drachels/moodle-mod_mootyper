@@ -127,9 +127,9 @@ function array_to_csv_download($array, $filename = "export.csv", $delimiter=";")
                       get_string('hitsperminute', 'mootyper'),
                       get_string('fullhits', 'mootyper'),
                       get_string('precision', 'mootyper'),
-                      get_string('timetaken', 'mootyper'),
                       get_string('wpm', 'mootyper'),
-                      get_string('gradenoun'));
+                      get_string('gradenoun'),
+                      get_string('timetaken', 'mootyper'));
     fputcsv($f, $details, $delimiter);
     fputcsv($f, $headings, $delimiter);
     foreach ($array as $gr) {
@@ -140,9 +140,9 @@ function array_to_csv_download($array, $filename = "export.csv", $delimiter=";")
                         format_float($gr->hitsperminute),
                         $gr->fullhits,
                         format_float($gr->precisionfield).'%',
-                        date(get_config('mod_mootyper', 'dateformat'), $gr->timetaken),
                         $gr->wpm,
-                        $gr->grade);
+                        $gr->grade,
+                        date(get_config('mod_mootyper', 'dateformat'), $gr->timetaken));
         fputcsv($f, $fields, $delimiter);
     }
     fclose($f);

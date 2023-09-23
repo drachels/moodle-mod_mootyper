@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Steps definitions related with the hotquestion activity.
+ * Steps definitions related with the mootyper activity.
  *
  * @package mod_mootyper
  * @category test
@@ -33,7 +33,7 @@ use Behat\Behat\Context\Step\Then;
 use Behat\Mink\Exception\ElementNotFoundException;
 
 /**
- * hotquestion-related steps definitions.
+ * mootyper-related steps definitions.
  *
  * @package    mod_mootyper
  * @category   test
@@ -43,13 +43,25 @@ use Behat\Mink\Exception\ElementNotFoundException;
 class behat_mod_mootyper extends behat_base {
 
     /**
-     * Simulates a user adding a personal hotquestion username to a URL entered into their browser address bar.
+     * @Then /^"([^"]*)" from "([^"]*)" is selected$/
      *
-     * @Given /^I visit the personal hotquestion for "(?P<user_string>(?:[^"]|\\")*)"$/
-     * @param string $user the user name
+     * To assert a select value.
+     * Shamelessly inspired by: https://stackoverflow.com/a/33223002/1038565
      */
-    public function i_visit_the_personal_mootyper_for($user) {
-        global $CFG;
-        $this->getSession()->visit($CFG->wwwroot .'/mod/hotquestion/view.php?u='. $user);
+    public function theOptionFromSelectIsSelected($optionValue, $select) {
+        $selectField = $this->getSession()->getPage()->findField($select);
+
+        if (NULL === $selectField) {
+            throw new \Exception(sprintf('The select "%s" was not found in the page %s', $select, $this->getSession()->getCurrentUrl()));
+        }
+
+        $optionField = $selectField->find('xpath', "//option[@selected]");
+        if (NULL === $optionField) {
+            throw new \Exception(sprintf('No option is selected in the %s select in the page %s', $select, $this->getSession()->getCurrentUrl()));
+        }
+
+        if ($optionField->getValue() != $optionValue) {
+            throw new \Exception(sprintf('The option "%s" was not selected in the page %s, %s was selected', $optionValue, $this->getSession()->getCurrentUrl(), $optionField->getValue()));
+        }
     }
 }

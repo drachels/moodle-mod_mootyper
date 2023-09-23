@@ -152,12 +152,13 @@ if (!has_capability('mod/mootyper:viewmygrades', context_module::instance($cm->i
             .get_string('fullhits', 'mootyper').'</a>'.$arrtextadds[7].'</td>
             <td><a href="?id='.$id.'&n='.$n.'&orderby=8'.$lnkadd.'">'
             .get_string('precision', 'mootyper').'</a>'.$arrtextadds[8].'</td>
-            <td><a href="?id='.$id.'&n='.$n.'&orderby=9'.$lnkadd.'">'
-            .get_string('timetaken', 'mootyper').'</a>'.$arrtextadds[9].'</td>
+
             <td><a href="?id='.$id.'&n='.$n.'&orderby=12'.$lnkadd.'">'
             .get_string('wpm', 'mootyper').'</a>'.$arrtextadds[12].'</td>
             <td><a href="?id='.$id.'&n='.$n.'&orderby=13'.$lnkadd.'">'
             .get_string('gradenoun').'</a>'.$arrtextadds[13].'</td>
+            <td><a href="?id='.$id.'&n='.$n.'&orderby=9'.$lnkadd.'">'
+            .get_string('timetaken', 'mootyper').'</a>'.$arrtextadds[9].'</td>
             <td>'.get_string('delete', 'mootyper').'</td></tr>';
 
         foreach ($grds as $gr) {
@@ -207,9 +208,9 @@ if (!has_capability('mod/mootyper:viewmygrades', context_module::instance($cm->i
                 <td>'.format_float($gr->hitsperminute).'</td>
                 <td>'.$gr->fullhits.'</td>
                 <td>'.format_float($gr->precisionfield).'%</td>
-                <td>'.date(get_config('mod_mootyper', 'dateformat'), $gr->timetaken).'</td>
                 <td>'.format_float($gr->wpm).'</td>
                 <td>'.format_float($gr->grade).'</td>
+                <td>'.date(get_config('mod_mootyper', 'dateformat'), $gr->timetaken).'</td>
                 <td>'.$removelnk.'</td>
                 <td>'.' '.'</td>
                 </tr>';
@@ -232,6 +233,9 @@ if (!has_capability('mod/mootyper:viewmygrades', context_module::instance($cm->i
         $agmin = results::get_grades_agmin($grds);
         $agsum = results::get_grades_agsum($grds);
 
+        // 20230914 Enter completionprecision and completionwpm to users completion status.
+        
+
         $stil = 'background-color: '.(get_config('mod_mootyper', 'textbgc')).';';
 
         // Do statistics for Practice and Lesson modes, but not Exam as it is just one exercise.
@@ -248,9 +252,9 @@ if (!has_capability('mod/mootyper:viewmygrades', context_module::instance($cm->i
                 <td>'.format_float($mean['hitsperminute']).'</td>
                 <td>'.$mean['fullhits'].'</td>
                 <td>'.format_float($mean['precisionfield']).'%</td>
-                <td>'.date(get_config('mod_mootyper', 'dateformat'), $mean['timetaken']).'</td>
                 <td>'.format_float($mean['wpm']).'</td>
                 <td>'.format_float($mean['grade']).'</td>
+                <td>'.date(get_config('mod_mootyper', 'dateformat'), $mean['timetaken']).'</td>
                 <td></td>
                 </tr>';
             // 20200727 Print medians.
@@ -261,9 +265,9 @@ if (!has_capability('mod/mootyper:viewmygrades', context_module::instance($cm->i
                 <td>'.format_float($median['hitsperminute']).'</td>
                 <td>'.$median['fullhits'].'</td>
                 <td>'.format_float($median['precisionfield']).'%</td>
-                <td>'.date(get_config('mod_mootyper', 'dateformat'), (round($median['timetaken']))).'</td>
                 <td>'.format_float($median['wpm']).'</td>
                 <td>'.format_float($median['grade']).'</td>
+                <td>'.date(get_config('mod_mootyper', 'dateformat'), (round($median['timetaken']))).'</td>
                 <td></td>
                 </tr>';
             // 20200727 Print modes.
@@ -274,9 +278,9 @@ if (!has_capability('mod/mootyper:viewmygrades', context_module::instance($cm->i
                 <td>'.$mode['hitsperminute'].'</td>
                 <td>'.$mode['fullhits'].'</td>
                 <td>'.$mode['precisionfield'].'</td>
-                <td>'.$mode['timetaken'].'</td>
                 <td>'.$mode['wpm'].'</td>
                 <td>'.$mode['grade'].'</td>
+                <td>'.$mode['timetaken'].'</td>
                 <td></td>
                 </tr>';
             // 20200727 Print ranges.
@@ -287,9 +291,9 @@ if (!has_capability('mod/mootyper:viewmygrades', context_module::instance($cm->i
                 <td>'.format_float($range['hitsperminute']).'</td>
                 <td>'.$range['fullhits'].'</td>
                 <td>'.format_float($range['precisionfield']).'%</td>
-                <td>'.$range['timetaken'].'</td>
                 <td>'.format_float($range['wpm']).'</td>
                 <td>'.format_float($range['grade']).'</td>
+                <td>'.$range['timetaken'].'</td>
                 <td></td>
                 </tr>';
         }
@@ -308,10 +312,10 @@ if (!has_capability('mod/mootyper:viewmygrades', context_module::instance($cm->i
                 <td style="opacity: 0.5;">'.format_float($mean['hitsperminute']).'</td>
                 <td style="opacity: 0.5;">'.$mean['fullhits'].'</td>
                 <td style="opacity: 0.5;">'.format_float($mean['precisionfield']).'%</td>
-                <td style="opacity: 0.5;">'.date(get_config('mod_mootyper', 'dateformat'), $mean['timetaken']).'</td>
                 <td style="opacity: 0.5;">'.format_float($mean['wpm']).'</td>
                 <td>'.format_float($mean['grade']).'</td>
                 <td>'.get_string('agavg', 'mootyper').'</td>
+                <td style="opacity: 0.5;">'.date(get_config('mod_mootyper', 'dateformat'), $mean['timetaken']).'</td>
                 </tr>';
 
             // 202230117 Print rating aggregatecount. Hits per minute, Precision, Completed, and WPM are meaningless as a count.
@@ -323,9 +327,9 @@ if (!has_capability('mod/mootyper:viewmygrades', context_module::instance($cm->i
                 <td style="opacity: 0.5;">'.$agcount['fullhits'].'</td>
                 <td style="opacity: 0.5;"> -- </td>
                 <td style="opacity: 0.5;"> -- </td>
-                <td style="opacity: 0.5;"> -- </td>
                 <td>'.format_float($agcount['grade']).'</td>
                 <td>'.get_string('agcount', 'mootyper').'</td>
+                <td style="opacity: 0.5;"> -- </td>
                 </tr>';
 
             // 202230117 Print rating aggregatemax.
@@ -336,10 +340,10 @@ if (!has_capability('mod/mootyper:viewmygrades', context_module::instance($cm->i
                 <td style="opacity: 0.5;">'.format_float($agmax['hitsperminute']).'</td>
                 <td style="opacity: 0.5;">'.$agmax['fullhits'].'</td>
                 <td style="opacity: 0.5;">'.format_float($agmax['precisionfield']).'%</td>
-                <td style="opacity: 0.5;">'.date(get_config('mod_mootyper', 'dateformat'), $agmax['timetaken']).'</td>
                 <td style="opacity: 0.5;">'.format_float($agmax['wpm']).'</td>
                 <td>'.format_float($agmax['grade']).'</td>
                 <td>'.get_string('agmax', 'mootyper').'</td>
+                <td style="opacity: 0.5;">'.date(get_config('mod_mootyper', 'dateformat'), $agmax['timetaken']).'</td>
                 </tr>';
 
             // 202230117 Print rating aggregatemin.
@@ -350,10 +354,10 @@ if (!has_capability('mod/mootyper:viewmygrades', context_module::instance($cm->i
                 <td style="opacity: 0.5;">'.format_float($agmin['hitsperminute']).'</td>
                 <td style="opacity: 0.5;">'.$agmin['fullhits'].'</td>
                 <td style="opacity: 0.5;">'.format_float($agmin['precisionfield']).'%</td>
-                <td style="opacity: 0.5;">'.date(get_config('mod_mootyper', 'dateformat'), $agmin['timetaken']).'</td>
                 <td style="opacity: 0.5;">'.format_float($agmin['wpm']).'</td>
                 <td>'.format_float($agmin['grade']).'</td>
                 <td>'.get_string('agmin', 'mootyper').'</td>
+                <td style="opacity: 0.5;">'.date(get_config('mod_mootyper', 'dateformat'), $agmin['timetaken']).'</td>
                 </tr>';
 
             // 202230117 Print rating aggregatesum. Precision, Completed, and WPM are meaningless as a sum.
@@ -365,9 +369,9 @@ if (!has_capability('mod/mootyper:viewmygrades', context_module::instance($cm->i
                 <td style="opacity: 0.5;">'.$agsum['fullhits'].'</td>
                 <td style="opacity: 0.5;"> -- </td>
                 <td style="opacity: 0.5;"> -- </td>
-                <td style="opacity: 0.5;"> -- </td>
                 <td>'.format_float($agsum['grade']).'</td>
                 <td>'.get_string('agsum', 'mootyper').'</td>
+                <td style="opacity: 0.5;"> -- </td>
                 </tr>';
         }
         echo '</table>';

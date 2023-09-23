@@ -47,25 +47,30 @@ $string['charttitlemyowngrades'] = 'My Own Grades';
 $string['chere'] = 'Click here to start';
 $string['closebeforeopen'] = 'Could not update the MooTyper. You have specified a close date before the open date.';
 
-$string['completiondetail:exercise'] = 'Complete exercises: {$a}';
-$string['completiondetail:lesson'] = 'Complete lesson: {$a}';
-$string['completiondetail:precision'] = 'Achieve precision: {$a}';
-$string['completiondetail:wpm'] = 'Achieve WPM: {$a}';
-$string['completiondetail:mootypergrade'] = 'Achieve MooTyper Grade: {$a}';
-
-$string['completionexercise'] = 'Complete all the exercises in this lesson. ';
+//$string['completionexercise'] = 'Student must complete {$a->one} exercises for lesson {$a->two}. ';
+$string['completionexercise'] = 'Student must complete all exercises for this lesson to complete this activity. ';
 $string['completionexercisegroup'] = 'Require exercise completion';
 
-$string['completionlesson'] = 'Complete this lesson to complete this MooTyper.';
+$string['completiondetail:exercise'] = 'Student must complete exercise: {$a}';
+$string['completiondetail:lesson'] = 'Student must complete lesson: {$a}';
+$string['completiondetail:precision'] = 'Student must achieve precision: {$a}';
+$string['completiondetail:wpm'] = 'Student must achieve wpm: {$a}';
+//$string['completiondetail:pass'] = 'Student must achieve MT Grade: {$a}';
+$string['completiondetail:mootypergrade'] = 'Student must achieve MT Grade: {$a}';
+
+$string['completionlessondesc'] = 'Student must complete lesson:y {$a}';
 $string['completionlessongroup'] = 'Require lesson completion';
+$string['completionlesson'] = 'Student must complete this lesson to complete this activity';
 
-$string['completionmootypergrade'] = 'Achieve this MooTyper Grade.';
-$string['completionmootypergradegroup'] = 'Require MooTyper Grade';
+//$string['completionpass'] = 'Student must achieve a passing MooTyper Grade to complete this activity. ';
+$string['completionmootypergrade'] = 'Student must achieve a passing MooTyper Grade to complete this activity. ';
+//$string['completionpassgroup'] = 'Require Grade';
+$string['completionmootypergradegroup'] = 'Require Grade';
 
-$string['completionprecision'] = 'Achieve this precision to complete this MooTyper. ';
+$string['completionprecision'] = 'Student must achieve a passing precision to complete this activity. ';
 $string['completionprecisiongroup'] = 'Require precision';
 
-$string['completionwpm'] = 'Achieve this WPM to complete this MooTyper. ';
+$string['completionwpm'] = 'Student must achieve a passing WPM  to complete this activity. ';
 $string['completionwpmgroup'] = 'Require WPM';
 
 $string['configdateformat'] = 'This defines how dates are shown in grade reports. The default value, "M d, Y G:i" is Month, day, year and 24 hour format time. Refer to Date in the PHP manual for more examples and predefined date constants.';
@@ -82,6 +87,7 @@ $string['countmistypedspaces_help'] = 'If enabled, a mistyped space is counted a
 $string['course_exercises_viewed'] = 'Viewed exercises';
 
 $string['createdin'] = 'Created in course: ';
+
 
 $string['crontask'] = 'Background processing for MooTyper module';
 $string['csvexport'] = 'Export to .csv';
@@ -324,7 +330,7 @@ $string['suspicion_colour'] = '#FFFF00';
 $string['testing'] = 'Testing code';
 $string['textbgc_title'] = 'Text background color';
 $string['textbgc_descr'] = 'This sets the background color of the exercise text.';
-$string['textbgc_colour'] = '#F0E68C ';
+$string['textbgc_colour'] = '#F0E68C';
 $string['textbgc'] = 'Text background color';
 $string['textbgc_help'] = 'This sets the background color of the exercise text. You can enter a hex color or named color. e.g. #95fc89 or green';
 $string['texterrorcolor_title'] = 'Text error color';

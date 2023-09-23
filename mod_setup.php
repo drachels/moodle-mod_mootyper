@@ -189,7 +189,8 @@ if ($mootyper->layout == null || is_null($mootyper->layout)) {
     // Current MooTyper layout is empty so set it to the site default.
     if (isset($mootyperconfig->defaultlayout_filenamewithoutfiletype) &&
             keyboards::is_layout_installed("$mootyperconfig->defaultlayout_filenamewithoutfiletype")) {
-        $dfly = keyboards::get_layout_id($mootyperconfig->defaultlayout_filenamewithoutfiletype);
+        //$dfly = keyboards::get_layout_id($mootyperconfig->defaultlayout_filenamewithoutfiletype);
+        $dfly = $mootyperconfig->defaultlayout_filenamewithoutfiletype;
     } else {
         $dfly = $moocfg->defaultlayout;
     }

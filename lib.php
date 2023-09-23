@@ -1229,11 +1229,11 @@ function mootyper_extend_settings_navigation(settings_navigation $settingsnav, n
 function mootyper_get_coursemodule_info($coursemodule) {
     global $DB;
 
-    //$debug = array();
-    //$debug['Entering mootyper_get_coursemodule_info($coursemodule) lib.php: '] = $coursemodule;
+    $debug = array();
+    $debug['Entering mootyper_get_coursemodule_info($coursemodule) lib.php: '] = $coursemodule;
 
     $dbparams = ['id' => $coursemodule->instance];
-    //$fields = 'id, name, intro, introformat, completionexercise, completionlesson, completionprecision, completionwpm, completionmootypergrade, timeopen, timeclose, assesstimestart, assesstimefinish, duedate, cutoffdate';
+    //$fields = 'id, name, intro, introformat, completionexercise, completionlesson, completionprecision, completionwpm, completionpass, timeopen, timeclose, assesstimestart, assesstimefinish';
     $fields = 'id, name, intro, introformat, completionexercise, completionlesson, completionprecision, completionwpm, completionmootypergrade, timeopen, timeclose, assesstimestart, assesstimefinish';
     if (!$mootyper = $DB->get_record('mootyper', $dbparams, $fields)) {
         return false;
@@ -1253,6 +1253,7 @@ function mootyper_get_coursemodule_info($coursemodule) {
         $result->customdata['customcompletionrules']['completionlesson'] = $mootyper->completionlesson;
         $result->customdata['customcompletionrules']['completionprecision'] = $mootyper->completionprecision;
         $result->customdata['customcompletionrules']['completionwpm'] = $mootyper->completionwpm;
+        //$result->customdata['customcompletionrules']['completionpass'] = $mootyper->completionpass;
         $result->customdata['customcompletionrules']['completionmootypergrade'] = $mootyper->completionmootypergrade;
     }
 
@@ -1275,7 +1276,7 @@ function mootyper_get_coursemodule_info($coursemodule) {
     //if ($mootyper->assesstimefinish) {
     //    $result->customdata['assesstimefinish'] = $mootyper->assesstimefinish;
     //}
-    //$debug['Exiting mootyper_get_coursemodule_info and printing $result lib.php: '] = $result;
+    $debug['Exiting mootyper_get_coursemodule_info and printing $result lib.php: '] = $result;
 
     //print_object($debug);
     //die;
@@ -1296,19 +1297,26 @@ function mootyper_get_coursemodule_info($coursemodule) {
  */
 function mootyper_get_completion_state($course, $cm, $userid, $type) {
     global $CFG, $DB;
-
+print_object('Entering lib.php function mootyper_get_completion_state, down around line 1297.');
+print_object($course);
+print_object($cm);
+print_object($userid);
+print_object($type);
+print_object('printed $course, $cm, $userid, and $type.');
+die;
     $mootyper = $DB->get_record('mootyper', array('id' => $cm->instance), '*', MUST_EXIST);
-    //if (!$mootyper->completionexercise && !$mootyper->completionlesson && !$mootyper->completionprecision && !$mootyper->completionwpm && !$mootyper->completionmootypergrade) {
-    if (!$mootyper->completionexercise && !$mootyper->completionlesson && !$mootyper->completionprecision && !$mootyper->completionwpm && !$mootyper->completionmootypergrade) {
+    // NOte: need this version when I implement completionpass for successfule completion of a MooTyper lesson.
+    //if (!$mootyper->completionexercise && !$mootyper->completionlesson && !$mootyper->completionprecision && !$mootyper->completionwpm && !$mootyper->completionpass) {
+    if (!$mootyper->completionexercise && !$mootyper->completionlesson && !$mootyper->completionprecision && !$mootyper->completionwpm) {
         return $type;
     }
 
     $result = $type; // Default return value.
 
-    // Check if the user has completed all exercises with a pass result.
+    // Check if the user has completed all exercises.
     if ($mootyper->completionexercise) {
         $value = $mootyper->completionexercise <=
-                 $DB->count_records('mootyper_grades', array('mootyper' => $mootyper->id, 'userid' => $userid, 'pass' => 1));
+                 $DB->count_records('mootyper_exercises', array('mootyper' => $mootyper->id, 'userid' => $userid));
         if ($type == COMPLETION_AND) {
             $result = $result && $value;
         } else {
@@ -1319,32 +1327,34 @@ function mootyper_get_completion_state($course, $cm, $userid, $type) {
     // Check if the user has completed the lesson.
     if ($mootyper->completionlesson) {
         $sql = "SELECT COUNT(mtl.id),
+                       mtl.lessonname,
                        mt.id,
-                       mt.lesson,
-                       mtg.mootyper
+                       mt.name,
+                       mt.requiredgoal,
+                       mt.requiredwpm,
                        mtg.userid,
                        mtg.grade,
                        COUNT(mtg.exercise),
                        COUNT(mtg.pass),
+                       AVG(mtg.precisionfield),
+                       AVG(mtg.wpm)
                   FROM {mootyper_lessons} mtl
                   JOIN {mootyper} mt
                   JOIN {mootyper_exercises} mte
                   JOIN {mootyper_grades} mtg
-
                  WHERE mtl.id = mt.lesson
-                   AND mt.completionlesson >= 1
+                   AND mt.completionlesson > 0
                    AND mte.lesson = mt.lesson
                    AND mtg.mootyper = :mootyper
                    AND mt.id = mtg.mootyper
                    AND mtg.userid = :userid
                    AND mtg.grade > mt.grade_mootyper
                    AND mtg.exercise = mte.id
-                   AND mtg.pass = 1";
+                   AND mtg.pass = 1
+                   AND mtg.wpm > mt.requiredwpm";
 
         $params = array('mootyper' => $mootyper->id, 'userid' => $userid);
-        $value = $mootyper->completionlesson <= 
-                     //$DB->count_records('mootyper_grades', array('mootyper' => $mootyper->id, 'userid' => $userid, 'pass' => 1));
-                     $DB->count_records_sql($sql, $params);
+        $value = $mootyper->completionlesson <= $DB->count_records_sql($sql, $params);
         if ($type == COMPLETION_AND) {
             $result = $result && $value;
         } else {
@@ -1352,74 +1362,17 @@ function mootyper_get_completion_state($course, $cm, $userid, $type) {
         }
     }
 
-    // Check if the user has achieved the required precision.
-    if ($mootyper->completionprecision) {
-        $sql = "SELECT mtg.id,
-                       AVG(mtg.precisionfield),
-                       mtg.mootyper,
-                       mt.requiredgoal
-                  FROM {mootyper_grades} mtg
-                  JOIN {mootyper} mt
-                 WHERE mtg.userid = :userid
-                   AND mtg.mootyper = :mootyper
-                   AND mtg.precisionfield >= mt.requiredgoal";
-
-        $params = array('mootyper' => $mootyper->id, 'userid' => $userid);
-        $value = $mootyper->completionlesson <= 
-                     //$DB->count_records('mootyper_grades', array('mootyper' => $mootyper->id, 'userid' => $userid, 'pass' => 1));
-                     $DB->count_records_sql($sql, $params);
-        if ($type == COMPLETION_AND) {
-            $result = $result && $value;
-        } else {
-            $result = $result || $value;
+    // Check for passing grade.
+    if ($mootyper->completionpass) {
+        require_once($CFG->libdir . '/gradelib.php');
+        $item = grade_item::fetch(array('courseid' => $course->id, 'itemtype' => 'mod',
+                'itemmodule' => 'mootyper', 'iteminstance' => $cm->instance, 'outcomeid' => null));
+        if ($item) {
+            $grades = grade_grade::fetch_users_grades($item, array($userid), false);
+            if (!empty($grades[$userid])) {
+                return $grades[$userid]->is_passed($item);
+            }
         }
     }
-
-    // Check if the user has achieved the required wpm.
-    if ($mootyper->completionwpm) {
-        $sql = "SELECT mtg.id,
-                       AVG(mtg.wpm),
-                       mtg.mootyper,
-                       mt.requiredwpm
-                  FROM {mootyper_grades} mtg
-                  JOIN {mootyper} mt
-                 WHERE mtg.userid = :userid
-                   AND mtg.mootyper = :mootyper
-                   AND mtg.wpm >= mt.requiredwpm";
-
-        $params = array('mootyper' => $mootyper->id, 'userid' => $userid);
-        $value = $mootyper->completionwpm <= 
-                     //$DB->count_records('mootyper_grades', array('mootyper' => $mootyper->id, 'userid' => $userid, 'pass' => 1));
-                     $DB->count_records_sql($sql, $params);
-        if ($type == COMPLETION_AND) {
-            $result = $result && $value;
-        } else {
-            $result = $result || $value;
-        }
-    }
-
-    // Check for passing MooTyper grade.
-    if ($mootyper->completionmootypergrade) {
-         $sql = "SELECT mtg.id,
-                        AVG(mtg.grade),
-                        mtg.mootyper,
-                        mt.grade_mootyper
-                   FROM {mootyper_grades} mtg
-                   JOIN {mootyper} mt
-                  WHERE mtg.userid = :userid
-                    AND mtg.mootyper = :mootyper
-                    AND mtg.grade >= mt.grade_mootyper";
-
-        $params = array('mootyper' => $mootyper->id, 'userid' => $userid);
-        $value = $mootyper->completionmootypergrade <= 
-                     //$DB->count_records('mootyper_grades', array('mootyper' => $mootyper->id, 'userid' => $userid, 'pass' => 1));
-                     $DB->count_records_sql($sql, $params);
-        if ($type == COMPLETION_AND) {
-            $result = $result && $value;
-        } else {
-            $result = $result || $value;
-        }
-    }
-
     return $result;
 }

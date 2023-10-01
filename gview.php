@@ -26,10 +26,10 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-use \mod_mootyper\event\viewed_all_grades;
-use \mod_mootyper\event\invalid_access_attempt;
-use \mod_mootyper\local\lessons;
-use \mod_mootyper\local\results;
+use mod_mootyper\event\viewed_all_grades;
+use mod_mootyper\event\invalid_access_attempt;
+use mod_mootyper\local\lessons;
+use mod_mootyper\local\results;
 
 // Changed to this newer format 20190301.
 require(__DIR__ . '/../../config.php');
@@ -51,17 +51,17 @@ if ($md == 1) {
 }
 if ($id) {
     $cm = get_coursemodule_from_id('mootyper', $id, 0, false, MUST_EXIST);
-    $course = $DB->get_record('course', array('id' => $cm->course), '*', MUST_EXIST);
-    $mootyper = $DB->get_record('mootyper', array('id' => $cm->instance), '*', MUST_EXIST);
+    $course = $DB->get_record('course', ['id' => $cm->course], '*', MUST_EXIST);
+    $mootyper = $DB->get_record('mootyper', ['id' => $cm->instance], '*', MUST_EXIST);
 } else if ($n) {
-    $mootyper = $DB->get_record('mootyper', array('id' => $n), '*', MUST_EXIST);
-    $course = $DB->get_record('course', array('id' => $mootyper->course), '*', MUST_EXIST);
+    $mootyper = $DB->get_record('mootyper', ['id' => $n], '*', MUST_EXIST);
+    $course = $DB->get_record('course', ['id' => $mootyper->course], '*', MUST_EXIST);
     $cm = get_coursemodule_from_instance('mootyper', $mootyper->id, $course->id, false, MUST_EXIST);
     $id = $cm->id; // Since we had ID of 0, we really need Course module ID for cvsexport, so set it.
 } else {
     throw new moodle_exception(get_string('mootypererror', 'mootyper'));
 }
-$lsnname = $DB->get_record('mootyper_lessons', array('id' => $mootyper->lesson), '*', MUST_EXIST);
+$lsnname = $DB->get_record('mootyper_lessons', ['id' => $mootyper->lesson], '*', MUST_EXIST);
 $mtmode = $mootyper->isexam;
 require_login($course, true, $cm);
 $context = context_module::instance($cm->id);
@@ -69,32 +69,32 @@ $context = context_module::instance($cm->id);
 // 20200706 Added to prevent student direct URL access attempts.
 if (!has_capability('mod/mootyper:viewgrades', context_module::instance($cm->id))) {
     // Trigger invalid_access_attempt with redirect to course page.
-    $params = array(
+    $params = [
         'objectid' => $id,
         'context' => $context,
-        'other' => array(
-            'file' => 'gview.php'
-        )
-    );
+        'other' => [
+            'file' => 'gview.php',
+        ],
+    ];
     $event = invalid_access_attempt::create($params);
     $event->trigger();
     redirect('view.php?id='.$id, get_string('invalidaccessexp', 'mootyper'));
 } else {
     // Trigger view all grades event.
-    $params = array(
+    $params = [
             'objectid' => $mootyper->id,
             'context' => $context,
-            'other' => array(
+            'other' => [
                 'lessonid' => $mootyper->lesson,
-                'lessonname' => $lsnname->lessonname
-            )
-        );
+                'lessonname' => $lsnname->lessonname,
+            ],
+        ];
     $event = viewed_all_grades::create($params);
     $event->trigger();
     // The following needs to retrieve keybdbgc for setting this background.
     $color3 = $mootyper->keybdbgc;
 
-    $PAGE->set_url('/mod/mootyper/gview.php', array('id' => $cm->id));
+    $PAGE->set_url('/mod/mootyper/gview.php', ['id' => $cm->id]);
     $PAGE->set_title(format_string($mootyper->name));
     $PAGE->set_heading(format_string($course->fullname));
     $PAGE->set_context($context);
@@ -225,7 +225,7 @@ if (!has_capability('mod/mootyper:viewgrades', context_module::instance($cm->id)
         } else {
             $lnkadd = "&desc=1";
         }
-        $arrtextadds = array();
+        $arrtextadds = [];
         $arrtextadds[2] = '<span class="arrow-s" style="font-size:1em;"></span>';
         $arrtextadds[4] = '<span class="arrow-s" style="font-size:1em;"></span>';
         $arrtextadds[5] = '<span class="arrow-s" style="font-size:1em;"></span>';
@@ -264,7 +264,7 @@ if (!has_capability('mod/mootyper:viewgrades', context_module::instance($cm->id)
             <td>'.get_string('delete', 'mootyper').'</td></tr>';
 
         $labels = null; // 20200624 Set to use as a flag for graphing.
-        $grds2 = array(); // 20200730 Array to hold data for current group members.
+        $grds2 = []; // 20200730 Array to hold data for current group members.
         foreach ($grds as $gr) {
             if ((! $groups) || (groups_is_member($groups, $gr->u_id))) {
                 if ($gr->suspicion) {
@@ -525,81 +525,107 @@ if ($hpmpreference != $oldhpmpreference) {
     set_user_preference('mootyper_hpmpreference_'.$mootyper->id, $hpmpreference);
 }
 
-$listoptions = array(
+$listoptions = [
     1 => get_string('hpmhide', 'mootyper'),
-    2 => get_string('hpmshow', 'mootyper')
-);
+    2 => get_string('hpmshow', 'mootyper'),
+];
 
 // This creates the dropdown list for how many entries to show on the page.
-$selection = html_writer::select($listoptions, 'hpmpreference', $hpmpreference, false, array(
-    'id' => 'pref_hpm',
-    'class' => 'custom-select'
-));
+$selection = html_writer::select(
+    $listoptions,
+    'hpmpreference',
+    $hpmpreference,
+    false,
+    [
+        'id' => 'pref_hpm',
+        'class' => 'custom-select',
+    ]
+);
 echo get_string('rhitspermin', 'mootyper').': <select onchange="this.form.submit()" name="hpmpreference">';
 echo '<option selected="true" value="'.$selection.'</option>';
 echo '</select>';
-/////////////////////////////////////////////////////////////////////////////////////////////
+
 // 20230517 Added selector for precision view. Default is ON.
 if ($precisionpreference != $oldprecisionpreference) {
     set_user_preference('mootyper_precisionpreference_'.$mootyper->id, $precisionpreference);
 }
 
-$listoptions = array(
+$listoptions = [
     1 => get_string('precisionhide', 'mootyper'),
-    2 => get_string('precisionshow', 'mootyper')
-);
+    2 => get_string('precisionshow', 'mootyper'),
+];
 
 // This creates the dropdown list for how many entries to show on the page.
-$selection = html_writer::select($listoptions, 'precisionpreference', $precisionpreference, false, array(
-    'id' => 'pref_precision',
-    'class' => 'custom-select'
-));
+$selection = html_writer::select(
+    $listoptions,
+    'precisionpreference',
+    $precisionpreference,
+    false,
+    [
+        'id' => 'pref_precision',
+        'class' => 'custom-select',
+    ]
+);
 echo ' | '.get_string('precision', 'mootyper').': <select onchange="this.form.submit()" name="precisionpreference">';
 echo '<option selected="true" value="'.$selection.'</option>';
 echo '</select>';
-//////////////////////////////////////////////////////////////////////////////////////
+
 // 20230517 Added selector for wpm view. Default is ON.
 if ($wpmpreference != $oldwpmpreference) {
     set_user_preference('mootyper_wpmpreference_'.$mootyper->id, $wpmpreference);
 }
 
-$listoptions = array(
+$listoptions = [
     1 => get_string('wpmhide', 'mootyper'),
-    2 => get_string('wpmshow', 'mootyper')
-);
+    2 => get_string('wpmshow', 'mootyper'),
+];
 
 // This creates the dropdown list for how many entries to show on the page.
-$selection = html_writer::select($listoptions, 'wpmpreference', $wpmpreference, false, array(
-    'id' => 'pref_wpm',
-    'class' => 'custom-select'
-));
+$selection = html_writer::select(
+    $listoptions,
+    'wpmpreference',
+    $wpmpreference,
+    false,
+    [
+        'id' => 'pref_wpm',
+        'class' => 'custom-select',
+    ]
+);
 echo ' | '.get_string('wpm', 'mootyper').': <select onchange="this.form.submit()" name="wpmpreference">';
 echo '<option selected="true" value="'.$selection.'</option>';
 echo '</select>';
-/////////////////////////////////////////////////////////////////////////////////////
+
 // 20230517 Added selector for grade view. Default is ON.
 if ($gradepreference != $oldgradepreference) {
     set_user_preference('mootyper_gradepreference_'.$mootyper->id, $gradepreference);
 }
 
-$listoptions = array(
+$listoptions = [
     1 => get_string('gradehide', 'mootyper'),
-    2 => get_string('gradeshow', 'mootyper')
-);
+    2 => get_string('gradeshow', 'mootyper'),
+];
 
 // This creates the dropdown list for how many entries to show on the page.
-$selection = html_writer::select($listoptions, 'gradepreference', $gradepreference, false, array(
-    'id' => 'pref_grade',
-    'class' => 'custom-select'
-));
+$selection = html_writer::select(
+    $listoptions,
+    'gradepreference',
+    $gradepreference,
+    false,
+    [
+        'id' => 'pref_grade',
+        'class' => 'custom-select',
+    ]
+);
 echo ' | '.get_string('grade_mootyper_title', 'mootyper').': <select onchange="this.form.submit()" name="gradepreference">';
 echo '<option selected="true" value="'.$selection.'</option>';
 echo '</select>';
 
 echo '</form>';
-// Process the chart. If there are NOT any grades, DON'T draw the chart.
-// Or if none of the series are visible, don't draw the chart.
-if ((($grds != false) && ($CFG->branch > 31))
+// Process the chart. Skip if there are NOT any grades, DON'T draw the chart.
+// AND skip unless Moodle is greater than 3.1.
+// AND skip if none of the series are visible, don't draw the chart.
+// AND skip if none of the users in the selected group have made any attempts.
+if ((($grds != false) && ($CFG->branch > 31) && (isset($serieshitsperminute)))
     && (($hpmpreference == 2) || ($precisionpreference == 2) || ($wpmpreference == 2) || ($gradepreference == 2))) {
     // Create the info the api needs passed to it for each series I want to chart.
     $serie1 = new core\chart_series(get_string('hitsperminute', 'mootyper'), $serieshitsperminute);

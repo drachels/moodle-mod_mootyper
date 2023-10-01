@@ -43,14 +43,6 @@ class mod_mootyper_renderer extends plugin_renderer_base {
     public function header($mootyper, $cm, $extrapagetitle = null) {
         global $CFG, $USER;
 
-        $debug = array();
-        $debug['Entering renderer.php and need some spacers 1.'] = 'spacer 1';
-        $debug['Entering renderer.php and need some spacers 2.'] = 'spacer 2';
-        $debug['Entering renderer.php and need some spacers 3.'] = 'spacer 3';
-        $debug['Entering renderer.php and need some spacers 4.'] = 'spacer 4';
-        $debug['Entering renderer.php function header($mootyper): '] = $mootyper;
-        $debug['Entering renderer.php function header($cm): '] = $cm;
-
         $activityname = format_string($mootyper->name, true);
 
         if (empty($extrapagetitle)) {
@@ -82,28 +74,12 @@ class mod_mootyper_renderer extends plugin_renderer_base {
             $completiondetails = \core_completion\cm_completion_details::get_instance($cminfo, $USER->id);
             $activitydates = \core\activity_dates::get_dates_for_module($cminfo, $USER->id);
 
-            $debug['In renderer.php and checking $CFG->branch which should be greater than 310: '] = $CFG->branch;
-            //$debug['In renderer.php and checking $cminfo: '] = $cminfo;
-            //$debug['In renderer.php and checking $completiondetails: '] = $completiondetails;
-            $debug['In renderer.php and checking $activitydates: '] = $activitydates;
-
-//print_object('in the renderer and branch is greater than 310//////////////////////////////////////////////');
-//print_object('in the renderer and branch is greater than 310//////////////////////////////////////////////');
-//print_object('in the renderer and branch is greater than 310//////////////////////////////////////////////');
-
-//die;
             if ($CFG->branch < 400) {
                 $debug['In renderer.php and checking $CFG->branch which should be less than 400: '] = $CFG->branch;
 
                 $output .= $this->output->activity_information($cminfo, $completiondetails, $activitydates);
             }
         }
-
-        $debug['Leaving renderer.php and printing $debug: '] = "This is the debug listing========================";
-
-        //print_object($debug);
-        // die;
-
         return $output;
     }
 

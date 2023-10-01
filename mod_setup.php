@@ -27,9 +27,9 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later.
  */
 
-use \mod_mootyper\event\invalid_access_attempt;
-use \mod_mootyper\local\keyboards;
-use \mod_mootyper\local\lessons;
+use mod_mootyper\event\invalid_access_attempt;
+use mod_mootyper\local\keyboards;
+use mod_mootyper\local\lessons;
 
 // Changed to this newer format 03/01/2019.
 require(__DIR__ . '/../../config.php');
@@ -42,11 +42,11 @@ $n = optional_param('n', 0, PARAM_INT);  // Mootyper instance ID - it should be 
 
 if ($id) {
     $cm = get_coursemodule_from_id('mootyper', $id, 0, false, MUST_EXIST);
-    $course = $DB->get_record('course', array('id' => $cm->course), '*', MUST_EXIST);
-    $mootyper = $DB->get_record('mootyper', array('id' => $cm->instance), '*', MUST_EXIST);
+    $course = $DB->get_record('course', ['id' => $cm->course], '*', MUST_EXIST);
+    $mootyper = $DB->get_record('mootyper', ['id' => $cm->instance], '*', MUST_EXIST);
 } else if ($n) {
-    $mootyper = $DB->get_record('mootyper', array('id' => $n), '*', MUST_EXIST);
-    $course = $DB->get_record('course', array('id' => $mootyper->course), '*', MUST_EXIST);
+    $mootyper = $DB->get_record('mootyper', ['id' => $n], '*', MUST_EXIST);
+    $course = $DB->get_record('course', ['id' => $mootyper->course], '*', MUST_EXIST);
     $cm = get_coursemodule_from_instance('mootyper', $mootyper->id, $course->id, false, MUST_EXIST);
 } else {
     throw new moodle_exception(get_string('mootypererror', 'mootyper'));
@@ -57,13 +57,13 @@ $context = context_module::instance($cm->id);
 // 20200706 Added to prevent student direct URL access attempts.
 if (!(has_capability('mod/mootyper:aftersetup', $context))) {
     // Trigger invalid_access_attempt with redirect to course page.
-    $params = array(
+    $params = [
         'objectid' => $id,
         'context' => $context,
-        'other' => array(
-            'file' => 'mod_setup.php'
-        )
-    );
+        'other' => [
+            'file' => 'mod_setup.php',
+        ],
+    ];
     $event = invalid_access_attempt::create($params);
     $event->trigger();
     redirect('../../course/view.php?id='.$course->id, get_string('invalidaccessexp', 'mootyper'));
@@ -189,7 +189,8 @@ if ($mootyper->layout == null || is_null($mootyper->layout)) {
     // Current MooTyper layout is empty so set it to the site default.
     if (isset($mootyperconfig->defaultlayout_filenamewithoutfiletype) &&
             keyboards::is_layout_installed("$mootyperconfig->defaultlayout_filenamewithoutfiletype")) {
-        //$dfly = keyboards::get_layout_id($mootyperconfig->defaultlayout_filenamewithoutfiletype);
+        // 20230925 Can't remember for sure, but I think this was a temp change for behat testing.
+        // ...$dfly = keyboards::get_layout_id($mootyperconfig->defaultlayout_filenamewithoutfiletype);.
         $dfly = $mootyperconfig->defaultlayout_filenamewithoutfiletype;
     } else {
         $dfly = $moocfg->defaultlayout;
@@ -287,7 +288,7 @@ if (isset($param1) && get_string('fconfirm', 'mootyper') == $param1) {
 
     global $DB, $CFG;
     // Update all the settings for this MooTyper instance when Confirm is clicked.
-    $mootyper = $DB->get_record('mootyper', array('id' => $n), '*', MUST_EXIST);
+    $mootyper = $DB->get_record('mootyper', ['id' => $n], '*', MUST_EXIST);
     $mootyper->lesson = $lessonpo;
     $mootyper->isexam = $modepo;
     if ($modepo == 1) {
@@ -315,7 +316,7 @@ if (isset($param1) && get_string('fconfirm', 'mootyper') == $param1) {
 }
 
 // Print the page header.
-$PAGE->set_url('/mod/mootyper/mod_setup.php', array('id' => $cm->id));
+$PAGE->set_url('/mod/mootyper/mod_setup.php', ['id' => $cm->id]);
 $PAGE->set_title(format_string($mootyper->name));
 $PAGE->set_heading(format_string($course->fullname));
 $PAGE->set_context($context);
@@ -426,9 +427,10 @@ $htmlout .= '</select></td></tr><tr><td>'
     .$wpmpo.'" style="width: 35px;" type="text" name="requiredwpm"></td></tr>';
 
 // Add a selector for text alignment.
-$aligns = array(get_string('defaulttextalign_left', 'mod_mootyper'),
+$aligns = [get_string('defaulttextalign_left', 'mod_mootyper'),
               get_string('defaulttextalign_center', 'mod_mootyper'),
-              get_string('defaulttextalign_right', 'mod_mootyper'));
+              get_string('defaulttextalign_right', 'mod_mootyper'),
+           ];
 $defaulttextalign = $moocfg->defaulttextalign;
 
 $htmlout .= '<tr><td>'.get_string('defaulttextalign', 'mootyper').'</td><td><select name="textalign">';

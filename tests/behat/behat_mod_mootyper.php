@@ -48,20 +48,23 @@ class behat_mod_mootyper extends behat_base {
      * To assert a select value.
      * Shamelessly inspired by: https://stackoverflow.com/a/33223002/1038565
      */
-    public function theOptionFromSelectIsSelected($optionValue, $select) {
-        $selectField = $this->getSession()->getPage()->findField($select);
+    public function theoptionfromselectisselected($optionvalue, $select) {
+        $selectfield = $this->getSession()->getPage()->findField($select);
 
-        if (NULL === $selectField) {
-            throw new \Exception(sprintf('The select "%s" was not found in the page %s', $select, $this->getSession()->getCurrentUrl()));
+        if (null === $selectfield) {
+            throw new \Exception(sprintf('The select "%s" was not found in the page %s',
+                $select, $this->getSession()->getCurrentUrl()));
         }
 
-        $optionField = $selectField->find('xpath', "//option[@selected]");
-        if (NULL === $optionField) {
-            throw new \Exception(sprintf('No option is selected in the %s select in the page %s', $select, $this->getSession()->getCurrentUrl()));
+        $optionfield = $selectfield->find('xpath', "//option[@selected]");
+        if (null === $optionfield) {
+            throw new \Exception(sprintf('No option is selected in the %s select in the page %s',
+                $select, $this->getSession()->getCurrentUrl()));
         }
 
-        if ($optionField->getValue() != $optionValue) {
-            throw new \Exception(sprintf('The option "%s" was not selected in the page %s, %s was selected', $optionValue, $this->getSession()->getCurrentUrl(), $optionField->getValue()));
+        if ($optionfield->getValue() != $optionvalue) {
+            throw new \Exception(sprintf('The option "%s" was not selected in the page %s, %s was selected',
+                $optionvalue, $this->getSession()->getCurrentUrl(), $optionfield->getValue()));
         }
     }
 }

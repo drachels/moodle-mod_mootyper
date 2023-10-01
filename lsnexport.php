@@ -25,7 +25,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later.
  */
 
-use \mod_mootyper\event\lesson_exported;
+use mod_mootyper\event\lesson_exported;
 
 require(__DIR__ . '/../../config.php');
 require_once(__DIR__ . '/lib.php');
@@ -36,7 +36,7 @@ $id = optional_param('id', 0, PARAM_INT); // Course ID.
 $lsn = optional_param('lsn', 0, PARAM_INT); // Lesson ID to download.
 
 if ($id) {
-    $course = $DB->get_record('course', array('id' => $id), '*', MUST_EXIST);
+    $course = $DB->get_record('course', ['id' => $id], '*', MUST_EXIST);
 } else {
     throw new moodle_exception(get_string('mootypererror', 'mootyper'));
 }
@@ -46,7 +46,7 @@ $context = context_course::instance($id);
 $data = new StdClass();
 $data->mootyper = $id;
 
-$params = array();
+$params = [];
 $params[] = $lsn;
 // Get name of lesson to export based on incoming lesson id.
 $sql = "SELECT lessonname
@@ -92,13 +92,13 @@ if ($exercise = $DB->get_records_sql($sql, $params)) {
         --$count;
         if ($count > 0) {
             // Write out the next exercise and exercise name with a break indicator.
-            $field1 = array($txt->texttotype.chr(10).'/**/'.chr(10));
-            $field2 = array($txt->exercisename.chr(10).'/**/'.chr(10));
+            $field1 = [$txt->texttotype.chr(10).'/**/'.chr(10)];
+            $field2 = [$txt->exercisename.chr(10).'/**/'.chr(10)];
         } else {
             // Write out last exercise with with a break indicator follwed by the exercise name
             // and no break indicator after it.
-            $field1 = array($txt->texttotype.chr(10).'/**/'.chr(10));
-            $field2 = array($txt->exercisename.chr(10));
+            $field1 = [$txt->texttotype.chr(10).'/**/'.chr(10)];
+            $field2 = [$txt->exercisename.chr(10)];
         }
         // Place the texttotyper followed by the exercise name in our file $f.
         fwrite($f, implode(" ", $field1));
@@ -109,11 +109,11 @@ if ($exercise = $DB->get_records_sql($sql, $params)) {
 }
 
 // Trigger lesson_export event.
-$params = array(
+$params = [
     'objectid' => $data->mootyper,
     'context' => $context,
-    'other' => $filename
-);
+    'other' => $filename,
+];
 $event = lesson_exported::create($params);
 $event->trigger();
 

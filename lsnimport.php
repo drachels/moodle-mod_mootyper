@@ -29,9 +29,9 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later.
  */
 
-use \mod_mootyper\event\invalid_access_attempt;
-use \mod_mootyper\event\lesson_imported;
-use \mod_mootyper\event\layout_imported;
+use mod_mootyper\event\invalid_access_attempt;
+use mod_mootyper\event\lesson_imported;
+use mod_mootyper\event\layout_imported;
 
 require(__DIR__ . '/../../config.php');
 require_once(__DIR__ . '/lib.php');
@@ -81,8 +81,23 @@ function read_lessons_file($dafile, $authoridarg, $visiblearg, $editablearg, $co
         // 20210328 Added same cleanup for exercisename.
         $exercisename = trim($splitted[$j + 1]);
 
-		// @codingStandardsIgnoreLine
-        $allowed = array('ё', 'ë', '¸','á', 'é', 'í', 'ï', 'ó', 'ú', '\\', '~', '!', '@', '#', '$', '%', '^', '&', '(', ')', '*', '_', '+', ':', ';', '"', '{', '}', '>', '<', '?', '\'', '-', '/', '=', '.', ',', ' ', '|', '¡', '`', 'ç', 'ñ', 'º', '¿', 'ª', '·', '\n', '\r', '\r\n', '\n\r', ']', '[', '¬', '´', '`', '§', '°', '€', '¦', '¢', '£', '?', '¹', '²', '³', '¨', '?', 'ù', 'µ', 'û','÷', '×', 'ł', 'Ł', 'ß', '¤', '«', '»');
+        $allowed = ['ё', 'ë', '¸', 'á', 'é',
+                    'í', 'ï', 'ó', 'ú', '\\',
+                    '~', '!', '@', '#', '$',
+                    '%', '^', '&', '(', ')',
+                    '*', '_', '+', ':', ';',
+                    '"', '{', '}', '>', '<',
+                    '?', '\'', '-', '/', '=',
+                    '.', ',', ' ', '|', '¡',
+                    '`', 'ç', 'ñ', 'º', '¿',
+                    'ª', '·', '\n', '\r', '\r\n',
+                    '\n\r', ']', '[', '¬', '´',
+                    '§', '°', '€', '¦',
+                    '¢', '£', '?', '¹', '²',
+                    '³', '¨', '?', 'ù', 'µ',
+                    'û', '÷', '×', 'ł', 'Ł',
+                    'ß', '¤', '«', '»',
+                   ];
         // Create a number to use as the exercise name. Start with 1 and increment for each exercise detected.
         // 20210328 We now get an actual exercise name from the lessonname.txt file, so $nm not needed now.
         $texttotype = "";
@@ -206,7 +221,7 @@ function update_exercises_file($dafile, $lsnid, $lsn) {
 $id = optional_param('id', 0, PARAM_INT); // Course ID.
 $lsn = optional_param('lsn', 0, PARAM_INT); // Lesson ID to download.
 $cm = get_coursemodule_from_id('mootyper', $id, 0, false, MUST_EXIST);
-$course = $DB->get_record('course', array('id' => $cm->course), '*', MUST_EXIST);
+$course = $DB->get_record('course', ['id' => $cm->course], '*', MUST_EXIST);
 
 require_login($course, true);
 $context = context_module::instance($cm->id);
@@ -214,20 +229,20 @@ $context = context_module::instance($cm->id);
 // 20200706 Added to prevent student direct URL access attempts.
 if (!(has_capability('mod/mootyper:aftersetup', $context))) {
     // Trigger invalid_access_attempt with redirect to course page.
-    $params = array(
+    $params = [
         'objectid' => $id,
         'context' => $context,
-        'other' => array(
-            'file' => 'lsnimport.php'
-        )
-    );
+        'other' => [
+            'file' => 'lsnimport.php',
+        ],
+    ];
     $event = invalid_access_attempt::create($params);
     $event->trigger();
     redirect('../../course/view.php?id='.$course->id, get_string('invalidaccessexp', 'mootyper'));
 }
 
 // Print the page header.
-$PAGE->set_url('/mod/mootyper/exercises.php', array('id' => $course->id));
+$PAGE->set_url('/mod/mootyper/exercises.php', ['id' => $course->id]);
 $PAGE->set_title(get_string('etitle', 'mootyper'));
 $PAGE->set_heading(get_string('eheading', 'mootyper'));
 
@@ -269,11 +284,11 @@ for ($i = 0; $i < count($res); $i++) {
             $data->mootyper = $id;
             $context = context_module::instance($id);
             // Trigger lesson_imported event.
-            $params = array(
+            $params = [
                 'objectid' => $data->mootyper,
                 'context' => $context,
-                'other' => $lsn
-            );
+                'other' => $lsn,
+            ];
             $event = lesson_imported::create($params);
             $event->trigger();
         }
@@ -315,11 +330,11 @@ for ($j = 0; $j < count($res2); $j++) {
             $data->mootyper = $id;
             $context = context_module::instance($id);
             // Trigger layout_imported event.
-            $params = array(
+            $params = [
                 'objectid' => $data->mootyper,
                 'context' => $context,
-                'other' => $kbl
-            );
+                'other' => $kbl,
+            ];
             $event = layout_imported::create($params);
             $event->trigger();
         }

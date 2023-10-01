@@ -68,6 +68,6 @@ class viewed_all_grades extends \core\event\base {
      * @return \moodle_url
      */
     public function get_url() {
-        return new \moodle_url('/mod/mootyper/gview.php', array('id' => $this->contextinstanceid));
+        return new \moodle_url('/mod/mootyper/gview.php', ['id' => $this->contextinstanceid]);
     }
 }

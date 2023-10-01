@@ -47,7 +47,6 @@ $string['charttitlemyowngrades'] = 'My Own Grades';
 $string['chere'] = 'Click here to start';
 $string['closebeforeopen'] = 'Could not update the MooTyper. You have specified a close date before the open date.';
 
-//$string['completionexercise'] = 'Student must complete {$a->one} exercises for lesson {$a->two}. ';
 $string['completionexercise'] = 'Student must complete all exercises for this lesson to complete this activity. ';
 $string['completionexercisegroup'] = 'Require exercise completion';
 
@@ -55,16 +54,13 @@ $string['completiondetail:exercise'] = 'Student must complete exercise: {$a}';
 $string['completiondetail:lesson'] = 'Student must complete lesson: {$a}';
 $string['completiondetail:precision'] = 'Student must achieve precision: {$a}';
 $string['completiondetail:wpm'] = 'Student must achieve wpm: {$a}';
-//$string['completiondetail:pass'] = 'Student must achieve MT Grade: {$a}';
 $string['completiondetail:mootypergrade'] = 'Student must achieve MT Grade: {$a}';
 
 $string['completionlessondesc'] = 'Student must complete lesson:y {$a}';
 $string['completionlessongroup'] = 'Require lesson completion';
 $string['completionlesson'] = 'Student must complete this lesson to complete this activity';
 
-//$string['completionpass'] = 'Student must achieve a passing MooTyper Grade to complete this activity. ';
 $string['completionmootypergrade'] = 'Student must achieve a passing MooTyper Grade to complete this activity. ';
-//$string['completionpassgroup'] = 'Require Grade';
 $string['completionmootypergradegroup'] = 'Require Grade';
 
 $string['completionprecision'] = 'Student must achieve a passing precision to complete this activity. ';

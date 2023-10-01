@@ -25,84 +25,84 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$capabilities = array(
-    'mod/mootyper:setup' => array(
+$capabilities = [
+    'mod/mootyper:setup' => [
         'captype' => 'read',
         'contextlevel' => CONTEXT_MODULE,
-        'legacy' => array(
+        'legacy' => [
             'editingteacher' => CAP_ALLOW,
-            'manager' => CAP_ALLOW
-        )
-    ),
+            'manager' => CAP_ALLOW,
+        ],
+    ],
 
-    'mod/mootyper:editall' => array(
+    'mod/mootyper:editall' => [
         'captype' => 'write',
         'contextlevel' => CONTEXT_COURSE,
-        'legacy' => array(
-            'manager' => CAP_ALLOW
-        )
-    ),
+        'legacy' => [
+            'manager' => CAP_ALLOW,
+        ],
+    ],
 
     // Added on 29.09.2012 as a fix for the plugin installation on Moodle 2.3.2+.
-    'mod/mootyper:addinstance' => array(
+    'mod/mootyper:addinstance' => [
         'riskbitmask' => RISK_XSS,
         'captype' => 'write',
         'contextlevel' => CONTEXT_COURSE,
-        'archetypes' => array(
+        'archetypes' => [
             'editingteacher' => CAP_ALLOW,
             'manager' => CAP_ALLOW,
-        ),
-        'clonepermissionsfrom' => 'moodle/course:manageactivities'
-    ),
+        ],
+        'clonepermissionsfrom' => 'moodle/course:manageactivities',
+    ],
 
-    'mod/mootyper:viewgrades' => array(
+    'mod/mootyper:viewgrades' => [
         'captype' => 'read',
         'contextlevel' => CONTEXT_MODULE,
-        'legacy' => array(
-            'teacher' => CAP_ALLOW,
-            'editingteacher' => CAP_ALLOW,
-            'manager' => CAP_ALLOW
-        )
-    ),
-
-    'mod/mootyper:viewmygrades' => array(
-        'captype' => 'read',
-        'contextlevel' => CONTEXT_MODULE,
-        'legacy' => array(
+        'legacy' => [
             'teacher' => CAP_ALLOW,
             'editingteacher' => CAP_ALLOW,
             'manager' => CAP_ALLOW,
-            'student' => CAP_ALLOW
-        )
-    ),
+        ],
+    ],
 
-    'mod/mootyper:aftersetup' => array(
+    'mod/mootyper:viewmygrades' => [
+        'captype' => 'read',
+        'contextlevel' => CONTEXT_MODULE,
+        'legacy' => [
+            'teacher' => CAP_ALLOW,
+            'editingteacher' => CAP_ALLOW,
+            'manager' => CAP_ALLOW,
+            'student' => CAP_ALLOW,
+        ],
+    ],
+
+    'mod/mootyper:aftersetup' => [
         'captype' => 'write',
         'contextlevel' => CONTEXT_MODULE,
-        'legacy' => array(
+        'legacy' => [
             'editingteacher' => CAP_ALLOW,
-            'manager' => CAP_ALLOW
-        )
-    ),
+            'manager' => CAP_ALLOW,
+        ],
+    ],
 
-    'mod/mootyper:view' => array(
+    'mod/mootyper:view' => [
         'captype' => 'read',
         'contextlevel' => CONTEXT_MODULE,
-        'legacy' => array(
+        'legacy' => [
             'student' => CAP_ALLOW,
             'teacher' => CAP_ALLOW,
             'editingteacher' => CAP_ALLOW,
-            'manager' => CAP_ALLOW
-        )
-    ),
+            'manager' => CAP_ALLOW,
+        ],
+    ],
 
-    'mod/mootyper:rate' => array(
+    'mod/mootyper:rate' => [
         'captype' => 'write',
         'contextlevel' => CONTEXT_MODULE,
-        'archetypes' => array(
+        'archetypes' => [
             'teacher' => CAP_ALLOW,
             'editingteacher' => CAP_ALLOW,
-            'manager' => CAP_ALLOW
-        )
-    )
-);
+            'manager' => CAP_ALLOW,
+        ],
+    ],
+];

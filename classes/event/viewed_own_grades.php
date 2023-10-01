@@ -67,6 +67,6 @@ class viewed_own_grades extends \core\event\base {
      * @return \moodle_url
      */
     public function get_url() {
-        return new \moodle_url('/mod/mootyper/owngrades.php', array('id' => $this->contextinstanceid));
+        return new \moodle_url('/mod/mootyper/owngrades.php', ['id' => $this->contextinstanceid]);
     }
 }

@@ -341,7 +341,7 @@ class provider implements
         }
         $instanceid = $DB->get_field('course_modules', 'instance', ['id' => $context->instanceid], MUST_EXIST);
         $DB->delete_records('mootyper_grades', ['mootyper' => $instanceid]);
-        $DB->delete_records('mootyper_attempts', ['mootyperid' => $instanceid]);
+        $DB->delete_records('mootyper_attempts', ['mootyper' => $instanceid]);
     }
 
     /**

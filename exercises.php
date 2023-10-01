@@ -24,9 +24,9 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later.
  */
 
-use \mod_mootyper\event\course_exercises_viewed;
-use \mod_mootyper\event\invalid_access_attempt;
-use \mod_mootyper\local\lessons;
+use mod_mootyper\event\course_exercises_viewed;
+use mod_mootyper\event\invalid_access_attempt;
+use mod_mootyper\local\lessons;
 
 // Changed to this newer format 03/01/2019.
 require(__DIR__ . '/../../config.php');
@@ -38,7 +38,7 @@ global $DB, $OUTPUT, $PAGE, $USER;
 $id = optional_param('id', 0, PARAM_INT); // Course module ID.
 // Changed cmid to course id.
 $cm = get_coursemodule_from_id('mootyper', $id, 0, false, MUST_EXIST);
-$course = $DB->get_record('course', array('id' => $cm->course), '*', MUST_EXIST);
+$course = $DB->get_record('course', ['id' => $cm->course], '*', MUST_EXIST);
 
 require_login($course, true);
 $context = context_module::instance($cm->id);
@@ -46,32 +46,32 @@ $context = context_module::instance($cm->id);
 // 20200706 Added to prevent student direct URL access attempts.
 if (!(has_capability('mod/mootyper:aftersetup', $context))) {
     // Trigger invalid_access_attempt with redirect to course page.
-    $params = array(
+    $params = [
         'objectid' => $id,
         'context' => $context,
-        'other' => array(
-            'file' => 'exercises.php'
-        )
-    );
+        'other' => [
+            'file' => 'exercises.php',
+        ],
+    ];
     $event = invalid_access_attempt::create($params);
     $event->trigger();
     redirect('../../course/view.php?id='.$course->id, get_string('invalidaccessexp', 'mootyper'));
 }
 
-$mootyper = $DB->get_record('mootyper', array('id' => $cm->instance) , '*', MUST_EXIST);
+$mootyper = $DB->get_record('mootyper', ['id' => $cm->instance] , '*', MUST_EXIST);
 $lessonpo = optional_param('lesson', 0, PARAM_INT);
 
 // Trigger module exercise_viewed event.
-$params = array(
+$params = [
     'objectid' => $course->id,
     'context' => $context,
-    'other' => $lessonpo
-);
+    'other' => $lessonpo,
+];
 $event = course_exercises_viewed::create($params);
 $event->trigger();
 
 // Print the page header.
-$PAGE->set_url('/mod/mootyper/exercises.php', array('id' => $id));
+$PAGE->set_url('/mod/mootyper/exercises.php', ['id' => $id]);
 $PAGE->set_title(get_string('etitle', 'mootyper'));
 $PAGE->set_heading(get_string('eheading', 'mootyper'));
 $PAGE->set_pagelayout('standard');
@@ -135,7 +135,7 @@ if (lessons::is_editable_by_me($USER->id, $id, $lessonpo)) {
     $jlnk3 = $CFG->wwwroot . '/mod/mootyper/eins.php?id='.$id.'&lesson='.$lessonpo;
 
     // 20200628 Following variable is temporary for development.
-    $vis = $DB->get_record("mootyper_lessons", array('id' => $lessonpo));
+    $vis = $DB->get_record("mootyper_lessons", ['id' => $lessonpo]);
     // 20220125 Added words instead of numbers, to the button.
     $visible = get_string('vaccess'.$vis->visible, 'mootyper');
     $editable = get_string('eaccess'.$vis->editable, 'mootyper');
@@ -161,7 +161,7 @@ echo '<table><tr><td '.$style1.'>'.get_string('ename', 'mootyper').'</td>
                  <td '.$style1.'>'.$jlink.'</td></tr>';
 
 // Print table row for each of the exercises in the lesson currently being viewed.
-$exercises = $DB->get_records("mootyper_exercises", array('lesson' => $lessonpo));
+$exercises = $DB->get_records("mootyper_exercises", ['lesson' => $lessonpo]);
 // 20230110 PostgreSQL gets sloppy with the order, but this seems to fix it.
 sort($exercises);
 foreach ($exercises as $ex) {

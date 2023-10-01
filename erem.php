@@ -26,8 +26,8 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later.
  */
 
-use \mod_mootyper\event\exercise_deleted;
-use \mod_mootyper\event\lesson_deleted;
+use mod_mootyper\event\exercise_deleted;
+use mod_mootyper\event\lesson_deleted;
 
 // Changed to this newer format 20190301.
 require(__DIR__ . '/../../config.php');
@@ -36,7 +36,7 @@ global $DB;
 
 $id = optional_param('id', 0, PARAM_INT); // Course_module ID.
 $cm = get_coursemodule_from_id('mootyper', $id, 0, false, MUST_EXIST);
-$course = $DB->get_record('course', array('id' => $cm->course), '*', MUST_EXIST);
+$course = $DB->get_record('course', ['id' => $cm->course], '*', MUST_EXIST);
 
 require_login($course, true, $cm);
 
@@ -51,28 +51,28 @@ $cmid = optional_param('cmid', '0', PARAM_INT); // Course Module ID.
 
 if ($exerciseid) {
     $lessonpo = optional_param('lesson', '', PARAM_INT);
-    $DB->delete_records('mootyper_exercises', array('id' => $exerciseid));
+    $DB->delete_records('mootyper_exercises', ['id' => $exerciseid)]);
     // Trigger module exercise_deleted event.
-    $params = array(
+    $params = [
         'objectid' => $course->id,
         'context' => $context,
-        'other' => array(
+        'other' => [
             'lesson' => $lessonpo,
-            'exercise' => $exerciseid
-        )
-    );
+            'exercise' => $exerciseid,
+        ],
+    ];
     $event = exercise_deleted::create($params);
     $event->trigger();
 } else if ($lessonid) {
-    $DB->delete_records('mootyper_exercises', array('lesson' => $lessonid));
-    $DB->delete_records('mootyper_lessons', array('id' => $lessonid));
+    $DB->delete_records('mootyper_exercises', ['lesson' => $lessonid]);
+    $DB->delete_records('mootyper_lessons', ['id' => $lessonid]);
     $lessonpo = 0;
     // Trigger module lesson_deleted event.
-    $params = array(
+    $params = [
         'objectid' => $course->id,
         'context' => $context,
-        'other' => $lessonid
-    );
+        'other' => $lessonid,
+    ];
     $event = lesson_deleted::create($params);
     $event->trigger();
 }

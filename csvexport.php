@@ -28,7 +28,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later.
  */
 
-use \mod_mootyper\event\export_viewallgrades_to_csv;
+use mod_mootyper\event\export_viewallgrades_to_csv;
 
 // Changed to this newer format 03/10/2019.
 require(__DIR__ . '/../../config.php');
@@ -89,16 +89,16 @@ function array_to_csv_download($array, $filename = "export.csv", $delimiter=";")
     $scale = get_string('gradenoun').' = '.$scale;
 
     // Trigger export_viewallgrades_to_csv event.
-    $params = array(
+    $params = [
         'objectid' => $id,
         'context' => $context,
-        'other' => array(
+        'other' => [
             'coursename' => $coursename,
             'mtname' => $mtname,
             'lesson' => $lsnname,
-            'filename' => $filename
-        )
-    );
+            'filename' => $filename,
+        ],
+    ];
     $event = export_viewallgrades_to_csv::create($params);
     $event->trigger();
 
@@ -111,38 +111,41 @@ function array_to_csv_download($array, $filename = "export.csv", $delimiter=";")
     header("Expires: 0");
     $f = fopen('php://output', 'w');
 
-    $details = array($coursename,
-                     $mtname,
-                     $mtmode,
-                     $lsnname,
-                     $timelimit,
-                     $requiredgoal,
-                     $requiredwpm,
-                     $scale);
+    $details = [$coursename,
+                $mtname,
+                $mtmode,
+                $lsnname,
+                $timelimit,
+                $requiredgoal,
+                $requiredwpm,
+                $scale,
+               ];
 
-    $headings = array(get_string('student', 'mootyper'),
-                      get_string('fexercise', 'mootyper'),
-                      get_string('vmistakes', 'mootyper'),
-                      get_string('timeinseconds', 'mootyper'),
-                      get_string('hitsperminute', 'mootyper'),
-                      get_string('fullhits', 'mootyper'),
-                      get_string('precision', 'mootyper'),
-                      get_string('wpm', 'mootyper'),
-                      get_string('gradenoun'),
-                      get_string('timetaken', 'mootyper'));
+    $headings = [get_string('student', 'mootyper'),
+                 get_string('fexercise', 'mootyper'),
+                 get_string('vmistakes', 'mootyper'),
+                 get_string('timeinseconds', 'mootyper'),
+                 get_string('hitsperminute', 'mootyper'),
+                 get_string('fullhits', 'mootyper'),
+                 get_string('precision', 'mootyper'),
+                 get_string('wpm', 'mootyper'),
+                 get_string('gradenoun'),
+                 get_string('timetaken', 'mootyper'),
+                ];
     fputcsv($f, $details, $delimiter);
     fputcsv($f, $headings, $delimiter);
     foreach ($array as $gr) {
-        $fields = array($gr->firstname.' '.$gr->lastname,
-                        $gr->exercisename,
-                        $gr->mistakes.': '.$gr->mistakedetails,
-                        format_time($gr->timeinseconds),
-                        format_float($gr->hitsperminute),
-                        $gr->fullhits,
-                        format_float($gr->precisionfield).'%',
-                        $gr->wpm,
-                        $gr->grade,
-                        date(get_config('mod_mootyper', 'dateformat'), $gr->timetaken));
+        $fields = [$gr->firstname.' '.$gr->lastname,
+                   $gr->exercisename,
+                   $gr->mistakes.': '.$gr->mistakedetails,
+                   format_time($gr->timeinseconds),
+                   format_float($gr->hitsperminute),
+                   $gr->fullhits,
+                   format_float($gr->precisionfield).'%',
+                   $gr->wpm,
+                   $gr->grade,
+                   date(get_config('mod_mootyper', 'dateformat'), $gr->timetaken),
+                  ];
         fputcsv($f, $fields, $delimiter);
     }
     fclose($f);

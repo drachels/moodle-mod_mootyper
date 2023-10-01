@@ -52,9 +52,8 @@ class cron_task extends \core\task\scheduled_task {
         $timeout = 5;
 
         // A namespace for the locks. Must be prefixed with the component name to prevent conflicts.
-        //$locktype = 'mod_assign_download_submissions';
-        //$locktype = 'mod_mootyper_renderer_resource';
-        //$locktype = 'mod_mootyper_file_upload';
+        // ...$locktype = 'mod_mootyper_renderer_resource';.
+        // ...$locktype = 'mod_mootyper_file_upload';.
         $locktype = 'mod_mootyper_renderer_factory';
 
         // Resource key - needs to uniquely identify the resource that is to be locked. E.g. If you
@@ -67,17 +66,13 @@ class cron_task extends \core\task\scheduled_task {
         // Get a new lock for the resource, wait for it if needed.
         if ($lock = $lockfactory->get_lock($resource, $timeout)) {
             // We have exclusive access to the resource, do the slow zip file generation...
-print_object('ready to release lock');
-die;
             if ($someerror) {
                 // Always release locks on failure.
                 $lock->release();
-                print_error('blah');
+                throw new moodle_exception('lockfailure');
             }
-
             // Release the lock once finished.
             $lock->release();
-
         } else {
             // We did not get access to the resource in time, give up.
             throw new moodle_exception('locktimeout');

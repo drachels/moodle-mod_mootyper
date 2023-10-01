@@ -112,7 +112,7 @@ function xmldb_mootyper_upgrade($oldversion) {
 
         // Define index course (not unique) to be added to mootyper.
         $table = new xmldb_table('mootyper');
-        $index = new xmldb_index('courseindex', XMLDB_INDEX_NOTUNIQUE, array('course'));
+        $index = new xmldb_index('courseindex', XMLDB_INDEX_NOTUNIQUE, ['course']);
 
         // Add index to course field.
         if (!$dbman->index_exists($table, $index)) {
@@ -400,7 +400,9 @@ function xmldb_mootyper_upgrade($oldversion) {
 
         // Define field completionprecision to be added to mootyper.
         $table = new xmldb_table('mootyper');
-        $field = new xmldb_field('completionprecision', XMLDB_TYPE_INTEGER, '2', null, XMLDB_NOTNULL, null, '0', 'completionlesson');
+        $field = new xmldb_field('completionprecision',
+                                 XMLDB_TYPE_INTEGER, '2', null,
+                                 XMLDB_NOTNULL, null, '0', 'completionlesson');
 
         // Conditionally launch add field completionprecision.
         if (!$dbman->field_exists($table, $field)) {
@@ -418,7 +420,9 @@ function xmldb_mootyper_upgrade($oldversion) {
 
         // Define field completionmootyperpass to be added to mootyper.
         $table = new xmldb_table('mootyper');
-        $field = new xmldb_field('completionmootypergrade', XMLDB_TYPE_INTEGER, '2', null, XMLDB_NOTNULL, null, '0', 'completionwpm');
+        $field = new xmldb_field('completionmootypergrade',
+                                 XMLDB_TYPE_INTEGER, '2', null,
+                                 XMLDB_NOTNULL, null, '0', 'completionwpm');
 
         // Conditionally launch add field completionmootyperpass.
         if (!$dbman->field_exists($table, $field)) {

@@ -26,7 +26,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later.
  */
 
-use \mod_mootyper\event\layout_deleted;
+use mod_mootyper\event\layout_deleted;
 
 // Changed to this newer format 20190301.
 require(__DIR__ . '/../../config.php');
@@ -36,14 +36,14 @@ $id = optional_param('id', 0, PARAM_INT); // Course_module ID.
 $kb = optional_param('kb', '', PARAM_TEXT); // Name of the keyboard layout to delete.
 
 $cm = get_coursemodule_from_id('mootyper', $id, 0, false, MUST_EXIST);
-$course = $DB->get_record('course', array('id' => $cm->course), '*', MUST_EXIST);
+$course = $DB->get_record('course', ['id' => $cm->course], '*', MUST_EXIST);
 
 require_login($course, true);
 $context = context_module::instance($cm->id);
 // 20220126 If we have a layout name, run the delete code.
 if ($kb) {
     // 20220126 Search and retrieve the layout by name.
-    $kbrecord = $DB->get_record('mootyper_layouts', array('name' => $kb), '*', MUST_EXIST);
+    $kbrecord = $DB->get_record('mootyper_layouts', ['name' => $kb], '*', MUST_EXIST);
 
     // 20220126 Get the absolute path to the current working directory.
     $pathtodir = getcwd();
@@ -62,16 +62,16 @@ if ($kb) {
     }
 
     // 20220126 Delete the database record for the layout being deleted.
-    $DB->delete_records('mootyper_layouts', array('id' => $kbrecord->id));
+    $DB->delete_records('mootyper_layouts', ['id' => $kbrecord->id]);
 
     // Trigger module layout_deleted event.
-    $params = array(
+    $params = [
         'objectid' => $course->id,
         'context' => $context,
-        'other' => array(
+        'other' => [
             'layout' => $kb,
-        )
-    );
+        ],
+    ];
     $event = layout_deleted::create($params);
     $event->trigger();
 }

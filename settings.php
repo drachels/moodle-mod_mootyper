@@ -24,7 +24,7 @@
  */
 
 defined('MOODLE_INTERNAL') || die;
-use \mod_mootyper\local\keyboards;
+use mod_mootyper\local\keyboards;
 
 if ($ADMIN->fulltree) {
     // Changed to this newer format 03/10/2019.
@@ -42,8 +42,13 @@ if ($ADMIN->fulltree) {
                                                     0));
     // Password setting.
     $settings->add(new admin_setting_configcheckbox_with_advanced('mod_mootyper/password',
-        get_string('password', 'mootyper'), get_string('configpassword_desc', 'mootyper'),
-        array('value' => 0, 'adv' => true)));
+        get_string('password', 'mootyper'),
+        get_string('configpassword_desc', 'mootyper'),
+        [
+            'value' => 0,
+            'adv' => true,
+        ]
+    ));
 
     // Options settings.
     $settings->add(new admin_setting_heading('mod_mootyper/options', get_string('options', 'mootyper'), ''));
@@ -52,12 +57,15 @@ if ($ADMIN->fulltree) {
     $settings->add(new admin_setting_configselect('mod_mootyper/isexam',
         get_string('fmode', 'mod_mootyper'),
         get_string('defaultfmode_help', 'mod_mootyper'), 0,
-        array(get_string('sflesson', 'mod_mootyper'),
+        [
+            get_string('sflesson', 'mod_mootyper'),
             get_string('isexamtext', 'mod_mootyper'),
-            get_string('practice', 'mod_mootyper'))));
+            get_string('practice', 'mod_mootyper'),
+        ]
+    ));
 
     // Default time limit.
-    $tl = array();
+    $tl = [];
     for ($i = 0; $i <= 10; $i++) {
         $tl[] = $i;
     }
@@ -65,7 +73,7 @@ if ($ADMIN->fulltree) {
         get_string('defaulttimelimit', 'mootyper'), '', 0, $tl));
 
     // Default typing precision.
-    $precs = array();
+    $precs = [];
     for ($i = 0; $i <= 100; $i++) {
         $precs[] = $i;
     }
@@ -73,7 +81,7 @@ if ($ADMIN->fulltree) {
         get_string('defaultprecision', 'mootyper'), '', 97, $precs));
 
     // Default Words Per Minute rate.
-    $wpm = array();
+    $wpm = [];
     for ($i = 0; $i <= 100; $i++) {
         $wpm[] = $i;
     }
@@ -84,37 +92,63 @@ if ($ADMIN->fulltree) {
     $settings->add(new admin_setting_configselect('mod_mootyper/defaulttextalign',
         get_string('defaulttextalign', 'mod_mootyper'),
         get_string('defaulttextalign_help', 'mod_mootyper'), 0,
-        array(get_string('defaulttextalign_left', 'mod_mootyper'),
+        [
+            get_string('defaulttextalign_left', 'mod_mootyper'),
             get_string('defaulttextalign_center', 'mod_mootyper'),
-            get_string('defaulttextalign_right', 'mod_mootyper'))));
+            get_string('defaulttextalign_right', 'mod_mootyper'),
+        ]
+    ));
 
     // Default text alignment while editing or creating an exercise.
     $settings->add(new admin_setting_configselect('mod_mootyper/defaulteditalign',
         get_string('defaulteditalign', 'mod_mootyper'),
         get_string('defaulteditalign_help', 'mod_mootyper'), 0,
-        array(get_string('defaulttextalign_left', 'mod_mootyper'),
+        [
+            get_string('defaulttextalign_left', 'mod_mootyper'),
             get_string('defaulttextalign_center', 'mod_mootyper'),
-            get_string('defaulttextalign_right', 'mod_mootyper'))));
+            get_string('defaulttextalign_right', 'mod_mootyper'),
+        ]
+    ));
 
     // Default continuous typing setting.
     $settings->add(new admin_setting_configcheckbox_with_advanced('mod_mootyper/continuoustype',
-        get_string('continuoustype', 'mootyper'), get_string('continuoustype_help', 'mootyper'),
-        array('value' => 0, 'adv' => false)));
+        get_string('continuoustype', 'mootyper'),
+        get_string('continuoustype_help', 'mootyper'),
+        [
+            'value' => 0,
+            'adv' => false,
+        ]
+    ));
 
     // Default count space as a mistake typing setting.
     $settings->add(new admin_setting_configcheckbox_with_advanced('mod_mootyper/countmistypedspaces',
-        get_string('countmistypedspaces', 'mootyper'), get_string('countmistypedspaces_help', 'mootyper'),
-        array('value' => 0, 'adv' => false)));
+        get_string('countmistypedspaces', 'mootyper'),
+        get_string('countmistypedspaces_help', 'mootyper'),
+        [
+            'value' => 0,
+            'adv' => false,
+        ]
+    ));
 
     // Default count each wrong keystroke as a mistake setting.
     $settings->add(new admin_setting_configcheckbox_with_advanced('mod_mootyper/countmistakes',
-        get_string('countmistakes', 'mootyper'), get_string('countmistakes_help', 'mootyper'),
-        array('value' => 0, 'adv' => false)));
+        get_string('countmistakes', 'mootyper'),
+        get_string('countmistakes_help', 'mootyper'),
+        [
+            'value' => 0,
+            'adv' => false,
+        ]
+    ));
 
     // Default show keyboard setting.
     $settings->add(new admin_setting_configcheckbox_with_advanced('mod_mootyper/showkeyboard',
-        get_string('showkeyboard', 'mootyper'), get_string('showkeyboard_help', 'mootyper'),
-        array('value' => 1, 'adv' => false)));
+        get_string('showkeyboard', 'mootyper'),
+        get_string('showkeyboard_help', 'mootyper'),
+        [
+            'value' => 1,
+            'adv' => false,
+        ]
+    ));
 
     // Default keyboard layout.
     $layouts = keyboards::get_keyboard_layouts_db();

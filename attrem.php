@@ -27,8 +27,8 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later.
  */
 
-use \mod_mootyper\event\owngrades_deleted;
-use \mod_mootyper\event\grade_deleted;
+use mod_mootyper\event\owngrades_deleted;
+use mod_mootyper\event\grade_deleted;
 
 require(__DIR__ . '/../../config.php');
 
@@ -40,7 +40,7 @@ $context = optional_param('context', 0, PARAM_INT);  // MooTyper id (mdl_mootype
 $gradeid = optional_param('g', 0, PARAM_INT);
 $mtmode = optional_param('mtmode', 0, PARAM_INT);
 
-$mootyper = $DB->get_record('mootyper', array('id' => $mid), '*', MUST_EXIST);
+$mootyper = $DB->get_record('mootyper', ['id' => $mid], '*', MUST_EXIST);
 $course = $mootyper->course;
 $cm = get_coursemodule_from_instance('mootyper', $mootyper->id, $course->id, false, MUST_EXIST);
 
@@ -48,15 +48,11 @@ $context = context_module::instance($cm->id);
 require_login($course, true, $cm);
 
 if (isset($gradeid)) {
-    $dbgrade = $DB->get_record('mootyper_grades', array('id' => $gradeid));
+    $dbgrade = $DB->get_record('mootyper_grades', ['id' => $gradeid]);
     // Changed from attempt_id to attemptid 20180129.
-    $DB->delete_records('mootyper_attempts', array('id' => $dbgrade->attemptid));
-    $DB->delete_records('mootyper_grades', array('id' => $dbgrade->id));
-print_object('At CP 1');
-print_object($gradeid);
-print_object($dbgrade->attemptid);
-print_object($dbgrade->id);
-//die;
+    $DB->delete_records('mootyper_attempts', ['id' => $dbgrade->attemptid]);
+    $DB->delete_records('mootyper_grades', ['id' => $dbgrade->id]);
+
     // 20200808 Delete ratings too.
     require_once($CFG->dirroot.'/rating/lib.php');
     $delopt = new stdClass;
@@ -74,31 +70,31 @@ print_object($dbgrade->id);
 // Return to the View my grades or View all grades page.
 if ($mtmode == 2) {
     // 20230517 Added to recalculate grades when user deletes one of their entries.
-    //mootyper_update_grades($mootyper, $dbgrade->userid);
+    // mootyper_update_grades($mootyper, $dbgrade->userid);
 
     // Trigger owngrades_deleted event for mode 2 only if on the, View own grades, page.
-    $params = array(
+    $params = [
         'objectid' => $mootyper->id,
         'context' => $context,
-        'other' => array(
+        'other' => [
             'exercise' => $dbgrade->exercise,
-            'mode' => $mootyper->isexam
-        )
-    );
+            'mode' => $mootyper->isexam,
+        ],
+    ];
     $event = owngrades_deleted::create($params);
     $event->trigger();
     $webdir = $CFG->wwwroot . '/mod/mootyper/owngrades.php?id='.$cid.'&n='.$mid;
 } else {
     // Trigger grade_deleted event for mode 0, 1, or 2 if on the, View all grades, page.
-    $params = array(
+    $params = [
         'objectid' => $mootyper->id,
         'context' => $context,
-        'other' => array(
+        'other' => [
             'exercise' => $dbgrade->exercise,
-            'mode' => $mootyper->isexam
-        ),
-        'relateduserid' => $dbgrade->userid
-    );
+            'mode' => $mootyper->isexam,
+        ],
+        'relateduserid' => $dbgrade->userid,
+    ];
     $event = grade_deleted::create($params);
     $event->trigger();
     $webdir = $CFG->wwwroot . '/mod/mootyper/gview.php?id='.$cid.'&n='.$mid;

@@ -23,10 +23,10 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later.
  */
 
-use \mod_mootyper\event\exercise_completed;
-use \mod_mootyper\event\exam_completed;
-use \mod_mootyper\event\lesson_completed;
-use \mod_mootyper\local\results;
+use mod_mootyper\event\exercise_completed;
+use mod_mootyper\event\exam_completed;
+use mod_mootyper\event\lesson_completed;
+use mod_mootyper\local\results;
 
 // Changed to this format 20190301.
 require(__DIR__ . '/../../config.php');
@@ -88,7 +88,7 @@ if (stripos($record->mistakedetails, "undefined") !== false) {
 }
 
 // 20200808 Added code for using MooTyper exercise grades as Moodle Ratings.
-$mootyper = $DB->get_record('mootyper', array('id' => $record->mootyper), '*', MUST_EXIST);
+$mootyper = $DB->get_record('mootyper', ['id' => $record->mootyper], '*', MUST_EXIST);
 
 // 20230102 Update $record->grade and $record->mistakedetails as needed to get the correct grade or rating.
 if (($mootyper->requiredgoal == 0) && ($mootyper->requiredwpm > 0)) {
@@ -117,7 +117,7 @@ $record->grade = number_format($record->grade, 2);
 $record->mistakedetails .= get_string('reqgoalwpm', 'mootyper',
                            ['goal' => $mootyper->requiredgoal,
                            'wpm' => $mootyper->requiredwpm,
-                           'currentresult' => $record->grade]);
+                           'currentresult' => $record->grade, ]);
 
 $DB->insert_record('mootyper_grades', $record, false);
 
@@ -149,24 +149,24 @@ if ($mootyper->assessed) {
 
 // 20191129 Added trigger for exercise_completed event.
 // 20191201 Added modification to also trigger exam_completed event.
-$params = array(
+$params = [
     'objectid' => $cmid,
     'context' => $context,
-    'other' => array(
+    'other' => [
         'exercise' => $record->exercise,
         'lessonname' => $lsnname,
-        'activity' => $cm->name
-    )
-);
+        'activity' => $cm->name,
+    ],
+];
 // If exam or just an exercise is completed, log the appropriate event.
 if ($mtmode === 1) {
     $event = exam_completed::create($params);
     // 20230910 If an exam is completed, so is completionexercises and and lesson.
     $mootyper->completionexercise <= 1;
     $mootyper->completionlesson <= 1;
-    //$mootyper->completionprecision <= 1;
-    //$mootyper->completionwpm <= 1;
-    //$mootyper->completionpass <= 1;
+    // ...$mootyper->completionprecision <= 1;.
+    // ...$mootyper->completionwpm <= 1;.
+    // ...$mootyper->completionpass <= 1;.
 
 } else {
     $event = exercise_completed::create($params);
@@ -175,15 +175,15 @@ $event->trigger();
 
 // Added 20191203 If all the exercises in a lesson are complete, trigger lesson_completed event, too.
 if (!($mtmode === 1) && ($exercisename === $count)) {
-    $params = array(
+    $params = [
         'objectid' => $cmid,
         'context' => $context,
-        'other' => array(
+        'other' => [
             'exercise' => $record->exercise,
             'lessonname' => $lsnname,
-            'activity' => $cm->name
-        )
-    );
+            'activity' => $cm->name,
+        ],
+    ];
     // 20230910 If all the exercises are completed, so is completionexercise and and completionlesson.
     $mootyper->completionexercise <= $count;
     $mootyper->completionlesson <= 1;

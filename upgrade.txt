@@ -84,6 +84,14 @@ Moodle Versions
 20230920 MooTyper_1074 - Grade pages need the Completed column moved two places to the right.
     20230920 Completed the moves in owngrades.php and being tested. 20230920 Made the same
     code moves in gview.php. 20230920 Made the needed changes in the csvexport.php file.
+20230927 MooTyper_1079 - No one in a group has any attempts causes multiple errors in gview.php.
+    Added an additional AND clause check to make sure at least one memeber of the group being
+    viewed has made an attempt at an exercise. 
+20230927 MooTyper_1080 - Latest codechecker requires convert from long array(), to short array [].
+    Changed all arrays to short array form, []. There was a "boat load" so see ticket for details.
+20230927 MooTyper_1081 - Latest codechecker says "Import statements must not begin with a leading
+    backslash." Removed all leading backslashes. There were many of them so see ticket for details.
+
 
 === 4.2.3 === 20230420
 20230105 MooTyper_982v - Need to enable new, Grade, bar to the chart. Added a new

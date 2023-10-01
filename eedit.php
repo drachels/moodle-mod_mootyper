@@ -23,8 +23,8 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-use \mod_mootyper\event\exercise_edited;
-use \mod_mootyper\event\invalid_access_attempt;
+use mod_mootyper\event\exercise_edited;
+use mod_mootyper\event\invalid_access_attempt;
 
 // Changed to this newer format 20190301.
 require(__DIR__ . '/../../config.php');
@@ -38,33 +38,33 @@ $lsnnamepo = '';
 $lessonpo = '';
 
 $cm = get_coursemodule_from_id('mootyper', $id, 0, false, MUST_EXIST);
-$course = $DB->get_record('course', array('id' => $cm->course), '*', MUST_EXIST);
+$course = $DB->get_record('course', ['id' => $cm->course], '*', MUST_EXIST);
 
 // TODO: Looks like $exercise and $rcrd are exact duplicates. Maybe need to combine?
-$exercise = $DB->get_record('mootyper_exercises', array('id' => $ex), '*', MUST_EXIST);
-$rcrd = $DB->get_record('mootyper_exercises', array('id' => $ex), '*', MUST_EXIST);
+$exercise = $DB->get_record('mootyper_exercises', ['id' => $ex], '*', MUST_EXIST);
+$rcrd = $DB->get_record('mootyper_exercises', ['id' => $ex], '*', MUST_EXIST);
 
 // Get the id of the lesson name from the current exercise, and then use it to get the lesson name.
-$lesson = $DB->get_record('mootyper_exercises', array('id' => $ex), 'lesson', MUST_EXIST);
-$lessonname = $DB->get_record('mootyper_lessons', array('id' => $lesson->lesson), 'lessonname', MUST_EXIST);
-$actuallesson = $DB->get_record('mootyper_lessons', array('id' => $lesson->lesson));
+$lesson = $DB->get_record('mootyper_exercises', ['id' => $ex], 'lesson', MUST_EXIST);
+$lessonname = $DB->get_record('mootyper_lessons', ['id' => $lesson->lesson], 'lessonname', MUST_EXIST);
+$actuallesson = $DB->get_record('mootyper_lessons', ['id' => $lesson->lesson]);
 
 // This context->id will be used for the path to file storage.
 $context = context_module::instance($cm->id);
-$mootyper = $DB->get_record('mootyper', array('id' => $cm->instance) , '*', MUST_EXIST);
+$mootyper = $DB->get_record('mootyper', ['id' => $cm->instance] , '*', MUST_EXIST);
 
 require_login($course, true, $cm);
 
 // 20200706 Added to prevent student direct URL access attempts.
 if (!(has_capability('mod/mootyper:aftersetup', $context))) {
     // Trigger invalid_access_attempt with redirect to course page.
-    $params = array(
+    $params = [
         'objectid' => $id,
         'context' => $context,
-        'other' => array(
-            'file' => 'eedit.php'
-        )
-    );
+        'other' => [
+            'file' => 'eedit.php',
+        ],
+    ];
     $event = invalid_access_attempt::create($params);
     $event->trigger();
     redirect('../../course/view.php?id='.$course->id, get_string('invalidaccessexp', 'mootyper'));
@@ -82,7 +82,7 @@ if (isset($param1) && get_string('fconfirm', 'mootyper') == $param1 ) {
     // Future development.
     $newdictation = optional_param('dictationdata', '', PARAM_RAW);
 
-    $rcrd = $DB->get_record('mootyper_exercises', array('id' => $ex), '*', MUST_EXIST);
+    $rcrd = $DB->get_record('mootyper_exercises', ['id' => $ex], '*', MUST_EXIST);
 
     $updr = new stdClass();
     $updr->id = $rcrd->id;
@@ -99,14 +99,14 @@ if (isset($param1) && get_string('fconfirm', 'mootyper') == $param1 ) {
     $DB->update_record('mootyper_lessons', $lessonname);
 
     // Trigger module exercise_edited event.
-    $params = array(
+    $params = [
         'objectid' => $course->id,
         'context' => $context,
-        'other' => array(
+        'other' => [
             'lesson' => $updr->lesson,
-            'exercise' => $updr->exercisename
-        )
-    );
+            'exercise' => $updr->exercisename,
+        ],
+    ];
     $event = exercise_edited::create($params);
     $event->trigger();
 
@@ -129,13 +129,13 @@ if (isset($moocfg->defaulteditalign)) {
     $align = $editalign;
 }
 
-$PAGE->set_url('/mod/mootyper/eedit.php', array('id' => $course->id, 'ex' => $ex));
+$PAGE->set_url('/mod/mootyper/eedit.php', ['id' => $course->id, 'ex' => $ex]);
 $PAGE->set_title(get_string('etitle', 'mootyper'));
 $PAGE->set_heading(get_string('eheading', 'mootyper'));
 $PAGE->set_cacheable(false);
 echo $OUTPUT->header();
 $exercisetoedit = $DB->get_record('mootyper_exercises',
-    array('id' => $ex), 'id, texttotype, exercisename, lesson, snumber', MUST_EXIST);
+    ['id' => $ex], 'id, texttotype, exercisename, lesson, snumber', MUST_EXIST);
 
 ?>
 
@@ -215,9 +215,12 @@ echo '<label>'.get_string('exercise_name', 'mootyper')
     .'"</label><br />';
 
 // Get our alignment strings and add a selector for text alignment.
-$aligns = array(get_string('defaulttextalign_left', 'mod_mootyper'),
-              get_string('defaulttextalign_center', 'mod_mootyper'),
-              get_string('defaulttextalign_right', 'mod_mootyper'));
+$aligns = [
+    get_string('defaulttextalign_left', 'mod_mootyper'),
+    get_string('defaulttextalign_center', 'mod_mootyper'),
+    get_string('defaulttextalign_right', 'mod_mootyper'),
+];
+
 echo '<span id="editalign" class="">'.get_string('defaulttextalign', 'mootyper').': ';
 echo '<select onchange="this.form.submit()" name="editalign">';
 
@@ -252,16 +255,20 @@ $editor = editors_get_preferred_editor(FORMAT_HTML);
 $attobuttons = 'files = recordrtc'. PHP_EOL .'list = unorderedlist, orderedlist'. PHP_EOL .'other = html, htmlplus';
 
 $editor->use_editor('exercisetoedit',
-    ['context' => $context,
-    'enable_filemanagement' => true,
-    'autosave' => true,
-    'atto:toolbar' => $attobuttons],
-    ['return_types' => "FILE_EXTERNAL"]
-    );
+    [
+        'context' => $context,
+        'enable_filemanagement' => true,
+        'autosave' => true,
+        'atto:toolbar' => $attobuttons,
+    ],
+    [
+         'return_types' => "FILE_EXTERNAL",
+    ]
+);
 
 // 20220723 Add some details so we know more about this lesson and it's exercises.
-$lessonauthor = $DB->get_record("user", array('id' => $actuallesson->authorid));
-$coursename = $DB->get_record("course", array('id' => $actuallesson->courseid));
+$lessonauthor = $DB->get_record("user", ['id' => $actuallesson->authorid]);
+$coursename = $DB->get_record("course", ['id' => $actuallesson->courseid]);
 // Add a number 0, 1, or 2 to get the correct string to use.
 $visible = get_string('vaccess'.$actuallesson->visible, 'mootyper');
 $editable = get_string('eaccess'.$actuallesson->editable, 'mootyper');

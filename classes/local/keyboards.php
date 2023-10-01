@@ -78,7 +78,7 @@ class keyboards {
      */
     public static function get_keyboard_layouts_db() {
         global $DB;
-        $lss = array();
+        $lss = [];
         if ($layouts = $DB->get_records('mootyper_layouts')) {
             foreach ($layouts as $ex) {
                 $lss[$ex->id] = $ex->name;
@@ -95,7 +95,7 @@ class keyboards {
      */
     public static function get_instance_layout_file($lid) {
         global $CFG, $DB;
-        $dbrec = $DB->get_record('mootyper_layouts', array('id' => $lid));
+        $dbrec = $DB->get_record('mootyper_layouts', ['id' => $lid]);
         return "$CFG->dirroot/mod/mootyper/layouts/$dbrec->name.php";
     }
 
@@ -105,7 +105,7 @@ class keyboards {
      */
     public static function get_instance_layout_js_file($lid) {
         global $CFG, $DB;
-        $dbrec = $DB->get_record('mootyper_layouts', array('id' => $lid));
+        $dbrec = $DB->get_record('mootyper_layouts', ['id' => $lid]);
         return "$CFG->wwwroot/mod/mootyper/layouts/$dbrec->name.js";
     }
 }

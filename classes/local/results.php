@@ -52,7 +52,7 @@ class results {
                         .$USER->id.
                " AND ".$CFG->prefix."mootyper_attempts.inprogress = 1".
                " ORDER BY ".$CFG->prefix."mootyper_checks.checktime DESC LIMIT 1";
-        if ($rec = $DB->get_record_sql($sql, array())) {
+        if ($rec = $DB->get_record_sql($sql, [])) {
             return $rec;
         } else {
             return null;
@@ -90,7 +90,7 @@ class results {
      */
     public static function get_grades_avg($grades) {
         // 20200704 Added code to include average date of completion and average wpm.
-        $avg = array();
+        $avg = [];
         $avg['mistakes'] = 0;
         $avg['timeinseconds'] = 0;
         $avg['hitsperminute'] = 0;
@@ -137,7 +137,7 @@ class results {
      * @return string
      */
     public static function get_grades_mean($grades) {
-        $mean = array();
+        $mean = [];
         $mean['mistakes'] = 0;
         $mean['timeinseconds'] = 0;
         $mean['hitsperminute'] = 0;
@@ -185,15 +185,15 @@ class results {
      * @return string
      */
     public static function get_grades_median($grades) {
-        $median = array();
-        $mistakes = array();
-        $timeinseconds = array();
-        $hitsperminute = array();
-        $fullhits = array();
-        $precisionfield = array();
-        $timetaken = array();
-        $wpm = array();
-        $grade = array();
+        $median = [];
+        $mistakes = [];
+        $timeinseconds = [];
+        $hitsperminute = [];
+        $fullhits = [];
+        $precisionfield = [];
+        $timetaken = [];
+        $wpm = [];
+        $grade = [];
 
         $c = count($grades);
 
@@ -315,15 +315,15 @@ class results {
      * @return string
      */
     public static function get_grades_mode($grades) {
-        $mode = array();
-        $mistakes = array();
-        $timeinseconds = array();
-        $hitsperminute = array();
-        $fullhits = array();
-        $precisionfield = array();
-        $timetaken = array();
-        $wpm = array();
-        $grade = array();
+        $mode = [];
+        $mistakes = [];
+        $timeinseconds = [];
+        $hitsperminute = [];
+        $fullhits = [];
+        $precisionfield = [];
+        $timetaken = [];
+        $wpm = [];
+        $grade = [];
 
         $c = count($grades);
 
@@ -455,15 +455,15 @@ class results {
      * @return string
      */
     public static function get_grades_range($grades) {
-        $range = array();
-        $mistakes = array();
-        $timeinseconds = array();
-        $hitsperminute = array();
-        $fullhits = array();
-        $precisionfield = array();
-        $timetaken = array();
-        $wpm = array();
-        $grade = array();
+        $range = [];
+        $mistakes = [];
+        $timeinseconds = [];
+        $hitsperminute = [];
+        $fullhits = [];
+        $precisionfield = [];
+        $timetaken = [];
+        $wpm = [];
+        $grade = [];
 
         $c = count($grades);
 
@@ -510,15 +510,15 @@ class results {
      * @return string
      */
     public static function get_grades_agcount($grades) {
-        $agcount = array();
-        $mistakes = array();
-        $timeinseconds = array();
-        $hitsperminute = array();
-        $fullhits = array();
-        $precisionfield = array();
-        $timetaken = array();
-        $wpm = array();
-        $grade = array();
+        $agcount = [];
+        $mistakes = [];
+        $timeinseconds = [];
+        $hitsperminute = [];
+        $fullhits = [];
+        $precisionfield = [];
+        $timetaken = [];
+        $wpm = [];
+        $grade = [];
 
         $c = count($grades);
 
@@ -553,15 +553,15 @@ class results {
      * @return string
      */
     public static function get_grades_agmax($grades) {
-        $agmax = array();
-        $mistakes = array();
-        $timeinseconds = array();
-        $hitsperminute = array();
-        $fullhits = array();
-        $precisionfield = array();
-        $timetaken = array();
-        $wpm = array();
-        $grade = array();
+        $agmax = [];
+        $mistakes = [];
+        $timeinseconds = [];
+        $hitsperminute = [];
+        $fullhits = [];
+        $precisionfield = [];
+        $timetaken = [];
+        $wpm = [];
+        $grade = [];
 
         $c = count($grades);
 
@@ -596,15 +596,15 @@ class results {
      * @return string
      */
     public static function get_grades_agmin($grades) {
-        $agmin = array();
-        $mistakes = array();
-        $timeinseconds = array();
-        $hitsperminute = array();
-        $fullhits = array();
-        $precisionfield = array();
-        $timetaken = array();
-        $wpm = array();
-        $grade = array();
+        $agmin = [];
+        $mistakes = [];
+        $timeinseconds = [];
+        $hitsperminute = [];
+        $fullhits = [];
+        $precisionfield = [];
+        $timetaken = [];
+        $wpm = [];
+        $grade = [];
 
         $c = count($grades);
 
@@ -639,15 +639,15 @@ class results {
      * @return string
      */
     public static function get_grades_agsum($grades) {
-        $agsum = array();
-        $mistakes = array();
-        $timeinseconds = array();
-        $hitsperminute = array();
-        $fullhits = array();
-        $precisionfield = array();
-        $timetaken = array();
-        $wpm = array();
-        $grade = array();
+        $agsum = [];
+        $mistakes = [];
+        $timeinseconds = [];
+        $hitsperminute = [];
+        $fullhits = [];
+        $precisionfield = [];
+        $timetaken = [];
+        $wpm = [];
+        $grade = [];
 
         $c = count($grades);
 
@@ -696,7 +696,7 @@ class results {
                         ." AND timetaken = ".$timetaken.
                " ORDER BY timetaken";
 
-        if ($rec = $DB->get_record_sql($sql, array())) {
+        if ($rec = $DB->get_record_sql($sql, [])) {
             return $rec;
         } else {
             return null;

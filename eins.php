@@ -25,9 +25,9 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later.
  **/
 
-use \mod_mootyper\event\exercise_added;
-use \mod_mootyper\event\invalid_access_attempt;
-use \mod_mootyper\local\lessons;
+use mod_mootyper\event\exercise_added;
+use mod_mootyper\event\invalid_access_attempt;
+use mod_mootyper\local\lessons;
 
 // Changed to this newer format 03/01/2019.
 require(__DIR__ . '/../../config.php');
@@ -38,7 +38,7 @@ global $USER, $DB;
 // 20200224 Switched $id to Course_module ID vice course ID.
 $id = optional_param('id', 0, PARAM_INT); // Course ID.
 $cm = get_coursemodule_from_id('mootyper', $id, 0, false, MUST_EXIST);
-$course = $DB->get_record('course', array('id' => $cm->course), '*', MUST_EXIST);
+$course = $DB->get_record('course', ['id' => $cm->course], '*', MUST_EXIST);
 // If lessonid is available, put in lsnnamepos, otherwise leave it blank.
 $lsnnamepo = optional_param('lesson', '', PARAM_TEXT);
 // If lessonid is available, put it in lsnnamepos, otherwise enter a -1.
@@ -49,18 +49,18 @@ require_login($course, true);
 
 $context = context_module::instance($cm->id);
 
-$mootyper = $DB->get_record('mootyper', array('id' => $cm->instance) , '*', MUST_EXIST);
+$mootyper = $DB->get_record('mootyper', ['id' => $cm->instance], '*', MUST_EXIST);
 
 // 20200706 Added to prevent student direct URL access attempts.
 if (!(has_capability('mod/mootyper:aftersetup', $context))) {
     // Trigger invalid_access_attempt with redirect to course page.
-    $params = array(
+    $params = [
         'objectid' => $id,
         'context' => $context,
-        'other' => array(
-            'file' => 'eins.php'
-        )
-    );
+        'other' => [
+            'file' => 'eins.php',
+        ],
+    ];
     $event = invalid_access_attempt::create($params);
     $event->trigger();
     redirect('../../course/view.php?id='.$course->id, get_string('invalidaccessexp', 'mootyper'));
@@ -114,14 +114,14 @@ if (isset($param1) && get_string('fconfirm', 'mootyper') == $param1 ) {
     echo '<script type="text/javascript">window.location="'.$webdir.'";</script>';
 
     // Trigger module exercise_added event.
-    $params = array(
+    $params = [
         'objectid' => $course->id,
         'context' => $context,
-        'other' => array(
+        'other' => [
             'lesson' => $lesson,
-            'exercisename' => $erecord->exercisename
-        )
-    );
+            'exercisename' => $erecord->exercisename,
+        ],
+    ];
     $event = exercise_added::create($params);
     $event->trigger();
 
@@ -141,7 +141,7 @@ if (isset($moocfg->defaulteditalign)) {
 }
 
 // Print the page header.
-$PAGE->set_url('/mod/mootyper/eins.php', array('id' => $course->id));
+$PAGE->set_url('/mod/mootyper/eins.php', ['id' => $course->id]);
 $PAGE->set_title(get_string('etitle', 'mootyper'));
 $PAGE->set_heading(get_string('eheading', 'mootyper'));
 $PAGE->set_pagelayout('standard');
@@ -157,7 +157,7 @@ if (has_capability('mod/mootyper:editall', context_course::instance($course->id)
     // If manager or admin get all lessons.
     $lessons = $lessonsg;
 } else {
-    $lessons = array();
+    $lessons = [];
     // If a teacher, only get ones they can edit.
     foreach ($lessonsg as $lsng) {
         if (lessons::is_editable_by_me($USER->id, $id, $lsng['id'])) {
@@ -238,9 +238,9 @@ if ($lessonpo == -1) {
 }
 
 // Get our alignment strings and add a selector for text alignment.
-$aligns = array(get_string('defaulttextalign_left', 'mod_mootyper'),
+$aligns = [get_string('defaulttextalign_left', 'mod_mootyper'),
             get_string('defaulttextalign_center', 'mod_mootyper'),
-            get_string('defaulttextalign_right', 'mod_mootyper'));
+            get_string('defaulttextalign_right', 'mod_mootyper'), ];
 echo '<br><br><span id="editalign" class="">'.get_string('defaulttextalign', 'mootyper').': ';
 echo '<select onchange="this.form.submit()" name="editalign">';
 

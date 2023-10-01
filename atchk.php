@@ -33,7 +33,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-use \mod_mootyper\local\results;
+use mod_mootyper\local\results;
 
 require(__DIR__ . '/../../config.php');
 
@@ -66,17 +66,17 @@ if ($st == 1) {
     $DB->insert_record('mootyper_checks', $record, false);
 } else if ($st == 3) {
     $attid = optional_param('attemptid', 0, PARAM_INT);
-    $attemptold = $DB->get_record('mootyper_attempts', array('id' => $attid), '*', MUST_EXIST);
+    $attemptold = $DB->get_record('mootyper_attempts', ['id' => $attid], '*', MUST_EXIST);
     $attemptnew = new stdClass();
     $attemptnew->id = $attemptold->id;
     $attemptnew->mootyperid = $attemptold->mootyperid;
     $attemptnew->userid = $attemptold->userid;
     $attemptnew->timetaken = $attemptold->timetaken;
     $attemptnew->inprogress = 0;
-    $dbchcks = $DB->get_records('mootyper_checks', array('attemptid' => $attemptold->id));
-    $checks = array();
+    $dbchcks = $DB->get_records('mootyper_checks', ['attemptid' => $attemptold->id]);
+    $checks = [];
     foreach ($dbchcks as $c) {
-        $checks[] = array('id' => $c->id, 'mistakes' => $c->mistakes, 'hits' => $c->hits, 'checktime' => $c->checktime);
+        $checks[] = ['id' => $c->id, 'mistakes' => $c->mistakes, 'hits' => $c->hits, 'checktime' => $c->checktime];
     }
     // Check for suspicious results for the current exercise.
     if (results::suspicion($checks, $attemptold->timetaken)) {
@@ -87,5 +87,5 @@ if ($st == 1) {
     // Exercise completed so update the attemp record.
     $DB->update_record('mootyper_attempts', $attemptnew);
     // Exercise completed so remove all the checks for this attempt.
-    $DB->delete_records('mootyper_checks', array('attemptid' => $attid));
+    $DB->delete_records('mootyper_checks', ['attemptid' => $attid]);
 }

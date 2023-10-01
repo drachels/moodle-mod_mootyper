@@ -26,10 +26,10 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later.
  */
 
-use \mod_mootyper\event\course_module_viewed;
-use \mod_mootyper\local\keyboards;
-use \mod_mootyper\local\lessons;
-use \mod_mootyper\local\results;
+use mod_mootyper\event\course_module_viewed;
+use mod_mootyper\local\keyboards;
+use mod_mootyper\local\lessons;
+use mod_mootyper\local\results;
 
 // Changed to this newer format 03/01/2019.
 require(__DIR__ . '/../../config.php');
@@ -52,11 +52,11 @@ $backtocourse = optional_param('backtocourse', false, PARAM_RAW);
 */
 if ($id) {
     $cm = get_coursemodule_from_id('mootyper', $id, 0, false, MUST_EXIST);
-    $course = $DB->get_record('course', array('id' => $cm->course) , '*', MUST_EXIST);
-    $mootyper = $DB->get_record('mootyper', array('id' => $cm->instance) , '*', MUST_EXIST);
+    $course = $DB->get_record('course', ['id' => $cm->course], '*', MUST_EXIST);
+    $mootyper = $DB->get_record('mootyper', ['id' => $cm->instance], '*', MUST_EXIST);
 } else if ($n) {
-    $mootyper = $DB->get_record('mootyper', array('id' => $n), '*', MUST_EXIST);
-    $course = $DB->get_record('course', array('id' => $mootyper->course), '*', MUST_EXIST);
+    $mootyper = $DB->get_record('mootyper', ['id' => $n], '*', MUST_EXIST);
+    $course = $DB->get_record('course', ['id' => $mootyper->course], '*', MUST_EXIST);
     $cm = get_coursemodule_from_instance('mootyper', $mootyper->id, $course->id, false, MUST_EXIST);
 } else {
     throw new moodle_exception(get_string('mootypererror', 'mootyper'));
@@ -67,7 +67,7 @@ $mtmode = $mootyper->isexam;
 require_login($course, true, $cm);
 
 if ($backtocourse) {
-    redirect(new moodle_url('/course/view.php', array('id' => $course->id)));
+    redirect(new moodle_url('/course/view.php', ['id' => $course->id]));
 }
 
 // Following two lines are for View, Automatic Completion marking. 20180630.
@@ -75,7 +75,7 @@ $completion = new completion_info($course);
 $completion->set_module_viewed($cm);
 
 // Moved set_title and set_heading to renderer.php.
-$PAGE->set_url('/mod/mootyper/view.php', array('id' => $cm->id));
+$PAGE->set_url('/mod/mootyper/view.php', ['id' => $cm->id]);
 // 20210722 Added this to replace former src URL link to googleapis.
 $PAGE->requires->jquery();
 
@@ -97,9 +97,11 @@ $color6 = $mootyper->texterrorcolor;
 $mistakessetting = $mootyper->countmistakes;
 
 $gettextalign = $mootyper->textalign;
-$aligns = array(get_string('defaulttextalign_left', 'mod_mootyper'),
+$aligns = [
+              get_string('defaulttextalign_left', 'mod_mootyper'),
               get_string('defaulttextalign_center', 'mod_mootyper'),
-              get_string('defaulttextalign_right', 'mod_mootyper'));
+              get_string('defaulttextalign_right', 'mod_mootyper'),
+          ];
 foreach ($aligns as $akey => $aval) {
     if ($akey == $gettextalign) {
         $textalign = $aval;
@@ -165,11 +167,6 @@ echo '<style>
     }
     </style>';
 
-// 20230722 If I leave this uncommented, I wind up with two copies of the activity description.
-//if ($mootyper->intro) {
-//    echo $OUTPUT->box(format_module_intro('mootyper', $mootyper, $cm->id) , 'generalbox mod_introbox', 'mootyperintro');
-//}
-
 if ($mootyper->lesson != null) {
     // Availability restrictions applied to students only.
     if ((!(results::is_available($mootyper)))&& (!(has_capability('mod/mootyper:viewgrades', $context)))) {
@@ -211,7 +208,7 @@ if ($mootyper->lesson != null) {
     $reqiredwpm = $mootyper->requiredwpm;
     $reqiredtimelimit = $mootyper->timelimit;
     // 5/20/2019 Get the lesson name.
-    $lsnname = $DB->get_record('mootyper_lessons', array('id' => $mootyper->lesson), '*', MUST_EXIST);
+    $lsnname = $DB->get_record('mootyper_lessons', ['id' => $mootyper->lesson], '*', MUST_EXIST);
     if ($mtmode === '1') {
         $exerciseid = $mootyper->exercise;
         $exercise = get_exercise_record($exerciseid);
@@ -386,11 +383,11 @@ if ($mootyper->lesson != null) {
                 .'" class="btn btn-primary btn-sm"  style="border-radius: 8px">'
                 .get_string('fsettings', 'mootyper').'</a>&nbsp;';
         }
-        // This is the View my grades button.
+        // This is the View my grades button. 20230924 Added name to the button.
         if (has_capability('mod/mootyper:viewmygrades', context_module::instance($cm->id))) {
             $jlnk7 = $CFG->wwwroot."/mod/mootyper/owngrades.php?id=".$id."&n=". $mootyper->id;
             echo '<a href="'.$jlnk7
-                .'" class="btn btn-primary btn-sm"  style="border-radius: 8px">'
+                .'" class="btn btn-primary btn-sm"  style="border-radius: 8px" name="viewmygrades">'
                 .get_string('viewmygrades', 'mootyper').'</a>';
         }
         // Next button is Continue. Hidden until exercise is complete.
@@ -545,9 +542,10 @@ if ($mootyper->lesson != null) {
 }
 
 // Trigger module viewed event.
-$params = array('objectid' => $mootyper->id,
-    'context' => $context
-);
+$params = [
+    'objectid' => $mootyper->id,
+    'context' => $context,
+];
 $event = course_module_viewed::create($params);
 $event->add_record_snapshot('course', $course);
 $event->add_record_snapshot('mootyper', $mootyper);

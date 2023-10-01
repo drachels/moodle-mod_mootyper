@@ -31,9 +31,9 @@ defined('MOODLE_INTERNAL') || die();
 
 global $DB;
 
-$logs = array(
-    array('module' => 'mootyper', 'action' => 'add', 'mtable' => 'mootyper', 'field' => 'name'),
-    array('module' => 'mootyper', 'action' => 'update', 'mtable' => 'mootyper', 'field' => 'name'),
-    array('module' => 'mootyper', 'action' => 'view', 'mtable' => 'mootyper', 'field' => 'name'),
-    array('module' => 'mootyper', 'action' => 'view all', 'mtable' => 'mootyper', 'field' => 'name')
-);
+$logs = [
+    ['module' => 'mootyper', 'action' => 'add', 'mtable' => 'mootyper', 'field' => 'name'],
+    ['module' => 'mootyper', 'action' => 'update', 'mtable' => 'mootyper', 'field' => 'name'],
+    ['module' => 'mootyper', 'action' => 'view', 'mtable' => 'mootyper', 'field' => 'name'],
+    ['module' => 'mootyper', 'action' => 'view all', 'mtable' => 'mootyper', 'field' => 'name'],
+];

@@ -50,7 +50,7 @@ class restore_mootyper_activity_structure_step extends restore_activity_structur
      * @return restore_path_element $structure
      */
     protected function define_structure() {
-        $paths = array();
+        $paths = [];
         // To know if we are including userinfo.
         $userinfo = $this->get_setting_value('userinfo');
         // Define each element separated.
@@ -87,7 +87,7 @@ class restore_mootyper_activity_structure_step extends restore_activity_structur
         $newitemid = $DB->insert_record('mootyper', $data);
         $this->currentattemptdata = $data;
         $this->apply_activity_instance($newitemid);
-        $this->newmootyperdata = $DB->get_record('mootyper', array('id' => $newitemid));
+        $this->newmootyperdata = $DB->get_record('mootyper', ['id' => $newitemid]);
     }
 
     /**
@@ -130,7 +130,7 @@ class restore_mootyper_activity_structure_step extends restore_activity_structur
         $mootyper = $this->currentattemptdata;
         $newmootyper = $this->newmootyperdata;
         $oldid = $data->id;
-        $layout = $DB->get_record('mootyper_layouts', array('name' => $data->name));
+        $layout = $DB->get_record('mootyper_layouts', ['name' => $data->name]);
         if (!$layout) {
             $data->mootyper = $this->get_new_parentid('mootyper');
             // Do this only if the layout does not already exist!
@@ -151,7 +151,7 @@ class restore_mootyper_activity_structure_step extends restore_activity_structur
         $data = (object)$data;
         $newmootyper = $this->newmootyperdata;
         $newexercisedata = $this->newexercisedata;
-        $lesson = $DB->get_record('mootyper_lessons', array('lessonname' => $data->lessonname));
+        $lesson = $DB->get_record('mootyper_lessons', ['lessonname' => $data->lessonname]);
         if (!$lesson) {
             $oldid = $data->id;
             $data->mootyper = $this->get_new_parentid('mootyper');
@@ -182,7 +182,7 @@ class restore_mootyper_activity_structure_step extends restore_activity_structur
 
         // If there are any exercises for this lesson, go ahead and process them.
         // Should only find a maximum of one exercise.
-        if ($exercises = $DB->get_records('mootyper_exercises', array('lesson' => $newmootyper->lesson, 'snumber' => $data->snumber))) {
+        if ($exercises = $DB->get_records('mootyper_exercises', ['lesson' => $newmootyper->lesson, 'snumber' => $data->snumber])) {
             // Make sure we are using the right exercise.
             foreach ($exercises as $exercise) {
                 if (($exercise->texttotype = $data->texttotype)
@@ -199,8 +199,8 @@ class restore_mootyper_activity_structure_step extends restore_activity_structur
                 }
             }
 
-        // This exercise is not in the database so add it.
         } else {
+            // This exercise is not in the database so add it.
             // Process data to get the ID.
             $data->mootyper = $this->get_new_parentid('mootyper'); // Fixed. Was using lesson which was wrong.
 
@@ -230,7 +230,7 @@ class restore_mootyper_activity_structure_step extends restore_activity_structur
         $data->timetaken = $this->apply_date_offset($data->timetaken);
         $newitemid = $DB->insert_record('mootyper_grades', $data);
         $this->set_mapping('mootyper_grade', $oldid, $newitemid);
-        $newgrade = $DB->get_record('mootyper_grades', array('id' => $newitemid));
+        $newgrade = $DB->get_record('mootyper_grades', ['id' => $newitemid]);
     }
 
 

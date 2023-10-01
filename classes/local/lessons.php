@@ -24,7 +24,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 namespace mod_mootyper\local;
-use \mod_mootyper\local\lessons;
+use mod_mootyper\local\lessons;
 defined('MOODLE_INTERNAL') || die(); // @codingStandardsIgnoreLine
 /**
  * Utility class for counting keyboards and so on.
@@ -46,14 +46,14 @@ class lessons {
      */
     public static function get_typerlessons() {
         global $CFG, $DB;
-        $params = array();
-        $lstoreturn = array();
+        $params = [];
+        $lstoreturn = [];
         $sql = "SELECT id, lessonname
                FROM ".$CFG->prefix."mootyper_lessons
                ORDER BY lessonname";
         if ($lessons = $DB->get_records_sql($sql, $params)) {
             foreach ($lessons as $ex) {
-                $lss = array();
+                $lss = [];
                 $lss['id'] = $ex->id;
                 $lss['lessonname'] = $ex->lessonname;
                 $lstoreturn[] = $lss;
@@ -73,8 +73,8 @@ class lessons {
      */
     public static function get_mootyperlessons($u, $c) {
         global $CFG, $DB;
-        $params = array();
-        $lstoreturn = array(); // DETERMINE IF USER IS INSIDE A COURSE???
+        $params = [];
+        $lstoreturn = []; // DETERMINE IF USER IS INSIDE A COURSE???
         // 20191124 Changed SQL for Postgre compatibility based on issue #34.
         $sql = "SELECT id, lessonname
             FROM ".$CFG->prefix."mootyper_lessons
@@ -86,7 +86,7 @@ class lessons {
 
         if ($lessons = $DB->get_records_sql($sql, $params)) {
             foreach ($lessons as $ex) {
-                $lss = array();
+                $lss = [];
                 $lss['id'] = $ex->id;
                 $lss['lessonname'] = $ex->lessonname;
                 $lstoreturn[] = $lss;
@@ -124,7 +124,7 @@ class lessons {
      */
     public static function is_editable_by_me($usr, $id, $lsn) {
         global $DB;
-        $lesson = $DB->get_record('mootyper_lessons', array('id' => $lsn));
+        $lesson = $DB->get_record('mootyper_lessons', ['id' => $lsn]);
         if (is_null($lesson->courseid)) {
             $crs = 0;
         } else {
@@ -149,8 +149,8 @@ class lessons {
      */
     public static function get_typerexercises() {
         global $USER, $CFG, $DB;
-        $params = array();
-        $exestoreturn = array();
+        $params = [];
+        $exestoreturn = [];
         $sql = "SELECT id, exercisename
                 FROM ".$CFG->prefix."mootyper_exercises";
         if ($exercises = $DB->get_records_sql($sql, $params)) {
@@ -169,23 +169,18 @@ class lessons {
      */
     public static function get_exercises_by_lesson($less) {
         global $USER, $CFG, $DB;
-        $params = array();
-        //$toreturn = array();
-        $lessonpo = array();
+        $params = [];
+        $lessonpo = [];
         $sql = "SELECT * FROM ".$CFG->prefix."mootyper_exercises WHERE lesson=".$less;
         if ($exercises = $DB->get_records_sql($sql, $params)) {
             foreach ($exercises as $ex) {
-                $exestoreturn = array();
+                $exestoreturn = [];
                 $exestoreturn['id'] = $ex->id;
                 $exestoreturn['exercisename'] = $ex->exercisename;
                 $exestoreturn['snumber'] = $ex->snumber;
-                //$toreturn[] = $exestoreturn;
                 $lessonpo[] = $exestoreturn;
             }
         }
-        // print_object($lessonpo);
-
-        //return $toreturn;
         return $lessonpo;
     }
 
@@ -217,12 +212,12 @@ class lessons {
      */
     public static function get_typerexercisesfull($lsn = 0) {
         global $USER, $CFG, $DB;
-        $params = array();
-        $toreturn = array();
+        $params = [];
+        $toreturn = [];
         $sql = "SELECT * FROM ".$CFG->prefix."mootyper_exercises WHERE lesson=".$lsn." OR 0=".$lsn;
         if ($exercises = $DB->get_records_sql($sql, $params)) {
             foreach ($exercises as $ex) {
-                $exestoreturn = array();
+                $exestoreturn = [];
                 $exestoreturn['id'] = $ex->id;
                 $exestoreturn['exercisename'] = $ex->exercisename;
                 $exestoreturn['texttotype'] = $ex->texttotype;
@@ -247,7 +242,7 @@ class lessons {
     public static function is_user_enrolled($usr, $crs) {
         global $DB, $CFG;
 
-        $params = array();
+        $params = [];
         $params[] = $usr;
         $sql2 = "SELECT * FROM ".$CFG->prefix."user_enrolments
                  WHERE userid = ?";

@@ -81,6 +81,8 @@ Moodle Versions
 
 20230708 MooTyper_1059 - MooTyper - Backup does not include teacher created lessons and exercises.
     The code to fix this was developed and included as part of MooTyper_1054.
+20230729 MooTyper_1063 - The mdl_mootyper_grades, mistakedetails, field size of 255 is too small.
+    Upgrade DB field size to 1333. Could not go bigger with varchar.
 20230920 MooTyper_1074 - Grade pages need the Completed column moved two places to the right.
     20230920 Completed the moves in owngrades.php and being tested. 20230920 Made the same
     code moves in gview.php. 20230920 Made the needed changes in the csvexport.php file.

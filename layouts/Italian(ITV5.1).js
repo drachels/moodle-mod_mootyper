@@ -1,8 +1,8 @@
 /**
- * @fileOverview Italian(V4.1) keyboard driver.
+ * @fileOverview Italian(ITV5.1) keyboard driver.
  * @author <a href="mailto:drachels@drachels.com">AL Rachels</a>
- * @version 4.1
- * @since 06/27/2018
+ * @version 5.1
+ * @since 20231004
  */
 
 /**
@@ -40,13 +40,17 @@ function keyboardElement(ltr) {
     this.chr = ltr.toLowerCase();
     this.alt = false;
     if (isLetter(ltr)) {
-        this.shift = ltr.toUpperCase() === ltr;
+        if (ltr.match(/[QWERTASDFGZXCVB]/)) {
+            this.shiftright = true;
+        } else if (ltr.match(/[YUIOPHJKLNM]/)) {
+            this.shiftleft = true;
+        }
     } else {
         // @codingStandardsIgnoreLine
-        if (ltr.match(/[|!"£$%&/()=?^é*ç°§>;:_]/i)) {
-            this.shift = true;
-        } else {
-            this.shift = false;
+        if (ltr.match(/[|!"£$%]/i)) {
+            this.shiftright = true;
+        } else if (ltr.match(/[&/()=?^é*ç°§;:_]/i)) {
+            this.shiftleft = true;
         }
     }
     // Set flags for characters needing Alt Gr key.
@@ -55,7 +59,7 @@ function keyboardElement(ltr) {
         this.shift = false;
         this.alt = true;
     } else if (ltr.match(/[{}]/)) {
-        this.shift = true;
+        this.shiftleft = true;
         this.alt = true;
     }
 
@@ -70,9 +74,11 @@ function keyboardElement(ltr) {
         if (this.chr === '\n' || this.chr === '\r\n' || this.chr === '\n\r' || this.chr === '\r') {
             document.getElementById('jkeyenter').className = "next4";
         }
-        if (this.shift) {
-            document.getElementById('jkeyshiftd').className = "next4";
+        if (this.shiftleft) {
             document.getElementById('jkeyshiftl').className = "next4";
+        }
+        if (this.shiftright) {
+            document.getElementById('jkeyshiftr').className = "next4";
         }
         if (this.alt) {
             document.getElementById('jkeyaltgr').className = "nextSpace";
@@ -92,9 +98,11 @@ function keyboardElement(ltr) {
         if (this.chr === '\n' || this.chr === '\r\n' || this.chr === '\n\r' || this.chr === '\r') {
             document.getElementById('jkeyenter').classname = "normal";
         }
-        if (this.shift) {
-            document.getElementById('jkeyshiftd').className = "normal";
+        if (this.shiftleft) {
             document.getElementById('jkeyshiftl').className = "normal";
+        }
+        if (this.shiftright) {
+            document.getElementById('jkeyshiftr').className = "normal";
         }
         if (this.alt) {
             document.getElementById('jkeyaltgr').className = "normal";
@@ -112,15 +120,19 @@ function thenFinger(tCrka) {
         return 5; // Highlight the spacebar.
     // @codingStandardsIgnoreLine
     } else if (tCrka.match(/[\\|<>1!qaz0=pòç@\-_'?èé[{à°#ì^+*\]}ù§]/i)) {
-        return 4; // Highlight the correct key above in red.
+        //return 4; // Highlight the correct key above in red.
+        return 3; // Highlight the correct key above in red.
     // @codingStandardsIgnoreLine
     } else if (tCrka.match(/[2"wsx9)ol.:]/i)) {
-        return 3; // Highlight the correct key above in green.
+        //return 3; // Highlight the correct key above in green.
+        return 2; // Highlight the correct key above in green.
     // @codingStandardsIgnoreLine
     } else if (tCrka.match(/[3£edc8(ik,;]/i)) {
-        return 2; // Highlight the correct key above in yellow.
+        //return 2; // Highlight the correct key above in yellow.
+        return 4; // Highlight the correct key above in yellow.
     // @codingStandardsIgnoreLine
     } else if (tCrka.match(/[4$rfv5%€tgb6&yhn7/ujm]/i)) {
+        //return 1; // Highlight the correct key above in blue.
         return 1; // Highlight the correct key above in blue.
     } else {
         return 6; // Do not change any highlight.

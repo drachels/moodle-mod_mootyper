@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * This file defines the Italian(V4.1)keyboard layout.
+ * This file defines the Italian(ITV5.1)keyboard layout.
  *
  * @package    mod_mootyper
  * @copyright  2012 Jaka Luthar (jaka.luthar@gmail.com)
@@ -30,7 +30,7 @@
 echo (isset($displaynone) && ($displaynone == true)) ? 'display:none;' : '';
 ?>
 ">
-<div id="keyboard" class="keyboardback">Italian(V4) Keyboard Layout<br>
+<div id="keyboard" class="keyboardback">Italian(ITV5.1) Keyboard Layout<br>
     <section>
         <div class="mtrow" style='float: left; margin-left:5px; font-size: 15px !important; line-height: 15px'>
             <div id="jkeybackslash" class="normal" style='text-align:left;'>|<br>\</div>
@@ -70,16 +70,16 @@ echo (isset($displaynone) && ($displaynone == true)) ? 'display:none;' : '';
             <span id="jkeyenter" class="normal" style="width: 50px; margin-right:5px; float: right; height: 85px;">Enter</span>
             <div class="mtrow" style='float: left; margin-left:5px; font-size: 15px !important; line-height: 15px'>
                 <div id="jkeycaps" class="normal" style="width: 80px;  font-size: 12px !important;">Caps Lock</div>
-                <div id="jkeya" class="finger4" style='text-align:left;'>A<br>&nbsp;&nbsp;&nbsp;</div>
-                <div id="jkeys" class="finger3" style='text-align:left;'>S<br>&nbsp;&nbsp;&nbsp;</div>
-                <div id="jkeyd" class="finger2" style='text-align:left;'>D<br>&nbsp;&nbsp;&nbsp;</div>
+                <div id="jkeya" class="finger3" style='text-align:left;'>A<br>&nbsp;&nbsp;&nbsp;</div>
+                <div id="jkeys" class="finger2" style='text-align:left;'>S<br>&nbsp;&nbsp;&nbsp;</div>
+                <div id="jkeyd" class="finger4" style='text-align:left;'>D<br>&nbsp;&nbsp;&nbsp;</div>
                 <div id="jkeyf" class="finger1" style='text-align:left;'>F<br>&nbsp;&nbsp;&nbsp;</div>
                 <div id="jkeyg" class="normal" style='text-align:left;'>G<br>&nbsp;&nbsp;&nbsp;</div>
                 <div id="jkeyh" class="normal" style='text-align:left;'>H<br>&nbsp;&nbsp;&nbsp;</div>
                 <div id="jkeyj" class="finger1" style='text-align:left;'>J<br>&nbsp;&nbsp;&nbsp;</div>
-                <div id="jkeyk" class="finger2" style='text-align:left;'>K<br>&nbsp;&nbsp;&nbsp;</div>
-                <div id="jkeyl" class="finger3" style='text-align:left;'>L<br>&nbsp;&nbsp;&nbsp;</div>
-                <div id="jkeyò" class="finger4" style='text-align:left;'>ç<br>ò&nbsp;
+                <div id="jkeyk" class="finger4" style='text-align:left;'>K<br>&nbsp;&nbsp;&nbsp;</div>
+                <div id="jkeyl" class="finger2" style='text-align:left;'>L<br>&nbsp;&nbsp;&nbsp;</div>
+                <div id="jkeyò" class="finger3" style='text-align:left;'>ç<br>ò&nbsp;
                     <span style="color:blue">@</span></div>
                 <div id="jkeyà" class="normal" style='text-align:left;'>°<br>à&nbsp;&nbsp;&nbsp;
                     <span style="color:blue">#</span></div>
@@ -99,7 +99,7 @@ echo (isset($displaynone) && ($displaynone == true)) ? 'display:none;' : '';
             <div id="jkeycomma" class="normal" style='text-align:left;'>;<br>,</div>
             <div id="jkeyperiod" class="normal" style='text-align:left;'>:<br>.</div>
             <div id="jkeyminus" class="normal" style='text-align:left;'>_<br>-</div>
-            <div id="jkeyshiftd" class="normal" style="width: 115px;">Shift</div>
+            <div id="jkeyshiftr" class="normal" style="width: 115px;">Shift</div>
         </div>
         <div class="mtrow" style='float: left; margin-left:5px;'>
             <div id="jkeyctrll" class="normal" style="width: 60px;">Ctrl</div>

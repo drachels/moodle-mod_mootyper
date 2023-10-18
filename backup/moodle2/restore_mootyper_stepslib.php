@@ -41,7 +41,17 @@ class restore_mootyper_activity_structure_step extends restore_activity_structur
      * process_mootyper sets this, and then inform_new_usage_id saves it.
      */
     protected $currentattemptdata;
+    /**
+     * @var stdClass data Can only be inserted after the MooTyper activity
+     * data is stored and we know the exercise, lesson, and layout id. Therefore,
+     * process_mootyper sets this, and then inform_new_usage_id saves it.
+     */
     protected $newmootyperdata;
+    /**
+     * @var stdClass data Can only be inserted after the MooTyper activity
+     * data is stored and we know the exercise, lesson, and layout id. Therefore,
+     * process_mootyper sets this, and then inform_new_usage_id saves it.
+     */
     protected $newexercisedata;
 
     /**

@@ -387,7 +387,7 @@ function xmldb_mootyper_upgrade($oldversion) {
         upgrade_mod_savepoint(true, 2022081000, 'mootyper');
     }
     // New completion fields added for v4.2.4.
-    if ($oldversion < 2023073000) {
+    if ($oldversion < 2023100500) {
 
         // Define field completionexercise to be added to mootyper.
         $table = new xmldb_table('mootyper');
@@ -429,15 +429,18 @@ function xmldb_mootyper_upgrade($oldversion) {
             $dbman->add_field($table, $field);
         }
 
-        // Changing type of field mistakedetails on table mootyper_grades to char.
+        // Changing type of field mistakedetails on table mootyper_grades to text.
         $table = new xmldb_table('mootyper_grades');
-        $field = new xmldb_field('mistakedetails', XMLDB_TYPE_CHAR, '1333', null, XMLDB_NOTNULL, null, null, 'wpm');
+        $field = new xmldb_field('mistakedetails', XMLDB_TYPE_TEXT, null, null, null, null, null, 'wpm');
+
+        // Launch change of type for field mistakedetails.
+        $dbman->change_field_type($table, $field);
 
         // Launch change of type for field mistakedetails.
         $dbman->change_field_type($table, $field);
 
         // Mootyper savepoint reached.
-        upgrade_mod_savepoint(true, 2023073000, 'mootyper');
+        upgrade_mod_savepoint(true, 2023100500, 'mootyper');
     }
     return true;
 }

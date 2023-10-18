@@ -52,6 +52,7 @@ sending an email, leave a comment at
 === Deferred to next version. ===
 20201006 MooTyper_629 - Request for Home Row Keys color settings. Have applied a
     one-off method to new French(BelgianFRBV5) layout. 
+20231014 MooTyper_1100 - Need to revisit cron_task.php as it is not really needed.
 
 
 
@@ -76,13 +77,16 @@ Moodle Versions
     file. As part of my work on MooTyper_1054, I have added the missing code and tested it.
     It seems to be working correctly now.
 20230707 MooTyper_1057 - MooTyper - Deleting a MooTyper activity does not delete related attempts.
-
-20230707 MooTyper_1058 - MooTyper - Reset MooTyper Instance does not delete checks.
-
+    Realized that the attemptid in mootyper_grades is NOT being updated during the restore! Once
+    this was changed in restore_mootyper_stepslib.php file, both deleting an individual grade, as
+    well as removing a MooTyper activity, removes attempts from the mootyper_attempts table.
+20230707 MooTyper_1058 - MooTyper - Reset MooTyper Instance does not delete checks. Added code
+    to delete checks based on attemptid when executing function reset_mootyper_instance($mootyperid).
 20230708 MooTyper_1059 - MooTyper - Backup does not include teacher created lessons and exercises.
     The code to fix this was developed and included as part of MooTyper_1054.
 20230729 MooTyper_1063 - The mdl_mootyper_grades, mistakedetails, field size of 255 is too small.
-    Upgrade DB field size to 1333. Could not go bigger with varchar.
+    Upgrade DB field size to 1333. Could not go bigger with varchar. 20231005 Had to make another
+    change from varchar 1333 to text.
 20230920 MooTyper_1074 - Grade pages need the Completed column moved two places to the right.
     20230920 Completed the moves in owngrades.php and being tested. 20230920 Made the same
     code moves in gview.php. 20230920 Made the needed changes in the csvexport.php file.

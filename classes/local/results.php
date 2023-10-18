@@ -713,6 +713,6 @@ class results {
     public static function is_available($mootyper) {
         $timeopen = $mootyper->timeopen;
         $timeclose = $mootyper->timeclose;
-        return (($timeopen == 0 || time() >= $timeopen) && ($timeclose == 0 || time    () < $timeclose));
+        return (($timeopen == 0 || time() >= $timeopen) && ($timeclose == 0 || time() < $timeclose));
     }
 }

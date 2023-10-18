@@ -82,12 +82,16 @@ class mod_mootyper_mod_form extends moodleform_mod {
         // MooTyper activity setup, Availability settings.
         $mform->addElement('header', 'availabilityhdr', get_string('availability'));
 
-        $mform->addElement('date_time_selector', 'timeopen',
-                           get_string('mootyperopentime', 'mootyper'),
-                           ['optional' => true, 'step' => 1]);
-        $mform->addElement('date_time_selector', 'timeclose',
-                           get_string('mootyperclosetime', 'mootyper'),
-                           ['optional' => true, 'step' => 1]);
+        $mform->addElement('date_time_selector',
+            'timeopen',
+            get_string('mootyperopentime', 'mootyper'),
+            ['optional' => true, 'step' => 1]
+            );
+        $mform->addElement('date_time_selector',
+            'timeclose',
+            get_string('mootyperclosetime', 'mootyper'),
+            ['optional' => true, 'step' => 1]
+            );
         // MooTyper activity password setup.
         $mform->addElement('selectyesno', 'usepassword', get_string('usepassword', 'mootyper'));
         $mform->addHelpButton('usepassword', 'usepassword', 'mootyper');
@@ -104,117 +108,6 @@ class mod_mootyper_mod_form extends moodleform_mod {
         // MooTyper activity setup, Options settings.
         $mform->addElement('header', 'optionhdr', get_string('options', 'mootyper'));
 
-        // ...***************************************************************************.
-        // TODO: Add a dropdown selector of lesson/category.
-
-        // 20230514 Added a dropdown selector for isexam (the activity mode).
-        $mode = [get_string('sflesson', 'mod_mootyper'),
-                    get_string('isexamtext', 'mod_mootyper'),
-                    get_string('practice', 'mod_mootyper'), ];
-        $mform->addElement('select', 'isexam', get_string('fmode', 'mootyper'), $mode);
-        $mform->addHelpButton('isexam', 'fmode', 'mootyper');
-        $mform->setDefault('isexam', $mootyperconfig->isexam);
-
-        // 20230514 Added a dropdown selector for lessonname.
-        $lessons = [];
-        $lessons = lessons::get_typerlessons();
-        // 20230924 $lessonpo is supposed to be the mootyper->lesson in use, but during the initial setup, it does NOT exist, yet!
-        // Need to create some sort of work around, the way it gets done in mod_setup.php file.
-        $lessonpo = 0;
-        for ($ij = 0; $ij < count($lessons); $ij++) {
-            if ($lessons[$ij]['id'] == $lessonpo) {
-                // When we have a match, go get the exercise names for this lesson.
-                $lssns[$lessons[$ij]['id']] = $lessons[$ij]['lessonname'];
-
-                $exercises = [];
-                $exercises = lessons::get_exercises_by_lesson($lessonpo);
-
-                for ($kl = 0; $kl < count($exercises); $kl++) {
-                    $exers[$exercises[$kl]['id']] = $exercises[$kl]['exercisename'];
-                }
-                $mform->setDefault('exercise', 1);
-
-            } else {
-                $lssns[$lessons[$ij]['id']] = $lessons[$ij]['lessonname'];
-            }
-        }
-
-        /*
-        $mform->addElement('select',
-                           'lesson',
-                           get_string('flesson', 'mootyper'),
-                           $lssns,
-                           ['onchange' => 'javascript:"this.form.submit()" id="lesson" name="lesson";']
-                           );
-        */
-        $mform->addElement('select',
-                           'lesson',
-                           get_string('flesson', 'mootyper'),
-                           $lssns,
-                           ['onchange' => 'javascript:removeAtts();']
-                           );
-        $mform->addHelpButton('lesson', 'fmode', 'mootyper');
-        $mform->setDefault('lesson', 1);
-
-        // ...====================================================================================.
-
-        /*
-        if (is_siteadmin()) {
-            $disselect = '';
-        } else {
-            $disselect = $epo == 1 ? ' disabled="disabled"' : '';
-        }
-        */
-
-        $htmlout .= '<div>';
-        $htmlout .= get_string('flesson', 'mootyper').'<select onchange="this.form.submit()" id="lesson" name="lesson">';
-        for ($ij = 0; $ij < count($lessons); $ij++) {
-            if ($lessons[$ij]['id'] == $lessonpo) {
-                $htmlout .= '<option selected="true" value="'.$lessons[$ij]['id'].'">'.$lessons[$ij]['lessonname'].'</option>';
-            } else {
-                $htmlout .= '<option value="'.$lessons[$ij]['id'].'">'.$lessons[$ij]['lessonname'].'</option>';
-            }
-        }
-        $htmlout .= '</select></div>';
-
-        $exercises = lessons::get_exercises_by_lesson($lessonpo);
-        $htmlout .= '<div>'.get_string('fexercise', 'mootyper').'</td><td><select name="exercise" id="exercise">';
-        for ($ik = 0; $ik < count($exercises); $ik++) {
-            if ($exercises[$ik]['id'] == $exercisepo) {
-                $htmlout .= '<option selected="true" value="'.
-                                $exercises[$ik]['id'].'">'.
-                                $exercises[$ik]['exercisename'].
-                                '</option>';
-            } else {
-                $htmlout .= '<option value="'.
-                                $exercises[$ik]['id'].
-                                '">'.
-                                $exercises[$ik]['exercisename'].
-                                '</option>';
-            }
-        }
-        $htmlout .= '</select></div>';
-
-        echo $htmlout;
-
-        // ...**********************************************************************************.
-        // 20220514 Added a dropdown selector for exercise name. Hidden if not an exam.
-        // ...$mform->addElement('select', 'exercise', get_string('ename', 'mootyper'), $exers);.
-        // ...$mform->setDefault('exercise', $mootyperconfig->defaultexercise);.
-
-        $mform->addElement('select',
-                           'exercise',
-                           get_string('ename', 'mootyper'),
-                           $exers,
-                           ['onchange' => 'javascript:removeAtts();']
-                           );
-        $mform->addHelpButton('exercise', 'fmode', 'mootyper');
-        // ...$mform->hideIf('exercise', 'isexam', 'neq', 1);.
-        $mform->hideIf('exercise', $mootyper->isexam, 'neq', '1');
-        // ...$mform->disabledIf('exercise', 'isexam', 'neq', 1);.
-        $mform->setDefault('exercise', '2');
-
-        // ...**********************************************************************************.
         // 20191223 Added a dropdown slector for timelimit.
         $tlimit = [];
         for ($i = 0; $i <= 10; $i++) {
@@ -244,8 +137,9 @@ class mod_mootyper_mod_form extends moodleform_mod {
 
         // Add a dropdown slector for text alignment.
         $aligns = [get_string('defaulttextalign_left', 'mod_mootyper'),
-                      get_string('defaulttextalign_center', 'mod_mootyper'),
-                      get_string('defaulttextalign_right', 'mod_mootyper'), ];
+            get_string('defaulttextalign_center', 'mod_mootyper'),
+            get_string('defaulttextalign_right', 'mod_mootyper'),
+            ];
         $mform->addElement('select', 'textalign', get_string('defaulttextalign', 'mootyper'), $aligns);
         $mform->addHelpButton('textalign', 'defaulttextalign', 'mootyper');
         $mform->setDefault('textalign', $mootyperconfig->defaulttextalign);
@@ -538,14 +432,23 @@ class mod_mootyper_mod_form extends moodleform_mod {
             $suffix = $this->get_suffix();
         }
         $completionexercisegroup = 'completionexercisegroup' . $suffix;
-        $completionpostenabled = 'completionexerciseenabled' . $suffix;
+        $completionexerciseenabled = 'completionexerciseenabled' . $suffix;
         $completionexercise = 'completionexercise' . $suffix;
 
         $group = [];
-        $group[] = $mform->createElement('checkbox', $completionexerciseenabled, '', get_string('completionexercise', 'mootyper'));
+        $group[] = $mform->createElement('checkbox',
+            $completionexerciseenabled,
+            '',
+            get_string('completionexercise', 'mootyper')
+            );
         $group[] = $mform->createElement('text', $completionexercise, '', ['size' => 3]);
         $mform->setType($completionexercise, PARAM_INT);
-        $mform->addGroup($group, $completionexercisegroup, get_string('completionexercisegroup', 'mootyper'), [' '], false);
+        $mform->addGroup($group,
+            $completionexercisegroup,
+            get_string('completionexercisegroup', 'mootyper'),
+            [' '],
+            false
+            );
         $mform->disabledIf($completionexercise, $completionexerciseenabled, 'notchecked');
 
         // 20230926 Added new and changed code for Moodle 4.3.
@@ -554,7 +457,11 @@ class mod_mootyper_mod_form extends moodleform_mod {
         $completionlesson = 'completionlesson'.$suffix;
 
         $group = [];
-        $group[] = $mform->createElement('checkbox', $completionlessonenabled, '', get_string('completionlesson', 'mootyper'));
+        $group[] = $mform->createElement('checkbox',
+            $completionlessonenabled,
+            '',
+            get_string('completionlesson', 'mootyper')
+            );
         $mform->setType($completionlesson, PARAM_INT);
         $mform->addGroup($group, $completionlessongroup, get_string('completionlessongroup', 'mootyper'), [' '], false);
         $mform->disabledIf($completionlesson, $completionlessonenabled, 'notchecked');
@@ -566,13 +473,18 @@ class mod_mootyper_mod_form extends moodleform_mod {
 
         $group = [];
         $group[] = $mform->createElement('checkbox',
-                                         $completionprecisionenabled,
-                                         '',
-                                         get_string('completionprecision', 'mootyper')
-                                         );
+            $completionprecisionenabled,
+            '',
+            get_string('completionprecision', 'mootyper')
+            );
         $group[] = $mform->createElement('text', $completionprecision, '', ['size' => 3]);
         $mform->setType($completionprecision, PARAM_INT);
-        $mform->addGroup($group, $completionprecisiongroup, get_string('completionprecisiongroup', 'mootyper'), [' '], false);
+        $mform->addGroup($group,
+            $completionprecisiongroup,
+            get_string('completionprecisiongroup', 'mootyper'),
+            [' '],
+            false
+            );
         $mform->disabledIf($completionprecision, $completionprecisionenabled, 'notchecked');
 
         // 20230926 Added new and changed code for Moodle 4.3.
@@ -581,10 +493,19 @@ class mod_mootyper_mod_form extends moodleform_mod {
         $completionwpm = 'completionwpm' . $suffix;
 
         $group = [];
-        $group[] = $mform->createElement('checkbox', 'completionwpmenabled', '', get_string('completionwpm', 'mootyper'));
+        $group[] = $mform->createElement('checkbox',
+            'completionwpmenabled',
+            '',
+            get_string('completionwpm', 'mootyper')
+            );
         $group[] = $mform->createElement('text', 'completionwpm', '', ['size' => 3]);
         $mform->setType('completionwpm', PARAM_INT);
-        $mform->addGroup($group, 'completionwpmgroup', get_string('completionwpmgroup', 'mootyper'), [' '], false);
+        $mform->addGroup($group,
+            'completionwpmgroup',
+            get_string('completionwpmgroup', 'mootyper'),
+            [' '],
+            false
+            );
         $mform->disabledIf('completionwpm', 'completionwpmenabled', 'notchecked');
 
         // 20230926 Added new and changed code for Moodle 4.3.
@@ -595,17 +516,17 @@ class mod_mootyper_mod_form extends moodleform_mod {
         // Need to add code for completionmootypergrade, here.
         $group = [];
         $group[] = $mform->createElement('checkbox',
-                                         'completionmootypergradeenabled',
-                                         '',
-                                         get_string('completionmootypergrade', 'mootyper')
-                                         );
+            'completionmootypergradeenabled',
+            '',
+            get_string('completionmootypergrade', 'mootyper')
+            );
         $group[] = $mform->createElement('text', 'completionmootypergrade', '', ['size' => 3]);
         $mform->setType('completionmootypergrade', PARAM_INT);
         $mform->addGroup($group,
-                         'completionmootypergradegroup',
-                         get_string('completionmootypergradegroup', 'mootyper'),
-                         [' '],
-                         false);
+            'completionmootypergradegroup',
+            get_string('completionmootypergradegroup', 'mootyper'),
+            [' '],
+            false);
         $mform->disabledIf('completionmootypergrade', 'completionmootypergradeenabled', 'notchecked');
 
         return [$completionexercisegroup,

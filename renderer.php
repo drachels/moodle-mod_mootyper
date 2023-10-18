@@ -73,10 +73,7 @@ class mod_mootyper_renderer extends plugin_renderer_base {
             $cminfo = cm_info::create($cm);
             $completiondetails = \core_completion\cm_completion_details::get_instance($cminfo, $USER->id);
             $activitydates = \core\activity_dates::get_dates_for_module($cminfo, $USER->id);
-
             if ($CFG->branch < 400) {
-                $debug['In renderer.php and checking $CFG->branch which should be less than 400: '] = $CFG->branch;
-
                 $output .= $this->output->activity_information($cminfo, $completiondetails, $activitydates);
             }
         }

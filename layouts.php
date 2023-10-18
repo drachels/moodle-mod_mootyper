@@ -22,8 +22,8 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later.
  */
 
-use \mod_mootyper\event\course_module_viewed;
-use \mod_mootyper\local\keyboards;
+use mod_mootyper\event\course_module_viewed;
+use mod_mootyper\local\keyboards;
 
 require_once('../../config.php');
 
@@ -32,21 +32,21 @@ global $DB, $OUTPUT, $PAGE;
 // Fetch URL parameters.
 $id = optional_param('id', 0, PARAM_INT); // Course ID.
 $cm = get_coursemodule_from_id('mootyper', $id, 0, false, MUST_EXIST);
-$course = $DB->get_record('course', array('id' => $cm->course), '*', MUST_EXIST);
+$course = $DB->get_record('course', ['id' => $cm->course], '*', MUST_EXIST);
 
 require_login($course, true, $cm);
 
 $context = context_module::instance($cm->id);
 
-$mootyper = $DB->get_record('mootyper', array('id' => $cm->instance) , '*', MUST_EXIST);
+$mootyper = $DB->get_record('mootyper', ['id' => $cm->instance], '*', MUST_EXIST);
 
 // Print the page header.
-$PAGE->set_url('/mod/mootyper/layouts.php', array('id' => $id));
+$PAGE->set_url('/mod/mootyper/layouts.php', ['id' => $id]);
 $PAGE->set_heading($course->fullname);
 
 $renderer = $PAGE->get_renderer('mod_mootyper');
 
-$returnedit = new moodle_url('/mod/mootyper/layouts.php', array('id' => $id));
+$returnedit = new moodle_url('/mod/mootyper/layouts.php', ['id' => $id]);
 
 // Other things you may want to set - remove if not needed.
 $PAGE->set_cacheable(false);

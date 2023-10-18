@@ -89,6 +89,7 @@ function read_lessons_file($dafile, $authoridarg, $visiblearg, $editablearg, $co
                     '"', '{', '}', '>', '<',
                     '?', '\'', '-', '/', '=',
                     '.', ',', ' ', '|', '¡',
+                    // @codingStandardsIgnoreLine
                     '`', 'ç', 'ñ', 'º', '¿',
                     'ª', '·', '\n', '\r', '\r\n',
                     '\n\r', ']', '[', '¬', '´',

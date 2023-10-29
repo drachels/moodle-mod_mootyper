@@ -1,8 +1,8 @@
 /**
- * @fileOverview Arabic(V4)dual keyboard driver.
+ * @fileOverview Arabic(V5)dual keyboard driver.
  * @author <a href="mailto:drachels@drachels.com">AL Rachels</a>
- * @version 4.0
- * @since 06/29/2018
+ * @version 5.0 (20231029)
+ * @since 20180629
  */
 
 /**
@@ -39,18 +39,24 @@ function keyupFirst(event) {
 function keyboardElement(ltr) {
     this.chr = ltr.toUpperCase();
     this.alt = false;
+    this.shiftright = false;
+    this.shiftleft = false;
+
     // @codingStandardsIgnoreLine
-    if (ltr.match(/[ّّ ّ !@#$%^&*)(_+ ]/i)) {
-        this.shift = true;
-        this.alt = false;
+    if (ltr.match(/[!@#$%]/)) {
+        this.shiftright = true;
+    } else if (ltr.match(/[^&*)(_+]/)) {
+        this.shiftleft = true;
+    }
     // @codingStandardsIgnoreLine
-    } else if (ltr.match(/[ ةىلارؤءئزولاظيبلاتنمكطسشغعهخحجد\\فقثصضذ12ذ1234567890\-=ذ ]/)) {
-        this.shift = false;
-        this.alt = false;
-    } else if (isLetter(ltr)) {
-        this.shift = ltr.toUpperCase() === ltr;
-    } else {
-        this.shift = false;
+    if (ltr.match(/[ذ1234567890-=]/)) {
+        this.shiftright = false;
+        this.shiftleft = false;
+    }
+    // @codingStandardsIgnoreLine
+    if (ltr.match(/[ضصثقفغعهخحجد\\شسيبلاتنمكطئءؤرلاىةوزظ]/)) {
+        this.shiftright = false;
+        this.shiftleft = false;
     }
 
     this.turnOn = function() {
@@ -64,12 +70,11 @@ function keyboardElement(ltr) {
         if (this.chr === '\n' || this.chr === '\r\n' || this.chr === '\n\r' || this.chr === '\r') {
             document.getElementById('jkeyenter').className = "next4";
         }
-        if (this.shift) {
-            document.getElementById('jkeyshiftd').className = "next4";
+        if (this.shiftleft) {
             document.getElementById('jkeyshiftl').className = "next4";
         }
-        if (this.alt) {
-            document.getElementById('jkeyaltgr').className = "nextSpace";
+        if (this.shiftright) {
+            document.getElementById('jkeyshiftr').className = "next4";
         }
     };
     this.turnOff = function() {
@@ -86,12 +91,11 @@ function keyboardElement(ltr) {
         if (this.chr === '\n' || this.chr === '\r\n' || this.chr === '\n\r' || this.chr === '\r') {
             document.getElementById('jkeyenter').classname = "normal";
         }
-        if (this.shift) {
-            document.getElementById('jkeyshiftd').className = "normal";
+        if (this.shiftleft) {
             document.getElementById('jkeyshiftl').className = "normal";
         }
-        if (this.alt) {
-            document.getElementById('jkeyaltgr').className = "normal";
+        if (this.shiftright) {
+            document.getElementById('jkeyshiftr').className = "normal";
         }
     };
 }

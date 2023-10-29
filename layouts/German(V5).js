@@ -1,5 +1,5 @@
 /**
- * @fileOverview German(V5) keyboard driver.
+ * @fileOverview German(V5.1) keyboard driver (20231028).
  * @author <a href="mailto:drachels@drachels.com">AL Rachels</a>
  * @version 5.0
  * @since 07/09/2018
@@ -56,31 +56,28 @@ function keyboardElement(ltr) {
     if (ltr.match(/[|²³ã¦@¬|¢~€\[\]{}\\µ]/i)) {
         this.alt = true;
     }
-    if (ltr.match(/[ëï]/)) {
-        this.umlaut = true;
-    }
-    if (ltr.match(/[ÄËÏÖ]/)) {
-        this.shift = true;
+    if (ltr.match(/[ÄÖÜ]/)) {
+        this.shiftleft = true;
     }
     if (ltr.match(/[âêîôû]/)) {
         this.pow = true;
     }
-    if (ltr.match(/[ÂÊÎÔÛ]/)) {
-        this.shift = true;
+    if (ltr.match(/[ÂÊ]/)) {
+        this.shiftright = true;
         this.pow = true;
     }
-    if (ltr === 'é') {
+    if (ltr.match(/[ÎÔÛ]/)) {
+        this.shiftleft = true;
+        this.pow = true;
+    }
+    if (ltr.match(/[áéó]/)) {
         this.accent = true;
     }
     if (ltr === 'è') {
         this.accent = true;
         this.shiftleft = true;
     }
-    if (ltr === 'ó' || ltr === 'á') {
-        this.alt = true;
-        this.accent = true;
-    }
-    if (ltr === 'ñ'|| ltr === 'ã') {
+    if (ltr.match(/[ñã]/)) {
         this.alt = true;
         this.tilde = true;
     }
@@ -117,9 +114,6 @@ function keyboardElement(ltr) {
         if (this.tilde) {
             document.getElementById('jkeyplus').className = "next4";
         }
-        if (this.umlaut) {
-            document.getElementById('jkeyumlaut').className = "next4";
-        }
     };
     this.turnOff = function() {
         if (isLetter(this.chr)) {
@@ -154,9 +148,6 @@ function keyboardElement(ltr) {
         if (this.tilde) {
             document.getElementById('jkeyplus').className = "normal";
         }
-        if (this.umlaut) {
-            document.getElementById('jkeyumlaut').className = "normal";
-        }
     };
 }
 
@@ -175,7 +166,7 @@ function thenFinger(tCrka) {
     } else if (tCrka.match(/[2"²wsx9)\]oôl.:]/i)) {
         return 3; // Highlight the correct key above in green.
     // @codingStandardsIgnoreLine
-    } else if (tCrka.match(/[3§³e€dc8(\[ik,;eëêéè€iïî]/i)) {
+    } else if (tCrka.match(/[3§³eëêéè€dc8(\[ik,;iî]/i)) {
         return 2; // Highlight the correct key above in yellow.
     // @codingStandardsIgnoreLine
     } else if (tCrka.match(/[4$rfv5%tgb6&zhn7/{ujmµû]/i)) {
@@ -224,7 +215,7 @@ function getKeyID(tCrka) {
         return "jkeyaccent";
     } else if (tCrka === '@') {
         return "jkeyq";
-    } else if (tCrka.match(/[€ëËêéè]/)) {
+    } else if (tCrka.match(/[€êéè]/)) {
         return "jkeye";
     } else if (tCrka.match(/[uû]/)) {
         return "jkeyu";

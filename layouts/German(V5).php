@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * This file defines the German(V5.0) keyboard layout.
+ * This file defines the German(V5.1) keyboard layout (202310280).
  *
  * @package    mod_mootyper
  * @copyright  2016 onwards AL Rachels (drachels@drachels.com)
@@ -29,10 +29,10 @@
 echo (isset($displaynone) && ($displaynone == true)) ? 'display:none;' : '';
 ?>
 ">
-<div id="keyboard" class="keyboardback">German(V5) Keyboard Layout<br>
+<div id="keyboard" class="keyboardback">German(V5.1) Keyboard Layout<br>
     <section>
         <div class="mtrow" style='float: left; margin-left:5px; font-size: 15px !important; line-height: 15px'>
-            <div id="jkeypow" class="normal" style='text-align:left;'>°<br><span style="color:red">&nbsp;&nbsp;&nbsp;^</span></div>
+            <div id="jkeypow" class="normal" style='text-align:left;'>°<br><span style="color:red">^&nbsp;&nbsp;&nbsp;</span></div>
             <div id="jkey1" class="normal" style='text-align:left;'>!<br>1&nbsp;&nbsp;&nbsp;</div>
             <div id="jkey2" class="normal" style='text-align:left;'>"<br>2
                 <span style="color:blue">&nbsp;²</span></div>
@@ -51,7 +51,7 @@ echo (isset($displaynone) && ($displaynone == true)) ? 'display:none;' : '';
                 <span style="color:blue">&nbsp;&nbsp;&nbsp;}</span></div>
             <div id="jkeyß" class="normal" style='text-align:left;'>?<br>ß
                 <span style="color:blue">&nbsp;&nbsp;&nbsp;\</span></div>
-            <div id="jkeyaccent" class="normal" style='text-align:left;'>`<br>´&nbsp;&nbsp;&nbsp;</div>
+            <div id="jkeyaccent" class="normal" style='text-align:left;'>`<br>´</div>
             <div id="jkeybackspace" class="normal" style="width: 95px;">Rücktaste</div>
         </div>
     <div style="float: left;">
@@ -73,8 +73,9 @@ echo (isset($displaynone) && ($displaynone == true)) ? 'display:none;' : '';
             <div id="jkeyplus" class="normal" style='text-align:left;'>*<br>+
                 <span style="color:blue">&nbsp;&nbsp;~</span></div>
         </div>
-         <span id="jkeyenter" class="normal" style="width: 50px; margin-right:5px; float: right; height: 85px;">Enter-Taste</span>
-         <div class="mtrow" style='float: left; margin-left:5px; font-size: 15px !important; line-height: 15px'>
+        <span id="jkeyenter" class="normal"
+            style="width: 50px; margin-right:5px; float: right; height: 85px;">Enter-Taste</span>
+        <div class="mtrow" style='float: left; margin-left:5px; font-size: 15px !important; line-height: 15px'>
             <div id="jkeycaps" class="normal" style="width: 72px; font-size: 10px !important;">Feststelltaste</div>
             <div id="jkeya" class="finger4" style='text-align:left;'>A<br>&nbsp;</div>
             <div id="jkeys" class="finger3" style='text-align:left;'>S<br>&nbsp;</div>

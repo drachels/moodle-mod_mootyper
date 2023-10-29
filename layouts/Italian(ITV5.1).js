@@ -72,13 +72,13 @@ function keyboardElement(ltr) {
             document.getElementById(getKeyID(this.chr)).className = "next" + thenFinger(this.chr.toLowerCase());
         }
         if (this.chr === '\n' || this.chr === '\r\n' || this.chr === '\n\r' || this.chr === '\r') {
-            document.getElementById('jkeyenter').className = "next4";
+            document.getElementById('jkeyenter').className = "next3";
         }
         if (this.shiftleft) {
-            document.getElementById('jkeyshiftl').className = "next4";
+            document.getElementById('jkeyshiftl').className = "next3";
         }
         if (this.shiftright) {
-            document.getElementById('jkeyshiftr').className = "next4";
+            document.getElementById('jkeyshiftr').className = "next3";
         }
         if (this.alt) {
             document.getElementById('jkeyaltgr').className = "nextSpace";

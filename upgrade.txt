@@ -58,7 +58,7 @@ sending an email, leave a comment at
 
 Moodle Versions
 ===============
-=== 4.2.4 === pending 2023051100
+=== 4.2.4 === pending 2023102200
 20230215 MooTyper_1011 - Need to add an on/off toggle or check box for each bar
     on the grade charts. Added need code to ownview.php. Did a copy and paste for gview.php.
     ***Need to fix dropdowns to NOT have one blank line as an option.
@@ -97,7 +97,8 @@ Moodle Versions
     Changed all arrays to short array form, []. There was a "boat load" so see ticket for details.
 20230927 MooTyper_1081 - Latest codechecker says "Import statements must not begin with a leading
     backslash." Removed all leading backslashes. There were many of them so see ticket for details.
-
+20231019 MooTyper_1103 - In the new Italian v5.1 keyboard layout, the shift and enter keys, color
+    is wrong.
 
 === 4.2.3 === 20230420
 20230105 MooTyper_982v - Need to enable new, Grade, bar to the chart. Added a new

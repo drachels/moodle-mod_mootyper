@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * This file defines the Arabic(V4)keyboard layout.
+ * This file defines the Arabic(V5.0) (20231029) keyboard layout.
  *
  * @package    mod_mootyper
  * @copyright  2012 Jaka Luthar (jaka.luthar@gmail.com)
@@ -32,7 +32,7 @@ echo (isset($displaynone) && ($displaynone == true)) ? 'display:none;' : '';
 if ($directionality === 'rtl') {
 ?>
 ">
-<div id="keyboard" class="keyboardback">Arabic(V4) Keyboard Layout<br>
+<div id="keyboard" class="keyboardback">Arabic(V5.0) Keyboard Layout<br>
     <section>
         <div class="mtrow" style='float: left; margin-left:5px; font-size: 15px !important; line-height: 15px'>
             <div id="jkeybackspace" class="normal" style="width: 95px;">Backspace</div>
@@ -82,7 +82,7 @@ if ($directionality === 'rtl') {
             <div id="jkeycaps" class="normal" style="width: 80px;  font-size: 12px !important;">Caps Lock</div>
         </div>
         <div class="mtrow" style='float: left; margin-left:5px; font-size: 15px !important; line-height: 15px'>
-            <div id="jkeyshiftd" class="normal" style="width: 115px;">Shift</div>
+            <div id="jkeyshiftr" class="normal" style="width: 115px;">Shift</div>
             <div id="jkeyظ" class="normal" style='text-align:left;'>؟<br>ظ</div>
             <div id="jkeyز" class="normal" style='text-align:left;'>.<br>&nbsp;&nbsp;&nbsp;ز</div>
             <div id="jkeyو" class="normal" style='text-align:left;'>,<br>&nbsp;&nbsp;&nbsp;و</div>
@@ -111,7 +111,7 @@ if ($directionality === 'rtl') {
 } else {
 ?>
 ">
-<div id="keyboard" class="keyboardback">Arabic(V4) Keyboard Layout<br>
+<div id="keyboard" class="keyboardback">Arabic(V5.0) Keyboard Layout<br>
     <section>
         <div class="mtrow" style='float: left; margin-left:5px; font-size: 15px !important; line-height: 15px'>
             <div id="jkeyr10" class="normal" style='text-align:left;'>ّ<br>ذ&nbsp;</div>
@@ -172,7 +172,7 @@ if ($directionality === 'rtl') {
             <div id="jkeyو" class="normal" style='text-align:left;'>,<br>و&nbsp;&nbsp;&nbsp;</div>
             <div id="jkeyز" class="normal" style='text-align:left;'>.<br>ز&nbsp;&nbsp;&nbsp;</div>
             <div id="jkeyظ" class="normal" style='text-align:left;'>؟<br>ظ</div>
-            <div id="jkeyshiftd" class="normal" style="width: 115px;">Shift</div>
+            <div id="jkeyshiftr" class="normal" style="width: 115px;">Shift</div>
         </div>
         <div class="mtrow" style='float: left; margin-left:5px;'>
             <div id="jkeyctrll" class="normal" style="width: 60px;">Ctrl</div>

@@ -431,9 +431,9 @@ class mod_mootyper_mod_form extends moodleform_mod {
         } else {
             $suffix = $this->get_suffix();
         }
-        $completionexercisegroup = 'completionexercisegroup' . $suffix;
-        $completionexerciseenabled = 'completionexerciseenabled' . $suffix;
-        $completionexercise = 'completionexercise' . $suffix;
+        $completionexercisegroup = 'completionexercisegroup'.$suffix;
+        $completionexerciseenabled = 'completionexerciseenabled'.$suffix;
+        $completionexercise = 'completionexercise'.$suffix;
 
         $group = [];
         $group[] = $mform->createElement('checkbox',
@@ -463,13 +463,18 @@ class mod_mootyper_mod_form extends moodleform_mod {
             get_string('completionlesson', 'mootyper')
             );
         $mform->setType($completionlesson, PARAM_INT);
-        $mform->addGroup($group, $completionlessongroup, get_string('completionlessongroup', 'mootyper'), [' '], false);
+        $mform->addGroup($group,
+            $completionlessongroup,
+            get_string('completionlessongroup', 'mootyper'),
+            [' '],
+            false
+            );
         $mform->disabledIf($completionlesson, $completionlessonenabled, 'notchecked');
 
         // 20230926 Added new and changed code for Moodle 4.3.
-        $completionprecisiongroup = 'completionprecisiongroup' . $suffix;
-        $completionprecisionenabled = 'completionprecisionenabled' . $suffix;
-        $completionprecision = 'completionprecision' . $suffix;
+        $completionprecisiongroup = 'completionprecisiongroup'.$suffix;
+        $completionprecisionenabled = 'completionprecisionenabled'.$suffix;
+        $completionprecision = 'completionprecision'.$suffix;
 
         $group = [];
         $group[] = $mform->createElement('checkbox',
@@ -488,9 +493,9 @@ class mod_mootyper_mod_form extends moodleform_mod {
         $mform->disabledIf($completionprecision, $completionprecisionenabled, 'notchecked');
 
         // 20230926 Added new and changed code for Moodle 4.3.
-        $completionwpmgroup = 'completionwpmgroup' . $suffix;
-        $completionwpmenabled = 'completionwpmenabled' . $suffix;
-        $completionwpm = 'completionwpm' . $suffix;
+        $completionwpmgroup = 'completionwpmgroup'.$suffix;
+        $completionwpmenabled = 'completionwpmenabled'.$suffix;
+        $completionwpm = 'completionwpm'.$suffix;
 
         $group = [];
         $group[] = $mform->createElement('checkbox',
@@ -509,9 +514,9 @@ class mod_mootyper_mod_form extends moodleform_mod {
         $mform->disabledIf('completionwpm', 'completionwpmenabled', 'notchecked');
 
         // 20230926 Added new and changed code for Moodle 4.3.
-        $completionmootypergradegroup = 'completionmootypergradegroup' . $suffix;
-        $completionmootypergradeenabled = 'completionmootypergradeenabled' . $suffix;
-        $completionmootypergrade = 'completionmootypergrade' . $suffix;
+        $completionmootypergradegroup = 'completionmootypergradegroup'.$suffix;
+        $completionmootypergradeenabled = 'completionmootypergradeenabled'.$suffix;
+        $completionmootypergrade = 'completionmootypergrade'.$suffix;
 
         // Need to add code for completionmootypergrade, here.
         $group = [];
@@ -551,23 +556,23 @@ class mod_mootyper_mod_form extends moodleform_mod {
         } else {
             $suffix = $this->get_suffix();
         }
-        $completionexerciseenabled = 'completionexerciseenabled' . $suffix;
-        $completionexercise = 'completionexercise' . $suffix;
+        $completionexerciseenabled = 'completionexerciseenabled'.$suffix;
+        $completionexercise = 'completionexercise'.$suffix;
 
-        $completionlessonenabled = 'completionlessonenabled' . $suffix;
-        $completionlesson = 'completionlesson' . $suffix;
+        $completionlessonenabled = 'completionlessonenabled'.$suffix;
+        $completionlesson = 'completionlesson'.$suffix;
 
-        $completionprecisiontenabled = 'completionprecisiontenabled' . $suffix;
-        $completionprecision = 'completionprecision' . $suffix;
+        $completionprecisiontenabled = 'completionprecisiontenabled'.$suffix;
+        $completionprecision = 'completionprecision'.$suffix;
 
-        $completionwpmenabled = 'completionwpmenabled' . $suffix;
-        $completionwpm = 'completionwpm' . $suffix;
+        $completionwpmenabled = 'completionwpmenabled'.$suffix;
+        $completionwpm = 'completionwpm'.$suffix;
 
-        $completionpassenabled = 'completionmootypergradeenabled' . $suffix;
-        $completionpass = 'completionmootypergrade' . $suffix;
+        $completionmootypergradeenabled = 'completionmootypergradeenabled'.$suffix;
+        $completionmootypergrade = 'completionmootypergrade'.$suffix;
 
         return (!empty($data[$completionexerciseenabled]) && $data[$completionexercise] != 0)
-            || (!empty($data[$completionexlessonenabled]) && $data[$completionlesson] != 0)
+            || (!empty($data[$completionlessonenabled]) && $data[$completionlesson] != 0)
             || (!empty($data[$completionprecisiontenabled]) && $data[$completionprecision] != 0)
             || (!empty($data[$completionwpmenabled]) && $data[$completionwpm] != 0)
             || (!empty($data[$completionmootypergradeenabled]) && $data[$completionmootypergrade] != 0);
@@ -602,30 +607,34 @@ class mod_mootyper_mod_form extends moodleform_mod {
         // Set up the completion checkboxes which aren't part of standard data.
         // We also make the default value (if you turn on the checkbox) for those
         // numbers to be 1, this will not apply unless checkbox is ticked.
-        $defaultvalues['completionpostenabled'] =
-            !empty($defaultvalues['completionexerciseenabled']) ? 1 : 0;
+        $defaultvalues['completionexerciseenabled'] =
+            !empty($defaultvalues['completionexercise']) ? 1 : 0;
         if (empty($defaultvalues['completionexercise'])) {
             $defaultvalues['completionexercise'] = 1;
         }
+
         $defaultvalues['completionlessonenabled'] =
             !empty($defaultvalues['completionlesson']) ? 1 : 0;
         if (empty($defaultvalues['completionlesson'])) {
             $defaultvalues['completionlesson'] = 1;
         }
+
         $defaultvalues['completionprecisionenabled'] =
             !empty($defaultvalues['completionprecision']) ? 1 : 0;
         if (empty($defaultvalues['completionprecision'])) {
             $defaultvalues['completionprecision'] = 1;
         }
+
         $defaultvalues['completionwpmenabled'] =
             !empty($defaultvalues['completionwpm']) ? 1 : 0;
         if (empty($defaultvalues['completionwpm'])) {
             $defaultvalues['completionwpm'] = 1;
         }
-        $defaultvalues['completionpassenabled'] =
-            !empty($defaultvalues['completionpass']) ? 1 : 0;
-        if (empty($defaultvalues['completionpass'])) {
-            $defaultvalues['completionpass'] = 1;
+
+        $defaultvalues['completionmootypergradeenabled'] =
+            !empty($defaultvalues['completionmootypergrade']) ? 1 : 0;
+        if (empty($defaultvalues['completionmootypergrade'])) {
+            $defaultvalues['completionmootypergrade'] = 1;
         }
     }
 }

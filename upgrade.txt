@@ -98,7 +98,16 @@ Moodle Versions
 20230927 MooTyper_1081 - Latest codechecker says "Import statements must not begin with a leading
     backslash." Removed all leading backslashes. There were many of them so see ticket for details.
 20231019 MooTyper_1103 - In the new Italian v5.1 keyboard layout, the shift and enter keys, color
-    is wrong.
+    is wrong. Made needed code changes in the .js file.
+20231029 MooTyper_1106 - German(v5) layouts do not properly handle ê é è characters. Made needed
+    changes to both the German(V5) and German(V5)-icons layouts.
+20231029 MooTyper_1107 - Syntax error in line 174 of mootyper/classes/local/lessons.php file. Fixed
+    by adding code to include the missing closing quotation mark.
+20231029 MooTyper_1108 - Need Arabic(ARV5)dual layout. Created the files some time ago and now
+    have tested the layout.
+20231030 MooTyper_1109 - Remove attempt does not work when using View all grades and Visible group
+    is not All participants. Changed code to ensure $n is always set to $mootyper->id. See ticket
+    for details. 
 
 === 4.2.3 === 20230420
 20230105 MooTyper_982v - Need to enable new, Grade, bar to the chart. Added a new

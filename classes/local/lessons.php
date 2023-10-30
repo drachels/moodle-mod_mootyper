@@ -171,7 +171,7 @@ class lessons {
         global $USER, $CFG, $DB;
         $params = [];
         $lessonpo = [];
-        $sql = "SELECT * FROM ".$CFG->prefix."mootyper_exercises WHERE lesson=".$less;
+        $sql = "SELECT * FROM ".$CFG->prefix."mootyper_exercises WHERE lesson=".$less.'"';
         if ($exercises = $DB->get_records_sql($sql, $params)) {
             foreach ($exercises as $ex) {
                 $exestoreturn = [];

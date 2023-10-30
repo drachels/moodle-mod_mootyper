@@ -44,6 +44,7 @@ $md = optional_param('jmode', 0, PARAM_INT);
 $us = optional_param('juser', 0, PARAM_INT);
 $orderby = optional_param('orderby', -1, PARAM_INT);
 $des = optional_param('desc', -1, PARAM_INT);
+
 if ($md == 1) {
     $us = 0;
 } else if ($md == 0 || $md == 2) {
@@ -53,6 +54,7 @@ if ($id) {
     $cm = get_coursemodule_from_id('mootyper', $id, 0, false, MUST_EXIST);
     $course = $DB->get_record('course', ['id' => $cm->course], '*', MUST_EXIST);
     $mootyper = $DB->get_record('mootyper', ['id' => $cm->instance], '*', MUST_EXIST);
+    $n = $mootyper->id;
 } else if ($n) {
     $mootyper = $DB->get_record('mootyper', ['id' => $n], '*', MUST_EXIST);
     $course = $DB->get_record('course', ['id' => $mootyper->course], '*', MUST_EXIST);
@@ -61,6 +63,7 @@ if ($id) {
 } else {
     throw new moodle_exception(get_string('mootypererror', 'mootyper'));
 }
+
 $lsnname = $DB->get_record('mootyper_lessons', ['id' => $mootyper->lesson], '*', MUST_EXIST);
 $mtmode = $mootyper->isexam;
 require_login($course, true, $cm);
@@ -142,7 +145,7 @@ if (!has_capability('mod/mootyper:viewgrades', context_module::instance($cm->id)
 
     // Print group information (A drop down box will be displayed if the user
     // is a member of more than one group, or has access to all groups).
-    echo groups_print_activity_menu($cm, $CFG->wwwroot . '/mod/mootyper/gview.php?id=' . $cm->id);
+    echo groups_print_activity_menu($cm, $CFG->wwwroot.'/mod/mootyper/gview.php?id='.$cm->id);
     // 20200620 Check to see if groups are being used here.
     $groupmode = groups_get_activity_groupmode($cm);
     $currentgroup = groups_get_activity_group($cm, true);
@@ -288,7 +291,7 @@ if (!has_capability('mod/mootyper:viewgrades', context_module::instance($cm->id)
                     .$fcol.'.'
                     .'\')" href="'.$CFG->wwwroot.'/mod/mootyper/attrem.php?c_id='
                     .optional_param('id', 0, PARAM_INT)
-                    .'&m_id='.optional_param('n', 0, PARAM_INT)
+                    .'&m_id='.$n
                     .'&g='.$gr->id
                     .'">'.get_string('delete', 'mootyper').'</a>';
                 $namelnk = '<a href="'.$CFG->wwwroot.'/user/view.php?id='.$gr->u_id

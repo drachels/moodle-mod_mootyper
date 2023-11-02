@@ -108,6 +108,8 @@ Moodle Versions
 20231030 MooTyper_1109 - Remove attempt does not work when using View all grades and Visible group
     is not All participants. Changed code to ensure $n is always set to $mootyper->id. See ticket
     for details. 
+20231101 MooTyper_1111 - Completion rules are missing from the Default activity completion page.
+    Added missing function in lib.php file and missing language description strings.
 
 === 4.2.3 === 20230420
 20230105 MooTyper_982v - Need to enable new, Grade, bar to the chart. Added a new

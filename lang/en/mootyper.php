@@ -48,6 +48,7 @@ $string['chere'] = 'Click here to start';
 $string['closebeforeopen'] = 'Could not update the MooTyper. You have specified a close date before the open date.';
 
 $string['completionexercise'] = 'Student must complete all exercises for this lesson to complete this activity. ';
+$string['completionexercisedesc'] = 'Student must complete {$a} exercise(s).';
 $string['completionexercisegroup'] = 'Require exercise completion';
 
 $string['completiondetail:exercise'] = 'Student must complete exercise: {$a}';
@@ -56,17 +57,20 @@ $string['completiondetail:precision'] = 'Student must achieve precision: {$a}';
 $string['completiondetail:wpm'] = 'Student must achieve wpm: {$a}';
 $string['completiondetail:mootypergrade'] = 'Student must achieve MT Grade: {$a}';
 
-$string['completionlessondesc'] = 'Student must complete lesson:y {$a}';
-$string['completionlessongroup'] = 'Require lesson completion';
 $string['completionlesson'] = 'Student must complete this lesson to complete this activity';
+$string['completionlessondesc'] = 'Student must complete {$a} lesson.';
+$string['completionlessongroup'] = 'Require lesson completion';
 
 $string['completionmootypergrade'] = 'Student must achieve a passing MooTyper Grade to complete this activity. ';
+$string['completionmootypergradedesc'] = 'Student must achieve a MooTyper Grade of {$a}.';
 $string['completionmootypergradegroup'] = 'Require Grade';
 
 $string['completionprecision'] = 'Student must achieve a passing precision to complete this activity. ';
+$string['completionprecisiondesc'] = 'Student must achieve {$a}% precision.';
 $string['completionprecisiongroup'] = 'Require precision';
 
-$string['completionwpm'] = 'Student must achieve a passing WPM  to complete this activity. ';
+$string['completionwpm'] = 'Student must achieve a passing WPM to complete this activity. ';
+$string['completionwpmdesc'] = 'Student must achieve {$a} WPM.';
 $string['completionwpmgroup'] = 'Require WPM';
 
 $string['configdateformat'] = 'This defines how dates are shown in grade reports. The default value, "M d, Y G:i" is Month, day, year and 24 hour format time. Refer to Date in the PHP manual for more examples and predefined date constants.';

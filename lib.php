@@ -1280,3 +1280,50 @@ function mootyper_get_coursemodule_info($coursemodule) {
     return $result;
 }
 
+/**
+ * Callback which returns human-readable strings describing the active completion custom rules for the module instance.
+ *
+ * @param cm_info|stdClass $cm stdClass with fields ->completion and ->customdata['customcompletionrules']
+ * @return array $descriptions the array of descriptions for the custom rules.
+ */
+function mod_mootyper_get_completion_active_rule_descriptions($cm) {
+    // Values will be present in cm_info, and we assume these are up to date.
+    if (empty($cm->customdata['customcompletionrules'])
+        || $cm->completion != COMPLETION_TRACKING_AUTOMATIC) {
+        return [];
+    }
+
+    $descriptions = [];
+    foreach ($cm->customdata['customcompletionrules'] as $key => $val) {
+        switch ($key) {
+            case 'completionexercise':
+                if (!empty($val)) {
+                    $descriptions[] = get_string('completionexercisedesc', 'mootyper', $val);
+                }
+                break;
+            case 'completionlesson':
+                if (!empty($val)) {
+                    $descriptions[] = get_string('completionlessondesc', 'mootyper', $val);
+                }
+                break;
+            case 'completionprecision':
+                if (!empty($val)) {
+                    $descriptions[] = get_string('completionprecisiondesc', 'mootyper', $val);
+                }
+                break;
+            case 'completionwpm':
+                if (!empty($val)) {
+                    $descriptions[] = get_string('completionwpmdesc', 'mootyper', $val);
+                }
+                break;
+            case 'completionmootypergrade':
+                if (!empty($val)) {
+                    $descriptions[] = get_string('completionmootypergradedesc', 'mootyper', $val);
+                }
+                break;
+            default:
+                break;
+        }
+    }
+    return $descriptions;
+}

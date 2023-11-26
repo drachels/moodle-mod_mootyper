@@ -50,65 +50,72 @@ sending an email, leave a comment at
     https://moodle.org/plugins/mod_mootyper
 ===============
 === Deferred to next version. ===
-20201006 MooTyper_629 - Request for Home Row Keys color settings. Have applied a
-    one-off method to new French(BelgianFRBV5) layout. 
+
 20231014 MooTyper_1100 - Need to revisit cron_task.php as it is not really needed.
 
 
 
 Moodle Versions
 ===============
-=== 4.2.4 === pending 2023102200
-20230215 MooTyper_1011 - Need to add an on/off toggle or check box for each bar
+=== 4.2.4 === pending 2023110200
+20201006 MooTyper_629v - Request for Home Row Keys color settings. Have applied a
+    one-off method to new French(BelgianFRBV5) layout. Modified the .js file to produce
+    the desired colors for the keys.
+20230215 MooTyper_1011v - Need to add an on/off toggle or check box for each bar
     on the grade charts. Added need code to ownview.php. Did a copy and paste for gview.php.
     ***Need to fix dropdowns to NOT have one blank line as an option.
-20230510 MooTyper_1040 - Deprecated: Implicit conversion from float 1674064081.5 to int
+20230510 MooTyper_1040v - Deprecated: Implicit conversion from float 1674064081.5 to int
     loses precision owngrades.php. Added round() to owngrades.php line 264 and to gview.php
     line 365.
-20230513 MooTyper_645 - Need Completion tracking based on Precision, WPM, exercises,
+20230513 MooTyper_645v - Need Completion tracking based on Precision, WPM, exercises,
     lesson, and grade. Got it working, but may need further development. Added
     required new completion fields to mdl_mootyper table.
-20230515 MooTyper_1044 - In Lesson mode, when anyone removes a grade, the Moodle Gradebook
+20230515 MooTyper_1044v - In Lesson mode, when anyone removes a grade, the Moodle Gradebook
     is not updated. In attrem.php, I added a new call to mootyper_update_grades() in lib.php.
-20230613 MooTyper_1054 - MooTyper Backup and Restore seems to be broken. Backup/restore only
+20230613 MooTyper_1054v - MooTyper Backup and Restore seems to be broken. Backup/restore only
     works on same server and give errors on another server due to not updating all ID's.
     Rewrote both the backup and restore code to correctly create and link to new ID's.
-20230614 MooTyper_1055 - Missing child tree for exercises in the backup_mootyper_stepslib.php
+20230614 MooTyper_1055v - Missing child tree for exercises in the backup_mootyper_stepslib.php
     file. As part of my work on MooTyper_1054, I have added the missing code and tested it.
     It seems to be working correctly now.
-20230707 MooTyper_1057 - MooTyper - Deleting a MooTyper activity does not delete related attempts.
+20230707 MooTyper_1057v - MooTyper - Deleting a MooTyper activity does not delete related attempts.
     Realized that the attemptid in mootyper_grades is NOT being updated during the restore! Once
     this was changed in restore_mootyper_stepslib.php file, both deleting an individual grade, as
     well as removing a MooTyper activity, removes attempts from the mootyper_attempts table.
-20230707 MooTyper_1058 - MooTyper - Reset MooTyper Instance does not delete checks. Added code
+20230707 MooTyper_1058v - MooTyper - Reset MooTyper Instance does not delete checks. Added code
     to delete checks based on attemptid when executing function reset_mootyper_instance($mootyperid).
-20230708 MooTyper_1059 - MooTyper - Backup does not include teacher created lessons and exercises.
+20230708 MooTyper_1059v - MooTyper - Backup does not include teacher created lessons and exercises.
     The code to fix this was developed and included as part of MooTyper_1054.
-20230729 MooTyper_1063 - The mdl_mootyper_grades, mistakedetails, field size of 255 is too small.
+20230729 MooTyper_1063v - The mdl_mootyper_grades, mistakedetails, field size of 255 is too small.
     Upgrade DB field size to 1333. Could not go bigger with varchar. 20231005 Had to make another
     change from varchar 1333 to text.
-20230920 MooTyper_1074 - Grade pages need the Completed column moved two places to the right.
+20230810 MooTyper_1065v - In line 344 of provider.php, mootyper should be mootyperid. Made the code
+    merge so it is now mootyperid in line 344 of the provider.php file.
+20230920 MooTyper_1074v - Grade pages need the Completed column moved two places to the right.
     20230920 Completed the moves in owngrades.php and being tested. 20230920 Made the same
     code moves in gview.php. 20230920 Made the needed changes in the csvexport.php file.
-20230927 MooTyper_1079 - No one in a group has any attempts causes multiple errors in gview.php.
+20230926 MooTyper_1078v - Need to implement suffix on mod_form.php for Moodle 4.3. Made all the
+    needed changes in public function add_completion_rules() {. Made all the needed code changes
+    in public function completion_rule_enabled($data) {.
+20230927 MooTyper_1079v - No one in a group has any attempts causes multiple errors in gview.php.
     Added an additional AND clause check to make sure at least one memeber of the group being
     viewed has made an attempt at an exercise. 
-20230927 MooTyper_1080 - Latest codechecker requires convert from long array(), to short array [].
+20230927 MooTyper_1080v - Latest codechecker requires convert from long array(), to short array [].
     Changed all arrays to short array form, []. There was a "boat load" so see ticket for details.
-20230927 MooTyper_1081 - Latest codechecker says "Import statements must not begin with a leading
+20230927 MooTyper_1081v - Latest codechecker says "Import statements must not begin with a leading
     backslash." Removed all leading backslashes. There were many of them so see ticket for details.
-20231019 MooTyper_1103 - In the new Italian v5.1 keyboard layout, the shift and enter keys, color
+20231019 MooTyper_1103v - In the new Italian v5.1 keyboard layout, the shift and enter keys, color
     is wrong. Made needed code changes in the .js file.
-20231029 MooTyper_1106 - German(v5) layouts do not properly handle ê é è characters. Made needed
+20231029 MooTyper_1106v - German(v5) layouts do not properly handle ê é è characters. Made needed
     changes to both the German(V5) and German(V5)-icons layouts.
-20231029 MooTyper_1107 - Syntax error in line 174 of mootyper/classes/local/lessons.php file. Fixed
+20231029 MooTyper_1107v - Syntax error in line 174 of mootyper/classes/local/lessons.php file. Fixed
     by adding code to include the missing closing quotation mark.
-20231029 MooTyper_1108 - Need Arabic(ARV5)dual layout. Created the files some time ago and now
+20231029 MooTyper_1108v - Need Arabic(ARV5)dual layout. Created the files some time ago and now
     have tested the layout.
-20231030 MooTyper_1109 - Remove attempt does not work when using View all grades and Visible group
+20231030 MooTyper_1109v - Remove attempt does not work when using View all grades and Visible group
     is not All participants. Changed code to ensure $n is always set to $mootyper->id. See ticket
     for details. 
-20231101 MooTyper_1111 - Completion rules are missing from the Default activity completion page.
+20231101 MooTyper_1111v - Completion rules are missing from the Default activity completion page.
     Added missing function in lib.php file and missing language description strings.
 
 === 4.2.3 === 20230420

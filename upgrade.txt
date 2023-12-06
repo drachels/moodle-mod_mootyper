@@ -57,7 +57,7 @@ sending an email, leave a comment at
 
 Moodle Versions
 ===============
-=== 4.2.5 Pending
+=== 4.2.5 === 20231206
 20231204 MooTyper_1124 - Deleting an exercise from the exercises.php page seems to
     possibly be broken/not working. In line 53(57) of the erem.php, I had left a right
     parenthesis when converting from array() to [].

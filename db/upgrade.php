@@ -436,9 +436,6 @@ function xmldb_mootyper_upgrade($oldversion) {
         // Launch change of type for field mistakedetails.
         $dbman->change_field_type($table, $field);
 
-        // Launch change of type for field mistakedetails.
-        $dbman->change_field_type($table, $field);
-
         // Mootyper savepoint reached.
         upgrade_mod_savepoint(true, 2023100500, 'mootyper');
     }

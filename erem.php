@@ -37,21 +37,20 @@ global $DB;
 $id = optional_param('id', 0, PARAM_INT); // Course_module ID.
 $cm = get_coursemodule_from_id('mootyper', $id, 0, false, MUST_EXIST);
 $course = $DB->get_record('course', ['id' => $cm->course], '*', MUST_EXIST);
+// If re is set we remove an exercise.
+// if rl is set we remove a lesson and all its exercises.
+$exerciseid = optional_param('re', '', PARAM_TEXT);
+$lessonid = optional_param('rl', '', PARAM_TEXT);
+// Added cmid so can exit back to MooTyper activity we came from.
+$cmid = optional_param('cmid', '0', PARAM_INT); // Course Module ID.
 
 require_login($course, true, $cm);
 
 $context = context_module::instance($cm->id);
 
-// If r is set we remove an exercise.
-// if l is set we remove a lesson and all its exercises.
-$exerciseid = optional_param('r', '', PARAM_TEXT);
-$lessonid = optional_param('l', '', PARAM_TEXT);
-// Added cmid so can exit back to MooTyper activity we came from.
-$cmid = optional_param('cmid', '0', PARAM_INT); // Course Module ID.
-
 if ($exerciseid) {
     $lessonpo = optional_param('lesson', '', PARAM_INT);
-    $DB->delete_records('mootyper_exercises', ['id' => $exerciseid)]);
+    $DB->delete_records('mootyper_exercises', ['id' => $exerciseid]);
     // Trigger module exercise_deleted event.
     $params = [
         'objectid' => $course->id,
@@ -82,6 +81,6 @@ if ($exerciseid) {
 // Lesson contained three exercises. I deleted number 2, and then number 3 appeared as part
 // of another lesson, lesson aaaa(121).
 // Later - seems to work okay now.
-$cid = optional_param('id', 0, PARAM_INT);
+//$cid = optional_param('id', 0, PARAM_INT);
 $webdir = $CFG->wwwroot . '/mod/mootyper/exercises.php?id='.$id.'&lesson='.$lessonpo;
 header('Location: '.$webdir);

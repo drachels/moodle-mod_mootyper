@@ -118,10 +118,9 @@ echo '</select>';
 // Preload not editable by me message for the current user.
 $jlink = get_string('noteditablebyme', 'mootyper');
 if (lessons::is_editable_by_me($USER->id, $id, $lessonpo)) {
-    $deleteurl = $CFG->wwwroot . '/mod/mootyper/erem.php?id='.$id.'&l='.$lessons[$selectedlessonindex]['id'];
+    $deleteurl = $CFG->wwwroot . '/mod/mootyper/erem.php?id='.$id.'&rl='.$lessons[$selectedlessonindex]['id'];
     $exporturl = $CFG->wwwroot . '/mod/mootyper/lsnexport.php?id='.$course->id.'&lsn='.$lessons[$selectedlessonindex]['id'];
     echo '<br>';
-
     echo '</form><br>';
     // Build a link with course id and lsn options to use when exporting the current Lesson.
     $jlink = '<a onclick="return confirm(\''.get_string('exportconfirm', 'mootyper')
@@ -176,18 +175,18 @@ foreach ($exercises as $ex) {
     if (strlen($exnametocut) > 20) {
         $exnametocut = substr($exnametocut, 0, 20).'...';
     }
-
-
     // If user can edit, create a delete link to the current exercise.
     $jlink1 = '<a onclick="return confirm(\''.get_string('deleteexconfirm', 'mootyper')
               .$lessons[$selectedlessonindex]['lessonname']
-              .'\')" href="erem.php?id='.$id.'&r='
-              .$ex->id.'&lesson='.$lessonpo.'"><img src="pix/delete.png" alt="'
+              .'\')" href="erem.php?id='.$id
+              .'&re='.$ex->id
+              .'&lesson='.$lessonpo.'"><img src="pix/delete.png" alt="'
               .get_string('delete', 'mootyper').'"></a>';
 
     // If user can edit, create an edit link to the current exercise.
     // Use activity ID so we can exit back to the MooTyper activity we came from.
-    $jlink2 = '<a href="eedit.php?id='.$id.'&ex='.$ex->id
+    $jlink2 = '<a href="eedit.php?id='.$id
+              .'&ex='.$ex->id
               .'&lesson='.$mootyper->lesson
               .'"><img src="pix/edit.png" alt='
               .get_string('eeditlabel', 'mootyper').'></a>';
@@ -207,15 +206,15 @@ foreach ($exercises as $ex) {
 echo '</table>';
 
 $url = $CFG->wwwroot . '/mod/mootyper/view.php?id='.$id;
-$deleteurl = $CFG->wwwroot . '/mod/mootyper/erem.php?id='.$id.'&l='.$lessons[$selectedlessonindex]['id'];
-$exporturl = $CFG->wwwroot . '/mod/mootyper/lsnexport.php?id='.$course->id.'&lsn='.$lessons[$selectedlessonindex]['id'];
+$deleteurl = $CFG->wwwroot.'/mod/mootyper/erem.php?id='.$id.'&rl='.$lessons[$selectedlessonindex]['id'];
+$exporturl = $CFG->wwwroot.'/mod/mootyper/lsnexport.php?id='.$course->id.'&lsn='.$lessons[$selectedlessonindex]['id'];
 
 // 20200414 Added a, Return, button. 20200428 added round corners.
 echo '<br><a href="'.$url.'" class="btn btn-primary" style="border-radius: 8px">'
     .get_string('returnto', 'mootyper', $mootyper->name).'</a>';
 
 // 20200614 Added an, Add new lesson with exercise, button.
-$jlnk2 = $CFG->wwwroot . '/mod/mootyper/eins.php?id='.$id.'&course='.$course->id;
+$jlnk2 = $CFG->wwwroot.'/mod/mootyper/eins.php?id='.$id.'&course='.$course->id;
 echo ' <a onclick="return confirm(\''.get_string('eaddnew', 'mootyper').
     '\')" href="'.$jlnk2.'" class="btn btn-secondary" style="border-radius: 8px">'
     .get_string('eaddnew', 'mootyper').'</a>';

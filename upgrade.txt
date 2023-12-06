@@ -57,7 +57,19 @@ sending an email, leave a comment at
 
 Moodle Versions
 ===============
-=== 4.2.4 === pending 2023110200
+=== 4.2.5 Pending
+20231204 MooTyper_1124 - Deleting an exercise from the exercises.php page seems to
+    possibly be broken/not working. In line 53(57) of the erem.php, I had left a right
+    parenthesis when converting from array() to [].
+20231204 MooTyper_1125 - Need to see about moving $style1 and $style, lines 156/157
+    of exercises.php to styles.css file.
+20231204 MooTyper_1126 - Deleting a lesson from exercises.php page seems to be broken.
+    In line 53(57) of the erem.php, I had left a right parenthesis when converting from
+    array() to [].
+
+
+
+=== 4.2.4 === 2023110200
 20201006 MooTyper_629v - Request for Home Row Keys color settings. Have applied a
     one-off method to new French(BelgianFRBV5) layout. Modified the .js file to produce
     the desired colors for the keys.

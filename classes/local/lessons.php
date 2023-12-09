@@ -168,10 +168,10 @@ class lessons {
      * @return string
      */
     public static function get_exercises_by_lesson($less) {
-        global $USER, $CFG, $DB;
-        $params = [];
+        global $DB;
+        $params = ['less' => $less];
         $lessonpo = [];
-        $sql = "SELECT * FROM ".$CFG->prefix."mootyper_exercises WHERE lesson=".$less;
+        $sql = "SELECT * FROM {mootyper_exercises} WHERE lesson = :less";
         if ($exercises = $DB->get_records_sql($sql, $params)) {
             foreach ($exercises as $ex) {
                 $exestoreturn = [];

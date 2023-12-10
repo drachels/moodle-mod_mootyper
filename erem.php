@@ -81,6 +81,6 @@ if ($exerciseid) {
 // Lesson contained three exercises. I deleted number 2, and then number 3 appeared as part
 // of another lesson, lesson aaaa(121).
 // Later - seems to work okay now.
-//$cid = optional_param('id', 0, PARAM_INT);
+// $cid = optional_param('id', 0, PARAM_INT);
 $webdir = $CFG->wwwroot . '/mod/mootyper/exercises.php?id='.$id.'&lesson='.$lessonpo;
 header('Location: '.$webdir);

@@ -121,6 +121,16 @@ div#statsRDiv {
         0 5px 0px #ddd;
 }
 
+.style1 {
+    border: 3px solid #000;
+    text-align: center;
+}
+
+.style2 {
+    border: 3px solid #000;
+    text-align: left;
+}
+
 .tb1 {
     width: 60px;
     height: 10px;

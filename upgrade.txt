@@ -49,7 +49,7 @@ sending an email, leave a comment at
 
     https://moodle.org/plugins/mod_mootyper
 ===============
-=== Deferred to next version. ===
+=== Deferred to a later version. ===
 
 20231014 MooTyper_1100 - Need to revisit cron_task.php as it is not really needed.
 
@@ -57,13 +57,21 @@ sending an email, leave a comment at
 
 Moodle Versions
 ===============
+=== 4.2.6 === pending
+20231204 MooTyper_1125 - Need to see about moving $style1 and $style, lines 155/156
+    of exercises.php to styles.css file.
+20231007 MooTyper_1127 - Need to prevent exercise delete unless it is the last one
+    in the lesson.
+20231210 MooTyper_1129 - Error in new instances with "Activity completion" configured #118.
+    Merged pull request that fixes this.
+20231210 MooTyper_1130 - Module only update completion progress when the instance is
+    updated. #120. Restored missing funtion. Testing shows completion now works.
+
 === 4.2.5 === 20231206
-20231204 MooTyper_1124 - Deleting an exercise from the exercises.php page seems to
+20231204 MooTyper_1124v - Deleting an exercise from the exercises.php page seems to
     possibly be broken/not working. In line 53(57) of the erem.php, I had left a right
     parenthesis when converting from array() to [].
-20231204 MooTyper_1125 - Need to see about moving $style1 and $style, lines 156/157
-    of exercises.php to styles.css file.
-20231204 MooTyper_1126 - Deleting a lesson from exercises.php page seems to be broken.
+20231204 MooTyper_1126v - Deleting a lesson from exercises.php page seems to be broken.
     In line 53(57) of the erem.php, I had left a right parenthesis when converting from
     array() to [].
 

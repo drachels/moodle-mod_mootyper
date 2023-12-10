@@ -152,12 +152,12 @@ if (lessons::is_editable_by_me($USER->id, $id, $lessonpo)) {
 }
 
 // Create border and alignment styles for use as needed.
-$style1 = 'style="border-color: #000000; border-style: solid; border-width: 3px; text-align: center;"';
-$style2 = 'style="border-color: #000000; border-style: solid; border-width: 3px; text-align: left;"';
+//$style1 = 'style="border-color: #000000; border-style: solid; border-width: 3px; text-align: center;"';
+//$style2 = 'style="border-color: #000000; border-style: solid; border-width: 3px; text-align: left;"';
 // Print header row for Lesson table currently being viewed.
-echo '<table><tr><td '.$style1.'>'.get_string('ename', 'mootyper').'</td>
-                 <td '.$style1.'>'.$lessons[$selectedlessonindex]['lessonname'].'</td>
-                 <td '.$style1.'>'.$jlink.'</td></tr>';
+echo '<table><tr><td class="style1">'.get_string('ename', 'mootyper').'</td>
+                 <td class="style1">'.$lessons[$selectedlessonindex]['lessonname'].'</td>
+                 <td class="style1">'.$jlink.'</td></tr>';
 
 // Print table row for each of the exercises in the lesson currently being viewed.
 $exercises = $DB->get_records("mootyper_exercises", ['lesson' => $lessonpo]);
@@ -192,14 +192,14 @@ foreach ($exercises as $ex) {
               .get_string('eeditlabel', 'mootyper').'></a>';
 
     // 20210326 Shorten displayed exercisename as well as text to type.
-    echo '<tr><td '.$style2.'>'.$exnametocut.'</td><td '.$style2.'>'.$strtocut.'</td>';
+    echo '<tr><td class="style2">'.$exnametocut.'</td><td class="style2">'.$strtocut.'</td>';
 
     // If the user can edit or delete this lesson and its exercises, then add edit and delete tools.
     if (lessons::is_editable_by_me($USER->id, $id, $lessonpo)) {
-        echo '<td '.$style1.'>'.$jlink2.' | '.$jlink1.'</td>';
+        echo '<td class="style1">'.$jlink2.' | '.$jlink1.'</td>';
     } else {
         // If the user can not edit or delete, show an empty space.
-        echo '<td '.$style2.'></td>';
+        echo '<td class="style2"></td>';
     }
     echo '</tr>';
 }

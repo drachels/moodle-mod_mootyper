@@ -151,9 +151,7 @@ if (lessons::is_editable_by_me($USER->id, $id, $lessonpo)) {
     echo '</form><br>';
 }
 
-// Create border and alignment styles for use as needed.
-//$style1 = 'style="border-color: #000000; border-style: solid; border-width: 3px; text-align: center;"';
-//$style2 = 'style="border-color: #000000; border-style: solid; border-width: 3px; text-align: left;"';
+// 20240120 Moved style1 and style2 to styles.css file.
 // Print header row for Lesson table currently being viewed.
 echo '<table><tr><td class="style1">'.get_string('ename', 'mootyper').'</td>
                  <td class="style1">'.$lessons[$selectedlessonindex]['lessonname'].'</td>

@@ -433,6 +433,10 @@ function mootyper_update_instance($mootyper, $mform) {
 
     $oldmootyper = $DB->get_record('mootyper', ['id' => $mootyper->id]);
 
+    // 20240119 Added so I could get completions to work.
+    $course = $DB->get_record('course', ['id' => $mootyper->course], '*', MUST_EXIST);
+    $cm = $DB->get_record('course_modules', ['id' => $mootyper->coursemodule, 'course' => $course->id], '*', MUST_EXIST);
+
     // MDL-3942 - if the aggregation type or scale (i.e. max grade) changes then
     // recalculate the grades for the entire mootyper if  scale changes - do we
     // need to recheck the ratings, if ratings higher than scale how do we want
@@ -475,6 +479,19 @@ function mootyper_update_instance($mootyper, $mform) {
     $completiontimeexpected = !empty($mootyper->completionexpected) ? $mootyper->completionexpected : null;
     \core_completion\api::update_completion_date_event($mootyper->coursemodule, 'mootyper', $mootyper->id, $completiontimeexpected);
 
+    // 20240119 Added this and completion started to work.
+    $completion = new completion_info($course);
+
+    // 20240119 Added new completion code.
+    if ($completion->is_enabled($cm) == COMPLETION_TRACKING_AUTOMATIC &&
+        ($mootyper->completionexercise
+            || $mootyper->completionlesson
+            || $mootyper->completionprecision
+            || $mootyper->completionwpm
+            || $mootyper->completionmootypergrade
+        )) {
+        $completion->update_state($cmid, COMPLETION_COMPLETE, $mootyper->id);
+    }
     return $DB->update_record('mootyper', $mootyper);
 }
 
@@ -801,7 +818,7 @@ function mootyper_scale_used_anywhere(int $scaleid): bool {
  */
 function mootyper_grade_item_update($mootyper, $ratings = null, $mootypergrades = null): void {
     global $CFG;
-    require_once("{$CFG->libdir}/gradelib.php");
+    require_once($CFG->libdir.'/gradelib.php');
     // Update the rating.
     $item = [
         'itemname' => get_string('gradeitemnameforrating', 'mootyper', $mootyper),
@@ -865,10 +882,13 @@ function mootyper_grade_item_update($mootyper, $ratings = null, $mootypergrades 
 function mootyper_update_grades($mootyper, $userid=0): void {
     global $CFG, $DB;
     require_once($CFG->libdir.'/gradelib.php');
+
     $cm = get_coursemodule_from_instance('mootyper', $mootyper->id);
     $mootyper->cmidnumber = $cm->idnumber;
     $ratings = null;
+
     if ($mootyper->assessed) {
+        // I think this is the Whole MooTyper grade stuff.
         require_once($CFG->dirroot.'/rating/lib.php');
         $rm = new rating_manager();
         $ratings = $rm->get_user_grades((object) [
@@ -905,13 +925,19 @@ function mootyper_update_grades($mootyper, $userid=0): void {
             $sql .= " AND g.userid = :userid";
             $params['userid'] = $userid;
         }
-
         $mootypergrades = [];
         if ($grades = $DB->get_recordset_sql($sql, $params)) {
             foreach ($grades as $userid => $grade) {
                 if ($grade->rawgrade != -1) {
                     $grade->feedback = $grade->mistakedetails;
                     $mootypergrades[$userid] = $grade;
+                    $course = $DB->get_record('course', ['id' => $mootyper->course]);
+                    // 20240122 I think this needs to be $course.
+                    $ci = new completion_info($course);
+                    if ($cm->completion == COMPLETION_TRACKING_AUTOMATIC) {
+                        $ci->update_state($cm, COMPLETION_UNKNOWN, $grade->userid);
+                    }
+
                 }
             }
             $grades->close();
@@ -1327,96 +1353,3 @@ function mod_mootyper_get_completion_active_rule_descriptions($cm) {
     }
     return $descriptions;
 }
-
-/**
- * Obtains the automatic completion state for this mootyper on any conditions
- * in the mootyper settings, such as requiredgoal or requiredwpm.
- *
- * @param stdClass $course Course
- * @param stdClass $cm Course-module
- * @param int $userid User ID
- * @param bool $type Type of comparison (or/and; can be used as return value if no conditions).
- * @return bool True if completed, false if not. (If no conditions, then return
- *   value depends on comparison type).
- */
-function mootyper_get_completion_state($course, $cm, $userid, $type) {
-    global $CFG, $DB;
-
-    $mootyper = $DB->get_record('mootyper', ['id' => $cm->instance], '*', MUST_EXIST);
-    if (!$mootyper->completionexercise
-        && !$mootyper->completionlesson
-        && !$mootyper->completionprecision
-        && !$mootyper->completionwpm
-        && !$mootyper->completionmootypergrade
-       ) {
-        return $type;
-    }
-
-    $result = $type; // Default return value.
-
-    // Check if the user has completed all exercises by using the code in the custom_completion.php file.
-    // Reload of the web page finally updated the completion for Pete Moss.
-    if ($mootyper->completionexercise) {
-        $value = $mootyper->completionexercise <=
-                 $DB->count_records('mootyper_exercises', ['mootyper' => $mootyper->id, 'userid' => $userid]);
-        if ($type == COMPLETION_AND) {
-            $result = $result && $value;
-        } else {
-            $result = $result || $value;
-        }
-    }
-
-    // Check if the user has completed the lesson.
-    if ($mootyper->completionlesson) {
-        $sql = "SELECT COUNT(mtl.id),
-                       mtl.lessonname,
-                       mt.id,
-                       mt.name,
-                       mt.requiredgoal,
-                       mt.requiredwpm,
-                       mtg.userid,
-                       mtg.grade,
-                       COUNT(mtg.exercise),
-                       COUNT(mtg.pass),
-                       AVG(mtg.precisionfield),
-                       AVG(mtg.wpm)
-                  FROM {mootyper_lessons} mtl
-                  JOIN {mootyper} mt
-                  JOIN {mootyper_exercises} mte
-                  JOIN {mootyper_grades} mtg
-                 WHERE mtl.id = mt.lesson
-                   AND mt.completionlesson > 0
-                   AND mte.lesson = mt.lesson
-                   AND mtg.mootyper = :mootyper
-                   AND mt.id = mtg.mootyper
-                   AND mtg.userid = :userid
-                   AND mtg.grade > mt.grade_mootyper
-                   AND mtg.exercise = mte.id
-                   AND mtg.pass = 1
-                   AND mtg.wpm > mt.requiredwpm";
-
-        $params = ['mootyper' => $mootyper->id, 'userid' => $userid];
-        $value = $mootyper->completionlesson <= $DB->count_records_sql($sql, $params);
-        if ($type == COMPLETION_AND) {
-            $result = $result && $value;
-        } else {
-            $result = $result || $value;
-        }
-    }
-
-    // Check for passing grade.
-    if ($mootyper->completionpass) {
-        require_once($CFG->libdir . '/gradelib.php');
-        $item = grade_item::fetch(['courseid' => $course->id, 'itemtype' => 'mod',
-                'itemmodule' => 'mootyper', 'iteminstance' => $cm->instance, 'outcomeid' => null, ]);
-        if ($item) {
-            $grades = grade_grade::fetch_users_grades($item, [$userid], false);
-            if (!empty($grades[$userid])) {
-                return $grades[$userid]->is_passed($item);
-            }
-        }
-    }
-    return $result;
-}
-
-

@@ -80,11 +80,7 @@ if (!has_capability('mod/mootyper:viewmygrades', context_module::instance($cm->i
     $PAGE->set_cacheable(false);
     echo $OUTPUT->header();
     echo $OUTPUT->heading($mootyper->name);
-    $temp = '<span class="reportlink"><a href="index.php?id='
-        .$course->id.'">'
-        .get_string('viewallmootypers', 'mootyper')
-        .'</a></span>';
-    echo $temp;
+
     echo '<div align="center" style="font-size:1em;
         font-weight:bold;background: '.$color3.';
         border:2px solid black;
@@ -92,7 +88,11 @@ if (!has_capability('mod/mootyper:viewmygrades', context_module::instance($cm->i
         -moz-border-radius:16px;
         border-radius:16px;">';
 
+    // 20240120 Created sub table for report heading and all MooTypers link.
+    echo '<table style="width:90%"><tr><td align="center">';
+
     // Set a heading for the grades table, based on the mode and the lesson/category name.
+    // Set the Mode data.
     switch ($mtmode) {
         case 0:
             echo get_string('fmode', 'mootyper')." = ".get_string('flesson', 'mootyper');
@@ -106,6 +106,7 @@ if (!has_capability('mod/mootyper:viewmygrades', context_module::instance($cm->i
         default:
             echo 'error';
     }
+    // Set the lesson name, time limit, required precision, and the required WPM.
     echo '&nbsp;&nbsp;&nbsp;&nbsp;'.get_string('lsnname', 'mootyper')
         ." = ".$lsnname->lessonname;
     echo '<br>'.get_string('timelimit', 'mootyper')
@@ -114,6 +115,15 @@ if (!has_capability('mod/mootyper:viewmygrades', context_module::instance($cm->i
         .' = '.$mootyper->requiredgoal.'%';
     echo '&nbsp;&nbsp;&nbsp;&nbsp;'.get_string('requiredwpm', 'mootyper')
         .' = '.$mootyper->requiredwpm;
+    echo '</td>';
+
+    // 20240120 Moved and reworked code for link to all the MooTypers in the current course.
+    echo '<td class="reportlink">'
+        .'<a href="index.php?id='
+        .$course->id.'">'
+        .get_string('viewallmootypers', 'mootyper')
+        .'</a></td></tr></table>';
+
     // Update the library.
     if ($des == -1 || $des == 0) {
         $grds = get_typergradesuser(optional_param('n', 0, PARAM_INT), $USER->id, $orderby, 0);
@@ -141,7 +151,8 @@ if (!has_capability('mod/mootyper:viewmygrades', context_module::instance($cm->i
         </span>' : '<span class="arrow-n" style="font-size:1em;"></span>';
     if ($grds != false) {
         echo '<table style="border-style: solid;"><tr>
-            <td>'.get_string('fexercise', 'mootyper').'</td>
+            <td><a href="?id='.$id.'&n='.$n.'&orderby=2'.$lnkadd.'">'
+            .get_string('fexercise', 'mootyper').'</td>
             <td><a href="?id='.$id.'&n='.$n.'&orderby=4'.$lnkadd.'">'
             .get_string('vmistakes', 'mootyper').'</a>'.$arrtextadds[4].'</td>
             <td><a href="?id='.$id.'&n='.$n.'&orderby=5'.$lnkadd.'">'

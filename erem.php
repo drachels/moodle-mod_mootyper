@@ -28,6 +28,7 @@
 
 use mod_mootyper\event\exercise_deleted;
 use mod_mootyper\event\lesson_deleted;
+use mod_mootyper\local\lessons;
 
 // Changed to this newer format 20190301.
 require(__DIR__ . '/../../config.php');
@@ -50,37 +51,32 @@ $context = context_module::instance($cm->id);
 
 if ($exerciseid) {
     $lessonpo = optional_param('lesson', '', PARAM_INT);
-    $DB->delete_records('mootyper_exercises', ['id' => $exerciseid]);
-    // Trigger module exercise_deleted event.
-    $params = [
-        'objectid' => $course->id,
-        'context' => $context,
-        'other' => [
-            'lesson' => $lessonpo,
-            'exercise' => $exerciseid,
-        ],
-    ];
-    $event = exercise_deleted::create($params);
-    $event->trigger();
-} else if ($lessonid) {
-    $DB->delete_records('mootyper_exercises', ['lesson' => $lessonid]);
-    $DB->delete_records('mootyper_lessons', ['id' => $lessonid]);
-    $lessonpo = 0;
-    // Trigger module lesson_deleted event.
-    $params = [
-        'objectid' => $course->id,
-        'context' => $context,
-        'other' => $lessonid,
-    ];
-    $event = lesson_deleted::create($params);
-    $event->trigger();
+    // Get all the other exercises in this lesson so we can fix the snumbers.
+    $exes = lessons::get_exercises_by_lesson($lessonpo);
+    // Initialize a counter to use for snumber replacements.
+    $count = 0;
+    // Adjust the snumber for each of the remaining exercises.
+    foreach ($exes as $exe) {
+        $count++;
+        // Replace the current snumber of this exercise with the current count.
+        $exe['snumber'] = $count + 0;
+
+        $orphanedgrades = $DB->get_records('mootyper_grades', ['exercise' => $exe['id'] = $exerciseid]);
+
+        foreach ($orphanedgrades as $orphanedgrade) {
+            $mootyper = $DB->get_record('mootyper', ['id' => $orphanedgrade->mootyper]);
+            $attempt = $DB->get_records('mootyper_attempts',
+                [
+                    'id' => $orphanedgrade->attemptid,
+                    'mootyperid' => $orphanedgrade->mootyper,
+                ]
+            );
+            $checks = $DB->get_record('mootyper_checks', ['id' => $attemptid]);
+        }
+        // At this point we need to look for orphaned mdl_mootyper_grades that refer to the exercise we just deleted!
+        // If we find any, we need to delete them!
+    }
 }
-// 20200224 Variable $cid not needed after changes to id. Delete after more testing.
-// Out of sequence lesson delete seems to have made follow on exercise appear as part
-// of wrong lesson!
-// Lesson contained three exercises. I deleted number 2, and then number 3 appeared as part
-// of another lesson, lesson aaaa(121).
-// Later - seems to work okay now.
-// $cid = optional_param('id', 0, PARAM_INT);
+
 $webdir = $CFG->wwwroot . '/mod/mootyper/exercises.php?id='.$id.'&lesson='.$lessonpo;
 header('Location: '.$webdir);

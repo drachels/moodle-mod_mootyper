@@ -47,7 +47,7 @@ class custom_completion extends activity_custom_completion {
      * @return int The completion state.
      */
     public function get_state(string $rule): int {
-        global $DB;
+        global $CFG, $DB;
 
         $this->validate_rule($rule);
 
@@ -60,11 +60,7 @@ class custom_completion extends activity_custom_completion {
 
         $status = COMPLETION_INCOMPLETE;
 
-        $finalexercisecompleteparams = ['userid' => $userid, 'mootyperid' => $mootyperid];
-        $finallessoncompleteparams = ['userid' => $userid, 'mootyperid' => $mootyperid];
-        $finalprecisionparams = ['userid' => $userid, 'mootyperid' => $mootyperid];
-        $finalwpmparams = ['userid' => $userid, 'mootyperid' => $mootyperid];
-        $finalmootypergradeparams = ['userid' => $userid, 'mootyperid' => $mootyperid];
+        $params = ['mootyperid' => $mootyperid, 'userid' => $userid];
 
         // All the exercises of a lesson must be successfully completed before bothering to check
         // for lesson, precision, or WPM completion.
@@ -80,22 +76,46 @@ class custom_completion extends activity_custom_completion {
         // Need count of mootyper_grades where mtg.exercise = mte.id AND mtg.pass = 1.
         $exercisecountforthislesson = count(lessons::get_exercises_by_lesson($mootyper->lesson));
 
-        $finalexercisecompletesql = "SELECT COUNT(mtg.userid),
-                                            AVG(mtg.grade),
-                                            mtg.timetaken,
-                                            mtg.mistakedetails,
-                                            mtg.exercise,
-                                            AVG(mtg.precisionfield),
-                                            AVG(mtg.wpm),
-                                            AVG(mtg.pass)
-                                       FROM {mootyper} m
-                                       JOIN {mootyper_grades} mtg ON mtg.mootyper = m.id
-                                      WHERE m.id = :mootyper
-                                        AND mtg.userid = :userid
-                                        AND mtg.grade >= m.grade_mootyper
-                                        AND mtg.precisionfield >= m.requiredgoal
-                                        AND mtg.wpm >= m.requiredwpm
-                                        AND mtg.pass = 1";
+        // Create SQL for prompts based on DB type.
+        if ($CFG->dbtype == 'pgsql') {
+            // 20240112 Modified for Postgresql.
+            $finalexercisecompletesql = "SELECT COALESCE(COUNT(mtg.userid), 0) AS count,
+                                                AVG(mtg.grade),
+                                                mtg.timetaken,
+                                                mtg.mistakedetails,
+                                                mtg.exercise,
+                                                AVG(mtg.precisionfield),
+                                                AVG(mtg.wpm),
+                                                AVG(mtg.pass)
+                                           FROM {mootyper} m
+                                      LEFT JOIN {mootyper_grades} mtg ON mtg.mootyper = m.id
+                                            AND mtg.userid = :userid
+                                            AND mtg.grade >= m.grade_mootyper
+                                            AND mtg.precisionfield >= m.requiredgoal
+                                            AND mtg.wpm >= m.requiredwpm
+                                            AND mtg.pass = 1
+                                          WHERE m.id = :mootyperid
+                                       GROUP BY mtg.timetaken, mtg.mistakedetails, mtg.exercise
+                                       ORDER BY mtg.timetaken ASC";
+        } else {
+            // This version works for MariaDB and MySQL.
+            $finalexercisecompletesql = "SELECT COUNT(mtg.userid),
+                                                AVG(mtg.grade),
+                                                mtg.timetaken,
+                                                mtg.mistakedetails,
+                                                mtg.exercise,
+                                                AVG(mtg.precisionfield),
+                                                AVG(mtg.wpm),
+                                                AVG(mtg.pass)
+                                           FROM {mootyper} m
+                                           JOIN {mootyper_grades} mtg ON mtg.mootyper = m.id
+                                          WHERE m.id = :mootyperid
+                                            AND mtg.userid = :userid
+                                            AND mtg.grade >= m.grade_mootyper
+                                            AND mtg.precisionfield >= m.requiredgoal
+                                            AND mtg.wpm >= m.requiredwpm
+                                            AND mtg.pass = 1";
+        }
 
         // Need SQL that gets the final lesson completed status.
         // mdl_mootyper has lesson id, mode, requiredgoal, requiredwpm, and the four completions.
@@ -113,7 +133,7 @@ class custom_completion extends activity_custom_completion {
         $finalprecisionsql = "SELECT AVG(mtg.precisionfield) AS precisionfield
                                 FROM {mootyper} m
                                 JOIN {mootyper_grades} mtg ON mtg.mootyper = m.id
-                               WHERE m.id = :mootyper
+                               WHERE m.id = :mootyperid
                                  AND mtg.userid = :userid
                                  AND mtg.precisionfield > 0";
 
@@ -121,7 +141,7 @@ class custom_completion extends activity_custom_completion {
         $finalwpmsql = "SELECT AVG(mtg.wpm) AS wpm
                           FROM {mootyper} m
                           JOIN {mootyper_grades} mtg ON mtg.mootyper = m.id
-                         WHERE m.id = :mootyper
+                         WHERE m.id = :mootyperid
                            AND mtg.userid = :userid
                            AND mtg.wpm >= 0";
 
@@ -129,42 +149,33 @@ class custom_completion extends activity_custom_completion {
         $finalmootypergradesql = "SELECT AVG(mtg.grade) AS grade
                                     FROM {mootyper} m
                                     JOIN {mootyper_grades} mtg ON mtg.mootyper = m.id
-                                   WHERE m.id = :mootyper
+                                   WHERE m.id = :mootyperid
                                      AND mtg.userid = :userid
                                      AND mtg.grade >= 0";
 
         if ($rule == 'completionexercise') {
             // Set completionexercise rule only when all exercises for the lesson are completed.
             $status = $mootyper->completionexercise <=
-                $DB->count_records_sql($finalexercisecompletesql, ['mootyper' => $mootyperid, 'userid' => $userid]);
-
+                $DB->count_records_sql($finalexercisecompletesql, $params);
             $currentsetofrecords = [];
-            $currentsetofrecords = $DB->get_records_sql($finalexercisecompletesql,
-                                                           ['mootyper' => $mootyperid,
-                                                           'userid' => $userid,
-                                                           ],
-                                                       );
+            $currentsetofrecords = $DB->get_records_sql($finalexercisecompletesql, $params);
         } else if ($rule == 'completionlesson') {
             // Set completionlesson rule only when completionexercise is completed.
             if ($status = $mootyper->completionexercise <=
-                    $DB->count_records_sql($finalexercisecompletesql, ['mootyper' => $mootyperid, 'userid' => $userid])) {
+                    $DB->count_records_sql($finalexercisecompletesql, $params)) {
                 // Completionlesson is always 1.
                 $status = $mootyper->completionlesson = 1;
             } else {
-                // Completionlesson is the percentage of items that need checking-off.
                 $status = $mootyper->completionlesson = 0;
             }
         } else if ($rule == 'completionprecision') {
             // Set completionprecision rule only when completionexercise is completed.
             if ($status = $mootyper->completionexercise <=
-                    $DB->count_records_sql($finalexercisecompletesql, ['mootyper' => $mootyperid, 'userid' => $userid])) {
-                // Need completionprecision sql.
+                    $DB->count_records_sql($finalexercisecompletesql, $params)) {
                 $mootyperprecision = [];
-                $mootyperprecision = $DB->get_records_sql($finalprecisionsql, ['mootyper' => $mootyperid, 'userid' => $userid]);
-
+                $mootyperprecision = $DB->get_records_sql($finalprecisionsql, $params);
                 ksort($mootyperprecision, SORT_NUMERIC);
                 $mootyperprecision = array_values($mootyperprecision);
-
                 if ($mootyperprecision[0]->precisionfield >= $mootyper->completionprecision) {
                     $status = $mootyper->completionprecision = 1;
                 } else {
@@ -174,14 +185,11 @@ class custom_completion extends activity_custom_completion {
         } else if ($rule == 'completionwpm') {
             // Set completionwpm rule only when completionexercise is completed.
             if ($status = $mootyper->completionexercise <=
-                    $DB->count_records_sql($finalexercisecompletesql, ['mootyper' => $mootyperid, 'userid' => $userid])) {
-
-                // Need completionwpm sql.
+                    $DB->count_records_sql($finalexercisecompletesql, $params)) {
                 $mootyperwpm = [];
-                $mootyperwpm = $DB->get_records_sql($finalwpmsql, ['mootyper' => $mootyperid, 'userid' => $userid]);
+                $mootyperwpm = $DB->get_records_sql($finalwpmsql, $params);
                 ksort($mootyperwpm, SORT_NUMERIC);
                 $mootyperwpm = array_values($mootyperwpm);
-
                 if ($mootyperwpm[0]->wpm >= $mootyper->completionwpm) {
                     $status = $mootyper->completionwpm = 1;
                 } else {
@@ -191,9 +199,9 @@ class custom_completion extends activity_custom_completion {
         } else if ($rule == 'completionmootypergrade') {
             // Set completionmootypergrade rule only when completionexercise is completed.
             if ($status = $mootyper->completionexercise <=
-                    $DB->count_records_sql($finalexercisecompletesql, ['mootyper' => $mootyperid, 'userid' => $userid])) {
+                    $DB->count_records_sql($finalexercisecompletesql, $params)) {
                 $mootypergrade = [];
-                $mootypergrade = $DB->get_records_sql($finalmootypergradesql, ['mootyper' => $mootyperid, 'userid' => $userid]);
+                $mootypergrade = $DB->get_records_sql($finalmootypergradesql, $params);
                 ksort($mootypergrade, SORT_NUMERIC);
                 $mootypergrade = array_values($mootypergrade);
                 if ($mootypergrade[0]->grade >= $mootyper->completionmootypergrade) {
@@ -202,7 +210,6 @@ class custom_completion extends activity_custom_completion {
                     $status = $mootyper->completionmootypergrade = 0;
                 }
             }
-
         }
         return $status ? COMPLETION_COMPLETE : COMPLETION_INCOMPLETE;
     }

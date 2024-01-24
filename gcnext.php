@@ -34,6 +34,7 @@ require(__DIR__ . '/../../config.php');
 require_once(__DIR__ . '/lib.php');
 
 global $CFG, $DB;
+    require_once($CFG->libdir.'/completionlib.php');
 
 $cmid = optional_param('cmid', 0, PARAM_INT); // Course_module ID.
 $lsnname = optional_param('lsnname', '', PARAM_RAW); // MooTyper lesson name.
@@ -162,6 +163,8 @@ $params = [
 if ($mtmode === 1) {
     $event = exam_completed::create($params);
     // 20230910 If an exam is completed, so is completionexercises and and lesson.
+    // Hmm, setting these to 1 here might be an error. Might be that I just need
+    // to initiate completion for the current user.
     $mootyper->completionexercise <= 1;
     $mootyper->completionlesson <= 1;
     // ...$mootyper->completionprecision <= 1;.
@@ -173,7 +176,11 @@ if ($mtmode === 1) {
 }
 $event->trigger();
 
+
+
 // Added 20191203 If all the exercises in a lesson are complete, trigger lesson_completed event, too.
+// 20240119 If all the exercises in a lesson are complete for this user, trigger completion
+// for completionexercise, completionlesson, completionprecision, completionwpm, and completionmootypergrade.
 if (!($mtmode === 1) && ($exercisename === $count)) {
     $params = [
         'objectid' => $cmid,
@@ -184,6 +191,23 @@ if (!($mtmode === 1) && ($exercisename === $count)) {
             'activity' => $cm->name,
         ],
     ];
+
+    // 20240120 Added as it was needed by $completion.
+    $course = $DB->get_record('course', ['id' => $courseid], '*', MUST_EXIST);
+
+    // 20240119 Added new completion code.
+    $completion = new completion_info($course);
+    if ($completion->is_enabled($cm) == COMPLETION_TRACKING_AUTOMATIC &&
+        ($mootyper->completionexercise
+            || $mootyper->completionlesson
+            || $mootyper->completionprecision
+            || $mootyper->completionwpm
+            || $mootyper->completionmootypergrade
+        )) {
+        $completion->update_state($cm, COMPLETION_COMPLETE, $mootyper->id);
+    }
+
+
     // 20230910 If all the exercises are completed, so is completionexercise and and completionlesson.
     $mootyper->completionexercise <= $count;
     $mootyper->completionlesson <= 1;

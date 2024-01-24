@@ -50,23 +50,61 @@ sending an email, leave a comment at
     https://moodle.org/plugins/mod_mootyper
 ===============
 === Deferred to a later version. ===
-
+20200521 MooTyper_471 - Need to add missing items to activity edit page - mod_form.php. 
+20231007 MooTyper_1127 - Need to prevent exercise delete unless it is the last one
+    in the lesson.
 20231014 MooTyper_1100 - Need to revisit cron_task.php as it is not really needed.
+20231019 MooTyper_1102 - See about changing Suspicion to be based on WPM and character
+    count of the exercise.
+20240110 MooTyper_1166 - When a teacher deletes an exercise result on gview.php, it does
+    not reset the completion status of the student.
+
+20240111 MooTyper_1168 - Deleting a MooTyper instance seems to leasve some items undeleted.
 
 
+ 
 
 Moodle Versions
 ===============
-=== 4.2.6 === pending
-20231204 MooTyper_1125 - Need to see about moving $style1 and $style, lines 155/156
-    of exercises.php to styles.css file.
-20231007 MooTyper_1127 - Need to prevent exercise delete unless it is the last one
-    in the lesson.
-20231210 MooTyper_1129 - Error in new instances with "Activity completion" configured #118.
-    Merged pull request that fixes this.
-20231210 MooTyper_1130 - Module only update completion progress when the instance is
-    updated. #120. Restored missing funtion. Testing shows completion now works.
+=== 4.2.7 === pending
+20230929 MooTyper_1083 - In lib.php, function mootyper_get_completion_state($course, $cm,
+    $userid, $type), needs to be removed. See ticket. This function has currently been
+    removed.
+20231212 MooTyper_1131 - Deleting an exercise leaves orphaned grades if a user has already
+    completed the exercise. Current code warns the teacher that an orphaned grade needs to
+    be deleted. See also, MooTyper_1165.
 
+20240110 MooTyper_1164 - Completion does not work for, Require lesson completion,
+    by itself. See ticket for current progress. Still needs work.
+
+
+20240110 MooTyper_1165 - There is some hard coded text, Need to delete., in gview.php
+    at about line 287. Converted the hard coded text to a string and added code to use
+    it in the gview.php page at about line 286.
+
+
+
+20240119 MooTyper_1176 - Sql in var $finalexercisecompletesql fails because it's missing,
+    Group By #121. Modified the SQL to use two versions based on the DB type. 
+20240120 MooTyper_1177 - Heading on the owngrades page is not formatting correctly. Added
+    a sub-table. See the ticket for details.
+20240120 MooTyper_1178 - Cannot sort data based on the exercise name. Added the code
+    that was missing. Sort by exercise name now works like the other columns on the page.
+20240121 MooTyper_1179 - The custom_completion.php file needs to use simplified $params.
+    Made a LOT of changes. See the ticket for details. 
+
+
+
+=== 4.2.6 === 2023121000
+20231204 MooTyper_1125v - Need to see about moving $style1 and $style, lines 155/156
+    of exercises.php to styles.css file. Added a, .style1 and .style2 into the styles.css
+    file. In the exercises.php file, for testing I commented out the line 155 and 156. I
+    then modified lines 158, 159, 160, and 199 to use class="style1" and then in two
+    places in line 195 I modified it to use class="style2".
+20231210 MooTyper_1129v - Error in new instances with "Activity completion" configured #118.
+    Merged pull request that fixes this.
+20231210 MooTyper_1130v - Module only update completion progress when the instance is
+    updated. #120. Restored missing function. Testing shows completion now works.
 === 4.2.5 === 20231206
 20231204 MooTyper_1124v - Deleting an exercise from the exercises.php page seems to
     possibly be broken/not working. In line 53(57) of the erem.php, I had left a right
@@ -74,8 +112,6 @@ Moodle Versions
 20231204 MooTyper_1126v - Deleting a lesson from exercises.php page seems to be broken.
     In line 53(57) of the erem.php, I had left a right parenthesis when converting from
     array() to [].
-
-
 
 === 4.2.4 === 2023110200
 20201006 MooTyper_629v - Request for Home Row Keys color settings. Have applied a

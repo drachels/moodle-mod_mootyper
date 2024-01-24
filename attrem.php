@@ -34,6 +34,9 @@ require(__DIR__ . '/../../config.php');
 
 global $DB;
 
+// NOTE!!!! I think completion stuff is not needed here as the lib.php mootyper_update_grades
+// function always gets invoked after a grade delete.
+
 $mid = optional_param('m_id', 0, PARAM_INT);  // MooTyper id (mdl_mootyper).
 $cid = optional_param('c_id', 0, PARAM_INT);  // Course module id (mdl_course_modules).
 $context = optional_param('context', 0, PARAM_INT);  // MooTyper id (mdl_mootyper).
@@ -42,10 +45,11 @@ $mtmode = optional_param('mtmode', 0, PARAM_INT);
 
 $mootyper = $DB->get_record('mootyper', ['id' => $mid], '*', MUST_EXIST);
 $course = $mootyper->course;
-$cm = get_coursemodule_from_instance('mootyper', $mootyper->id, $course->id, false, MUST_EXIST);
+$cm = get_coursemodule_from_instance('mootyper', $mootyper->id, $course, false, MUST_EXIST);
 
 $context = context_module::instance($cm->id);
 require_login($course, true, $cm);
+
 
 if (isset($gradeid)) {
     $dbgrade = $DB->get_record('mootyper_grades', ['id' => $gradeid]);

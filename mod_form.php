@@ -417,11 +417,12 @@ class mod_mootyper_mod_form extends moodleform_mod {
     }
 
     /**
-     * Add custom completion rules to the form.
+     * Add elements for setting the custom completion rules on the form.
      *
      * @return array Array of string IDs of added items, empty array if none.
      */
     public function add_completion_rules() {
+        // Added for branch check.
         global $CFG;
         $mform = $this->_form;
 
@@ -441,14 +442,18 @@ class mod_mootyper_mod_form extends moodleform_mod {
             '',
             get_string('completionexercise', 'mootyper')
             );
-        $group[] = $mform->createElement('text', $completionexercise, '', ['size' => 3]);
+        $group[] = $mform->createElement('text',
+            $completionexercise,
+            '',
+            ['size' => 3]
+        );
         $mform->setType($completionexercise, PARAM_INT);
         $mform->addGroup($group,
             $completionexercisegroup,
             get_string('completionexercisegroup', 'mootyper'),
             [' '],
             false
-            );
+        );
         $mform->disabledIf($completionexercise, $completionexerciseenabled, 'notchecked');
 
         // 20230926 Added new and changed code for Moodle 4.3.
@@ -459,16 +464,17 @@ class mod_mootyper_mod_form extends moodleform_mod {
         $group = [];
         $group[] = $mform->createElement('checkbox',
             $completionlessonenabled,
-            '',
-            get_string('completionlesson', 'mootyper')
-            );
+            'test3',
+            get_string('completionlesson', 'mootyper').' test1',
+            'test2'
+        );
         $mform->setType($completionlesson, PARAM_INT);
         $mform->addGroup($group,
             $completionlessongroup,
             get_string('completionlessongroup', 'mootyper'),
             [' '],
             false
-            );
+        );
         $mform->disabledIf($completionlesson, $completionlessonenabled, 'notchecked');
 
         // 20230926 Added new and changed code for Moodle 4.3.
@@ -481,7 +487,7 @@ class mod_mootyper_mod_form extends moodleform_mod {
             $completionprecisionenabled,
             '',
             get_string('completionprecision', 'mootyper')
-            );
+        );
         $group[] = $mform->createElement('text', $completionprecision, '', ['size' => 3]);
         $mform->setType($completionprecision, PARAM_INT);
         $mform->addGroup($group,
@@ -489,7 +495,7 @@ class mod_mootyper_mod_form extends moodleform_mod {
             get_string('completionprecisiongroup', 'mootyper'),
             [' '],
             false
-            );
+        );
         $mform->disabledIf($completionprecision, $completionprecisionenabled, 'notchecked');
 
         // 20230926 Added new and changed code for Moodle 4.3.
@@ -502,7 +508,7 @@ class mod_mootyper_mod_form extends moodleform_mod {
             'completionwpmenabled',
             '',
             get_string('completionwpm', 'mootyper')
-            );
+        );
         $group[] = $mform->createElement('text', 'completionwpm', '', ['size' => 3]);
         $mform->setType('completionwpm', PARAM_INT);
         $mform->addGroup($group,
@@ -510,7 +516,7 @@ class mod_mootyper_mod_form extends moodleform_mod {
             get_string('completionwpmgroup', 'mootyper'),
             [' '],
             false
-            );
+        );
         $mform->disabledIf('completionwpm', 'completionwpmenabled', 'notchecked');
 
         // 20230926 Added new and changed code for Moodle 4.3.
@@ -524,22 +530,23 @@ class mod_mootyper_mod_form extends moodleform_mod {
             'completionmootypergradeenabled',
             '',
             get_string('completionmootypergrade', 'mootyper')
-            );
+        );
         $group[] = $mform->createElement('text', 'completionmootypergrade', '', ['size' => 3]);
         $mform->setType('completionmootypergrade', PARAM_INT);
         $mform->addGroup($group,
             'completionmootypergradegroup',
             get_string('completionmootypergradegroup', 'mootyper'),
             [' '],
-            false);
+            false
+        );
         $mform->disabledIf('completionmootypergrade', 'completionmootypergradeenabled', 'notchecked');
 
         return [$completionexercisegroup,
-                $completionlessongroup,
-                $completionprecisiongroup,
-                $completionwpmgroup,
-                $completionmootypergradegroup,
-                ];
+            $completionlessongroup,
+            $completionprecisiongroup,
+            $completionwpmgroup,
+            $completionmootypergradegroup,
+        ];
     }
 
     /**
@@ -549,6 +556,7 @@ class mod_mootyper_mod_form extends moodleform_mod {
      * @return bool True if one or more rules is enabled, false if none are.
      */
     public function completion_rule_enabled($data) {
+        global $CFG;
 
         // 20230926 Changed code for Moodle 4.3.
         if ($CFG->branch < 403) {
@@ -588,9 +596,36 @@ class mod_mootyper_mod_form extends moodleform_mod {
      */
     public function get_data() {
         $data = parent::get_data();
-        if ($data) {
-            $itemname = 'mootyper';
-            $component = 'mod_mootyper';
+        if (!$data) {
+            return false;
+        }
+
+        // Turn off completion settings if the checkboxes aren't ticked.
+        if (isset($data->completionexercise)) {
+            $autocompletion = !empty($data->completion) && $data->completion == COMPLETION_TRACKING_AUTOMATIC;
+            if (empty($data->completionexerciseenabled) || !$autocompletion) {
+                $data->completionexercise = 0;
+            }
+        } else if (isset($data->completionlesson)) {
+            $autocompletion = !empty($data->completion) && $data->completion == COMPLETION_TRACKING_AUTOMATIC;
+            if (empty($data->completionlessonenabled) || !$autocompletion) {
+                $data->completionlesson = 0;
+            }
+        } else if (isset($data->completionprecision)) {
+            $autocompletion = !empty($data->completion) && $data->completion == COMPLETION_TRACKING_AUTOMATIC;
+            if (empty($data->completionprecisionenabled) || !$autocompletion) {
+                $data->completionprecision = 0;
+            }
+        } else if (isset($data->completionwpm)) {
+            $autocompletion = !empty($data->completion) && $data->completion == COMPLETION_TRACKING_AUTOMATIC;
+            if (empty($data->completionwpmenabled) || !$autocompletion) {
+                $data->completionwpm = 0;
+            }
+        } else if (isset($data->completionmootypergrade)) {
+            $autocompletion = !empty($data->completion) && $data->completion == COMPLETION_TRACKING_AUTOMATIC;
+            if (empty($data->completionmootypergradeenabled) || !$autocompletion) {
+                $data->completionmootypergrade = 0;
+            }
         }
 
         return $data;
@@ -610,31 +645,31 @@ class mod_mootyper_mod_form extends moodleform_mod {
         $defaultvalues['completionexerciseenabled'] =
             !empty($defaultvalues['completionexercise']) ? 1 : 0;
         if (empty($defaultvalues['completionexercise'])) {
-            $defaultvalues['completionexercise'] = 1;
+            $defaultvalues['completionexercise'] = 0;
         }
 
         $defaultvalues['completionlessonenabled'] =
             !empty($defaultvalues['completionlesson']) ? 1 : 0;
         if (empty($defaultvalues['completionlesson'])) {
-            $defaultvalues['completionlesson'] = 1;
+            $defaultvalues['completionlesson'] = 0;
         }
 
         $defaultvalues['completionprecisionenabled'] =
             !empty($defaultvalues['completionprecision']) ? 1 : 0;
         if (empty($defaultvalues['completionprecision'])) {
-            $defaultvalues['completionprecision'] = 1;
+            $defaultvalues['completionprecision'] = 0;
         }
 
         $defaultvalues['completionwpmenabled'] =
             !empty($defaultvalues['completionwpm']) ? 1 : 0;
         if (empty($defaultvalues['completionwpm'])) {
-            $defaultvalues['completionwpm'] = 1;
+            $defaultvalues['completionwpm'] = 0;
         }
 
         $defaultvalues['completionmootypergradeenabled'] =
             !empty($defaultvalues['completionmootypergrade']) ? 1 : 0;
         if (empty($defaultvalues['completionmootypergrade'])) {
-            $defaultvalues['completionmootypergrade'] = 1;
+            $defaultvalues['completionmootypergrade'] = 0;
         }
     }
 }

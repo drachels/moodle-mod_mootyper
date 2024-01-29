@@ -86,7 +86,7 @@ if ($ADMIN->fulltree) {
         $wpm[] = $i;
     }
     $settings->add(new admin_setting_configselect('mod_mootyper/defaultwpm',
-        get_string('defaultwpm', 'mootyper'), '', 0, $wpm));
+        get_string('defaultwpm', 'mootyper'), '', 20, $wpm));
 
     // Default text alignment while typing an exercise.
     $settings->add(new admin_setting_configselect('mod_mootyper/defaulttextalign',

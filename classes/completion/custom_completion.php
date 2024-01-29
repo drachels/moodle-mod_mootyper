@@ -62,11 +62,13 @@ class custom_completion extends activity_custom_completion {
 
         $params = ['mootyperid' => $mootyperid, 'userid' => $userid];
 
-        // All the exercises of a lesson must be successfully completed before bothering to check
-        // for lesson, precision, or WPM completion.
-        // If the exercises are successfully completed, is the lesson sucessfully compled?
+        // The required number of exercises of a lesson must be successfully completed before
+        // bothering to check for lesson, precision, or WPM completion.
+        // If ALL or the REQUIRED number of exercises are successfully completed, is the
+        // lesson sucessfully completed?
         // If the exercises and the lesson are complete, was the required precision achieved?
         // If the exercises and the lesson are complete, was the required wpm achieved?
+        // If the exercises and the lesson are complete, was the require MooTyper Grade achieved?
 
         // Need count of exercises in current lesson and then need the count of exercise grades
         // for the current lesson that have been passed.
@@ -76,46 +78,13 @@ class custom_completion extends activity_custom_completion {
         // Need count of mootyper_grades where mtg.exercise = mte.id AND mtg.pass = 1.
         $exercisecountforthislesson = count(lessons::get_exercises_by_lesson($mootyper->lesson));
 
-        // Create SQL for prompts based on DB type.
-        if ($CFG->dbtype == 'pgsql') {
-            // 20240112 Modified for Postgresql.
-            $finalexercisecompletesql = "SELECT COALESCE(COUNT(mtg.userid), 0) AS count,
-                                                AVG(mtg.grade),
-                                                mtg.timetaken,
-                                                mtg.mistakedetails,
-                                                mtg.exercise,
-                                                AVG(mtg.precisionfield),
-                                                AVG(mtg.wpm),
-                                                AVG(mtg.pass)
-                                           FROM {mootyper} m
-                                      LEFT JOIN {mootyper_grades} mtg ON mtg.mootyper = m.id
-                                            AND mtg.userid = :userid
-                                            AND mtg.grade >= m.grade_mootyper
-                                            AND mtg.precisionfield >= m.requiredgoal
-                                            AND mtg.wpm >= m.requiredwpm
-                                            AND mtg.pass = 1
-                                          WHERE m.id = :mootyperid
-                                       GROUP BY mtg.timetaken, mtg.mistakedetails, mtg.exercise
-                                       ORDER BY mtg.timetaken ASC";
-        } else {
-            // This version works for MariaDB and MySQL.
-            $finalexercisecompletesql = "SELECT COUNT(mtg.userid),
-                                                AVG(mtg.grade),
-                                                mtg.timetaken,
-                                                mtg.mistakedetails,
-                                                mtg.exercise,
-                                                AVG(mtg.precisionfield),
-                                                AVG(mtg.wpm),
-                                                AVG(mtg.pass)
-                                           FROM {mootyper} m
-                                           JOIN {mootyper_grades} mtg ON mtg.mootyper = m.id
-                                          WHERE m.id = :mootyperid
-                                            AND mtg.userid = :userid
-                                            AND mtg.grade >= m.grade_mootyper
-                                            AND mtg.precisionfield >= m.requiredgoal
-                                            AND mtg.wpm >= m.requiredwpm
-                                            AND mtg.pass = 1";
-        }
+        // 20240127 Modified for Postgresql.
+        $finalexercisecompletesql = "SELECT COUNT(*)
+                                       FROM {mootyper_grades} mtg
+                                       JOIN {mootyper} m ON mtg.mootyper = m.id
+                                      WHERE mtg.userid = :userid
+                                        AND mtg.pass = 1
+                                        AND m.id = :mootyperid";
 
         // Need SQL that gets the final lesson completed status.
         // mdl_mootyper has lesson id, mode, requiredgoal, requiredwpm, and the four completions.
@@ -127,6 +96,7 @@ class custom_completion extends activity_custom_completion {
                                     WHERE mte.lesson = mtl.id
                                       AND mte.lesson = mt.lesson
                                       AND mt.id = mtg.mootyper
+                                      AND mtg.mootyper = :mootyper
                                       AND mtg.userid = :userid";
 
         // Need SQL that gets the final precision.
@@ -163,13 +133,20 @@ class custom_completion extends activity_custom_completion {
             // Set completionlesson rule only when completionexercise is completed.
             if ($status = $mootyper->completionexercise <=
                     $DB->count_records_sql($finalexercisecompletesql, $params)) {
-                // Completionlesson is always 1.
+                // Completionlesson should always be 1.
                 $status = $mootyper->completionlesson = 1;
             } else {
                 $status = $mootyper->completionlesson = 0;
             }
         } else if ($rule == 'completionprecision') {
             // Set completionprecision rule only when completionexercise is completed.
+            // Take in to account the mode.
+            // Exam mode one exercise only is required, and Pass or Fail, both exercise and lesson are completed.
+            // Lesson mode one to all exercises in the lesson, and Pass or Fail, all must be completed then both
+            // exercise and lesson are completed.
+            // Practice mode one to all exercise required, only Passing exercises are considered, give the teacher
+            // the option to allow lesson completion on number of exercises required or on the the total
+            // number of exercises in the lesson.
             if ($status = $mootyper->completionexercise <=
                     $DB->count_records_sql($finalexercisecompletesql, $params)) {
                 $mootyperprecision = [];

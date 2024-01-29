@@ -117,6 +117,7 @@ $string['defaultwpm'] = 'Default words per minute rate';
 $string['delete'] = 'Delete';
 $string['deleteall'] = 'Delete all from ';
 $string['deletekb'] = 'Delete keyboard layouts';
+$string['deletegrade'] = 'Need to delete.';
 $string['deletegradeconfirm'] = 'Confirm you are about to delete exercise results for ';
 $string['deletelsnconfirm'] = 'Confirm you are about to completely delete ';
 $string['deleteexconfirm'] = 'Confirm you are about to delete an exercise from ';

@@ -426,7 +426,7 @@ class mod_mootyper_mod_form extends moodleform_mod {
         global $CFG;
         $mform = $this->_form;
 
-        // 20230926 Changed code for Moodle 4.3.
+        // 20230926 Changed code for Moodle 4.3 to add a suffix.
         if ($CFG->branch < 403) {
             $suffix = '';
         } else {
@@ -456,7 +456,7 @@ class mod_mootyper_mod_form extends moodleform_mod {
         );
         $mform->disabledIf($completionexercise, $completionexerciseenabled, 'notchecked');
 
-        // 20230926 Added new and changed code for Moodle 4.3.
+        // 20230926 Added new Require Exercise and changed code for Moodle 4.3.
         $completionlessongroup = 'completionlessongroup'.$suffix;
         $completionlessonenabled = 'completionlessonenabled'.$suffix;
         $completionlesson = 'completionlesson'.$suffix;
@@ -464,9 +464,9 @@ class mod_mootyper_mod_form extends moodleform_mod {
         $group = [];
         $group[] = $mform->createElement('checkbox',
             $completionlessonenabled,
-            'test3',
-            get_string('completionlesson', 'mootyper').' test1',
-            'test2'
+            '',
+            get_string('completionlesson', 'mootyper'),
+            ''
         );
         $mform->setType($completionlesson, PARAM_INT);
         $mform->addGroup($group,
@@ -477,7 +477,7 @@ class mod_mootyper_mod_form extends moodleform_mod {
         );
         $mform->disabledIf($completionlesson, $completionlessonenabled, 'notchecked');
 
-        // 20230926 Added new and changed code for Moodle 4.3.
+        // 20230926 Added new Require Precision and changed code for Moodle 4.3.
         $completionprecisiongroup = 'completionprecisiongroup'.$suffix;
         $completionprecisionenabled = 'completionprecisionenabled'.$suffix;
         $completionprecision = 'completionprecision'.$suffix;
@@ -498,7 +498,7 @@ class mod_mootyper_mod_form extends moodleform_mod {
         );
         $mform->disabledIf($completionprecision, $completionprecisionenabled, 'notchecked');
 
-        // 20230926 Added new and changed code for Moodle 4.3.
+        // 20230926 Added new Require WPM and changed code for Moodle 4.3.
         $completionwpmgroup = 'completionwpmgroup'.$suffix;
         $completionwpmenabled = 'completionwpmenabled'.$suffix;
         $completionwpm = 'completionwpm'.$suffix;
@@ -519,12 +519,11 @@ class mod_mootyper_mod_form extends moodleform_mod {
         );
         $mform->disabledIf('completionwpm', 'completionwpmenabled', 'notchecked');
 
-        // 20230926 Added new and changed code for Moodle 4.3.
+        // 20230926 Added new MooTyper Grade and changed code for Moodle 4.3.
         $completionmootypergradegroup = 'completionmootypergradegroup'.$suffix;
         $completionmootypergradeenabled = 'completionmootypergradeenabled'.$suffix;
         $completionmootypergrade = 'completionmootypergrade'.$suffix;
 
-        // Need to add code for completionmootypergrade, here.
         $group = [];
         $group[] = $mform->createElement('checkbox',
             'completionmootypergradeenabled',

@@ -67,14 +67,14 @@ sending an email, leave a comment at
 Moodle Versions
 ===============
 === 4.2.7 === pending
-20230929 MooTyper_1083 - In lib.php, function mootyper_get_completion_state($course, $cm,
+20230929 MooTyper_1083p - In lib.php, function mootyper_get_completion_state($course, $cm,
     $userid, $type), needs to be removed. See ticket. This function has currently been
     removed.
 20231212 MooTyper_1131 - Deleting an exercise leaves orphaned grades if a user has already
     completed the exercise. Current code warns the teacher that an orphaned grade needs to
     be deleted. See also, MooTyper_1165.
 
-20240110 MooTyper_1164 - Completion does not work for, Require lesson completion,
+20240110 MooTyper_1164p - Completion does not work for, Require lesson completion,
     by itself. See ticket for current progress. Still needs work.
 
 
@@ -90,7 +90,7 @@ Moodle Versions
     a sub-table. See the ticket for details.
 20240120 MooTyper_1178 - Cannot sort data based on the exercise name. Added the code
     that was missing. Sort by exercise name now works like the other columns on the page.
-20240121 MooTyper_1179 - The custom_completion.php file needs to use simplified $params.
+20240121 MooTyper_1179p - The custom_completion.php file needs to use simplified $params.
     Made a LOT of changes. See the ticket for details. 
 
 

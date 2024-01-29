@@ -283,6 +283,10 @@ if (!has_capability('mod/mootyper:viewgrades', context_module::instance($cm->id)
                 // Keep grades for group members so stats will be just for the group selected.
                 $grds2[] = $gr;
                 $fcol = $gr->exercisename;
+                // 20240110 Added new string for orphaned grades that need to be deleted.
+                if ($fcol == '') {
+                    $fcol = get_string('deletegrade', 'mootyper');
+                }
                 $fcol = get_string('exercise_abreviation', 'mootyper').'-'.$fcol;  // This gets the exercise number.
                 $removelnk = '<a onclick="return confirm(\''
                     .get_string('deletegradeconfirm', 'mootyper')
@@ -301,11 +305,12 @@ if (!has_capability('mod/mootyper:viewgrades', context_module::instance($cm->id)
 
                 // 20191230 Combine new mistakedetails with mistakes count.
                 $strtocut = $gr->mistakes.': '.$gr->mistakedetails;
-
+                // 20231216 Added next line for exerciseid to find orphaned grades, and use it four lines later.
+                $se = $gr->exercise;
                 // 20210327 Added alignment to Exercise, Mistakes and Elapsed time columns.
                 echo '<tr align="center" style="border-top-style: solid;'.$stil.'">
                              <td>'.$exclamation.' '.$namelnk.'</td>
-                             <td align="left">'.$fcol.'</td>
+                             <td align="left">ID '.$se.'<br>'.$fcol.'</td>
                              <td align="left">'.$strtocut.'</td>
                              <td align="right">'.format_time($gr->timeinseconds).'</td>
                              <td>'.format_float($gr->hitsperminute).'</td>

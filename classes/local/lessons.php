@@ -36,7 +36,7 @@ defined('MOODLE_INTERNAL') || die(); // @codingStandardsIgnoreLine
 class lessons {
 
     /**
-     * 3/22/16 Changed call from mod_setup so this is no longer used by exercises.php.
+     * 20160322 Changed call from mod_setup so this is no longer used by exercises.php.
      * Currently this is only used by eins.php which does not need the extra parameters
      * brought in like exercise.php does.
      *
@@ -64,7 +64,7 @@ class lessons {
 
     /**
      * Improved get_typerlessons() function.
-     * Modified 3/22/16 to improve reliability of correctly listing edit/remove capability.
+     * Modified 20160322 to improve reliability of correctly listing edit/remove capability.
      *
      * If correct user and in a course, get list of lessons.
      * @param int $u

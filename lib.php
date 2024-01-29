@@ -147,6 +147,7 @@ function get_typer_grades_adv($mootyperid, $exerciseid, $userid=0, $orderby=-1, 
                     .$gradestblname.".fullhits, "
                     .$gradestblname.".precisionfield, "
                     .$gradestblname.".timetaken, "
+                    .$gradestblname.".exercise, "
                     .$exertblname.".exercisename, "
                     .$gradestblname.".wpm,"
                     .$gradestblname.".grade,"
@@ -433,10 +434,6 @@ function mootyper_update_instance($mootyper, $mform) {
 
     $oldmootyper = $DB->get_record('mootyper', ['id' => $mootyper->id]);
 
-    // 20240119 Added so I could get completions to work.
-    $course = $DB->get_record('course', ['id' => $mootyper->course], '*', MUST_EXIST);
-    $cm = $DB->get_record('course_modules', ['id' => $mootyper->coursemodule, 'course' => $course->id], '*', MUST_EXIST);
-
     // MDL-3942 - if the aggregation type or scale (i.e. max grade) changes then
     // recalculate the grades for the entire mootyper if  scale changes - do we
     // need to recheck the ratings, if ratings higher than scale how do we want
@@ -479,19 +476,6 @@ function mootyper_update_instance($mootyper, $mform) {
     $completiontimeexpected = !empty($mootyper->completionexpected) ? $mootyper->completionexpected : null;
     \core_completion\api::update_completion_date_event($mootyper->coursemodule, 'mootyper', $mootyper->id, $completiontimeexpected);
 
-    // 20240119 Added this and completion started to work.
-    $completion = new completion_info($course);
-
-    // 20240119 Added new completion code.
-    if ($completion->is_enabled($cm) == COMPLETION_TRACKING_AUTOMATIC &&
-        ($mootyper->completionexercise
-            || $mootyper->completionlesson
-            || $mootyper->completionprecision
-            || $mootyper->completionwpm
-            || $mootyper->completionmootypergrade
-        )) {
-        $completion->update_state($cmid, COMPLETION_COMPLETE, $mootyper->id);
-    }
     return $DB->update_record('mootyper', $mootyper);
 }
 

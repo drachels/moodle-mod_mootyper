@@ -48,6 +48,11 @@ class custom_completion extends activity_custom_completion {
      */
     public function get_state(string $rule): int {
         global $CFG, $DB;
+print_object('CP 0 Spacer 1.');
+print_object('CP 0 Spacer 2.');
+print_object('CP 0 Spacer 3.');
+print_object('CP 0 Spacer 4.');
+print_object('CP 0 Spacer 5.');
 
         $this->validate_rule($rule);
 
@@ -122,13 +127,46 @@ class custom_completion extends activity_custom_completion {
                                    WHERE m.id = :mootyperid
                                      AND mtg.userid = :userid
                                      AND mtg.grade >= 0";
-
+        $mtmode = $mootyper->isexam;
         if ($rule == 'completionexercise') {
-            // Set completionexercise rule only when all exercises for the lesson are completed.
+            // Set completionexercise rule 1 when one exercise is used and that ONE completes the lesson.
             $status = $mootyper->completionexercise <=
                 $DB->count_records_sql($finalexercisecompletesql, $params);
             $currentsetofrecords = [];
             $currentsetofrecords = $DB->get_records_sql($finalexercisecompletesql, $params);
+
+        if ($mtmode === '1') {
+print_object('CP 1 The $mtmode is 1.');
+print_object($mootyper->isexam);
+print_object($mootyper->isexam);
+print_object($mootyper->isexam);
+print_object($mootyper->isexam);
+print_object($mootyper->isexam);
+print_object('CP 1 And the $mootyperid is:');
+print_object($mootyperid);
+
+}
+            // Set completionexercise rule 2, and 5 when all exercises are required for exercise completion and for the lesson completion.
+        if (!($mtmode === '1') && ($exercisecountforthislesson)) {
+print_object('CP 2 The $mtmode is 0 or 2.');
+
+print_object($mootyper->isexam);
+print_object($mootyper->isexam);
+print_object($mootyper->isexam);
+print_object($mootyper->isexam);
+print_object($mootyper->isexam);
+print_object('CP 2 And the $mootyperid is:');
+
+print_object($mootyperid);
+
+}
+            // Set completionexercise rule 3 and 6, when only x of exercises is used for excercise completion, but max is needed for lesson completion.
+
+            // Set completionexercise rull 4 and 7, when only x of exercises are used for both excercise and lesson completion.
+
+
+
+
         } else if ($rule == 'completionlesson') {
             // Set completionlesson rule only when completionexercise is completed.
             if ($status = $mootyper->completionexercise <=

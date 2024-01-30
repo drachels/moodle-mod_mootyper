@@ -283,10 +283,12 @@ if (!has_capability('mod/mootyper:viewgrades', context_module::instance($cm->id)
                 // Keep grades for group members so stats will be just for the group selected.
                 $grds2[] = $gr;
                 $fcol = $gr->exercisename;
+
                 // 20240110 Added new string for orphaned grades that need to be deleted.
                 if ($fcol == '') {
                     $fcol = get_string('deletegrade', 'mootyper');
                 }
+
                 $fcol = get_string('exercise_abreviation', 'mootyper').'-'.$fcol;  // This gets the exercise number.
                 $removelnk = '<a onclick="return confirm(\''
                     .get_string('deletegradeconfirm', 'mootyper')

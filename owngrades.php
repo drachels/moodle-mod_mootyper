@@ -206,14 +206,22 @@ if (!has_capability('mod/mootyper:viewmygrades', context_module::instance($cm->i
             }
 
             $fcol = $gr->exercisename;
+
+            // 20240110 Added new string for orphaned grades that need to be deleted.
+            if ($fcol == '') {
+                $fcol = get_string('deletegrade', 'mootyper');
+            }
+
             $fcol = get_string('exercise_abreviation', 'mootyper').'-'.$fcol;  // This gets the exercise number.
 
             // 20191230 Combine new mistakedetails with mistakes count.
             $strtocut = $gr->mistakes.': '.$gr->mistakedetails;
+            $se = $gr->exercise;
 
-                // 20210327 Added alignment to Exercise, Mistakes and Elapsed time columns.
+            // 20210327 Added alignment to Exercise, Mistakes and Elapsed time columns.
+            // 20231216 Added ID .$se. <br> two lines below, for testing to find orphaned grades.
             echo '<tr align="center" style="border-top-style: solid;'.$stil.'">
-                <td align="left">'.$fcol.'</td>
+                <td align="left">ID '.$se.' <br>'.$fcol.'</td>
                 <td align="left">'.$strtocut.'</td>
                 <td align="right">'.format_time($gr->timeinseconds).'</td>
                 <td>'.format_float($gr->hitsperminute).'</td>

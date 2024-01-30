@@ -216,7 +216,9 @@ function get_typergradesuser($sid, $uid, $orderby=-1, $desc=false) {
     $userstblname = $CFG->prefix."user";
     $exertblname = $CFG->prefix."mootyper_exercises";
     $atttblname = $CFG->prefix."mootyper_attempts";
+    // 20231216 Added $gradestblname.".exercise a couple of lines down from here, for testing.
     $sql = "SELECT ".$gradestblname.".id, "
+                    .$gradestblname.".exercise, "
                     .$userstblname.".firstname, "
                     .$userstblname.".lastname, "
                     .$atttblname.".suspicion, "

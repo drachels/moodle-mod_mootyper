@@ -40,7 +40,7 @@ $lessonpo = '';
 $cm = get_coursemodule_from_id('mootyper', $id, 0, false, MUST_EXIST);
 $course = $DB->get_record('course', ['id' => $cm->course], '*', MUST_EXIST);
 
-// TODO: Looks like $exercise and $rcrd are exact duplicates. Maybe need to combine?
+// Looks like these two variables are exact duplicates. Maybe need to combine?
 $exercise = $DB->get_record('mootyper_exercises', ['id' => $ex], '*', MUST_EXIST);
 $rcrd = $DB->get_record('mootyper_exercises', ['id' => $ex], '*', MUST_EXIST);
 

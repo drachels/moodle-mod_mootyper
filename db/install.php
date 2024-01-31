@@ -122,7 +122,7 @@ function read_lessons_file($dafile, $authoridarg, $visiblearg, $editablearg, $co
         $texttotype = "";
         // Place each character of an exercise into $texttotype.
         for ($k = 0; $k < strlen($exercise); $k++) {
-            // TODO
+            // Need to check this.
             // * If it is not a letter
             // * and if it is not a number
             // * compare against $allowed array.

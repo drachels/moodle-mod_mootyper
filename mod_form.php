@@ -455,18 +455,24 @@ class mod_mootyper_mod_form extends moodleform_mod {
             false
         );
         $mform->disabledIf($completionexercise, $completionexerciseenabled, 'notchecked');
+        $mform->addHelpButton($completionexercisegroup, 'completionexercisegroup', 'mootyper');
 
         // 20230926 Added new Require Exercise and changed code for Moodle 4.3.
         $completionlessongroup = 'completionlessongroup'.$suffix;
         $completionlessonenabled = 'completionlessonenabled'.$suffix;
         $completionlesson = 'completionlesson'.$suffix;
-
+        // Line 467 will add text in front of the completionlesson string. Line 480 adds text after the completionlesson string.
         $group = [];
         $group[] = $mform->createElement('checkbox',
             $completionlessonenabled,
             '',
             get_string('completionlesson', 'mootyper'),
-            ''
+            '',
+        );
+        $group[] = $mform->createElement('text',
+            $completionlesson,
+            '',
+            ['size' => 3]
         );
         $mform->setType($completionlesson, PARAM_INT);
         $mform->addGroup($group,
@@ -476,6 +482,7 @@ class mod_mootyper_mod_form extends moodleform_mod {
             false
         );
         $mform->disabledIf($completionlesson, $completionlessonenabled, 'notchecked');
+        $mform->addHelpButton($completionlessongroup, 'completionlessongroup', 'mootyper');
 
         // 20230926 Added new Require Precision and changed code for Moodle 4.3.
         $completionprecisiongroup = 'completionprecisiongroup'.$suffix;
@@ -497,6 +504,7 @@ class mod_mootyper_mod_form extends moodleform_mod {
             false
         );
         $mform->disabledIf($completionprecision, $completionprecisionenabled, 'notchecked');
+        $mform->addHelpButton($completionprecisiongroup, 'completionprecisiongroup', 'mootyper');
 
         // 20230926 Added new Require WPM and changed code for Moodle 4.3.
         $completionwpmgroup = 'completionwpmgroup'.$suffix;
@@ -517,7 +525,8 @@ class mod_mootyper_mod_form extends moodleform_mod {
             [' '],
             false
         );
-        $mform->disabledIf('completionwpm', 'completionwpmenabled', 'notchecked');
+        $mform->disabledIf($completionwpm, $completionwpmenabled, 'notchecked');
+        $mform->addHelpButton($completionwpmgroup, 'completionwpmgroup', 'mootyper');
 
         // 20230926 Added new MooTyper Grade and changed code for Moodle 4.3.
         $completionmootypergradegroup = 'completionmootypergradegroup'.$suffix;
@@ -538,7 +547,8 @@ class mod_mootyper_mod_form extends moodleform_mod {
             [' '],
             false
         );
-        $mform->disabledIf('completionmootypergrade', 'completionmootypergradeenabled', 'notchecked');
+        $mform->disabledIf($completionmootypergrade, $completionmootypergradeenabled, 'notchecked');
+        $mform->addHelpButton($completionmootypergradegroup, 'completionmootypergradegroup', 'mootyper');
 
         return [$completionexercisegroup,
             $completionlessongroup,

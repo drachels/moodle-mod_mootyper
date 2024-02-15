@@ -50,44 +50,65 @@ sending an email, leave a comment at
     https://moodle.org/plugins/mod_mootyper
 ===============
 === Deferred to a later version. ===
-20200521 MooTyper_471 - Need to add missing items to activity edit page - mod_form.php. 
+20200521 MooTyper_435 - Need to be able to delete un-need lesson files from lesson folder.
+    20240212 See ticket re:may be in v4.2.4 already! Need to VERIFY.
+20200521 MooTyper_471 - Need to add missing items to activity edit page - mod_form.php.
+20200708 MooTyper_572 - Need behat tests. WAITING
+20230928 MooTyper_1082 - Need to implement automatic attempts removal for old data. WAITING
 20231007 MooTyper_1127 - Need to prevent exercise delete unless it is the last one
     in the lesson.
 20231014 MooTyper_1100 - Need to revisit cron_task.php as it is not really needed.
 20231019 MooTyper_1102 - See about changing Suspicion to be based on WPM and character
     count of the exercise.
+20231106 MooTyper_1112 - English to Hebrew lessons. See ticket. WAITING
 20240111 MooTyper_1168 - Deleting a MooTyper instance seems to leasve some items undeleted.
+20240115 MooTyper_1170 - Might need a previous_completions.php file. - WAITING
 
+20240129 MooTyper_1182 - Lesson Completion needs rewrite to account for when exercises are
+    set to less than max.
+20240129 MooTyper_1183 - Exercise Completion may need rewrite to account for bad exercise
+    grade in Lesson mode.
+20240201 MooTyper_1185 - Feature request - Automatically save results at end of an exercise.
 
  
 
 Moodle Versions
 ===============
-=== 4.2.7 === pending release
-20230929 MooTyper_1083p - In lib.php, function mootyper_get_completion_state($course, $cm,
+=== 4.2.8 === Pending
+20231014 MooTyper_1100r - Need to revisit cron_task.php as it is not really needed.
+
+20240110 MooTyper_1164r - Completion does not work for, Require lesson completion,
+    by itself. See ticket for current progress. Still needs work.
+20240215 MooTyper_1207 - Lesson completion not staying checked. Changed the setting from just
+    the checkbox, to require an input of 1. Added a help button.
+20240215 MooTyper_1208 - Upon later change to deactivate, completion item must be set to 0.
+    Discovered I was using hard coded words, instead of the needed string with the new
+    $suffix added. Added help buttons for each completion.
+
+
+=== 4.2.7 === 2024013100
+20230929 MooTyper_1083v - In lib.php, function mootyper_get_completion_state($course, $cm,
     $userid, $type), needs to be removed. See ticket. This function has currently been
     removed.
-20231212 MooTyper_1131p - Deleting an exercise leaves orphaned grades if a user has already
+20231212 MooTyper_1131v - Deleting an exercise leaves orphaned grades if a user has already
     completed the exercise. Current code warns the teacher that an orphaned grade needs to
     be deleted. See also, MooTyper_1165.
-20240110 MooTyper_1164p - Completion does not work for, Require lesson completion,
-    by itself. See ticket for current progress. Still needs work.
-20240110 MooTyper_1165p - There is some hard coded text, Need to delete., in gview.php
+20240110 MooTyper_1165v - There is some hard coded text, Need to delete., in gview.php
     at about line 287. Converted the hard coded text to a string and added code to use
     it in the gview.php page at about line 286.
-20240110 MooTyper_1166p - When a teacher deletes an exercise result on gview.php, it does
+20240110 MooTyper_1166v - When a teacher deletes an exercise result on gview.php, it does
     not reset the completion status of the student. When I fixed the completionexercise
     SQL for PostgreSQL, MariaDB, and MySQL, this finally started working correctly.
-20240119 MooTyper_1176p - Sql in var $finalexercisecompletesql fails because it's missing,
+20240119 MooTyper_1176v - Sql in var $finalexercisecompletesql fails because it's missing,
     Group By #121. Modified the SQL to use two versions based on the DB type. Reworked the
     SQL to one simpler and also works for PostgreSQL, MariaDB and MySQL.
-20240120 MooTyper_1177p - Heading on the owngrades page is not formatting correctly. Added
+20240120 MooTyper_1177v - Heading on the owngrades page is not formatting correctly. Added
     a sub-table. See the ticket for details.
-20240120 MooTyper_1178p - Cannot sort data based on the exercise name. Added the code
+20240120 MooTyper_1178v - Cannot sort data based on the exercise name. Added the code
     that was missing. Sort by exercise name now works like the other columns on the page.
-20240121 MooTyper_1179p - The custom_completion.php file needs to use simplified $params.
+20240121 MooTyper_1179v - The custom_completion.php file needs to use simplified $params.
     Made a LOT of changes. See the ticket for details. 
-20240128 MooTyper_1181p - Warning: Undefined property: stdClass::$completionexercise, plus
+20240128 MooTyper_1181v - Warning: Undefined property: stdClass::$completionexercise, plus
     the other four. Once I got the PostgreSQL straightened out, I was able to remove the
     extra completion code that I had added into the lib.php files. These five undefineds
     were part of my addition that I have now removed and things are working as expected.

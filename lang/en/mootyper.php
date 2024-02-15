@@ -47,9 +47,10 @@ $string['charttitlemyowngrades'] = 'My Own Grades';
 $string['chere'] = 'Click here to start';
 $string['closebeforeopen'] = 'Could not update the MooTyper. You have specified a close date before the open date.';
 
-$string['completionexercise'] = 'Student must complete all exercises for this lesson to complete this activity. ';
+$string['completionexercise'] = 'Student must complete the specified exercise count for this lesson to complete this activity. ';
 $string['completionexercisedesc'] = 'Student must complete {$a} exercise(s).';
 $string['completionexercisegroup'] = 'Require exercise completion';
+$string['completionexercisegroup_help'] = 'If enabled, Require exercise completion, can be set from 1 to the number of exercises in the lesson. Enable with it set to 0, if you later change your mind and do not want to use it.';
 
 $string['completiondetail:exercise'] = 'Student must complete exercise: {$a}';
 $string['completiondetail:lesson'] = 'Student must complete lesson: {$a}';
@@ -57,21 +58,25 @@ $string['completiondetail:precision'] = 'Student must achieve precision: {$a}';
 $string['completiondetail:wpm'] = 'Student must achieve wpm: {$a}';
 $string['completiondetail:mootypergrade'] = 'Student must achieve MT Grade: {$a}';
 
-$string['completionlesson'] = 'Student must complete this lesson to complete this activity';
+$string['completionlesson'] = 'Student must complete this lesson to complete this activity. ';
 $string['completionlessondesc'] = 'Student must complete {$a} lesson.';
 $string['completionlessongroup'] = 'Require lesson completion';
+$string['completionlessongroup_help'] = 'If enabled, Require lesson completion, should be set to 1. Enable with it set to 0, if you later change your mind and do not want to use it.';
 
 $string['completionmootypergrade'] = 'Student must achieve a passing MooTyper Grade to complete this activity. ';
 $string['completionmootypergradedesc'] = 'Student must achieve a MooTyper Grade of {$a}.';
-$string['completionmootypergradegroup'] = 'Require Grade';
+$string['completionmootypergradegroup'] = 'Require MooTyper Grade';
+$string['completionmootypergradegroup_help'] = 'If enabled, Require MooTyper Grade, completion, can be set from 1 to 100. The MooTper Grade is based on the Precision or WPM, or both of them. Enable with it set to 0, if you later change your mind and do not want to use it.';
 
 $string['completionprecision'] = 'Student must achieve a passing precision to complete this activity. ';
 $string['completionprecisiondesc'] = 'Student must achieve {$a}% precision.';
 $string['completionprecisiongroup'] = 'Require precision';
+$string['completionprecisiongroup_help'] = 'If enabled, Require precison, completion can be set from 1 to 100. Enable with it set to 0, if you later change your mind and do not want to use it.';
 
 $string['completionwpm'] = 'Student must achieve a passing WPM to complete this activity. ';
 $string['completionwpmdesc'] = 'Student must achieve {$a} WPM.';
 $string['completionwpmgroup'] = 'Require WPM';
+$string['completionwpmgroup_help'] = 'If enabled, Require WPM, completion can be set from 1 to to any reasonable word per minute rate. Enable with it set to 0, if you later change your mind and do not want to use it.';
 
 $string['configdateformat'] = 'This defines how dates are shown in grade reports. The default value, "M d, Y G:i" is Month, day, year and 24 hour format time. Refer to Date in the PHP manual for more examples and predefined date constants.';
 $string['configrequirepassword'] = 'Configure password';

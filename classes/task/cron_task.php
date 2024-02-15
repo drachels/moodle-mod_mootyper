@@ -46,37 +46,6 @@ class cron_task extends \core\task\scheduled_task {
     public function execute() {
         // 20210722 Converted from old cron to task.
         // Commented out as not currently needed.
-        // $this->log_start("Processing MooTyper information.");
-        // $this->log_finish("Processing MooTyper cron is completed.");
-
-        $timeout = 5;
-
-        // A namespace for the locks. Must be prefixed with the component name to prevent conflicts.
-        // ...$locktype = 'mod_mootyper_renderer_resource';.
-        // ...$locktype = 'mod_mootyper_file_upload';.
-        $locktype = 'mod_mootyper_renderer_factory';
-
-        // Resource key - needs to uniquely identify the resource that is to be locked. E.g. If you
-        // want to prevent a user from running multiple course backups - include the userid in the key.
-        $resource = 'user:' . $USER->id;
-
-        // Get an instance of the currently configured lock_factory.
-        $lockfactory = \core\lock\lock_config::get_lock_factory($locktype);
-
-        // Get a new lock for the resource, wait for it if needed.
-        if ($lock = $lockfactory->get_lock($resource, $timeout)) {
-            // We have exclusive access to the resource, do the slow zip file generation...
-            if ($someerror) {
-                // Always release locks on failure.
-                $lock->release();
-                throw new moodle_exception('lockfailure');
-            }
-            // Release the lock once finished.
-            $lock->release();
-        } else {
-            // We did not get access to the resource in time, give up.
-            throw new moodle_exception('locktimeout');
-        }
-        return;
+        return true;
     }
 }

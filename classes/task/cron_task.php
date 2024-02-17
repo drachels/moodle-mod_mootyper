@@ -45,7 +45,7 @@ class cron_task extends \core\task\scheduled_task {
      */
     public function execute() {
         // 20210722 Converted from old cron to task.
-        // Commented out as not currently needed.
+        // 20240212 Commented out as not currently needed.
         return true;
     }
 }

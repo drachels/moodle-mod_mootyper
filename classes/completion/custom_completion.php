@@ -48,6 +48,10 @@ class custom_completion extends activity_custom_completion {
     public function get_state(string $rule): int {
         global $CFG, $DB;
 
+
+        $debug = [];
+        $debug['In the function get_state'] = '============function get_state==============';
+
         $this->validate_rule($rule);
 
         $userid = $this->userid;
@@ -58,8 +62,13 @@ class custom_completion extends activity_custom_completion {
         }
 
         $status = COMPLETION_INCOMPLETE;
-
+        $mootyper = $DB->get_record('mootyper', ['id' => $mootyperid]);
         $params = ['mootyperid' => $mootyperid, 'userid' => $userid];
+
+        //$debug['CP $mootyper: '] = $mootyper;
+        //$debug['CP $params: '] = $params;
+        //die;
+
 
         // The required number of exercises of a lesson must be successfully completed before
         // bothering to check for lesson, precision, or WPM completion.
@@ -77,8 +86,13 @@ class custom_completion extends activity_custom_completion {
 
         // 20240129 Retrieve the mode for the curret Mootyper.
         $mtmode = $mootyper->isexam;
+
+        //$debug['CP $mtmode: '] = $mtmode;
+
         // Need count of mootyper_exercises id,  where me.lesson = mt.lesson.
         $exercisecountforthislesson = count(lessons::get_exercises_by_lesson($mootyper->lesson));
+
+        //$debug['CP $exercisecountforthislesson: '] = $exercisecountforthislesson;
 
         // 20240127 Modified for Postgresql.
         $finalexercisecompletesql = "SELECT COUNT(*)
@@ -87,6 +101,8 @@ class custom_completion extends activity_custom_completion {
                                       WHERE mtg.userid = :userid
                                         AND mtg.pass = 1
                                         AND m.id = :mootyperid";
+
+        //$debug['CP $finalexercisecompletesql: '] = $finalexercisecompletesql;
 
         // Need SQL that gets the final lesson completed status.
         // mdl_mootyper has lesson id, mode, requiredgoal, requiredwpm, and the four completions.
@@ -100,6 +116,9 @@ class custom_completion extends activity_custom_completion {
                                       AND mt.id = mtg.mootyper
                                       AND mtg.mootyper = :mootyper
                                       AND mtg.userid = :userid";
+
+        //$debug['CP $finallessoncompletesql: '] = $finallessoncompletesql;
+
 
         // Need SQL that gets the final precision.
         $finalprecisionsql = "SELECT AVG(mtg.precisionfield) AS precisionfield
@@ -126,21 +145,85 @@ class custom_completion extends activity_custom_completion {
                                      AND mtg.grade >= 0";
 
         if ($rule == 'completionexercise') {
+            $debug['CP compex $rule: '] = $rule;
+
             // Set completionexercise rule 1 when one exercise is used and that ONE completes the lesson.
-            $status = $mootyper->completionexercise <=
-                $DB->count_records_sql($finalexercisecompletesql, $params);
-            $currentsetofrecords = [];
-            $currentsetofrecords = $DB->get_records_sql($finalexercisecompletesql, $params);
-        } else if ($rule == 'completionlesson') {
-            // Set completionlesson rule only when completionexercise is completed.
+            //$status = $mootyper->completionexercise <=
+            //    $DB->count_records_sql($finalexercisecompletesql, $params);
+            //$currentsetofrecords = [];
+            //$currentsetofrecords = $DB->get_records_sql($finalexercisecompletesql, $params);
+
+
             if ($status = $mootyper->completionexercise <=
-                    $DB->count_records_sql($finalexercisecompletesql, $params)) {
-                // Completionlesson should always be 1.
-                $status = $mootyper->completionlesson = 1;
+                $DB->count_records_sql($finalexercisecompletesql, $params)) {
+                $debug['CP compex sub if before setting $status: '] = $status;
+
+                $status = $mootyper->completionexercise = 1;
+                $debug['CP compex sub if checking $status: '] = $status;
+
             } else {
-                $status = $mootyper->completionlesson = 0;
+
+                $status = $mootyper->completionexercise = 0;
             }
+
+            //$mootyperexercise = [];
+            //$mootyperexercise = $DB->get_records_sql($finalexercisecompletesql, $params);
+
+
+        } else if ($rule == 'completionlesson') {
+            $debug['CP complsn $rule: '] = $rule;
+            $debug['CP complsn count records of completed exercise $DB->count_records_sql($finalexercisecompletesql, $params): '] = $DB->count_records_sql($finalexercisecompletesql, $params);
+            $debug['CP complsn checked wtih these $params: '] = $params;
+            $debug['CP complsn checking $mootyper->completionexercise: '] = $mootyper->completionexercise;
+            $debug['CP complsn checking $mootyper->completionlesson: '] = $mootyper->completionlesson;
+
+
+
+
+//die;
+            // Needs rewrite to set completionlesson when nothing else is set.
+            // Set completionlesson rule only when completionexercise is completed.
+            if (($status = $mootyper->completionexercise <=
+                    $DB->count_records_sql($finalexercisecompletesql, $params)) && ($mootyper->completionexercise <> 0)) {
+
+                $debug['CP 2 $rule: first if before setting $status'] = $status;
+
+//die;
+
+                $status = $mootyper->completionlesson = 1;
+
+                $debug['CP 3 $rule: first if after setting $status'] = $status;
+
+            } else {
+
+                $debug['CP 4 $rule: in the else of the first if checking $status'] = $status;
+
+                //if (($status = $mootyper->completionlesson <= $DB->count_records_sql($finallessoncompletesql, $params)) && ($mootyper->completionexercise == 0)) {
+                if (($mootyper->completionlesson == 1) && ($mootyper->completionexercise == 0) && (!$mootyper->completionexercise <=
+                    $DB->count_records_sql($finalexercisecompletesql, $params))) {
+
+                    $debug['CP 5 $rule: in the if of the else before setting $status'] = $status;
+
+
+                    $status = $mootyper->completionlesson = 1;
+
+                    $debug['CP 6 $rule: in the if of the else after setting $status'] = $status;
+
+                } else {
+
+                    $debug['CP 7 $rule: in the else of sub if of the else before setting $status'] = $status;
+
+                    $status = $mootyper->completionlesson = 0;
+
+                    $debug['CP 8 $rule: in the else of sub if of the else after setting $status'] = $status;
+
+                }
+             }
+//die;
         } else if ($rule == 'completionprecision') {
+
+            $debug['CP comppre $rule: '] = $rule;
+
             // Set completionprecision rule only when completionexercise is completed.
             // Take in to account the mode.
             // Exam mode one exercise only is required, and Pass or Fail, both exercise and lesson are completed.
@@ -160,8 +243,12 @@ class custom_completion extends activity_custom_completion {
                 } else {
                     $status = $mootyper->completionprecision = 0;
                 }
+            // Need an else here to set completion precision when nothing else is set.
             }
         } else if ($rule == 'completionwpm') {
+
+            $debug['CP compwpm $rule: '] = $rule;
+
             // Set completionwpm rule only when completionexercise is completed.
             if ($status = $mootyper->completionexercise <=
                     $DB->count_records_sql($finalexercisecompletesql, $params)) {
@@ -174,8 +261,12 @@ class custom_completion extends activity_custom_completion {
                 } else {
                     $status = $mootyper->completionwpm = 0;
                 }
+            // Need an else here to set completionwpm when nothing else is set.
             }
         } else if ($rule == 'completionmootypergrade') {
+
+            $debug['CP compmtg $rule: '] = $rule;
+
             // Set completionmootypergrade rule only when completionexercise is completed.
             if ($status = $mootyper->completionexercise <=
                     $DB->count_records_sql($finalexercisecompletesql, $params)) {
@@ -188,8 +279,12 @@ class custom_completion extends activity_custom_completion {
                 } else {
                     $status = $mootyper->completionmootypergrade = 0;
                 }
+            // Need an else here to set completionmootypergrade when nothing else is set.
             }
         }
+
+print_object($debug);
+//die;
         return $status ? COMPLETION_COMPLETE : COMPLETION_INCOMPLETE;
     }
 

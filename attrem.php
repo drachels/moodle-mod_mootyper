@@ -36,6 +36,8 @@ global $DB;
 
 // NOTE!!!! I think completion stuff is not needed here as the lib.php mootyper_update_grades
 // function always gets invoked after a grade delete.
+// 20240218 Yeah, but I don't thing the completions are getting updated then.
+// When a student deletes their own grade, the completion state is NOT getting updated!
 
 $mid = optional_param('m_id', 0, PARAM_INT);  // MooTyper id (mdl_mootyper).
 $cid = optional_param('c_id', 0, PARAM_INT);  // Course module id (mdl_course_modules).
@@ -74,7 +76,7 @@ if (isset($gradeid)) {
 // Return to the View my grades or View all grades page.
 if ($mtmode == 2) {
     // 20230517 Added to recalculate grades when user deletes one of their entries.
-    // mootyper_update_grades($mootyper, $dbgrade->userid);
+    mootyper_update_grades($mootyper, $dbgrade->userid);
 
     // Trigger owngrades_deleted event for mode 2 only if on the, View own grades, page.
     $params = [

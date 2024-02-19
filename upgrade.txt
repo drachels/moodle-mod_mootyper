@@ -80,6 +80,7 @@ Moodle Versions
 
 20240110 MooTyper_1164r - Completion does not work for, Require lesson completion,
     by itself. See ticket for current progress. Still needs work.
+
 20240215 MooTyper_1207r - Lesson completion not staying checked. Changed the setting from just
     the checkbox, to require an input of 1. Added a help button.
 20240215 MooTyper_1208b - Upon later change to deactivate, completion item must be set to 0.

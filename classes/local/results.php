@@ -779,8 +779,6 @@ class results {
         }
     }
 
-
-
     /**
      * Check for user MooTyper Grade completion.
      * @param int $mootyper->id

@@ -74,14 +74,14 @@ sending an email, leave a comment at
 
 Moodle Versions
 ===============
-=== 4.2.8 === Pending
+=== 4.2.8 === Pending currently possibility 2024022200
 20231014 MooTyper_1100bt - Need to revisit cron_task.php as it is not really needed. Commented
     out as not currently needed.
 
-20240110 MooTyper_1164r - Completion does not work for, Require lesson completion,
-    by itself. See ticket for current progress. Still needs work.
+20240110 MooTyper_1164bt - Completion does not work for, Require lesson completion,
+    by itself. See ticket for current progress. Possibly still needs work.
 
-20240215 MooTyper_1207r - Lesson completion not staying checked. Changed the setting from just
+20240215 MooTyper_1207bt - Lesson completion not staying checked. Changed the setting from just
     the checkbox, to require an input of 1. Added a help button.
 20240215 MooTyper_1208b - Upon later change to deactivate, completion item must be set to 0.
     Discovered I was using hard coded words, instead of the needed string with the new

@@ -74,6 +74,12 @@ if ($backtocourse) {
 $completion = new completion_info($course);
 $completion->set_module_viewed($cm);
 
+// 20240221 Added to update completion state after a user deletes a grade.
+$ci = new completion_info($course);
+if ($cm->completion == COMPLETION_TRACKING_AUTOMATIC) {
+    $ci->update_state($cm, COMPLETION_UNKNOWN, null);
+}
+
 // Moved set_title and set_heading to renderer.php.
 $PAGE->set_url('/mod/mootyper/view.php', ['id' => $cm->id]);
 // 20210722 Added this to replace former src URL link to googleapis.

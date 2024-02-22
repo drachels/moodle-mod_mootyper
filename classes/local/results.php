@@ -715,4 +715,100 @@ class results {
         $timeclose = $mootyper->timeclose;
         return (($timeopen == 0 || time() >= $timeopen) && ($timeclose == 0 || time() < $timeclose));
     }
+
+
+    /**
+     * Check for user precision completion.
+     * @param int $mootyper->id
+     * @param int $userid
+     * @return boolean
+     */
+    public static function get_user_precision($mootyperid, $userid) {
+        global $USER, $DB, $CFG;
+        // Need SQL that gets the current precision's for this user in this MooTyper activity.
+        $params = ['mootyperid' => $mootyperid, 'userid' => $userid];
+        $sql = "SELECT COUNT(mtg.id),
+                       mtg.userid,
+                       AVG(mtg.precisionfield) AS precisionfield,
+                       m.id
+                  FROM {mootyper_grades} mtg
+                  JOIN {mootyper} m ON mtg.mootyper = m.id
+                 WHERE m.id = :mootyperid
+                   AND mtg.userid = :userid
+                   AND mtg.precisionfield >= 0";
+        if ($records = $DB->get_records_sql($sql, $params)) {
+            $c = count($records);
+            $total = $c;
+            foreach ($records as $record) {
+                $precision[$c] = $record->precisionfield;
+            }
+            return [$precision, $total];
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Check for user WPM completion.
+     * @param int $mootyper->id
+     * @param int $userid
+     * @return boolean
+     */
+    public static function get_user_wpm($mootyperid, $userid) {
+        global $USER, $DB, $CFG;
+        // Need SQL that gets the current wpm's for this user in this MooTyper activity.
+        $params = ['mootyperid' => $mootyperid, 'userid' => $userid];
+        $sql = "SELECT COUNT(mtg.id),
+                       mtg.userid,
+                       AVG(mtg.wpm) AS wpm,
+                       m.id
+                  FROM {mootyper_grades} mtg
+                  JOIN {mootyper} m ON mtg.mootyper = m.id
+                 WHERE m.id = :mootyperid
+                   AND mtg.userid = :userid
+                   AND mtg.wpm >= 0";
+        if ($records = $DB->get_records_sql($sql, $params)) {
+            $c = count($records);
+            $total = $c;
+            foreach ($records as $record) {
+                $wpm[$c] = $record->wpm;
+            }
+            return [$wpm, $total];
+        } else {
+            return null;
+        }
+    }
+
+
+
+    /**
+     * Check for user MooTyper Grade completion.
+     * @param int $mootyper->id
+     * @param int $userid
+     * @return boolean
+     */
+    public static function get_user_mootypergrade($mootyperid, $userid) {
+        global $USER, $DB, $CFG;
+        // Need SQL that gets the current grades for this user in this MooTyper activity.
+        $params = ['mootyperid' => $mootyperid, 'userid' => $userid];
+        $sql = "SELECT COUNT(mtg.id),
+                       mtg.userid,
+                       AVG(mtg.grade) AS grade,
+                       m.id
+                  FROM {mootyper_grades} mtg
+                  JOIN {mootyper} m ON mtg.mootyper = m.id
+                 WHERE m.id = :mootyperid
+                   AND mtg.userid = :userid
+                   AND mtg.grade >= 0";
+        if ($records = $DB->get_records_sql($sql, $params)) {
+            $c = count($records);
+            $total = $c;
+            foreach ($records as $record) {
+                $mootypergrade[$c] = $record->grade;
+            }
+            return [$mootypergrade, $total];
+        } else {
+            return null;
+        }
+    }
 }

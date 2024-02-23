@@ -192,7 +192,7 @@ class backup_mootyper_activity_structure_step extends backup_activity_structure_
         $layout->set_source_sql('
             SELECT m.id, m.layout, mlay.*
               FROM {mootyper} m
-              JOIN {mootyper_layouts} mlay
+              JOIN {mootyper_layouts} mlay ON m.layout = mlay.id
              WHERE m.layout = mlay.id AND m.id = ?',
                    [backup::VAR_PARENTID], 'layout');
 
@@ -200,7 +200,7 @@ class backup_mootyper_activity_structure_step extends backup_activity_structure_
         $lesson->set_source_sql('
             SELECT m.id, m.lesson, mles.*
               FROM {mootyper} m
-              JOIN {mootyper_lessons} mles
+              JOIN {mootyper_lessons} mles ON m.lesson = mles.id
              WHERE m.lesson = mles.id AND m.id = ?',
                    [backup::VAR_PARENTID], 'lesson');
 
@@ -208,8 +208,8 @@ class backup_mootyper_activity_structure_step extends backup_activity_structure_
         $exercise->set_source_sql('
             SELECT m.id, m.lesson, m.exercise, mles.id, me.*
               FROM {mootyper} m
-              JOIN {mootyper_lessons} mles
-              JOIN {mootyper_exercises} me
+              JOIN {mootyper_lessons} mles ON m.lesson = mles.id
+              JOIN {mootyper_exercises} me ON mles.id = me.lesson
              WHERE m.lesson = mles.id AND me.lesson = mles.id AND m.id = ?',
                    [backup::VAR_PARENTID], 'exercise');
 

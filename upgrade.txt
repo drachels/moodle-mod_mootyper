@@ -74,7 +74,7 @@ sending an email, leave a comment at
 
 Moodle Versions
 ===============
-=== 4.2.8 === Pending currently possibility 2024022200
+=== 4.2.8 === Pending currently possibility 2024022300
 20231014 MooTyper_1100bt - Need to revisit cron_task.php as it is not really needed. Commented
     out as not currently needed.
 
@@ -86,7 +86,8 @@ Moodle Versions
 20240215 MooTyper_1208b - Upon later change to deactivate, completion item must be set to 0.
     Discovered I was using hard coded words, instead of the needed string with the new
     $suffix added. Added help buttons for each completion.
-
+20240223 MooTyper_1212 - Duplicate fails when using PostgreSQL data base. Changed the
+    three affected SQL's in the backup_mootyper_stepslib.php file, so that JOIN's use ON.
 
 === 4.2.7 === 2024013100
 20230929 MooTyper_1083v - In lib.php, function mootyper_get_completion_state($course, $cm,

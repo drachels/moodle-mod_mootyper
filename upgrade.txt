@@ -74,20 +74,22 @@ sending an email, leave a comment at
 
 Moodle Versions
 ===============
-=== 4.2.8 === Pending currently possibility 2024022300
+=== 4.2.8 === Pending currently possibility 2024022400
 20231014 MooTyper_1100bt - Need to revisit cron_task.php as it is not really needed. Commented
     out as not currently needed.
-
 20240110 MooTyper_1164bt - Completion does not work for, Require lesson completion,
     by itself. See ticket for current progress. Possibly still needs work.
-
 20240215 MooTyper_1207bt - Lesson completion not staying checked. Changed the setting from just
     the checkbox, to require an input of 1. Added a help button.
-20240215 MooTyper_1208b - Upon later change to deactivate, completion item must be set to 0.
+20240215 MooTyper_1208bt - Upon later change to deactivate, completion item must be set to 0.
     Discovered I was using hard coded words, instead of the needed string with the new
     $suffix added. Added help buttons for each completion.
-20240223 MooTyper_1212 - Duplicate fails when using PostgreSQL data base. Changed the
-    three affected SQL's in the backup_mootyper_stepslib.php file, so that JOIN's use ON.
+20240223 MooTyper_1212bt - MooTyper - Duplicate fails when using PostgreSQL data base in
+    MooTyper v4.2.7 and lower. Changed the three affected SQL's in the
+    backup_mootyper_stepslib.php file, so that JOIN's use ON.
+20240223 MooTyper_1214bt - MooTyper v4.2.8 fails when used with PostgreSQL Data Base. See
+    the code for details. Added GROUP BY as needed, where needed. Modified other code in
+    custom_completion.php as needed to get the correct completion results.
 
 === 4.2.7 === 2024013100
 20230929 MooTyper_1083v - In lib.php, function mootyper_get_completion_state($course, $cm,

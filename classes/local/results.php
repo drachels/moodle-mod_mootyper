@@ -735,7 +735,8 @@ class results {
                   JOIN {mootyper} m ON mtg.mootyper = m.id
                  WHERE m.id = :mootyperid
                    AND mtg.userid = :userid
-                   AND mtg.precisionfield >= 0";
+                   AND mtg.precisionfield >= 0
+              GROUP BY mtg.userid, m.id";
         if ($records = $DB->get_records_sql($sql, $params)) {
             $c = count($records);
             $total = $c;
@@ -766,7 +767,8 @@ class results {
                   JOIN {mootyper} m ON mtg.mootyper = m.id
                  WHERE m.id = :mootyperid
                    AND mtg.userid = :userid
-                   AND mtg.wpm >= 0";
+                   AND mtg.wpm >= 0
+              GROUP BY mtg.userid, m.id";
         if ($records = $DB->get_records_sql($sql, $params)) {
             $c = count($records);
             $total = $c;
@@ -778,6 +780,8 @@ class results {
             return null;
         }
     }
+
+
 
     /**
      * Check for user MooTyper Grade completion.
@@ -797,7 +801,8 @@ class results {
                   JOIN {mootyper} m ON mtg.mootyper = m.id
                  WHERE m.id = :mootyperid
                    AND mtg.userid = :userid
-                   AND mtg.grade >= 0";
+                   AND mtg.grade >= 0
+              GROUP BY mtg.userid, m.id";
         if ($records = $DB->get_records_sql($sql, $params)) {
             $c = count($records);
             $total = $c;

@@ -90,6 +90,14 @@ Moodle Versions
 20240223 MooTyper_1214bt - MooTyper v4.2.8 fails when used with PostgreSQL Data Base. See
     the code for details. Added GROUP BY as needed, where needed. Modified other code in
     custom_completion.php as needed to get the correct completion results.
+20240227 MooTyper_1216bt - Layout - Spanish(V5) needs to remove a non-breaking space from
+    the 5 key. Removed one non-breaking space.
+20240303 MooTyper_1219bt - Lesson Completion - Need to prevent values other than 0 or 1. 
+    Modified the file, mod?form.php for the, $completionlessongroup, so the the group item
+    is no longer $mform->createElement('checkbox', but is now, $mform->createElement
+    ('selectyesno'. The yes-no selection is automatically translated as 1 or 0.
+
+
 
 === 4.2.7 === 2024013100
 20230929 MooTyper_1083v - In lib.php, function mootyper_get_completion_state($course, $cm,

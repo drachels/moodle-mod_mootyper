@@ -469,11 +469,22 @@ class mod_mootyper_mod_form extends moodleform_mod {
             get_string('completionlesson', 'mootyper'),
             '',
         );
+
+        $group[] = $mform->createElement('selectyesno',
+            $completionlesson,
+            '',
+            get_string('completionlesson', 'mootyper'),
+        );
+
+
+
+/*
         $group[] = $mform->createElement('text',
             $completionlesson,
             '',
             ['size' => 3]
         );
+*/
         $mform->setType($completionlesson, PARAM_INT);
         $mform->addGroup($group,
             $completionlessongroup,

@@ -426,7 +426,7 @@ class mod_mootyper_mod_form extends moodleform_mod {
         global $CFG;
         $mform = $this->_form;
 
-        // 20230926 Changed code for Moodle 4.3 to add a suffix.
+        // 20230926 Added new Require Exercise and changed code for Moodle 4.3 to add a suffix.
         if ($CFG->branch < 403) {
             $suffix = '';
         } else {
@@ -457,7 +457,7 @@ class mod_mootyper_mod_form extends moodleform_mod {
         $mform->disabledIf($completionexercise, $completionexerciseenabled, 'notchecked');
         $mform->addHelpButton($completionexercisegroup, 'completionexercisegroup', 'mootyper');
 
-        // 20230926 Added new Require Exercise and changed code for Moodle 4.3.
+        // 20230926 Added new Require Lesson and changed code for Moodle 4.3.
         $completionlessongroup = 'completionlessongroup'.$suffix;
         $completionlessonenabled = 'completionlessonenabled'.$suffix;
         $completionlesson = 'completionlesson'.$suffix;
@@ -476,15 +476,6 @@ class mod_mootyper_mod_form extends moodleform_mod {
             get_string('completionlesson', 'mootyper'),
         );
 
-
-
-/*
-        $group[] = $mform->createElement('text',
-            $completionlesson,
-            '',
-            ['size' => 3]
-        );
-*/
         $mform->setType($completionlesson, PARAM_INT);
         $mform->addGroup($group,
             $completionlessongroup,

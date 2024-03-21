@@ -45,49 +45,45 @@ class backup_mootyper_activity_structure_step extends backup_activity_structure_
 
         // Define each element separated.
         $mootyper = new backup_nested_element('mootyper',
-            [
-                'id',
-            ],
-            [
-                'name',
-                'intro',
-                'introformat',
-                'timecreated',
-                'timemodified',
-                'timeopen',
-                'timeclose',
-                'assessed',
-                'assesstimestart',
-                'assesstimefinished',
-                'scale',
-                'grade_mootyper',
-                'usepassword',
-                'password',
-                'exercise',
-                'lesson',
-                'isexam',
-                'requiredgoal',
-                'requiredwpm',
-                'timelimit',
-                'layout',
-                'showkeyboard',
-                'continuoustype',
-                'countmistypedspaces',
-                'statsbgc',
-                'keytoptextc',
-                'keytopbgc',
-                'keybdbgc',
-                'textalign',
-                'cursorcolor',
-                'textbgc',
-                'texterrorcolor',
-                'countmistakes',
-                'completionexercise',
-                'completionlesson',
-                'completionprecision',
-                'completionwpm',
-                'completionmootypergrade',
-            ],
+            ['id'],
+            ['name',
+            'intro',
+            'introformat',
+            'timecreated',
+            'timemodified',
+            'timeopen',
+            'timeclose',
+            'assessed',
+            'assesstimestart',
+            'assesstimefinished',
+            'scale',
+            'grade_mootyper',
+            'usepassword',
+            'password',
+            'exercise',
+            'lesson',
+            'isexam',
+            'requiredgoal',
+            'requiredwpm',
+            'timelimit',
+            'layout',
+            'showkeyboard',
+            'continuoustype',
+            'countmistypedspaces',
+            'statsbgc',
+            'keytoptextc',
+            'keytopbgc',
+            'keybdbgc',
+            'textalign',
+            'cursorcolor',
+            'textbgc',
+            'texterrorcolor',
+            'countmistakes',
+            'completionexercise',
+            'completionlesson',
+            'completionprecision',
+            'completionwpm',
+            'completionmootypergrade', ]
         );
 
         $attempts = new backup_nested_element('attempts');
@@ -98,8 +94,7 @@ class backup_mootyper_activity_structure_step extends backup_activity_structure_
                                                 'userid',
                                                 'timetaken',
                                                 'inprogress',
-                                                'suspicion',
-                                                ]
+                                                'suspicion', ]
                                             );
 
         $checks = new backup_nested_element('checks');
@@ -109,8 +104,7 @@ class backup_mootyper_activity_structure_step extends backup_activity_structure_
                                           ['attemptid',
                                            'mistakes',
                                            'hits',
-                                           'checktime',
-                                           ]
+                                           'checktime', ]
                                            );
 
         $exercises = new backup_nested_element('exercises');
@@ -120,15 +114,14 @@ class backup_mootyper_activity_structure_step extends backup_activity_structure_
                                                  ['texttotype',
                                                  'exercisename',
                                                  'lesson',
-                                                 'snumber',
-                                                 ]
+                                                 'snumber', ]
                                              );
 
         $layouts = new backup_nested_element('layouts');
 
         $layout = new backup_nested_element('layout',
                                                ['id'],
-                                               ['name'],
+                                               ['name']
                                             );
 
         $lessons = new backup_nested_element('lessons');
@@ -139,8 +132,7 @@ class backup_mootyper_activity_structure_step extends backup_activity_structure_
                                                'authorid',
                                                'visible',
                                                'editable',
-                                               'courseid',
-                                               ]
+                                               'courseid', ]
                                             );
 
         $grades = new backup_nested_element('grades');
@@ -160,8 +152,7 @@ class backup_mootyper_activity_structure_step extends backup_activity_structure_
                                               'pass',
                                               'attemptid',
                                               'wpm',
-                                              'mistakedetails',
-                                              ]
+                                              'mistakedetails', ]
                                           );
 
         // Build the tree.

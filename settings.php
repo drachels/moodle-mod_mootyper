@@ -37,17 +37,15 @@ if ($ADMIN->fulltree) {
     $name = new lang_string('showrecentactivity', 'mootyper');
     $description = new lang_string('showrecentactivityconfig', 'mootyper');
     $settings->add(new admin_setting_configcheckbox('mod_mootyper/showrecentactivity',
-                                                    $name,
-                                                    $description,
-                                                    0));
+        $name,
+        $description,
+        0));
     // Password setting.
     $settings->add(new admin_setting_configcheckbox_with_advanced('mod_mootyper/password',
         get_string('password', 'mootyper'),
         get_string('configpassword_desc', 'mootyper'),
-        [
-            'value' => 0,
-            'adv' => true,
-        ]
+        ['value' => 0,
+        'adv' => true, ]
     ));
 
     // Options settings.
@@ -57,11 +55,9 @@ if ($ADMIN->fulltree) {
     $settings->add(new admin_setting_configselect('mod_mootyper/isexam',
         get_string('fmode', 'mod_mootyper'),
         get_string('defaultfmode_help', 'mod_mootyper'), 0,
-        [
-            get_string('sflesson', 'mod_mootyper'),
-            get_string('isexamtext', 'mod_mootyper'),
-            get_string('practice', 'mod_mootyper'),
-        ]
+        [get_string('sflesson', 'mod_mootyper'),
+        get_string('isexamtext', 'mod_mootyper'),
+        get_string('practice', 'mod_mootyper'), ]
     ));
 
     // Default time limit.
@@ -92,62 +88,50 @@ if ($ADMIN->fulltree) {
     $settings->add(new admin_setting_configselect('mod_mootyper/defaulttextalign',
         get_string('defaulttextalign', 'mod_mootyper'),
         get_string('defaulttextalign_help', 'mod_mootyper'), 0,
-        [
-            get_string('defaulttextalign_left', 'mod_mootyper'),
-            get_string('defaulttextalign_center', 'mod_mootyper'),
-            get_string('defaulttextalign_right', 'mod_mootyper'),
-        ]
+        [get_string('defaulttextalign_left', 'mod_mootyper'),
+        get_string('defaulttextalign_center', 'mod_mootyper'),
+        get_string('defaulttextalign_right', 'mod_mootyper'), ]
     ));
 
     // Default text alignment while editing or creating an exercise.
     $settings->add(new admin_setting_configselect('mod_mootyper/defaulteditalign',
         get_string('defaulteditalign', 'mod_mootyper'),
         get_string('defaulteditalign_help', 'mod_mootyper'), 0,
-        [
-            get_string('defaulttextalign_left', 'mod_mootyper'),
-            get_string('defaulttextalign_center', 'mod_mootyper'),
-            get_string('defaulttextalign_right', 'mod_mootyper'),
-        ]
+        [get_string('defaulttextalign_left', 'mod_mootyper'),
+        get_string('defaulttextalign_center', 'mod_mootyper'),
+        get_string('defaulttextalign_right', 'mod_mootyper'), ]
     ));
 
     // Default continuous typing setting.
     $settings->add(new admin_setting_configcheckbox_with_advanced('mod_mootyper/continuoustype',
         get_string('continuoustype', 'mootyper'),
         get_string('continuoustype_help', 'mootyper'),
-        [
-            'value' => 0,
-            'adv' => false,
-        ]
+        ['value' => 0,
+        'adv' => false, ]
     ));
 
     // Default count space as a mistake typing setting.
     $settings->add(new admin_setting_configcheckbox_with_advanced('mod_mootyper/countmistypedspaces',
         get_string('countmistypedspaces', 'mootyper'),
         get_string('countmistypedspaces_help', 'mootyper'),
-        [
-            'value' => 0,
-            'adv' => false,
-        ]
+        ['value' => 0,
+        'adv' => false, ]
     ));
 
     // Default count each wrong keystroke as a mistake setting.
     $settings->add(new admin_setting_configcheckbox_with_advanced('mod_mootyper/countmistakes',
         get_string('countmistakes', 'mootyper'),
         get_string('countmistakes_help', 'mootyper'),
-        [
-            'value' => 0,
-            'adv' => false,
-        ]
+        ['value' => 0,
+        'adv' => false, ]
     ));
 
     // Default show keyboard setting.
     $settings->add(new admin_setting_configcheckbox_with_advanced('mod_mootyper/showkeyboard',
         get_string('showkeyboard', 'mootyper'),
         get_string('showkeyboard_help', 'mootyper'),
-        [
-            'value' => 1,
-            'adv' => false,
-        ]
+        ['value' => 1,
+        'adv' => false, ]
     ));
 
     // Default keyboard layout.
@@ -183,9 +167,9 @@ if ($ADMIN->fulltree) {
     $name = new lang_string('lesson_export_filename', 'mootyper');
     $description = new lang_string('lesson_export_filenameconfig', 'mootyper');
     $settings->add(new admin_setting_configcheckbox('mod_mootyper/lesson_export_filename',
-                                                    $name,
-                                                    $description,
-                                                    0));
+        $name,
+        $description,
+        0));
 
     // Appearance settings.
     $settings->add(new admin_setting_heading('mod_mootyper/appearance', get_string('appearance'), ''));

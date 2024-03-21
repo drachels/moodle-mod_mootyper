@@ -78,7 +78,7 @@ class restore_mootyper_activity_structure_step extends restore_activity_structur
     }
 
     /**
-     * Process an assign restore.
+     * Process a mootyper restore.
      *
      * @param object $data The data in object form
      * @return void
@@ -180,7 +180,7 @@ class restore_mootyper_activity_structure_step extends restore_activity_structur
      */
     protected function process_mootyper_exercise($data) {
         global $DB;
-        //$debug['CP666661-enter-process_mootyper_exercise($data): '] = 'Entering function process_mootyper_exercise($data).';
+        $debug['CP666661-enter-process_mootyper_exercise($data): '] = 'Entering function process_mootyper_exercise($data).';
 
         $data = (object)$data;
         $oldid = $data->id;

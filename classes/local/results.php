@@ -35,7 +35,6 @@ defined('MOODLE_INTERNAL') || die(); // @codingStandardsIgnoreLine
  */
 class results {
 
-
     /**
      * Get the last keystroke and check if correct.
      * @param int $mid
@@ -502,7 +501,6 @@ class results {
         return $range;
     }
 
-
     /**
      * Calculate counts.
      *
@@ -701,7 +699,6 @@ class results {
         } else {
             return null;
         }
-
     }
 
     /**
@@ -716,10 +713,9 @@ class results {
         return (($timeopen == 0 || time() >= $timeopen) && ($timeclose == 0 || time() < $timeclose));
     }
 
-
     /**
      * Check for user precision completion.
-     * @param int $mootyper->id
+     * @param int $mootyperid
      * @param int $userid
      * @return boolean
      */
@@ -751,7 +747,7 @@ class results {
 
     /**
      * Check for user WPM completion.
-     * @param int $mootyper->id
+     * @param int $mootyperid
      * @param int $userid
      * @return boolean
      */
@@ -781,11 +777,9 @@ class results {
         }
     }
 
-
-
     /**
      * Check for user MooTyper Grade completion.
-     * @param int $mootyper->id
+     * @param int $mootyperid
      * @param int $userid
      * @return boolean
      */

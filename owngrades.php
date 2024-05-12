@@ -152,24 +152,23 @@ if (!has_capability('mod/mootyper:viewmygrades', context_module::instance($cm->i
     if ($grds != false) {
         echo '<table style="border-style: solid;"><tr>
             <td><a href="?id='.$id.'&n='.$n.'&orderby=2'.$lnkadd.'">'
-            .get_string('fexercise', 'mootyper').'</td>
+            .get_string('fexercise', 'mootyper').$arrtextadds[2].'</a></td>
             <td><a href="?id='.$id.'&n='.$n.'&orderby=4'.$lnkadd.'">'
-            .get_string('vmistakes', 'mootyper').'</a>'.$arrtextadds[4].'</td>
+            .get_string('vmistakes', 'mootyper').$arrtextadds[4].'</a></td>
             <td><a href="?id='.$id.'&n='.$n.'&orderby=5'.$lnkadd.'">'
-            .get_string('timeinseconds', 'mootyper').'</a>'.$arrtextadds[5].'</td>
+            .get_string('timeinseconds', 'mootyper').$arrtextadds[5].'</a></td>
             <td><a href="?id='.$id.'&n='.$n.'&orderby=6'.$lnkadd.'">'
-            .get_string('hitsperminute', 'mootyper').'</a>'.$arrtextadds[6].'</td>
+            .get_string('hitsperminute', 'mootyper').$arrtextadds[6].'</a></td>
             <td><a href="?id='.$id.'&n='.$n.'&orderby=7'.$lnkadd.'">'
-            .get_string('fullhits', 'mootyper').'</a>'.$arrtextadds[7].'</td>
+            .get_string('fullhits', 'mootyper').$arrtextadds[7].'</a></td>
             <td><a href="?id='.$id.'&n='.$n.'&orderby=8'.$lnkadd.'">'
-            .get_string('precision', 'mootyper').'</a>'.$arrtextadds[8].'</td>
-
+            .get_string('precision', 'mootyper').$arrtextadds[8].'</a></td>
             <td><a href="?id='.$id.'&n='.$n.'&orderby=12'.$lnkadd.'">'
-            .get_string('wpm', 'mootyper').'</a>'.$arrtextadds[12].'</td>
+            .get_string('wpm', 'mootyper').$arrtextadds[12].'</a></td>
             <td><a href="?id='.$id.'&n='.$n.'&orderby=13'.$lnkadd.'">'
-            .get_string('gradenoun').'</a>'.$arrtextadds[13].'</td>
+            .get_string('gradenoun').$arrtextadds[13].'</a></td>
             <td><a href="?id='.$id.'&n='.$n.'&orderby=9'.$lnkadd.'">'
-            .get_string('timetaken', 'mootyper').'</a>'.$arrtextadds[9].'</td>
+            .get_string('timetaken', 'mootyper').$arrtextadds[9].'</a></td>
             <td>'.get_string('delete', 'mootyper').'</td></tr>';
 
         foreach ($grds as $gr) {

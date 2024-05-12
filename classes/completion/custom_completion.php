@@ -133,9 +133,9 @@ class custom_completion extends activity_custom_completion {
                     $DB->count_records_sql($finalexercisecompletesql, $params)) && ($mootyper->completionexercise <> 0)) {
                 $status = $mootyper->completionlesson = 1;
             } else {
-                // 20240219 If the $mootyper->completionlesson is set to 1, and $mootyper->completionexercise is set to 0, and
-                if (($mootyper->completionlesson == 1) && ($mootyper->completionexercise == 0) && (!$mootyper->completionexercise <=
-                    $DB->count_records_sql($finalexercisecompletesql, $params))) {
+                // 20240512 If the $mootyper->completionlesson is set to 1, and $mootyper->completionexercise is set to 0, and all exercises of the current lesson are complete.
+                //if (($mootyper->completionlesson == 1) && ($mootyper->completionexercise == 0) && (!$mootyper->completionexercise <= $DB->count_records_sql($finalexercisecompletesql, $params))) {
+                if (($mootyper->completionlesson == 1) && ($mootyper->completionexercise == 0) && ($exercisecountforthislesson <= $DB->count_records_sql($finalexercisecompletesql, $params))) {
                     $status = $mootyper->completionlesson = 1;
                 } else {
                     $status = $mootyper->completionlesson = 0;

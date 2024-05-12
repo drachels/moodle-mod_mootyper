@@ -39,7 +39,7 @@ Contact
 
 Feel free to contact me at drachels@drachels.com
 
-If you have problems using the plugin the plugin or would like
+If you have problems using the plugin or would like
 to see a new feature implemented, please visit
 
     https://github.com/drachels/moodle-mod_mootyper/issues
@@ -64,42 +64,57 @@ sending an email, leave a comment at
 20240111 MooTyper_1168 - Deleting a MooTyper instance seems to leasve some items undeleted.
 20240115 MooTyper_1170 - Might need a previous_completions.php file. - WAITING
 
-20240129 MooTyper_1182 - Lesson Completion needs rewrite to account for when exercises are
-    set to less than max.
+
 20240129 MooTyper_1183 - Exercise Completion may need rewrite to account for bad exercise
     grade in Lesson mode.
+
 20240201 MooTyper_1185 - Feature request - Automatically save results at end of an exercise.
 
+20240326 MooTyper_1227 - Would be nice to have pictures for which finger to use. In progress
+    in the MooTyper Keyboard development course with new English(USV5.2)masterlayout version.
+20240331 MooTyper_1228 - Need to make an English International Keyboard Layout. In progress
+    using layout picture in Picture/FAQ/MooTyper/English.
  
 
 Moodle Versions
 ===============
-=== 4.2.8 === Pending currently possibility 2024022400
-20231014 MooTyper_1100bt - Need to revisit cron_task.php as it is not really needed. Commented
+=== 4.2.9 === Pending 
+20240129 MooTyper_1182bt - Lesson Completion needs rewrite to account for when exercises are
+    set to less than max. I made a change in the "if" at about line 136, in the code of the
+    custom_completion.php file.
+20240410 MooTyper_1234bt - Sort arrows on gview.php and owngrades.php should be part of the sort link.
+    Changed code in gview.php and owngrades.php to include the arrows as part of the sort link.
+    See the ticket for further details.    
+20240424 MooTyper_1236bt - The lsnimport.php needs to ignore Eclipse IDE period folders. Added an
+   "if" that checks to skip any file name that starts with a period.
+
+
+=== 4.2.8 === (Build: 2024032100)
+20231014 MooTyper_1100v - Need to revisit cron_task.php as it is not really needed. Commented
     out as not currently needed.
-20240110 MooTyper_1164bt - Completion does not work for, Require lesson completion,
+20240110 MooTyper_1164v - Completion does not work for, Require lesson completion,
     by itself. See ticket for current progress. Possibly still needs work.
-20240215 MooTyper_1207bt - Lesson completion not staying checked. Changed the setting from just
+20240215 MooTyper_1207v - Lesson completion not staying checked. Changed the setting from just
     the checkbox, to require an input of 1. Added a help button.
-20240215 MooTyper_1208bt - Upon later change to deactivate, completion item must be set to 0.
+20240215 MooTyper_1208v - Upon later change to deactivate, completion item must be set to 0.
     Discovered I was using hard coded words, instead of the needed string with the new
     $suffix added. Added help buttons for each completion.
-20240223 MooTyper_1212bt - MooTyper - Duplicate fails when using PostgreSQL data base in
+20240223 MooTyper_1212v - MooTyper - Duplicate fails when using PostgreSQL data base in
     MooTyper v4.2.7 and lower. Changed the three affected SQL's in the
     backup_mootyper_stepslib.php file, so that JOIN's use ON.
-20240223 MooTyper_1214bt - MooTyper v4.2.8 fails when used with PostgreSQL Data Base. See
+20240223 MooTyper_1214v - MooTyper v4.2.8 fails when used with PostgreSQL Data Base. See
     the code for details. Added GROUP BY as needed, where needed. Modified other code in
     custom_completion.php as needed to get the correct completion results.
-20240227 MooTyper_1216bt - Layout - Spanish(V5) needs to remove a non-breaking space from
+20240227 MooTyper_1216v - Layout - Spanish(V5) needs to remove a non-breaking space from
     the 5 key. Removed one non-breaking space.
-20240303 MooTyper_1219bt - Lesson Completion - Need to prevent values other than 0 or 1. 
+20240303 MooTyper_1219v - Lesson Completion - Need to prevent values other than 0 or 1. 
     Modified the file, mod?form.php for the, $completionlessongroup, so the the group item
     is no longer $mform->createElement('checkbox', but is now, $mform->createElement
     ('selectyesno'. The yes-no selection is automatically translated as 1 or 0.
 
 
 
-=== 4.2.7 === 2024013100
+=== 4.2.7 === (Build: 2024013100)
 20230929 MooTyper_1083v - In lib.php, function mootyper_get_completion_state($course, $cm,
     $userid, $type), needs to be removed. See ticket. This function has currently been
     removed.

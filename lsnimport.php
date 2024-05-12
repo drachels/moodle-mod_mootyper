@@ -156,64 +156,67 @@ function update_exercises_file($dafile, $lsnid, $lsn) {
     // Extract the lesson name from the file name.
     $record = new stdClass();
     $periodpos = strrpos($dafile, '.');
-    $lessonname = substr($dafile, 0, $periodpos);
+    // 20240512 Skip files with names starting with a period.
+    if ($periodpos <> 0) {
+        $lessonname = substr($dafile, 0, $periodpos);
 
-    // Now read the whole lesson file so we can split it into exercises and exercise names.
-    $fh = fopen($thefile, 'r');
-    $thedata = fread($fh, filesize($thefile));
-    fclose($fh);
+        // Now read the whole lesson file so we can split it into exercises and exercise names.
+        $fh = fopen($thefile, 'r');
+        $thedata = fread($fh, filesize($thefile));
+        fclose($fh);
 
-    $haha = "";
-    for ($i = 0; $i < strlen($thedata); $i++) {
-        $haha .= $thedata[$i];
-    }
-    $haha = trim($haha);
-    // Break lesson into an array of separate exercises followed by exercise names.
-    $splitted = explode ('/**/' , $haha);
+        $haha = "";
+        for ($i = 0; $i < strlen($thedata); $i++) {
+            $haha .= $thedata[$i];
+        }
+        $haha = trim($haha);
+        // Break lesson into an array of separate exercises followed by exercise names.
+        $splitted = explode ('/**/' , $haha);
 
-    for ($j = 0; $j < count($splitted); $j += 2) {
-        // Remove whitespace from both sides of $splitted.
-        $fexercise = trim($splitted[$j]);
-        $fexercisename = trim($splitted[$j + 1]);
+        for ($j = 0; $j < count($splitted); $j += 2) {
+            // Remove whitespace from both sides of $splitted.
+            $fexercise = trim($splitted[$j]);
+            $fexercisename = trim($splitted[$j + 1]);
 
-        // Create sql to see how many exercises are in this lesson.
-        $sql = "SELECT id, texttotype, exercisename, lesson, snumber
-                  FROM {mootyper_exercises}
-                 WHERE lesson = '".$lsnid."'";
+            // Create sql to see how many exercises are in this lesson.
+            $sql = "SELECT id, texttotype, exercisename, lesson, snumber
+                      FROM {mootyper_exercises}
+                     WHERE lesson = '".$lsnid."'";
 
-        // Get the total number of exercises that belong to this lesson.
-        $snumber = count($DB->get_records_sql($sql));
-        $snum = $j / 2 + 1;
-        $sql = "SELECT id, texttotype, exercisename, lesson, snumber
-                  FROM {mootyper_exercises}
-                 WHERE lesson = '".$lsnid."' AND snumber = '".$snum."'";
+            // Get the total number of exercises that belong to this lesson.
+            $snumber = count($DB->get_records_sql($sql));
+            $snum = $j / 2 + 1;
+            $sql = "SELECT id, texttotype, exercisename, lesson, snumber
+                      FROM {mootyper_exercises}
+                     WHERE lesson = '".$lsnid."' AND snumber = '".$snum."'";
 
-        $record = $DB->get_record_sql($sql);
-        // If there is no record, we must be adding a new exercise.
-        if (!$record) {
-            $record = new stdClass();
-            $record->texttotype = $fexercise;
-            $record->exercisename = $fexercisename;
-            $record->lesson = $lsnid;
-            $record->snumber = $snum;
-            $DB->insert_record('mootyper_exercises', $record, false);
-            echo "<tr class='table-success'><td><b>$lsn</td><td>"
-                .get_string('exercise_name_added', 'mootyper', $fexercisename).'</b></td></tr>';
-        } else if (($record->texttotype == $fexercise) && ($record->exercisename == $fexercisename)) {
-            // If no changes, then do not need to do anything.
-            echo "<tr class='table-dark text-dark'><td>$lsn</td><td>".get_string('lsnimportnotadd', 'mootyper').'</td></tr>';
-        } else if (($record->texttotype == $fexercise) && !($record->exercisename == $fexercisename)) {
-            // If the text is the same but the exercise name is different, then change it.
-            $record->exercisename = $fexercisename;
-            $DB->update_record('mootyper_exercises', $record, false);
-            echo "<tr class='table-success'><td><b>$lsn</td><td>"
-                .get_string('exercise_name_updated', 'mootyper', $fexercisename).'</b></td></tr>';
-        } else if (!($record->texttotype == $fexercise) && ($record->exercisename == $fexercisename)) {
-            // If the text is different but not the exercise name, then update the text.
-            // Need updated string for adding changed text to type.
-            $record->texttotype = $fexercise;
-            $DB->update_record('mootyper_exercises', $record, false);
-            echo "<tr class='table-success'><td><b>$lsn</td><td>".get_string('lsnimportadd', 'mootyper').'</b></td></tr>';
+            $record = $DB->get_record_sql($sql);
+            // If there is no record, we must be adding a new exercise.
+            if (!$record) {
+                $record = new stdClass();
+                $record->texttotype = $fexercise;
+                $record->exercisename = $fexercisename;
+                $record->lesson = $lsnid;
+                $record->snumber = $snum;
+                $DB->insert_record('mootyper_exercises', $record, false);
+                echo "<tr class='table-success'><td><b>$lsn</td><td>"
+                    .get_string('exercise_name_added', 'mootyper', $fexercisename).'</b></td></tr>';
+            } else if (($record->texttotype == $fexercise) && ($record->exercisename == $fexercisename)) {
+                // If no changes, then do not need to do anything.
+                echo "<tr class='table-dark text-dark'><td>$lsn</td><td>".get_string('lsnimportnotadd', 'mootyper').'</td></tr>';
+            } else if (($record->texttotype == $fexercise) && !($record->exercisename == $fexercisename)) {
+                // If the text is the same but the exercise name is different, then change it.
+                $record->exercisename = $fexercisename;
+                $DB->update_record('mootyper_exercises', $record, false);
+                echo "<tr class='table-success'><td><b>$lsn</td><td>"
+                    .get_string('exercise_name_updated', 'mootyper', $fexercisename).'</b></td></tr>';
+            } else if (!($record->texttotype == $fexercise) && ($record->exercisename == $fexercisename)) {
+                // If the text is different but not the exercise name, then update the text.
+                // Need updated string for adding changed text to type.
+                $record->texttotype = $fexercise;
+                $DB->update_record('mootyper_exercises', $record, false);
+                echo "<tr class='table-success'><td><b>$lsn</td><td>".get_string('lsnimportadd', 'mootyper').'</b></td></tr>';
+            }
         }
     }
 }

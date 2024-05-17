@@ -1,8 +1,8 @@
 /**
- * @fileOverview EnglishWKeypad(USV6.1) keyboard driver.
+ * @fileOverview SpanishLatinAmericaWKeypad(V6.0) keyboard driver.
  * @author <a href="mailto:drachels@drachels.com">AL Rachels</a>
  * @version 6.1
- * @since 05/17/2019
+ * @since 20240516
  */
 
 /**
@@ -29,6 +29,8 @@ function keyupCombined(e) {
  * @returns {bolean} The event.
  */
 function keyupFirst(event) {
+    $("#form1").off("keyup", "#tb1", keyupFirst);
+    $("#form1").on("keyup", "#tb1", keyupCombined);
     return false;
 }
 
@@ -39,13 +41,47 @@ function keyupFirst(event) {
 function keyboardElement(ltr) {
     this.chr = ltr.toLowerCase();
     this.alt = false;
-    if (isLetter(ltr)) {
-        // Depending on letter, set shift key for right or left.
-        if (ltr.match(/[QWERTASDFGZXCVB~!@#$%]/)) {
+    this.accent = false;
+    if (isLetter(ltr)) { // Set specified shift key for right or left.
+        this.shift = ltr.toUpperCase() === ltr && ltr != '¡' && ltr != '`';
+        if (ltr.match(/[QWEÉRTAÁSDFGZXCVB]/)) {
             this.shiftright = true;
-        } else if (ltr.match(/[YUIOPHJKLNM\^&*()_+{}|:"<>?]/)) {
+        } else if (ltr.match(/[YUÚÜIÍOÓPHJKLÑNMÇ]/)) {
             this.shiftleft = true;
         }
+    } else {
+        // @codingStandardsIgnoreLine
+        if (ltr.match(/[ª>!"·$%]/i)) {
+            this.shiftright = true;
+            this.shiftleft = false;
+        // @codingStandardsIgnoreLine
+        } else if (ltr.match(/[&/()=?¿^*¨;:_]/i)) {
+            this.shiftright = false;
+            this.shiftleft = true;
+        } else {
+            this.shiftright = false;
+            this.shiftleft = false;
+        }
+    }
+    // @codingStandardsIgnoreLine
+    if (ltr.match(/[áéíóú]/)) {
+        this.accent = true;
+    }
+    // @codingStandardsIgnoreLine
+    if (ltr.match(/[ÁÉÍÓÚ]/)) {
+        this.accent = true;
+    }
+    if (ltr === 'ü') {
+        this.accent = true;
+        this.shiftleft = true;
+
+    }
+    if (ltr === 'Ü') {
+        this.accent = true;
+    }
+    // @codingStandardsIgnoreLine
+    if (ltr.match(/[\\|@#~€¬\[\]{}]/i)) {
+        this.alt = true;
     }
     this.turnOn = function() {
         if (isLetter(this.chr)) {
@@ -74,13 +110,16 @@ function keyboardElement(ltr) {
             document.getElementById('jkeyshiftr').className = "next4";
         }
         if (this.alt) {
-            document.getElementById('jkeyaltgr').className = "nextSpace";
+            document.getElementById('jkeyaltgr').className = "next2";
+        }
+        if (this.accent) {
+            document.getElementById('jkeyrighttick').className = "next4";
         }
     };
     this.turnOff = function() {
         if (isLetter(this.chr)) {
         // @codingStandardsIgnoreLine
-            if (this.chr.match(/[asdfjkl;]/i)) {
+            if (this.chr.match(/[asdfjklñ]/i)) {
                 // Turns off highlight of normal home row keys.
                 document.getElementById(getKeyID(this.chr)).className = "finger" + thenFinger(this.chr.toLowerCase());
                 // Turns off highlight of keypad home row keys.
@@ -120,7 +159,10 @@ function keyboardElement(ltr) {
         if (this.alt) {
             document.getElementById('jkeyaltgr').className = "normal";
         }
-    };
+        if (this.accent) {
+            document.getElementById('jkeyrighttick').className = "normal";
+        }
+    }
 }
 
 /**
@@ -132,16 +174,15 @@ function thenFinger(tCrka) {
     if (tCrka === ' ') {
         return 5; // Highlight the spacebar.
     // @codingStandardsIgnoreLine
-    } else if (tCrka.match(/[`~1!qaz0)p;:/?\-_[{'"=+\]}\\|]/i)) {
+    } else if (tCrka.match(/[ºª\\1!|qaáz<>0=pñ\'?`^\[´¨{\-_¡¿+*\]ç}]/i)) {
         return 4; // Highlight the correct key above in red.
     // @codingStandardsIgnoreLine
-    } else if (tCrka.match(/[2@wsx9(ol.>]/i)) {
+    } else if (tCrka.match(/[2"@wsx9)oól.:]/i)) {
         return 3; // Highlight the correct key above in green.
     // @codingStandardsIgnoreLine
-    } else if (tCrka.match(/[3#edc8*ik,<]/i)) {
-        return 2; // Highlight the correct key above in yellow.
-    // @codingStandardsIgnoreLine
-    } else if (tCrka.match(/[4$rfv5%tgb6^yhn7&ujm]/i)) {
+    } else if (tCrka.match(/[3·#eé€dc8(iík,;]/i)) {
+        return 2; // Highlight the correct key above in yellow.    // @codingStandardsIgnoreLine
+    } else if (tCrka.match(/[4$~rf5%€tgv6&¬yhnb7/uúüjm]/i)) {
         return 1; // Highlight the correct key above in blue.
     } else {
         return 6; // Do not change any highlight.
@@ -183,58 +224,61 @@ function thenPadFinger(tCrka) {
 function getKeyID(tCrka) {
     if (tCrka === ' ') {
         return "jkeyspace";
-    } else if (tCrka === ',') {
+    } else if (tCrka === ',' || tCrka === ';') {
         return "jkeycomma";
     } else if (tCrka === '\n') {
         return "jkeyenter";
-    } else if (tCrka === '.') {
+    } else if (tCrka === '.' || tCrka === ':') {
         return "jkeyperiod";
     } else if (tCrka === '-' || tCrka === '_') {
         return "jkeyminus";
-    } else if (tCrka === '`') {
-        return "jkeybackquote";
-    } else if (tCrka === '!') {
+    } else if (tCrka === '!' || tCrka === '|') {
         return "jkey1";
-    } else if (tCrka === '@') {
+    } else if (tCrka === '"' || tCrka === '@') {
         return "jkey2";
-    } else if (tCrka === '#') {
+    } else if (tCrka === '·' || tCrka === '#') {
         return "jkey3";
-    } else if (tCrka === '$') {
+    } else if (tCrka === '$'|| tCrka === '~') {
         return "jkey4";
     } else if (tCrka === '%') {
         return "jkey5";
-    } else if (tCrka === '^') {
+    } else if (tCrka === '&' || tCrka === '¬') {
         return "jkey6";
-    } else if (tCrka === '&') {
+    } else if (tCrka === '/') {
         return "jkey7";
-    } else if (tCrka === '*') {
-        return "jkey8";
     } else if (tCrka === '(') {
-        return "jkey9";
+        return "jkey8";
     } else if (tCrka === ')') {
+        return "jkey9";
+    } else if (tCrka === '=') {
         return "jkey0";
-    } else if (tCrka === '-' || tCrka === '_') {
-        return "jkeyminus";
-    } else if (tCrka === '[' || tCrka === '{') {
-        return "jkeybracketl";
-    } else if (tCrka === ']' || tCrka === '}') {
-        return "jkeybracketr";
-    } else if (tCrka === ';' || tCrka === ':') {
-        return "jkeysemicolon";
-    } else if (tCrka === "'" || tCrka === '"') {
-        return "jkeycrtica";
-    } else if (tCrka === "\\" || tCrka === '|') {
-        return "jkeybackslash";
-    } else if (tCrka === ',' || tCrka === '<') {
-        return "jkeycomma";
-    } else if (tCrka === '.' || tCrka === '>') {
-        return "jkeyperiod";
-    } else if (tCrka === '=' || tCrka === '+') {
-        return "jkeyequals";
-    } else if (tCrka === '?' || tCrka === '/') {
-        return "jkeyslash";
-    } else if (tCrka === '~' || tCrka === '`') {
-        return "jkeybackquote";
+    } else if (tCrka === '`' || tCrka === '^' || tCrka === '[') {
+        return "jkeylefttick";
+    } else if (tCrka === '´' || tCrka === '¨' || tCrka === '{') {
+        return "jkeyrighttick";
+    } else if (tCrka === 'ç' || tCrka === '}') {
+        return "jkeyç";
+    } else if (tCrka === "'" || tCrka === '?') {
+        return "jkeyapostrophe";
+    } else if (tCrka === '*' || tCrka === '+' || tCrka === ']') {
+        return "jkeyplus";
+    } else if (tCrka === '<' || tCrka === '>') {
+        return "jkeyckck";
+    } else if (tCrka === 'º' || tCrka === 'ª' || tCrka === '\\') {
+        return "jkeytilde";
+    } else if (tCrka === '¿') {
+        return 'jkey¡';
+    } else if (tCrka === 'a' || tCrka === 'á') {
+        return "jkeya";
+    } else if (tCrka === 'e' || tCrka === 'é' || tCrka === '€') {
+        return "jkeye";
+    } else if (tCrka === 'i' || tCrka === 'í') {
+        return "jkeyi";
+    } else if (tCrka === 'o' || tCrka === 'ó') {
+        return "jkeyo";
+    } else if (tCrka === 'u' || tCrka === 'ú' || tCrka === 'ü') {
+        return "jkeyu";
+                                                                 
     } else {
         return "jkey" + tCrka;
     }
@@ -246,5 +290,9 @@ function getKeyID(tCrka) {
  * @returns {(number|Array)}.
  */
 function isLetter(str) {
-    return str.length === 1 && str.match(/[!-ﻼ]/i);
+    // return str.length === 1 && str.match(/[!-ﻼ]/i);
+    return str.length === 1 && str.match(/[a-z0123456789`¡ñçáéíóúü]/i);
+    // When I try to use str.match(/[!-ﻼ]/i);, at least four lower case
+    // keys start highlighting the Shift key, too. But they all
+    // work fine using the old version.
 }

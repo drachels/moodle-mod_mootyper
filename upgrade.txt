@@ -82,12 +82,19 @@ Moodle Versions
 20240129 MooTyper_1182bt - Lesson Completion needs rewrite to account for when exercises are
     set to less than max. I made a change in the "if" at about line 136, in the code of the
     custom_completion.php file.
+20240331 MooTyper_1228bt - Need to make an English International Keyboard Layout. Created two
+    needed files based English(UKV5) then modified as needed.
 20240410 MooTyper_1234bt - Sort arrows on gview.php and owngrades.php should be part of the sort link.
     Changed code in gview.php and owngrades.php to include the arrows as part of the sort link.
     See the ticket for further details.    
 20240424 MooTyper_1236bt - The lsnimport.php needs to ignore Eclipse IDE period folders. Added an
-   "if" that checks to skip any file name that starts with a period.
-
+    "if" that checks to skip any file name that starts with a period.
+20240516 MooTyper_1240 - Need Español Lantin America V5 and V6 keyboard layouts. Created and
+    verfied the code as needed in the four files.
+20240517 MooTyper_1241bt - EnglishWKeypad(USV6).php indents are mostly incorrect. Changed indents
+    as needed to align code in the file. Changed version to 6.1 in this file and the .js file.
+20240517 MooTyper_1242bt - Need new KB layout, EnglishInternationalWKeypad(INTLV6). Made changes
+    as needed to create the working layout.
 
 === 4.2.8 === (Build: 2024032100)
 20231014 MooTyper_1100v - Need to revisit cron_task.php as it is not really needed. Commented

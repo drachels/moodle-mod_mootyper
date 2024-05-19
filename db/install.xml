@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<XMLDB PATH="mod/mootyper/db" VERSION="20231005" COMMENT="XMLDB file for Moodle mod/mootyper"
+<XMLDB PATH="mod/mootyper/db" VERSION="20240518" COMMENT="XMLDB file for Moodle mod/mootyper"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
 >
@@ -32,7 +32,7 @@
         <FIELD NAME="showkeyboard" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="1" SEQUENCE="false"/>
         <FIELD NAME="continuoustype" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
         <FIELD NAME="countmistypedspaces" TYPE="int" LENGTH="1" NOTNULL="false" DEFAULT="0" SEQUENCE="false"/>
-        <FIELD NAME="statsbgc" TYPE="char" LENGTH="20" NOTNULL="true" SEQUENCE="false" COMMENT="Statistics bar background color."/>
+        <FIELD NAME="statsbgc" TYPE="char" LENGTH="20" NOTNULL="true" DEFAULT="#00ff00" SEQUENCE="false" COMMENT="Statistics bar background color."/>
         <FIELD NAME="keytoptextc" TYPE="char" LENGTH="20" NOTNULL="true" SEQUENCE="false" COMMENT="Text color of keys."/>
         <FIELD NAME="keytopbgc" TYPE="char" LENGTH="20" NOTNULL="true" SEQUENCE="false" COMMENT="Keytop color setting."/>
         <FIELD NAME="keybdbgc" TYPE="char" LENGTH="20" NOTNULL="true" SEQUENCE="false" COMMENT="Keyboard background color setting."/>
@@ -41,8 +41,8 @@
         <FIELD NAME="textbgc" TYPE="char" LENGTH="20" NOTNULL="true" SEQUENCE="false" COMMENT="Text to type background color setting."/>
         <FIELD NAME="texterrorcolor" TYPE="char" LENGTH="20" NOTNULL="true" SEQUENCE="false" COMMENT="Background color setting for mis-typed letters."/>
         <FIELD NAME="countmistakes" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="Count all keystroke mistakes, or just once per key."/>
-        <FIELD NAME="completionexercise" TYPE="int" LENGTH="2" NOTNULL="true" DEFAULT="1" SEQUENCE="false" COMMENT="Based on mode 0 (lesson) or 2 (practice), did the student complete all the exercises for the lesson? If mode 1 (exam), did the student complete the one required exercise?"/>
-        <FIELD NAME="completionlesson" TYPE="int" LENGTH="2" NOTNULL="true" DEFAULT="1" SEQUENCE="false" COMMENT="Did the student complete the lesson?"/>
+        <FIELD NAME="completionexercise" TYPE="int" LENGTH="2" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="Based on mode 0 (lesson) or 2 (practice), did the student complete all the exercises for the lesson? If mode 1 (exam), did the student complete the one required exercise?"/>
+        <FIELD NAME="completionlesson" TYPE="int" LENGTH="2" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="Did the student complete the lesson?"/>
         <FIELD NAME="completionprecision" TYPE="int" LENGTH="2" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="If set, did the student meet or exceed the required Precision."/>
         <FIELD NAME="completionwpm" TYPE="int" LENGTH="2" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="If set, did the student meet or exceed the required WPM?"/>
         <FIELD NAME="completionmootypergrade" TYPE="int" LENGTH="2" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="Did the student pass this MooTyper activity based on it's settings?"/>

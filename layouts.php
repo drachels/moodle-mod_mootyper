@@ -71,7 +71,7 @@ $jlinkklrem = $CFG->wwwroot . '/mod/mootyper/klrem.php?id='.$id;
 
 echo '<div class="container">';
 echo '<table class="table table-hover">';
-echo '<thead><tr><th>'.get_string('layout', 'mootyper').'</th><th>'.get_string('delete', 'mootyper').'</th>';
+echo '<thead><tr><th>'.get_string('layout', 'mootyper').'</th><th>'.get_string('deletekb', 'mootyper').'</th>';
 echo '</tr></thead>';
 echo '<tbody>';
 
@@ -82,7 +82,7 @@ foreach ($layouts as $lo) {
         .'<a onclick="return confirm(\''.get_string('deletelsnconfirm', 'mootyper').$lo
         .'\')" href="'.$jlinkklrem.'&kb='.$lo
         .'" class="btn btn-warning" style="border-radius: 8px">'
-        .get_string('deletekb', 'mootyper', $lo)
+        .get_string('deletekblo', 'mootyper', $lo)
         .'</a></td></tr>';
 }
 echo '</tbody>';

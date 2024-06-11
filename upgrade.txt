@@ -72,8 +72,8 @@ sending an email, leave a comment at
 
 20240326 MooTyper_1227 - Would be nice to have pictures for which finger to use. In progress
     in the MooTyper Keyboard development course with new English(USV5.2)masterlayout version.
-20240331 MooTyper_1228 - Need to make an English International Keyboard Layout. In progress
-    using layout picture in Picture/FAQ/MooTyper/English.
+20240524 MooTyper_1248 - Need new KB layout installation code when installing/upgrading MooTyper.
+
  
 
 Moodle Versions
@@ -95,6 +95,9 @@ Moodle Versions
     as needed to align code in the file. Changed version to 6.1 in this file and the .js file.
 20240517 MooTyper_1242bt - Need new KB layout, EnglishInternationalWKeypad(INTLV6). Made changes
     as needed to create the working layout.
+20240611 MooTyper_1252bt - New codechecker shows language file needs to be sorted. Completed changes
+    as directed by codechecker. Found a duplicate string name and renamed both: deletekb and
+    deletedblo in the layouts.php file.
 
 === 4.2.8 === (Build: 2024032100)
 20231014 MooTyper_1100v - Need to revisit cron_task.php as it is not really needed. Commented

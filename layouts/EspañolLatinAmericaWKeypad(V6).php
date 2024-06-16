@@ -35,7 +35,7 @@ echo (isset($displaynone) && ($displaynone == true)) ? 'display:none;' : '';
         <td style="width:630px">
             <section>
                 <div class="mtrow" style='float: left; margin-left:5px; font-size: 15px !important; line-height: 15px'>
-                    <div id="jkeytilde" class="normal" style='text-align:left; float: left;'>°<br>|</div>
+                    <div id="jkey|" class="normal" style='text-align:left; float: left;'>°<br>|</div>
                     <div id="jkey1" class="normal" style='text-align:left; float: left;'>!<br>1</div>
                     <div id="jkey2" class="normal" style='text-align:left; float: left;'>"<br>2
                         <span style="color:blue;">&nbsp;@</span></div>
@@ -67,7 +67,7 @@ echo (isset($displaynone) && ($displaynone == true)) ? 'display:none;' : '';
                         <div id="jkeylefttick" class="normal" style='color:red; text-align:left; float: left;'>¨<br>´</div>
                         <div id="jkeyplus" class="normal" style='text-align:left; float: left;'>*<br>+</div>
                     </div>
-                    <span id="jkeyenter" class="normal" style="width: 50px; float: right; height: 85px;">Enter</span>
+                    <span id="jkeyenter" class="normal" style="width: 50px; float: right; height: 85px;">Entrar</span>
                     <div class="mtrow" style='float: left; margin-left:5px; font-size: 15px !important; line-height: 15px'>
                         <div id="jkeycaps" class="normal" style="width: 80px;
                             font-size: 12px !important; float: left;">Bloq. mayús</div>

@@ -224,6 +224,8 @@ function thenPadFinger(tCrka) {
 function getKeyID(tCrka) {
     if (tCrka === ' ') {
         return "jkeyspace";
+    } else if (tCrka === '|' || tCrka === '°') {
+        return "jkey|";
     } else if (tCrka === ',' || tCrka === ';') {
         return "jkeycomma";
     } else if (tCrka === '\n') {

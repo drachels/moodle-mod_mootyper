@@ -36,13 +36,13 @@ echo (isset($displaynone) && ($displaynone == true)) ? 'display:none;' : '';
     <div id="masterlayoutfinger" class="masterlayoutfinger">
         <section>
             <div class="mtrow" style='float: left; margin-left:5px; font-size: 0.9em; !important;'>
-                <div id="jkeyxxx" class="finger4" style="width: 70px; font-size: 0.9em;">Little finger</div>
-                <div id="jkeyxxx" class="finger3" style="text-align:left; font-size: 0.9em;">Ring finger</div>
-                <div id="jkeyxxx" class="finger2" style="text-align:left; font-size: 0.9em;">Middle finger</div>
-                <div id="jkeyxxx" class="finger1" style="width: 160px;">Index finger</div>
-                <div id="jkeyxxx" class="finger2" style="text-align:left; font-size: 0.9em;">Middle finger</div>
-                <div id="jkeyxxx" class="finger3" style="text-align:left; font-size: 0.9em;">Ring finger</div>
-                <div id="jkeyxxx" class="finger4" style="width: 230px; font-size: 0.9em;">Little finger</div>
+                <div id="jkeylfl" class="finger4" style="width: 70px; font-size: 0.9em;">Little finger</div>
+                <div id="jkeyrfl" class="finger3" style="text-align:left; font-size: 0.9em;">Ring finger</div>
+                <div id="jkeymfl" class="finger2" style="text-align:left; font-size: 0.9em;">Middle finger</div>
+                <div id="jkeyif" class="finger1" style="width: 160px;">Index finger</div>
+                <div id="jkeymfr" class="finger2" style="text-align:left; font-size: 0.9em;">Middle finger</div>
+                <div id="jkeyrfr" class="finger3" style="text-align:left; font-size: 0.9em;">Ring finger</div>
+                <div id="jkeylfr" class="finger4" style="width: 230px; font-size: 0.9em;">Little finger</div>
             </div>
         </section>
     </div><br>
@@ -121,8 +121,8 @@ echo (isset($displaynone) && ($displaynone == true)) ? 'display:none;' : '';
         </section>
     </div><br>
     <div id="masterlayoutfinger2" class="masterlayoutfinger">
-        <div id="jkeyxxx" class="finger4" style="width: 165px;">Little finger</div>
-        <div id="jkeyxxx" class="fingerSpace" style="width: 295px;">Thumbs</div>
-        <div id="jkeyxxx" class="finger4" style="width: 165px;">Little finger</div>
+        <div id="jkeylfl" class="finger4" style="width: 165px;">Little finger</div>
+        <div id="jkeythumb" class="fingerSpace" style="width: 295px;">Thumbs</div>
+        <div id="jkeylfr" class="finger4" style="width: 165px;">Little finger</div>
     </div>
 </div>

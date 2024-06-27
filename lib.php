@@ -27,7 +27,7 @@
  */
 use mod_mootyper\local\lessons;
 
-defined('MOODLE_INTERNAL') || die(); // @codingStandardsIgnoreLine
+defined('MOODLE_INTERNAL') || die(); // phpcs:ignore
 
 define('MOOTYPER_EVENT_TYPE_OPEN', 'open');
 define('MOOTYPER_EVENT_TYPE_CLOSE', 'close');

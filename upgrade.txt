@@ -74,28 +74,31 @@ sending an email, leave a comment at
     in the MooTyper Keyboard development course with new English(USV5.2)masterlayout version.
 20240524 MooTyper_1248 - Need new KB layout installation code when installing/upgrading MooTyper.
 
- 
+
 
 Moodle Versions
 ===============
-=== 4.2.9 === Pending 
-20240129 MooTyper_1182bt - Lesson Completion needs rewrite to account for when exercises are
-    set to less than max. I made a change in the "if" at about line 136, in the code of the
-    custom_completion.php file.
-20240331 MooTyper_1228bt - Need to make an English International Keyboard Layout. Created two
-    needed files based English(UKV5) then modified as needed.
-20240410 MooTyper_1234bt - Sort arrows on gview.php and owngrades.php should be part of the sort link.
-    Changed code in gview.php and owngrades.php to include the arrows as part of the sort link.
-    See the ticket for further details.    
-20240424 MooTyper_1236bt - The lsnimport.php needs to ignore Eclipse IDE period folders. Added an
-    "if" that checks to skip any file name that starts with a period.
+=== 4.3.0 === Pending
 20240516 MooTyper_1240 - Need Español Lantin America V5 and V6 keyboard layouts. Created and
     verfied the code as needed in the four files.
-20240517 MooTyper_1241bt - EnglishWKeypad(USV6).php indents are mostly incorrect. Changed indents
-    as needed to align code in the file. Changed version to 6.1 in this file and the .js file.
 20240517 MooTyper_1242bt - Need new KB layout, EnglishInternationalWKeypad(INTLV6). Made changes
     as needed to create the working layout.
-20240611 MooTyper_1252bt - New codechecker shows language file needs to be sorted. Completed changes
+    
+    
+=== 4.2.9 === 2024061300 
+20240129 MooTyper_1182v - Lesson Completion needs rewrite to account for when exercises are
+    set to less than max. I made a change in the "if" at about line 136, in the code of the
+    custom_completion.php file.
+20240331 MooTyper_1228v - Need to make an English International Keyboard Layout. Created two
+    needed files based English(UKV5) then modified as needed.
+20240410 MooTyper_1234v - Sort arrows on gview.php and owngrades.php should be part of the sort link.
+    Changed code in gview.php and owngrades.php to include the arrows as part of the sort link.
+    See the ticket for further details.    
+20240424 MooTyper_1236v - The lsnimport.php needs to ignore Eclipse IDE period folders. Added an
+    "if" that checks to skip any file name that starts with a period.
+20240517 MooTyper_1241v - EnglishWKeypad(USV6).php indents are mostly incorrect. Changed indents
+    as needed to align code in the file. Changed version to 6.1 in this file and the .js file.
+20240611 MooTyper_1252v - New codechecker shows language file needs to be sorted. Completed changes
     as directed by codechecker. Found a duplicate string name and renamed both: deletekb and
     deletedblo in the layouts.php file.
 

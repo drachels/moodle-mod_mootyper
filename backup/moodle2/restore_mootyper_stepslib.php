@@ -89,6 +89,7 @@ class restore_mootyper_activity_structure_step extends restore_activity_structur
         $oldid = $data->id;
         $oldexercise = $data->exercise;
         $oldlesson = $data->lesson;
+        $oldisexam = $data->isexam;
         $oldlayout = $data->layout;
         $data->course = $this->get_courseid();
         $data->timecreated = $this->apply_date_offset($data->timecreated);
@@ -114,6 +115,7 @@ class restore_mootyper_activity_structure_step extends restore_activity_structur
         $newitemid = $DB->insert_record('mootyper_attempts', $data);
         $this->set_mapping('mootyper_attempt', $oldid, $newitemid);
     }
+
     /**
      * Process a check restore.
      * @param object $data The data in object form
@@ -151,6 +153,7 @@ class restore_mootyper_activity_structure_step extends restore_activity_structur
             $this->newmootyperdata = $newmootyper;
         }
     }
+
     /**
      * Process a lesson restore
      * @param object $data The data in object form
@@ -208,7 +211,6 @@ class restore_mootyper_activity_structure_step extends restore_activity_structur
                     }
                 }
             }
-
         } else {
             // This exercise is not in the database so add it.
             // Process data to get the ID.
@@ -243,7 +245,6 @@ class restore_mootyper_activity_structure_step extends restore_activity_structur
         $newgrade = $DB->get_record('mootyper_grades', ['id' => $newitemid]);
     }
 
-
     /**
      * Once the database tables have been fully restored, restore the files.
      * @return void
@@ -255,6 +256,5 @@ class restore_mootyper_activity_structure_step extends restore_activity_structur
         // Add mootyper related files, no need to match by itemname (just internally handled context).
         $this->add_related_files('mod_mootyper', 'intro', null);
         $this->add_related_files('mod_mootyper', 'introattachment', null);
-
     }
 }

@@ -49,6 +49,14 @@ require_login($course, true, $cm);
 
 $context = context_module::instance($cm->id);
 
+// 20240617 COde to delete a lesson and all of the exercises in it.
+// Needs more work to force grade removal first.
+// Needs to check mootyper_grades for the mootyper in use.
+// if ($lessonid) {
+// $DB->delete_records('mootyper_lessons', ['id' => $lessonid]);
+// $DB->delete_records('mootyper_exercises', ['lesson' => $lessonid]);
+// }
+
 if ($exerciseid) {
     $lessonpo = optional_param('lesson', '', PARAM_INT);
     // Get all the other exercises in this lesson so we can fix the snumbers.

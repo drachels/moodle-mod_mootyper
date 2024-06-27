@@ -39,7 +39,7 @@ function keyupFirst(event) {
 function keyboardElement(ltr) {
     this.chr = ltr.toLowerCase();
     this.alt = false;
-    // @codingStandardsIgnoreLine
+    // phpcs:ignore
     if (ltr.match(/[ู฿ํ๊็ฺ๋์%+๑๒๓๔๕๖๗๘๙๐"ฎฑธณฯญฐ,ฅฤฆฏโฌษศซ.()ฉฮ?ฒฬฦ]/)) {
         this.shift = true;
     } else {
@@ -67,7 +67,7 @@ function keyboardElement(ltr) {
     };
     this.turnOff = function() {
         if (isLetter(this.chr)) {
-        // @codingStandardsIgnoreLine
+        // phpcs:ignore
             if (this.chr.match(/[่้็๋ฟหกดเาสวฤฆฏโฌษศซ]/i)) {
                 document.getElementById(getKeyID(this.chr)).className = "finger" + thenFinger(this.chr.toLowerCase());
             } else {
@@ -97,16 +97,16 @@ function keyboardElement(ltr) {
 function thenFinger(tCrka) {
     if (tCrka === ' ') {
         return 5; // Highlight the spacebar.
-    // @codingStandardsIgnoreLine
+    // phpcs:ignore
     } else if (tCrka.match(/[_%ๅ+ๅ๐ๆฟฤผ(จ๗ยญวซฝฦข๘บฐง.ช๙ล,ฃฅ]/i)) {
         return 4; // Highlight the correct key above in red.
-    // @codingStandardsIgnoreLine
+    // phpcs:ignore
     } else if (tCrka.match(/[/๑ไ"หฆป)ต๖นฯสศใฬ]/i)) {
         return 3; // Highlight the correct key above in green.
-    // @codingStandardsIgnoreLine
+    // phpcs:ignore
     } else if (tCrka.match(/[-๒ำฎกฏแฉค๕รณาษมฒ]/i)) {
         return 2; // Highlight the correct key above in yellow.
-    // @codingStandardsIgnoreLine
+    // phpcs:ignore
     } else if (tCrka.match(/[ฺุึัี้่ิืูํ้็ื์฿ี๊่๋ท?ภ๓พฑดโอฮถ๔ะธเฌ]/i)) {
         return 1; // Highlight the correct key above in blue.
     } else {

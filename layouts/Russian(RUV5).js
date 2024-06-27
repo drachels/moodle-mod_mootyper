@@ -46,10 +46,10 @@ function keyboardElement(ltr) {
             this.shiftleft = true;
         }
     } else {
-        // @codingStandardsIgnoreLine
+        // phpcs:ignore
         if (ltr.match(/[!"№;%]/i)) {
             this.shiftright = true;
-        // @codingStandardsIgnoreLine
+        // phpcs:ignore
         } else if (ltr.match(/[:?*()_+/,]/i)) {
             this.shiftleft = true;
         }
@@ -77,7 +77,7 @@ function keyboardElement(ltr) {
     };
     this.turnOff = function() {
         if (isLetter(this.chr)) {
-            // @codingStandardsIgnoreLine
+            // phpcs:ignore
             if (this.chr.match(/[фываолдж]/i)) {
                 document.getElementById(getKeyID(this.chr)).className = "finger" + thenFinger(this.chr.toLowerCase());
             } else {
@@ -109,7 +109,7 @@ function keyboardElement(ltr) {
 function thenFinger(tCrka) {
     if (tCrka === ' ') {
         return 5; // Highlight the spacebar.
-		// @codingStandardsIgnoreLine
+		// phpcs:ignore
     } else if (tCrka.match(/[ё1!йфя0\-=\\)_+/зхъжэ.,]/i)) {
         return 4; // Highlight the correct key above in red.
     } else if (tCrka.match(/[2цыч"9щдю(]/i)) {

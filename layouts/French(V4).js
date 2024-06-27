@@ -50,7 +50,7 @@ function keyboardElement(ltr) {
         this.shift = ltr.toUpperCase() === ltr;
     } else {
         // Set flags for characters needing shift keys.
-        // @codingStandardsIgnoreLine
+        // phpcs:ignore
         if (ltr.match(/[1234567890°+¨£%µ>?./§]/i)) {
             this.alt = false;
             this.accent = false;
@@ -64,7 +64,7 @@ function keyboardElement(ltr) {
         }
     }
     // Set flags for characters needing Alt Gr key.
-    // @codingStandardsIgnoreLine
+    // phpcs:ignore
     if (ltr.match(/[~#{\[|`\\@\]}¤€]/i)) {
         this.shift = false;
         this.alt = true;
@@ -72,7 +72,7 @@ function keyboardElement(ltr) {
     }
     // Set flags for characters needing shift and ¨ keys.
     // Ignore case as flags are same lower or upper case.
-    // @codingStandardsIgnoreLine
+    // phpcs:ignore
     if (ltr.match(/[äëïöü]/i)) {
         this.shift = true;
         this.alt = false;
@@ -80,14 +80,14 @@ function keyboardElement(ltr) {
         this.caret = true;
     }
     // Set flags for lower case characters needing ^ key.
-    // @codingStandardsIgnoreLine
+    // phpcs:ignore
     if (ltr.match(/[âêîôû]/)) {
         this.shift = false;
         this.alt = false;
         this.accent = false;
         this.caret = true;
         // Set flags for upper characters needing ^ key.
-        // @codingStandardsIgnoreLine
+        // phpcs:ignore
     } else if (ltr.match(/[ÂÊÎÔÛ]/)) {
         this.shift = true;
         this.alt = false;
@@ -95,14 +95,14 @@ function keyboardElement(ltr) {
         this.caret = true;
     }
     // Set flags for lower characters needing ~ key.
-    // @codingStandardsIgnoreLine
+    // phpcs:ignore
     if (ltr.match(/[ãñõ]/)) {
         this.shift = false;
         this.alt = true;
         this.accent = false;
         this.tilde = true;
         // Set flags for upper characters needing ~ key.
-        // @codingStandardsIgnoreLine
+        // phpcs:ignore
     } else if (ltr.match(/[ÃÑÕ]/)) {
         this.shift = true;
         this.alt = true;
@@ -140,7 +140,7 @@ function keyboardElement(ltr) {
     };
     this.turnOff = function() {
         if (isLetter(this.chr)) {
-            // @codingStandardsIgnoreLine
+            // phpcs:ignore
             if (this.chr.match(/[qsdfjklm]/i)) {
                 document.getElementById(getKeyID(this.chr)).className = "finger" + thenFinger(this.chr.toLowerCase());
             } else {
@@ -180,16 +180,16 @@ function keyboardElement(ltr) {
 function thenFinger(tCrka) {
     if (tCrka === ' ') {
         return 5; // Highlight the spacebar.
-        // @codingStandardsIgnoreLine
+        // phpcs:ignore
     } else if (tCrka.match(/[²&1aáqw<>àâäã0@pm§!)°\]^¨ù%=+}$£¤*µ]/i)) {
         return 4; // Highlight the correct key above in red.
-        // @codingStandardsIgnoreLine
+        // phpcs:ignore
     } else if (tCrka.match(/[é2~zsxç9^oóöôõl:/]/i)) {
         return 3; // Highlight the correct key above in green.
-        // @codingStandardsIgnoreLine
+        // phpcs:ignore
     } else if (tCrka.match(/["3#eéë€êdc_8\\iíîïk;.]/i)) {
         return 2; // Highlight the correct key above in yellow.
-        // @codingStandardsIgnoreLine
+        // phpcs:ignore
     } else if (tCrka.match(/[\'4{rfv(5\[tgbv\-6|yhnñè7`uúüûj,?]/i)) {
         return 1; // Highlight the correct key above in blue.
     } else {

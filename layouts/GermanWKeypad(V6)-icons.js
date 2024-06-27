@@ -46,12 +46,12 @@ function keyboardElement(ltr) {
     if (isLetter(ltr)) { // Set specified shift key for right or left.
         if (ltr.match(/[°!"§$%QWEÊRTAÂSDFG>YXCVB]/)) {
             this.shiftright = true;
-        // @codingStandardsIgnoreLine
+        // phpcs:ignore
         } else if (ltr.match(/[&/()=?`*';:_ZUIOÔPÜ*'HJKLÖÄNM;:_]/)) {
             this.shiftleft = true;
         }
     }
-    // @codingStandardsIgnoreLine
+    // phpcs:ignore
     if (ltr.match(/[|²³ã¦@¬|¢~€\[\]{}\\µ]/i)) {
         this.alt = true;
     }
@@ -80,7 +80,7 @@ function keyboardElement(ltr) {
         if (isLetter(this.chr)) {
             document.getElementById(getKeyID(this.chr)).className = "next" + thenFinger(this.chr.toLowerCase());
             // If this.chr is in the keypad, highlight it. Asterisk, 7, and slash are special cases.
-            // @codingStandardsIgnoreLine
+            // phpcs:ignore
             if (this.chr.match(/[012345689.+-]/i)) {
                 document.getElementById(getKeyID(this.chr) + 'p').className = "next" + thenPadFinger(this.chr.toLowerCase());
             }
@@ -127,7 +127,7 @@ function keyboardElement(ltr) {
     };
     this.turnOff = function() {
         if (isLetter(this.chr)) {
-            // @codingStandardsIgnoreLine
+            // phpcs:ignore
             if (this.chr.match(/[asdfjklö]/i)) {
                 // Turns off highlight of normal home row keys.
                 document.getElementById(getKeyID(this.chr)).className = "finger" + thenFinger(this.chr.toLowerCase());
@@ -141,7 +141,7 @@ function keyboardElement(ltr) {
                 // Turns off keyboard highlight for all keys but home row and enter.
                 document.getElementById(getKeyID(this.chr)).className = "normal";
                 // Turns off keypad highlights, except its homerow.
-                // @codingStandardsIgnoreLine
+                // phpcs:ignore
                 if (this.chr.match(/[012389.-]/i)) {
                     document.getElementById(getKeyID(this.chr) + 'p').className = "normal";
                 }
@@ -199,19 +199,19 @@ function keyboardElement(ltr) {
 function thenFinger(tCrka) {
     if (tCrka === ' ') {
         return 5; // Highlight the spacebar.
-    // @codingStandardsIgnoreLine
+    // phpcs:ignore
     } else if (tCrka.match(/[\n^°<>|1!q@aây0=}pö\-_ß?\\üä´`+*~#']/i)) {
         return 4; // Highlight the correct key above in red.
-    // @codingStandardsIgnoreLine
+    // phpcs:ignore
     } else if (tCrka.match(/[2"²wsx9)\]oôl.:]/i)) {
         return 3; // Highlight the correct key above in green.
-    // @codingStandardsIgnoreLine
+    // phpcs:ignore
     } else if (tCrka.match(/[3§³e€dc8(\[ik,;eëê€iïî]/i)) {
         return 2; // Highlight the correct key above in yellow.
-    // @codingStandardsIgnoreLine
+    // phpcs:ignore
     } else if (tCrka.match(/[4$rfv5%tgb6&zhn7/{ujmµû]/i)) {
         return 1; // Highlight the correct key above in blue.
-    // @codingStandardsIgnoreLine
+    // phpcs:ignore
     } else {
         return 6; // Do not change any highlight.
     }
@@ -225,22 +225,22 @@ function thenFinger(tCrka) {
 function thenPadFinger(tCrka) {
     if (tCrka === ' ') {
         return 5; // Highlight the spacebar.
-    // @codingStandardsIgnoreLine
+    // phpcs:ignore
     } else if (tCrka.match(/[-+]/i)) {
         return 4; // Highlight the correct key above in red.
-    // @codingStandardsIgnoreLine
+    // phpcs:ignore
     } else if (tCrka.match(/[*963.]/i)) {
         return 3; // Highlight the correct key above in green.
-    // @codingStandardsIgnoreLine
+    // phpcs:ignore
     } else if (tCrka.match(/[//852]/i)) {
         return 2; // Highlight the correct key above in yellow.
-    // @codingStandardsIgnoreLine
+    // phpcs:ignore
     } else if (tCrka.match(/[7410]/i)) {
         return 1; // Highlight the correct key above in blue.
-    // @codingStandardsIgnoreLine
+    // phpcs:ignore
     } else {
         return 6; // Do not change any highlight.
-    // @codingStandardsIgnoreLine
+    // phpcs:ignore
     }
 }
 

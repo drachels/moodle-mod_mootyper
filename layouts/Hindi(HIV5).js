@@ -40,7 +40,7 @@ function keyboardElement(ltr) {
     this.chr = ltr.toLowerCase();
     this.alt = false;
     //if (isLetter(ltr)) { // Verify this is a unicode letter.
-        // @codingStandardsIgnoreLine
+        // phpcs:ignore
         //if (ltr.match(/[्ॅऍ र्ज्ञत्रक्षश्र()ऋः]/)) {
         //    this.shiftright = true; // Set specified shift key for right.
         //} else if (ltr.match(/[]/)) {
@@ -68,7 +68,7 @@ function keyboardElement(ltr) {
     };
     this.turnOff = function() {
         if (isLetter(this.chr)) {
-        // @codingStandardsIgnoreLine
+        // phpcs:ignore
             if (this.chr.match(/[ोे्िरकतच]/i)) {
                 document.getElementById(getKeyID(this.chr)).className = "finger" + thenFinger(this.chr.toLowerCase());
             } else {
@@ -97,19 +97,19 @@ function keyboardElement(ltr) {
 function thenFinger(tCrka) {
     if (tCrka === ' ') {
         return 5; // Highlight the spacebar.
-    // @codingStandardsIgnoreLine
+    // phpcs:ignore
     //} else if (tCrka.match(/[ृ़1ऍ0)जझचछयय़-ःडढटठृऋञॉऑ]/i)) {
     } else if (tCrka.match(/[-़ौऍःृ1)0ऋडोॉयय़]/i)) {
         return 4; // Highlight the correct key above in red.
-    // @codingStandardsIgnoreLine
+    // phpcs:ignore
     //} else if (tCrka.match(/[ॅेंँ2ैऐए(9दधतथ.।]/i)) {
     } else if (tCrka.match(/[ंैॅ2े(9दधढथ।.ँ]/i)) {
         return 3; // Highlight the correct key above in green.
-    // @codingStandardsIgnoreLine
+    // phpcs:ignore
     //} else if (tCrka.match(/[्ा्3आअमण8श्रगघकख,ष]/i)) {
     } else if (tCrka.match(/[्ा्3आअमण8श्रगघकख,ष]/i)) {
         return 2; // Highlight the correct key above in yellow.
-    // @codingStandardsIgnoreLine
+    // phpcs:ignore
     //} else if (tCrka.match(/[िूु4र्ीईइन5ज्ञऊउव6त्रबभपफलळ7क्षहङरऱसश]/i)) {
     } else if (tCrka.match(/[िूु4र्ीईइन5ज्ञऊउव6त्रबभपफलळ7क्षहङरऱसश]/i)) {
         return 1; // Highlight the correct key above in blue.

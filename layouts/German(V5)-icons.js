@@ -47,12 +47,12 @@ function keyboardElement(ltr) {
     if (isLetter(ltr)) { // Set specified shift key for right or left.
         if (ltr.match(/[°!"§$%QWEÊÉÈRTAÂSDFG>YXCVB]/)) {
             this.shiftright = true;
-            // @codingStandardsIgnoreLine
+            // phpcs:ignore
         } else if (ltr.match(/[&/()=?`*';:_ZUIOÔPÜ*'HJKLÖÄNM;:_]/)) {
             this.shiftleft = true;
         }
     }
-    // @codingStandardsIgnoreLine
+    // phpcs:ignore
     if (ltr.match(/[|²³ã¦@¬|¢~€\[\]{}\\µ]/i)) {
         this.alt = true;
     }
@@ -117,7 +117,7 @@ function keyboardElement(ltr) {
     };
     this.turnOff = function() {
         if (isLetter(this.chr)) {
-            // @codingStandardsIgnoreLine
+            // phpcs:ignore
             if (this.chr.match(/[asdfjklö]/i)) {
                 document.getElementById(getKeyID(this.chr)).className = "finger" + thenFinger(this.chr.toLowerCase());
             } else {
@@ -159,19 +159,19 @@ function keyboardElement(ltr) {
 function thenFinger(tCrka) {
     if (tCrka === ' ') {
         return 5; // Highlight the spacebar.
-    // @codingStandardsIgnoreLine
+    // phpcs:ignore
     } else if (tCrka.match(/[\n^°<>|1!q@aáây0=}pö\-_ß?\\üä´`+*~#']/i)) {
         return 4; // Highlight the correct key above in red.
-    // @codingStandardsIgnoreLine
+    // phpcs:ignore
     } else if (tCrka.match(/[2"²wsx9)\]oôl.:]/i)) {
         return 3; // Highlight the correct key above in green.
-    // @codingStandardsIgnoreLine
+    // phpcs:ignore
     } else if (tCrka.match(/[3§³eëêéè€dc8(\[ik,;iî]/i)) {
         return 2; // Highlight the correct key above in yellow.
-    // @codingStandardsIgnoreLine
+    // phpcs:ignore
     } else if (tCrka.match(/[4$rfv5%tgb6&zhn7/{ujmµû]/i)) {
         return 1; // Highlight the correct key above in blue.
-    // @codingStandardsIgnoreLine
+    // phpcs:ignore
     } else {
         return 6; // Do not change any highlight.
     }

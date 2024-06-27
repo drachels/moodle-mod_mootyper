@@ -39,24 +39,24 @@ function keyupFirst(event) {
 function keyboardElement(ltr) {
     this.chr = ltr.toLowerCase();
 
-    // @codingStandardsIgnoreLine
+    // phpcs:ignore
     if (ltr.match(/[~!@#$%^&*()_+:{}¨"|<>?]/i)) {
         this.shift = true;
         this.alt = false;
-        // @codingStandardsIgnoreLine
+        // phpcs:ignore
     } else if (ltr.match(/[;\\`1234567890\-=[\]΄',./]/)) {
         this.shift = false;
         this.alt = false;
-        // @codingStandardsIgnoreLine
+        // phpcs:ignore
     } else if (ltr.match(/[²³£§¶¤¦°±½«»¬]/)) {
         this.shift = false;
         this.alt = true;
-        // @codingStandardsIgnoreLine
+        // phpcs:ignore
     } else if (ltr.match(/[άέήίόύώ]/)) {
         this.shift = false;
         this.alt = false;
         this.accent = true;
-       // @codingStandardsIgnoreLine
+       // phpcs:ignore
     } else if (ltr.match(/[ΆΈΉΊΌΎΏ]/)) {
         this.shift = true;
         this.alt = false;
@@ -84,7 +84,7 @@ function keyboardElement(ltr) {
         }
     };
     this.turnOff = function() {
-        // @codingStandardsIgnoreLine
+        // phpcs:ignore
             if (this.chr.match(/[ασδφξκλ΄]/i)) {
             document.getElementById(getKeyID(this.chr)).className = "finger" + thenFinger(this.chr.toLowerCase());
         } else {
@@ -111,16 +111,16 @@ function keyboardElement(ltr) {
 function thenFinger(tCrka) {
     if (tCrka === ' ') {
         return 5; // Highlight the spacebar.
-    // @codingStandardsIgnoreLine
+    // phpcs:ignore
     } else if (tCrka.match(/[\n`~1!;:αάζ0)°π΄¨΅/\-_±?[{«'"=+½\]}»\\|¬]/i)) {
         return 4; // Highlight the correct key above in red.
-    // @codingStandardsIgnoreLine
+    // phpcs:ignore
     } else if (tCrka.match(/[2@²ς΅σχ9(¦οόλ.>]/)) {
         return 3; // Highlight the correct key above in green.
-    // @codingStandardsIgnoreLine
+    // phpcs:ignore
     } else if (tCrka.match(/[3#³εέδψ8*¤ιίκ,<]/)) {
         return 2; // Highlight the correct key above in yellow.
-    // @codingStandardsIgnoreLine
+    // phpcs:ignore
     } else if (tCrka.match(/[4$£ρφωώ5%§τγβ6^¶υύηήν7&θξμ]/i)) {
         return 1; // Highlight the correct key above in blue.
     } else {

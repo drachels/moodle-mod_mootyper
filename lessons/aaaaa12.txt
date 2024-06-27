@@ -1,0 +1,19 @@
+This is the text for the first exercise.
+/**/
+1 first exercise name of the lesson
+/**/
+This is some text for the second named exercise.
+/**/
+2 second exercise name
+/**/
+Text for the third exercise.
+/**/
+3 third exercise name
+/**/
+This is the fourth exercise I have added. 
+/**/
+4 exercise name i have added
+/**/
+Some sample text to have in my fifth exercise of this lesson.
+/**/
+5 test a fifth exercise name test

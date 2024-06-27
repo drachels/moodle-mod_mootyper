@@ -39,19 +39,19 @@ function keyupFirst(event) {
 function keyboardElement(ltr) {
     this.chr = ltr.toLowerCase();
 
-    // @codingStandardsIgnoreLine
+    // phpcs:ignore
     if (ltr.match(/[§!"#¤%]/i)) {
         this.shiftright = true;
         this.alt = false;
-        // @codingStandardsIgnoreLine
+        // phpcs:ignore
     } else if (ltr.match(/[&/¤()=?`^*>;:_]/i)) {
         this.shiftleft = true;
         this.alt = false;
-        // @codingStandardsIgnoreLine
+        // phpcs:ignore
     } else if (ltr.match(/[@£$€{[\]}\\~µ|]/i)) {
         this.shift = false;
         this.alt = true;
-        // @codingStandardsIgnoreLine
+        // phpcs:ignore
     } else if (ltr.match(/[½1234567890+´¨'<,.-]/)) {
         this.shift = false;
         this.alt = false;
@@ -86,7 +86,7 @@ function keyboardElement(ltr) {
     };
     this.turnOff = function() {
         if (isLetter(this.chr)) {
-            // @codingStandardsIgnoreLine
+            // phpcs:ignore
             if (this.chr.match(/[asdfjklæ]/i)) {
                 document.getElementById(getKeyID(this.chr)).className = "finger" + thenFinger(this.chr.toLowerCase());
             } else {
@@ -118,21 +118,21 @@ function keyboardElement(ltr) {
 function thenFinger(tCrka) {
     if (tCrka === ' ') {
         return 5; // Highlight the spacebar.
-        // @codingStandardsIgnoreLine
+        // phpcs:ignore
     } else if (tCrka.match(/[<>|§½´`~1!qa0zpæÆøØåÅ¨^~?\-_}=+\\'*]/i)) {
         return 4; // Highlight the correct key above in red.
-        // @codingStandardsIgnoreLine
+        // phpcs:ignore
     } else if (tCrka.match(/[2"@wsx9)\]ol.:]/i)) {
         return 3; // Highlight the correct key above in green.
-        // @codingStandardsIgnoreLine
+        // phpcs:ignore
     } else if (tCrka.match(/[3#£edc8([ik,;]/i)) {
         return 2; // Highlight the correct key above in yellow.
-        // @codingStandardsIgnoreLine
+        // phpcs:ignore
     } else if (tCrka.match(/[4$vrjnuk¤5%€y6^fb7&{tghmµ/]/i)) {
         return 1; // Highlight the correct key above in blue.
-        // @codingStandardsIgnoreLine
+        // phpcs:ignore
     } else {
-        // @codingStandardsIgnoreLine
+        // phpcs:ignore
         return 6; // Do not change any highlight.
     }
 }

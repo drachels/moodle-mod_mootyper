@@ -20,8 +20,9 @@
  * @package    mod_mootyper
  * @copyright  2012 Jaka Luthar (jaka.luthar@gmail.com)
  * @copyright  2016 onwards AL Rachels (drachels@drachels.com)
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
  require_once(dirname(dirname(dirname(dirname(__FILE__)))).'/config.php');
  require_login($course, true, $cm);
 ?>

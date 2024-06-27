@@ -24,7 +24,7 @@
 
 namespace mod_mootyper\local;
 
-defined('MOODLE_INTERNAL') || die(); // @codingStandardsIgnoreLine
+defined('MOODLE_INTERNAL') || die(); // phpcs:ignore
 
 use mod_mootyper\local\factories\renderer as renderer_factory;
 use mod_mootyper\local\factories\legacy_data_mapper as legacy_data_mapper_factory;

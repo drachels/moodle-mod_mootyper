@@ -27,7 +27,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later.
  */
 
-defined('MOODLE_INTERNAL') || die; // @codingStandardsIgnoreLine
+defined('MOODLE_INTERNAL') || die; // phpcs:ignore
 
 /**
  * Post installation procedure.
@@ -115,7 +115,7 @@ function read_lessons_file($dafile, $authoridarg, $visiblearg, $editablearg, $co
         // 20210328 Added same cleanup for exercisename.
         $exercisename = trim($splitted[$j + 1]);
 
-		// @codingStandardsIgnoreLine
+		// phpcs:ignore
         $allowed = array('ё', 'ë', '¸','á', 'é', 'í', 'ï', 'ó', 'ú', '\\', '~', '!', '@', '#', '$', '%', '^', '&', '(', ')', '*', '_', '+', ':', ';', '"', '{', '}', '>', '<', '?', '\'', '-', '/', '=', '.', ',', ' ', '|', '¡', '`', 'ç', 'ñ', 'º', '¿', 'ª', '·', '\n', '\r', '\r\n', '\n\r', ']', '[', '¬', '´', '`', '§', '°', '€', '¦', '¢', '£', '?', '¹', '²', '³', '¨', '?', 'ù', 'µ', 'û','÷', '×', 'ł', 'Ł', 'ß', '¤', '«', '»');
         // Create a number to use as the exercise name. Start with 1 and increment for each exercise detected.
         // 20210328 We now get an actual exercise name from the lessonname.txt file, so $nm not needed now.

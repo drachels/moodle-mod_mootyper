@@ -25,7 +25,7 @@
  */
 namespace mod_mootyper\local;
 use mod_mootyper\local\lessons;
-defined('MOODLE_INTERNAL') || die(); // @codingStandardsIgnoreLine
+defined('MOODLE_INTERNAL') || die(); // phpcs:ignore
 /**
  * Utility class for counting keyboards and so on.
  *

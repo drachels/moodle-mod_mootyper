@@ -38,25 +38,25 @@ function keyupFirst(event) {
  */
 function keyboardElement(ltr) {
     this.chr = ltr.toLowerCase();
-    // @codingStandardsIgnoreLine
+    // phpcs:ignore
     if (ltr.match(/[!@#$%^&*(){}]/i)) {
         this.shift = true;
         this.alt = true;
-        // @codingStandardsIgnoreLine
+        // phpcs:ignore
     } else if (ltr.match(/[`ăâêộ̀̉̃́đ-₫\\;',./]/)) {
         this.shift = false;
         this.alt = false;
         this.accent = false;
-        // @codingStandardsIgnoreLine
+        // phpcs:ignore
     } else if (ltr.match(/[ƯƠĂÂÊÔĐQWERTYUIOP|ASDFGHJKL:~_+"ZXCVBNM<>?]/)) {
         this.shift = true;
         this.alt = false;
         this.accent = false;
-        // @codingStandardsIgnoreLine
+        // phpcs:ignore
     } else if (ltr.match(/[1234567890=[\]]/i)) {
         this.shift = false;
         this.alt = true;
-        // @codingStandardsIgnoreLine
+        // phpcs:ignore
     } else if (ltr.match(/[!@#$%^&*()]/i)) {
         this.shift = true;
         this.alt = true;
@@ -83,7 +83,7 @@ function keyboardElement(ltr) {
     };
     this.turnOff = function() {
         if (isLetter(this.chr)) {
-            // @codingStandardsIgnoreLine
+            // phpcs:ignore
             if (this.chr.match(/[asdfjkl;]/i)) {
                 document.getElementById(getKeyID(this.chr)).className = "finger" + thenFinger(this.chr.toLowerCase());
             } else {
@@ -113,16 +113,16 @@ function keyboardElement(ltr) {
 function thenFinger(tCrka) {
     if (tCrka === ' ') {
         return 5; // Highlight the spacebar.
-        // @codingStandardsIgnoreLine
+        // phpcs:ignore
     } else if (tCrka.match(/[`~ă1!'"qa;:đ0)zp\[{/?\-_\]}₫ươ=+\\|]/i)) {
         return 4; // Highlight the correct key above in red.
-        // @codingStandardsIgnoreLine
+        // phpcs:ignore
     } else if (tCrka.match(/[â2@slwx.>oq̣9(]/i)) {
         return 3; // Highlight the correct key above in green.
-        // @codingStandardsIgnoreLine
+        // phpcs:ignore
     } else if (tCrka.match(/[ê3#,<ediḱ8*c]/i)) {
         return 2; // Highlight the correct key above in yellow.
-        // @codingStandardsIgnoreLine
+        // phpcs:ignore
     } else if (tCrka.match(/[ô4$vrjnuk5̀%ỷ6^fb̃7&tghm]/i)) {
         return 1; // Highlight the correct key above in blue.
     } else {

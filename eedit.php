@@ -26,7 +26,7 @@
 use mod_mootyper\event\exercise_edited;
 use mod_mootyper\event\invalid_access_attempt;
 
-// Changed to this newer format 20190301.
+// Changed to this format 20190301.
 require(__DIR__ . '/../../config.php');
 require_once(__DIR__ . '/lib.php');
 

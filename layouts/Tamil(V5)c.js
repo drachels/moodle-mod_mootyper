@@ -50,10 +50,10 @@ function keyboardElement(ltr) {
     if (isLetter(ltr)) { // Set specified shift key for right or left.
     //window.alert("In the keyboardElement(ltr) function printing ltr: " + ltr);
 
-        // @codingStandardsIgnoreLine
+        // phpcs:ignore
         if (ltr.match(/[~!@#$%ஸஷஜஹக்ஷ௹௺௸ஃஎ௳௴௵௶௷]/)) {
             this.shiftright = true;
-        // @codingStandardsIgnoreLine
+        // phpcs:ignore
         } else if (ltr.match(/[^ஶ்ரீகௐ&ஶப/*"<([:>)];?_{'+}|]/)) {
             this.shiftleft = true;
         }
@@ -84,7 +84,7 @@ function keyboardElement(ltr) {
     //window.alert("In the this.turnOff function printing this.chr: ".this.chr);
 
         if (isLetter(this.chr)) {
-            // @codingStandardsIgnoreLine
+            // phpcs:ignore
                 if (this.chr.match(/[அஇஉ்பமதந]/i)) {
                 document.getElementById(getKeyID(this.chr)).className = "finger" + thenFinger(this.chr.toLowerCase());
             } else {
@@ -115,17 +115,17 @@ function thenFinger(tCrka) {
 
     if (tCrka === ' ') {
         return 5; // Highlight the spacebar.
-    // @codingStandardsIgnoreLine
+    // phpcs:ignore
     // } else if (tCrka.match(/[`~1!ஆஸஅ௹ஔ௳0)ண\]ந;ழ?-_ச{ய'=+ஞ}\\|]/i)) {
     } else if (tCrka.match(/[`~1!ஆஸஅ௹ஔ௳0)ண\]ந;ழ?-_ச{ய'=+ஞ}\\|]/i)) {
         return 4; // Highlight the correct key above in red.
-    // @codingStandardsIgnoreLine
+    // phpcs:ignore
     } else if (tCrka.match(/[2@ஈஷி௺ஓ௴9(ட\[த:.>]/)) {
         return 3; // Highlight the correct key above in green.
-    // @codingStandardsIgnoreLine
+    // phpcs:ignore
     } else if (tCrka.match(/[3#ஊஜஉ௸ஒ௵8*னம",<]/)) {
         return 2; // Highlight the correct key above in yellow.
-    // @codingStandardsIgnoreLine
+    // phpcs:ignore
     } else if (tCrka.match(/[4$ஐஹஃ்வ௶5%ஏக்ஷெஎங௷6^ளஶ்ரீக்கலௐ7&றஶப்பர/]/i)) {
         return 1; // Highlight the correct key above in blue.
     } else {

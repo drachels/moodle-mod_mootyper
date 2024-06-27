@@ -204,7 +204,8 @@ foreach ($exercises as $ex) {
 echo '</table>';
 
 $url = $CFG->wwwroot . '/mod/mootyper/view.php?id='.$id;
-$deleteurl = $CFG->wwwroot.'/mod/mootyper/erem.php?id='.$id.'&rl='.$lessons[$selectedlessonindex]['id'];
+// $deleteurl = $CFG->wwwroot.'/mod/mootyper/erem.php?id='.$id.'&rl='.$lessons[$selectedlessonindex]['id'];
+$deleteurl = $CFG->wwwroot.'/mod/mootyper/erem.php?id='.$id.'&rl='.$lessonpo;
 $exporturl = $CFG->wwwroot.'/mod/mootyper/lsnexport.php?id='.$course->id.'&lsn='.$lessons[$selectedlessonindex]['id'];
 
 // 20200414 Added a, Return, button. 20200428 added round corners.
@@ -226,7 +227,7 @@ if (lessons::is_editable_by_me($USER->id, $id, $lessonpo)) {
     // 20200613 Added a, Delete all from, this lesson button.
     echo ' <a onclick="return confirm(\''.get_string('deletelsnconfirm', 'mootyper').$lessons[$selectedlessonindex]['lessonname'].
         '\')" href="'.$deleteurl.'" class="btn btn-danger" style="border-radius: 8px">'
-        .get_string('deleteall', 'mootyper').' - '. $lessons[$selectedlessonindex]['lessonname'].'</a>'.'</form>';
+        .get_string('deleteall', 'mootyper').' - '. $lessons[$selectedlessonindex]['lessonname'].' - '.$lessonpo.'</a>'.'</form>';
 } else {
     echo '</form>';
 }

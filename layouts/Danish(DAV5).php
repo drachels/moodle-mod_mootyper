@@ -13,17 +13,18 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
 /**
  * This file defines the Danish(DKV5.0) keyboard layout.
  *
  * @package   mod_mootyper
- * @copyright 2016 onwards AL Rachels (drachels@drachels.com)
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @copyright 2016 AL Rachels
+ * @license   https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
 require_once(dirname(dirname(dirname(dirname(__FILE__)))) . '/config.php');
 require_login($course, true, $cm);
 ?>
-﻿
 <div id="innerKeyboard" style="margin: 0px auto;display: inline-block;
 <?php
 echo (isset($displaynone) && ($displaynone == true)) ? 'display:none;' : '';

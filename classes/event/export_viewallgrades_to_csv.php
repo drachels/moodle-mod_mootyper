@@ -23,7 +23,7 @@
  */
 
 namespace mod_mootyper\event;
-defined('MOODLE_INTERNAL') || die(); // @codingStandardsIgnoreLine
+defined('MOODLE_INTERNAL') || die(); // phpcs:ignore
 
 /**
  * The mod_mootyper export_viewallgrades_to_csv event class.

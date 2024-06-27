@@ -23,7 +23,7 @@
  */
 
 namespace mod_mootyper\event;
-defined('MOODLE_INTERNAL') || die(); // @codingStandardsIgnoreLine
+defined('MOODLE_INTERNAL') || die(); // phpcs:ignore
 
 /**
  * The mod_mootyper layout deleted event class.

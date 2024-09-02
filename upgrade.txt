@@ -83,7 +83,15 @@ Moodle Versions
     verfied the code as needed in the four files.
 20240517 MooTyper_1242bt - Need new KB layout, EnglishInternationalWKeypad(INTLV6). Made changes
     as needed to create the working layout.
-    
+20240706 MooTyper_1259 - Need to change all occurences of, // @codingStandardsIgnoreLine, over
+    to, // phpcs:ignore. Changed
+20240902 MooTyper_1312 - MooTyper - High delay in large courses #125. Added missing $record->userid
+    and now seems to work correctly.
+20240902 MooTyper_1313 - MooTyper - number_format(): Passing null to parameter #1 ($num) of
+    type float is deprecated. Found suggestion to switch from using, number_format();, over
+    to using, sprintf();, instead. See ticker for details of actual code change.
+
+
     
 === 4.2.9 === 2024061300 
 20240129 MooTyper_1182v - Lesson Completion needs rewrite to account for when exercises are

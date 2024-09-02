@@ -26,7 +26,7 @@
  require_login($course, true, $cm);
 ?>
 <div id="innerKeyboard" style="margin: 0px auto;display: inline-block;
-<?php
+<?php // phpcs:ignore
 echo (isset($displaynone) && ($displaynone == true)) ? 'display:none;' : '';
 ?>
 ">

@@ -27,7 +27,7 @@
  require_login($course, true, $cm);
 ?>
 <div id="innerKeyboard" style="margin: 0px auto;display: inline-block;
-<?php
+<?php // phpcs:ignore
 echo (isset($displaynone) && ($displaynone == true)) ? 'display:none;' : '';
 ?>
 ">
@@ -63,7 +63,8 @@ echo (isset($displaynone) && ($displaynone == true)) ? 'display:none;' : '';
             </div>
             <div style="float: left;">
                 <div class="mtrow" style='float: left; margin-left:5px; font-size: 15px !important; line-height: 15px'>
-                    <span id="jkeyenter" class="normal" style="width: 55px; margin-right:5px; float: right; height: 85px;">Enter</span>
+                    <span id="jkeyenter" class="normal" style="width: 55px; margin-right:5px;
+                        float: right; height: 85px;">Enter</span>
                     <div id="jkeytab" class="normal" style="width: 60px;">Tab</div>
                     <div id="jkeyq" class="normal" style='text-align:left;'>Q<br>&nbsp;</div>
                     <div id="jkeyw" class="normal" style='text-align:left;'>W<br>&nbsp;</div>
@@ -74,8 +75,8 @@ echo (isset($displaynone) && ($displaynone == true)) ? 'display:none;' : '';
                     <div id="jkeyy" class="normal" style='text-align:left;'>Y<br>&nbsp;</div>
                     <div id="jkeyu" class="normal" style='text-align:left;'>U<span style="color:blue">&nbsp;Ú</span>
                         <br>&nbsp;</div>
-                    <div id="jkeyi" class="normal" style='text-align:left;'>I<span style="color:blue">&nbsp;&nbsp;&nbsp;&nbsp;Í</span>
-                        <br>&nbsp;</div>
+                    <div id="jkeyi" class="normal" style='text-align:left;'>I<span style="color:blue">&nbsp;&nbsp;&nbsp;&nbsp;Í
+                        </span><br>&nbsp;</div>
                     <div id="jkeyo" class="normal" style='text-align:left;'>O<span style="color:blue">&nbsp;&nbsp;Ó</span>
                         <br>&nbsp;</div>
                     <div id="jkeyp" class="normal" style='text-align:left;'>P<br>&nbsp;</div>

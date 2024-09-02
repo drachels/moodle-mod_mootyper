@@ -28,7 +28,7 @@
 // First section is for right-to-left (Arabic). Second section is for left-to-right.
 ?>
 <div id="innerKeyboard" style="margin: 0px auto;display: inline-block;
-<?php
+<?php // phpcs:ignore
 
 echo (isset($displaynone) && ($displaynone == true)) ? 'display:none;' : '';
 if ($directionality === 'rtl') {
@@ -109,7 +109,7 @@ if ($directionality === 'rtl') {
         </section>
     </div>
 </div>
-<?php
+<?php // phpcs:ignore
 } else {
 ?>
 ">
@@ -187,5 +187,5 @@ if ($directionality === 'rtl') {
         </div>
     </section>
 </div>
-<?php
+<?php // phpcs:ignore
 }

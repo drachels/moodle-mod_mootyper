@@ -18,15 +18,16 @@
  * This file defines the English(UKV5.0)keyboard layout.
  *
  * @package    mod_mootyper
- * @copyright  2012 Jaka Luthar (jaka.luthar@gmail.com)
+ * @copyright  2011 Jaka Luthar (jaka.luthar@gmail.com)
  * @copyright  2016 onwards AL Rachels (drachels@drachels.com)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
  require_once(dirname(dirname(dirname(dirname(__FILE__)))).'/config.php');
  require_login($course, true, $cm);
 ?>
 <div id="innerKeyboard" style="margin: 0px auto;display: inline-block;
-<?php
+<?php // phpcs:ignore
 echo (isset($displaynone) && ($displaynone == true)) ? 'display:none;' : '';
 ?>
 ">

@@ -49,7 +49,7 @@ require_login($course, true, $cm);
 
 $context = context_module::instance($cm->id);
 
-// 20240617 COde to delete a lesson and all of the exercises in it.
+// 20240617 Code to delete a lesson and all of the exercises in it.
 // Needs more work to force grade removal first.
 // Needs to check mootyper_grades for the mootyper in use.
 // if ($lessonid) {

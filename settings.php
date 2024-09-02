@@ -40,6 +40,7 @@ if ($ADMIN->fulltree) {
         $name,
         $description,
         0));
+
     // Password setting.
     $settings->add(new admin_setting_configcheckbox_with_advanced('mod_mootyper/password',
         get_string('password', 'mootyper'),

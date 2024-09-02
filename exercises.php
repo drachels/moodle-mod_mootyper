@@ -174,20 +174,22 @@ foreach ($exercises as $ex) {
         $exnametocut = substr($exnametocut, 0, 20).'...';
     }
     // If user can edit, create a delete link to the current exercise.
-    $jlink1 = '<a onclick="return confirm(\''.get_string('deleteexconfirm', 'mootyper')
-              .$lessons[$selectedlessonindex]['lessonname']
-              .'\')" href="erem.php?id='.$id
-              .'&re='.$ex->id
-              .'&lesson='.$lessonpo.'"><img src="pix/delete.png" alt="'
-              .get_string('delete', 'mootyper').'"></a>';
+    $jlink1 = '<a onclick="return confirm(\''
+        .get_string('deleteexconfirm', 'mootyper')
+        .$lessons[$selectedlessonindex]['lessonname']
+        .'\')" href="erem.php?id='.$id
+        .'&re='.$ex->id
+        .'&lesson='.$lessonpo.'"><img src="pix/delete.png" alt="'
+        .get_string('delete', 'mootyper').'"></a>';
 
     // If user can edit, create an edit link to the current exercise.
     // Use activity ID so we can exit back to the MooTyper activity we came from.
-    $jlink2 = '<a href="eedit.php?id='.$id
-              .'&ex='.$ex->id
-              .'&lesson='.$mootyper->lesson
-              .'"><img src="pix/edit.png" alt='
-              .get_string('eeditlabel', 'mootyper').'></a>';
+    $jlink2 = '<a href="eedit.php?id='
+        .$id
+        .'&ex='.$ex->id
+        .'&lesson='.$mootyper->lesson
+        .'"><img src="pix/edit.png" alt='
+        .get_string('eeditlabel', 'mootyper').'></a>';
 
     // 20210326 Shorten displayed exercisename as well as text to type.
     echo '<tr><td class="style2">'.$exnametocut.'</td><td class="style2">'.$strtocut.'</td>';
@@ -204,7 +206,6 @@ foreach ($exercises as $ex) {
 echo '</table>';
 
 $url = $CFG->wwwroot . '/mod/mootyper/view.php?id='.$id;
-// $deleteurl = $CFG->wwwroot.'/mod/mootyper/erem.php?id='.$id.'&rl='.$lessons[$selectedlessonindex]['id'];
 $deleteurl = $CFG->wwwroot.'/mod/mootyper/erem.php?id='.$id.'&rl='.$lessonpo;
 $exporturl = $CFG->wwwroot.'/mod/mootyper/lsnexport.php?id='.$course->id.'&lsn='.$lessons[$selectedlessonindex]['id'];
 

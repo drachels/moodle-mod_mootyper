@@ -282,10 +282,10 @@ if ($mootyper->lesson != null) {
         echo '<script type="text/javascript" src="typer.js"></script>';
 ?>
 <div id="mainDiv" align="left">
-<form name='form1' id='form1' method='post' action='<?php echo $insertdir; ?>'> 
+<form name='form1' id='form1' method='post' action='<?php echo $insertdir; // phpcs:ignore ?>'> 
 <div id="keyboard" style="float: left; text-align:center; margin-left: auto; margin-right: auto;">
 <h5>
-        <?php
+        <?php // phpcs:ignore
 
         echo '<div id="infoDiv" align="left">';
         // Old MooTypers without the mode set need this initialized to empty.
@@ -321,18 +321,18 @@ if ($mootyper->lesson != null) {
 </h5>
 
 <div id="reportDiv" align="left">
-<input name='rpCourseId' type='hidden' value='<?php
+<input name='rpCourseId' type='hidden' value='<?php // phpcs:ignore
         echo $course->id; ?>'>
-<input name='rpSityperId' type='hidden' value='<?php
+<input name='rpSityperId' type='hidden' value='<?php // phpcs:ignore
         echo $mootyper->id; ?>'>
-<input name='rpUser' type='hidden' value='<?php
+<input name='rpUser' type='hidden' value='<?php // phpcs:ignore
         echo $USER->id; ?>'>
-<input name='rpExercise' type='hidden' value='<?php
+<input name='rpExercise' type='hidden' value='<?php // phpcs:ignore
         echo $exerciseid; ?>'>
 <input name='rpAttId' type='hidden' value=''>
 <input name='rpFullHits' type='hidden' value=''>
 <input name='rpTimeLimit' type='hidden' value='
-        <?php
+        <?php // phpcs:ignore
         if (isset($reqiredtimelimit)) {
             echo $reqiredtimelimit;
         }
@@ -340,7 +340,7 @@ if ($mootyper->lesson != null) {
 '>
 
 <input name='rpGoal' type='hidden' value='
-        <?php
+        <?php // phpcs:ignore
         if (isset($reqiredgoal)) {
             echo $reqiredgoal;
         }
@@ -348,7 +348,7 @@ if ($mootyper->lesson != null) {
 '>
 
 <input name='rpWPM' type='hidden' value='
-        <?php
+        <?php // phpcs:ignore
         if (isset($reqiredwpm)) {
             echo $reqiredwpm;
         }
@@ -361,7 +361,7 @@ if ($mootyper->lesson != null) {
     <input name='rpWpmInput' type='hidden'>
     <input name='rpMistakeDetailsInput' type='hidden'>
 
-        <?php
+        <?php // phpcs:ignore
 
         // Set the status bar CSS based on direction of language currently in use.
         if ($directionality == 'rtl' && ($CFG->branch > 31)) {
@@ -404,62 +404,62 @@ if ($mootyper->lesson != null) {
             id="btnContinue"
             name='btnContinue'
             type="submit"
-            value=<?php
+            value=<?php // phpcs:ignore
             echo "'" . get_string('fcontinue', 'mootyper') . "'";?>>
 
     <div id='wrapStats'>
-                    <div id=<?php echo $stats1; ?> style='text-align: center; float: left; width:15%;'>
+                    <div id=<?php echo $stats1; // phpcs:ignore ?> style='text-align: center; float: left; width:15%;'>
                         <div id="timerText" class="statsText">
-                            <?php echo get_string('rtime', 'mootyper'); ?></div>
+                            <?php echo get_string('rtime', 'mootyper'); // phpcs:ignore ?></div>
                         <div id='timer'><span id="jsTime2">00:00</span></div>
                     </div>
 
                     <div id='statsMDiv' style='text-align: center; float: left; width:15%;'>
                         <div id='progressText' class="statsText">
-                            <?php echo get_string('rprogress', 'mootyper'); ?></div>
+                            <?php echo get_string('rprogress', 'mootyper'); // phpcs:ignore ?></div>
                         <div id='progressValue'><span id="jsProgress2">0/0</span></div>
                     </div>
 
                     <div id='statsMDiv' style='text-align: center; float: left; width:15%;'>
                         <div id='mistakesText' class="statsText">
-                            <?php echo get_string('rmistakes', 'mootyper'); ?></div>
+                            <?php echo get_string('rmistakes', 'mootyper'); // phpcs:ignore ?></div>
                         <div id='mistakesValue'><span id="jsMistakes2">0</span></div>
                     </div>
 
                     <div id='statsMDiv' style='text-align: center; float: left; width:15%;'>
                         <div id='precisionText' class="statsText">
-                            <?php echo get_string('rprecision', 'mootyper'); ?></div>
+                            <?php echo get_string('rprecision', 'mootyper'); // phpcs:ignore ?></div>
                         <div id='precisionValue'><span id="jsAcc2">0</span><span> %</span></div>
                     </div>
 
                     <div id='statsMDiv' style='text-align: center; float: left; width:20%;'>
                         <div id='speedText' class="statsText">
-                            <?php echo get_string('rhitspermin', 'mootyper'); ?></div>
+                            <?php echo get_string('rhitspermin', 'mootyper'); // phpcs:ignore ?></div>
                         <div id='speedValue'><span id="jsSpeed2">0</span></div>
                     </div>
 
-                    <div id=<?php echo $stats2; ?> style='text-align: center; float: left; width:20%;'>
+                    <div id=<?php echo $stats2; // phpcs:ignore ?> style='text-align: center; float: left; width:20%;'>
                         <div id='wpmText' class="statsText">
-                            <?php echo get_string('wpm', 'mootyper'); ?></div>
+                            <?php echo get_string('wpm', 'mootyper'); // phpcs:ignore ?></div>
                         <div id='wpmValue'><span id="jsWpm2">0 | 0</span></div>
                     </div>
     </div>
 </div>
 
 <div style="float: left;">
-    <strong><?php echo get_string('mistakedetails', 'mootyper'); ?></strong><span id="jsDetailMistake"></span>
+    <strong><?php echo get_string('mistakedetails', 'mootyper'); // phpcs:ignore ?></strong><span id="jsDetailMistake"></span>
 </div>
 
 <textarea name="tb1" wrap="off" id="tb1" class="tb1" onfocus="return focusSet(event)"  
     onpaste="return false" onselectstart="return false"
     onCopy="return false" onCut="return false" 
     onDrag="return false" onDrop="return false" autocomplete="off">
-        <?php
+        <?php // phpcs:ignore
         echo get_string('chere', 'mootyper') . '...';
         ?>
 </textarea>
 <div style="float: left; padding-bottom: 10px;" id="texttoenter"></div><br />
-        <?php
+        <?php // phpcs:ignore
         if ($mootyper->showkeyboard) {
             $displaynone = false;
         } else {
@@ -474,7 +474,7 @@ if ($mootyper->lesson != null) {
 </form>
 
 </div>
-        <?php
+        <?php // phpcs:ignore
         $texttoinit = '';
         for ($it = 0; $it < strlen($texttoenter); $it++) {
             if ($texttoenter[$it] == "\n") {

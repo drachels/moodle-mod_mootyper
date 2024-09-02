@@ -13,6 +13,7 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
 /**
  * This file defines the Danish(V4.4) keyboard layout.
  *
@@ -26,7 +27,7 @@ require_login($course, true, $cm);
 ?>
 ﻿
 <div id="innerKeyboard" style="margin: 0px auto;display: inline-block;
-<?php
+<?php // phpcs:ignore
 echo (isset($displaynone) && ($displaynone == true)) ? 'display:none;' : '';
 ?>
 ">

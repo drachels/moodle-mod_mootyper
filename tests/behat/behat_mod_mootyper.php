@@ -43,9 +43,9 @@ use Behat\Mink\Exception\ElementNotFoundException;
 class behat_mod_mootyper extends behat_base {
 
     /**
+     * To assert a select value.
      * @Then /^"([^"]*)" from "([^"]*)" is selected$/
      *
-     * To assert a select value.
      * Shamelessly inspired by: https://stackoverflow.com/a/33223002/1038565
      * @param string $optionvalue
      * @param string $select

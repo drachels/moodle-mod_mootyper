@@ -298,15 +298,14 @@ function clClick() {
         return false;
     }
     if(document.getElementById("lessonname").value == "") {
-        document.getElementById("namemsg").innerHTML = '<?php echo get_string('reqfield', 'mootyper');?>';
+        document.getElementById("namemsg").innerHTML = '<?php echo get_string('reqfield', 'mootyper'); // phpcs:ignore?>';
         return false;
     }
     else
         return true;
 }
 </script>
-
-<?php
+<?php // phpcs:ignore
 // Create a link back to where we came from in case we want to cancel.
 if ($lessonpo == -1) {
     // 20200414 On cancel, go back to the MT activity if invoked from there.

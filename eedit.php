@@ -191,7 +191,7 @@ function clClick() {
 }
 
 </script>
-<?php
+<?php // phpcs:ignore
 // 20200625 Get the current MooTyper keyboard background default color for our page background here.
 $color3 = $mootyper->keybdbgc;
 echo '<div align="center" style="font-size:1em;

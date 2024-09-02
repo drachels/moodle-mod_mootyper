@@ -27,7 +27,7 @@
  require_login($course, true, $cm);
 ?>
 <div id="innerKeyboard" style="margin: 0px auto;display: inline-block;
-<?php
+<?php // phpcs:ignore
 // This upper part of the layout is used when using a RTL language.
 echo (isset($displaynone) && ($displaynone == true)) ? 'display:none;' : '';
 if ($directionality === 'rtl') {
@@ -108,7 +108,7 @@ if ($directionality === 'rtl') {
 </section>
 </div>
 </div>
-    <?php
+    <?php // phpcs:ignore
     // This part of the layout is used when using LTR language.
 } else {
 ?>
@@ -187,5 +187,5 @@ if ($directionality === 'rtl') {
         </div>
 </section>
 </div>
-    <?php
+    <?php // phpcs:ignore
 }

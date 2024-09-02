@@ -112,8 +112,8 @@ if (($mootyper->requiredgoal == 0) && ($mootyper->requiredwpm > 0)) {
     // Results for no goal and no wpm.
     $record->grade = null;
 }
-// 20230103 Set decimal to two places.
-$record->grade = number_format($record->grade, 2);
+// 20230103 Set decimal to two places. 20240902 change from number_format to sprintf due to deprecation.
+$record->grade = sprintf('%0.2f', $record->grade);
 // 20230103 Add goal and wpm info to the mistake details.
 $record->mistakedetails .= get_string('reqgoalwpm', 'mootyper',
                            ['goal' => $mootyper->requiredgoal,
@@ -145,7 +145,8 @@ if ($mootyper->assessed) {
 
 } else {
     // Otherwise, place a whole grade into the mdl_grade_items table.
-    mootyper_update_grades($mootyper);
+    // 20240902 Added, $record->userid.
+    mootyper_update_grades($mootyper, $record->userid);
 }
 
 // 20191129 Added trigger for exercise_completed event.

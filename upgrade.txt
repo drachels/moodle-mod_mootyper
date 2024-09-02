@@ -79,15 +79,15 @@ sending an email, leave a comment at
 Moodle Versions
 ===============
 === 4.3.0 === Pending
-20240516 MooTyper_1240 - Need Español Lantin America V5 and V6 keyboard layouts. Created and
+20240516 MooTyper_1240bt - Need Español Lantin America V5 and V6 keyboard layouts. Created and
     verfied the code as needed in the four files.
 20240517 MooTyper_1242bt - Need new KB layout, EnglishInternationalWKeypad(INTLV6). Made changes
     as needed to create the working layout.
-20240706 MooTyper_1259 - Need to change all occurences of, // @codingStandardsIgnoreLine, over
+20240706 MooTyper_1259bt - Need to change all occurences of, // @codingStandardsIgnoreLine, over
     to, // phpcs:ignore. Changed
-20240902 MooTyper_1312 - MooTyper - High delay in large courses #125. Added missing $record->userid
+20240902 MooTyper_1312bt - MooTyper - High delay in large courses #125. Added missing $record->userid
     and now seems to work correctly.
-20240902 MooTyper_1313 - MooTyper - number_format(): Passing null to parameter #1 ($num) of
+20240902 MooTyper_1313bt - MooTyper - number_format(): Passing null to parameter #1 ($num) of
     type float is deprecated. Found suggestion to switch from using, number_format();, over
     to using, sprintf();, instead. See ticker for details of actual code change.
 

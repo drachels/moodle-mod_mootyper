@@ -78,7 +78,7 @@ sending an email, leave a comment at
 
 Moodle Versions
 ===============
-=== 4.3.0 === Pending
+=== 4.3.0 === (Build: 2024102000)
 20240227 MooTyper_1215bt - Duplicate or Restore activity always winds up in Exam mode. Found
     code error with comparison in restore_mootyper_stepslib.php file. See ticket for details. 
 20240516 MooTyper_1240bt - Need Español Lantin America V5 and V6 keyboard layouts. Created and
@@ -96,7 +96,7 @@ Moodle Versions
     for English(USV5) EnglishWKeypad(USV6).
 
     
-=== 4.2.9 === 2024061300 
+=== 4.2.9 === (Build: 2024061300)
 20240129 MooTyper_1182v - Lesson Completion needs rewrite to account for when exercises are
     set to less than max. I made a change in the "if" at about line 136, in the code of the
     custom_completion.php file.

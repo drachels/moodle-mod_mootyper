@@ -79,6 +79,8 @@ sending an email, leave a comment at
 Moodle Versions
 ===============
 === 4.3.0 === Pending
+20240227 MooTyper_1215bt - Duplicate or Restore activity always winds up in Exam mode. Found
+    code error with comparison in restore_mootyper_stepslib.php file. See ticket for details. 
 20240516 MooTyper_1240bt - Need Español Lantin America V5 and V6 keyboard layouts. Created and
     verfied the code as needed in the four files.
 20240517 MooTyper_1242bt - Need new KB layout, EnglishInternationalWKeypad(INTLV6). Made changes
@@ -90,7 +92,8 @@ Moodle Versions
 20240902 MooTyper_1313bt - MooTyper - number_format(): Passing null to parameter #1 ($num) of
     type float is deprecated. Found suggestion to switch from using, number_format();, over
     to using, sprintf();, instead. See ticker for details of actual code change.
-
+20240918 MooTyper_1320bt - Need a Maori Keyboard Layout. Created the two files based off the one's
+    for English(USV5) EnglishWKeypad(USV6).
 
     
 === 4.2.9 === 2024061300 

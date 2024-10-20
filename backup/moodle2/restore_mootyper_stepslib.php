@@ -183,7 +183,6 @@ class restore_mootyper_activity_structure_step extends restore_activity_structur
      */
     protected function process_mootyper_exercise($data) {
         global $DB;
-        $debug['CP666661-enter-process_mootyper_exercise($data): '] = 'Entering function process_mootyper_exercise($data).';
 
         $data = (object)$data;
         $oldid = $data->id;
@@ -205,8 +204,9 @@ class restore_mootyper_activity_structure_step extends restore_activity_structur
 
                     $newexercisedata->id = $exercise->id;
                     $this->set_mapping('mootyper_exercise', $oldid, $exercise->id);
+                    // 20241020 Modified and changed to double equal signs. 
                     // If this mootyper is an exam, update the exam exerciseid in the mootyper.
-                    if (($newmootyper->isexam = 1) && ($newmootyper->exercise = $oldid)) {
+                    if (($newmootyper->isexam == 1) && ($newmootyper->exercise == $oldid)) {
                         ($newmootyper->exercise = $exercise->id);
                     }
                 }

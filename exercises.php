@@ -236,3 +236,4 @@ if (lessons::is_editable_by_me($USER->id, $id, $lessonpo)) {
 echo '</div>';
 
 echo $OUTPUT->footer();
+

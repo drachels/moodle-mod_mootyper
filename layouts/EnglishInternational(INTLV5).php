@@ -75,7 +75,7 @@ echo (isset($displaynone) && ($displaynone == true)) ? 'display:none;' : '';
         <div class="mtrow" style='float: left; margin-left:5px; font-size: 15px !important; line-height: 15px'>
             <div id="jkeytab" class="normal" style="width: 60px;">Tab</div>
             <div id="jkeyq" class="normal" style='text-align:left;'>Q
-                <span style="color:blue">&nbsp;&nbsp;Ä</span><br>&nbsp;</div>
+                <span style="color:blue">&nbsp;Ä</span><br>&nbsp;</div>
             <div id="jkeyw" class="normal" style='text-align:left;'>W
                 <span style="color:blue">&nbsp;Å</span><br>&nbsp;</div>
             <div id="jkeye" class="normal" style='text-align:left;'>E
@@ -91,7 +91,7 @@ echo (isset($displaynone) && ($displaynone == true)) ? 'display:none;' : '';
             <div id="jkeyi" class="normal" style='text-align:left;'>I
                 <span style="color:blue">&nbsp;&nbsp;&nbsp;&nbsp;Í</span><br>&nbsp;</div>
             <div id="jkeyo" class="normal" style='text-align:left;'>O
-                <span style="color:blue">&nbsp;&nbsp;Ó</span><br>&nbsp;</div>
+                <span style="color:blue">&nbsp;Ó</span><br>&nbsp;</div>
             <div id="jkeyp" class="normal" style='text-align:left;'>P
                 <span style="color:blue">&nbsp;&nbsp;Ö</span><br>&nbsp;</div>
             <div id="jkeybracketl" class="normal" style='text-align:left;'>{<br>[

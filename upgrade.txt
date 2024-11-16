@@ -78,6 +78,18 @@ sending an email, leave a comment at
 
 Moodle Versions
 ===============
+=== 4.3.1 === pending
+20241028 MooTyper_1333 - Comma in Passing grade - issue #126. Set up new Moodle and course at:
+    https://10.0.6.134/moodle405/mod/mootyper/view.php?id=57&forceview=1. This is on the
+    RaspberryPi5-1 SBC server. Took a little while for the locales to reconfigure to, all, but
+    once I did, changing the  MooTyper Grade to pass worked as expected, without any problems.
+    Made an update to the issue#126 on github. User says they have correct locales and still
+    have the same problem. Made the needed changes in the mod_form.php file. Tested before the
+    changes on the moodledemo site and saw the error. Saved the new version of the mod_form.php
+    file and the problem went away, so pushed new code to github.
+
+
+
 === 4.3.0 === (Build: 2024102000)
 20240227 MooTyper_1215bt - Duplicate or Restore activity always winds up in Exam mode. Found
     code error with comparison in restore_mootyper_stepslib.php file. See ticket for details. 

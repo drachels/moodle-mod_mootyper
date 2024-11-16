@@ -1,0 +1,27 @@
+NGƯỜI ĐÁNH CÁ VÀ CON CÁ NHỎ\n\nSau khi vất vả cả ngày mà chẳng bắt được gì, một Người Đánh Cá đã kéo lên một chú Cá nhỏ. Con Cá nài nỉ anh ta thả nó đi, vì lúc này nó còn nhỏ, nhưng rồi nó sẽ lớn lên thành một con cá lớn và đáng để đánh bắt. Nhưng Người Đánh Cá trả lời, "Không, không, giờ tôi đã có bạn rồi, thật là ngu ngốc nếu tôi thả bạn đi; tôi có thể không bắt được bạn khi bạn đã lớn hơn."\n\nMột con chim trong tay còn đáng giá hơn hai con trong bụi rậm.
+/**/
+1 NGƯỜI ĐÁNH CÁ VÀ CON CÁ NHỎ
+/**/
+CON CÁO VÀ CON QUẠ\n\nMột con quạ giật một miếng pho mát từ cửa sổ và bay lên cây để ăn thỏa thích. Một con cáo đi ngang qua tình cờ nhìn lên và thấy con quạ. Nó thèm muốn giải thưởng và do đó tiến đến gần để giành lấy nó. "Ôi con quạ," nó nói, "đôi cánh của bạn đẹp làm sao và đôi mắt của bạn sáng làm sao! Chiếc cổ của bạn duyên dáng làm sao! Thật đáng tiếc khi một con chim như vậy chỉ muốn có một giọng nói!" Đầu hàng trước sự nịnh hót, con quạ há miệng ra để làm con cáo ngạc nhiên với tiếng kêu của mình, khi miếng pho mát rơi xuống, con cáo, vồ lấy, ăn khi nó bỏ đi, nhận xét rằng bất cứ điều gì nó đã nói về giọng nói của cô ấy, nó không nói về bộ não của cô ấy.
+/**/
+2 CON CÁO VÀ CON QUẠ
+/**/
+CON GÀ GÀ VÀ CON CHIM GÀ\n\nMột con gà gô, bị mắc vào lưới của một người thợ săn chim, kêu lên thảm thiết, "Xin hãy tha cho tôi, thưa ngài thợ săn chim tốt bụng, và tôi hứa với ngài, tôi sẽ dụ những con gà gô khác vào lưới của ngài."\n\n"Không," người đàn ông trả lời, "bất kể tôi có làm gì, tôi quyết tâm không để ngài đi; vì không có cái chết nào là quá tệ đối với một người sẵn sàng phản bội bạn bè của mình."
+/**/
+3 CON CHIM GÀ VÀ CON CHIM CÁ
+/**/
+CON BỒ CÂU KHÁT\n\nMột con bồ câu khát nước và nhìn thấy một cốc nước được vẽ trên một tấm biển, tưởng rằng đó là thật. Lao xuống với tất cả sức lực của mình, nó đập vào tấm ván cứng, và gãy cánh, nó ngã xuống đất bất lực và nhanh chóng bị một con chim đi ngang qua bắt được.\n\nSự vội vã không phải lúc nào cũng là tốc độ tốt.
+/**/
+4 CON BỒ CÂU KHÁT
+/**/
+BA NGƯỜI THƯƠNG GIA\n\nCó một thành phố nào đó đang có nguy cơ bị bao vây, và một hội đồng đã được triệu tập để xem xét phương tiện tốt nhất để củng cố nó. Một thợ nề đã đưa ra phán quyết của mình rằng không có vật liệu nào tốt cho mục đích này bằng gạch. Một thợ mộc xin phép đề xuất rằng gỗ sẽ tốt hơn, sau đó một người thợ mộc bắt đầu và nói, "Các ngài, khi tất cả những gì có thể nói được đã được nói ra, thì không có gì trên thế giới này giống như da."
+/**/
+5 BA NGƯỜI THƯƠNG GIA
+/**/
+THỎ VÀ ẾCH\n\nTrong cơn tuyệt vọng vì thời buổi khó khăn mà chúng phải chịu đựng vì nhiều kẻ thù, Thỏ đã tụ họp lại và sau khi diễn tập tình hình của mình, chúng đã đi đến kết luận buồn bã rằng chúng không còn cách nào khác ngoài việc tự dìm mình xuống nước như những sinh vật khốn khổ và bất hạnh nhất. Chúng đến một cái ao để nhảy từ một tảng đá xuống nước và như vậy là chấm dứt mọi rắc rối. Một đàn ếch đang ngồi quanh mép ao, và khi Thỏ đến gần, chúng giật mình và vô cùng bối rối nhảy xuống nước. Khi đó, con Thỏ đầu đàn nói với đồng bọn: "Không, vậy thì, các bạn ạ, tình hình của chúng ta có thể không tuyệt vọng như chúng ta nghĩ. Ở đây có những sinh vật khác yếu đuối hơn chúng ta."
+/**/
+6 CON THỎ VÀ CON ẾCH
+/**/
+ĐẠI BÀNG VÀ CON CÁO\n\nMột con Đại Bàng và một con Cáo sống với nhau như những người hàng xóm tốt bụng, con Đại Bàng ở trên đỉnh một cây cao, con Cáo ở trong một cái hang dưới chân cây. Một ngày nọ, khi con Cáo đi ra ngoài, con Đại Bàng lao xuống và bắt con của con Cáo và mang nó lên tổ của mình, nghĩ rằng ngôi nhà cao của mình sẽ an toàn trước sự trả thù của con Cáo. Con Cáo trở về đã khiển trách con Đại Bàng vì đã vi phạm lòng tin như vậy và cầu xin con của mình được trả lại cho nó. Thấy rằng những lời cầu xin của mình không có tác dụng, con Cáo đã giật một ngọn đuốc từ một ngọn lửa trên bàn thờ đã được thắp sáng mạnh và bắt đầu thiêu rụi cả cái cây. Con Đại Bàng, để bảo vệ tổ của mình và những đứa con của mình, đã trả lại con cho mẹ của nó, nhưng nó sẽ không làm điều đó mặc cho những lời cầu xin tha thiết nhất.
+/**/
+7 ĐẠI BÀNG VÀ CÁO

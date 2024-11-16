@@ -1,0 +1,71 @@
+CON CUA VÀ MẸ\n\nMột con Cua già nói với một con Cua non, "Sao con đi quanh co thế? Hãy đi thẳng đi!" "Mẹ ơi," con Cua non nói, "hãy chỉ đường cho con nhé? Khi con thấy mẹ đi thẳng, con sẽ cố gắng đi theo."\n\nGương mẫu tốt hơn lời răn.
+/**/
+1 CON CUA VÀ MẸ
+/**/
+CON CÁO VÀ NHO\n\nMột con cáo đến đúng mùa nho ở một nơi có những chùm nho chín treo thành từng chùm hấp dẫn trên cành cây. "Tôi sẽ lấy chúng," con cáo nói. Nó đã nhảy nhiều lần, nhưng mỗi lần đều không lấy được giải thưởng, cuối cùng nó bỏ đi, lẩm bẩm, "Được rồi, có gì quan trọng đâu? Nho thì chua."
+/**/
+2 CON CÁO VÀ QUẢ NHO
+/**/
+SÓI VÀ CON Sếu\n\nMột con Sói có một cái xương trong cổ họng và chạy lên chạy xuống trong cơn đau đớn tột cùng, cầu xin mọi con vật mà nó gặp cứu giúp, đồng thời ám chỉ rằng sẽ có một phần thưởng lớn. Một con Sếu, cảm động trước lời cầu xin của nó, đã liều lĩnh thò cái cổ dài của mình xuống cổ họng của Sói và rút xương ra. Khi đã làm xong, nó khiêm tốn yêu cầu phần thưởng đã hứa. Con Sói, cười toe toét và nhe răng, trả lời, "Sinh vật vô ơn, chẳng phải việc mày nhét đầu vào miệng Sói và lấy ra an toàn là chưa đủ sao?"
+/**/
+3 CON SÓI VÀ CON SẦN
+/**/
+KIẾN VÀ CHÂU CHẤU\n\nMột đàn kiến ​​đang bận rộn chăm sóc và bảo quản thức ăn, chúng phơi thức ăn thành đống xung quanh nơi ở của mình.\n\nMột con châu chấu, tình cờ sống sót qua mùa hè và sắp chết vì lạnh và đói, đã đến với sự khiêm nhường lớn lao và cầu xin chúng sẽ giúp nó thoát khỏi sự thiếu thốn bằng một hạt lúa mì hoặc lúa mạch đen. Một trong những con kiến ​​đã hỏi nó đã xử lý thời gian của mình vào mùa hè như thế nào, rằng nó đã không mất công và tích trữ như chúng đã làm.\n\n"Than ôi! Các quý ông," nó nói, "Tôi đã dành thời gian đó một cách vui vẻ và thoải mái trong việc uống rượu, ca hát và nhảy múa, và không bao giờ nghĩ đến mùa đông."\n\n"Nếu đúng như vậy," con kiến ​​trả lời, "tất cả những gì tôi phải nói là những người uống rượu, ca hát và nhảy múa vào mùa hè sẽ phải chết đói vào mùa đông."
+/**/
+4 CON KIẾN VÀ CHÂU ÂU
+/**/
+NHỮNG CON ẾCH CẦU XIN MỘT VUA\n\nCộng đồng Ếch, một giống loài bất mãn, chán ngán tự do và thích thay đổi, đã thỉnh cầu Jupiter ban cho họ một vị Vua.\n\nVị thần tốt bụng, để ban cho họ yêu cầu mà ít gây tổn hại nhất có thể, đã ném cho họ một khúc gỗ. Tiếng nước bắn tung tóe khiến họ vô cùng kinh hoàng và sửng sốt, và lúc đầu họ nhìn vị vua mới của mình với sự tôn kính lớn lao và giữ khoảng cách tôn trọng. Nhưng dần dần, nhận thấy tính tình dễ mến và ôn hòa của ông, họ dần dần mạo hiểm tiếp cận ông với thái độ thân thiện hơn, cho đến khi cuối cùng họ coi thường ông hết mức.\n\nKhông hài lòng với tình trạng này, họ tiếp tục thỉnh cầu Jupiter và cầu xin ông ban cho họ một vị Vua khác.\n\nTrong cơn thịnh nộ, Thần Sấm đã gửi cho họ một con Sếu, ngay khi chiếm được lãnh thổ mới của mình, nó đã bắt đầu nuốt chửng thần dân của mình, từng người một.\n\nBây giờ họ bất mãn hơn nhiều so với trước. Khi cầu xin thần Jupiter lần thứ ba, họ đã được giải thoát với lời khiển trách rằng tai họa mà họ than phiền chính là do họ đã vô tình gây ra; và rằng bây giờ họ không còn cách nào khác ngoài việc kiên nhẫn chịu đựng.
+/**/
+5 CON ẾCH CẦU VUA
+/**/
+CON LỪA MẶC DA SƯ TỬ\n\nMột con lừa, đã khoác lên mình bộ da của một con sư tử, mà nó thấy đang phơi khô bên vệ đường, đi lang thang trong rừng và tự mua vui bằng cách dọa tất cả các loài động vật mà nó gặp. Cuối cùng, khi gặp một con cáo, nó cũng cố gắng dọa con cáo; nhưng con cáo vừa nghe thấy tiếng nó kêu thì đã kêu lên, "Tôi có thể đã sợ nếu tôi không nghe thấy tiếng kêu của anh."
+/**/
+6 CON LỪA BẰNG DA SƯ TỬ
+/**/
+BỘ TÙNG CHUỘT TRONG HỘI ĐỒNG\n\nBọn Chuột, buồn bã đau khổ vì kẻ thù chung của chúng là Mèo, đã triệu tập một hội đồng để tìm ra cách thoát khỏi sự phiền toái này. Nhiều kế hoạch đã được đề xuất và bác bỏ, cho đến khi cuối cùng một chú Chuột trẻ đề xuất rằng nên treo một chiếc chuông quanh cổ Mèo, để khi biết Mèo đến, chúng có thể trốn về hang của mình.\n\nĐề xuất được hoan nghênh bằng tràng pháo tay và nhất trí thông qua. Sau đó, một chú Chuột già, người đã ngồi im lặng, đứng dậy và nói, "Được thôi, nhưng ai sẽ rung chuông cho Mèo?" Lũ Chuột nhìn nhau, nhưng không ai trả lời.\n\nChú Chuột già nói, "Dễ khuyên lắm; cần có người hành động."
+/**/
+7 CON CHUỘT TRONG HỘI ĐỒNG
+/**/
+Đứa trẻ và con sói\n\nMột đứa trẻ, đi một mình từ đồng cỏ, bị một con sói đuổi theo. Với sự tỉnh táo tuyệt vời, đứa trẻ quay lại và nói: "Tôi biết, bạn sói, rằng bạn muốn giết tôi; nhưng vì cuộc đời tôi ngắn ngủi, hãy để nó vui vẻ. Bạn thổi sáo và để tôi nhảy thêm một điệu nữa trước khi tôi chết." Trong khi con sói thổi sáo và đứa trẻ nhảy, một số con chó, nghe thấy tiếng nhạc, chạy đến nơi để xem chuyện gì đang xảy ra; và con sói rất vui khi được tự mình chạy đi nhanh nhất có thể.
+/**/
+8 ĐỨA TRẺ VÀ CON SÓI
+/**/
+CON Diều Hâu VÀ CHIM ĐÊM\n\nChim họa mi, đang đậu trên cây sồi, được một con Diều Hâu nhìn thấy, nó lao xuống và tóm lấy. Con họa mi tha thiết cầu xin Diều Hâu thả nó đi, nói rằng nó không đủ lớn để thỏa mãn cơn đói của một con Diều Hâu, con chim này hẳn phải tìm thấy nhiều loài chim lớn hơn. "Bạn có tình cờ thấy nhiều loài chim lớn bay xung quanh không?" Con Diều Hâu hỏi. "Tôi sẽ thật ngốc nghếch nếu thả bạn đi vì những loài chim lớn hơn mà bạn không nhìn thấy. Một miếng ăn còn hơn không."
+/**/
+9 CON Diều Hâu và CHIM ĐÊM
+/**/
+CON QUẠ VÀ CHIẾC BÌNH NƯỚC\n\nMột con quạ sắp chết khát nhìn thấy một chiếc bình đựng một ít nước. Cúi xuống, nó thấy nước quá thấp đến nỗi, dù đã cúi xuống và cố hết sức, nó vẫn không thể với tới bằng mỏ. Sau đó, nó cố lật úp và làm vỡ chiếc bình. Nhưng nó không đủ sức. Cuối cùng, nhìn thấy một số viên sỏi nhỏ, nó mang đến rất nhiều viên và thả từng viên một, và như vậy nước dâng lên đến miệng bình và giải cơn khát của mình.
+/**/
+10 CON QUẠ VÀ CÁI BÌNH
+/**/
+CON KIẾN VÀ CON BỒ CÂU\n\nĐi đến một đài phun nước để giải cơn khát, một con Kiến lăn xuống và sắp chết đuối. Nhưng một con Bồ câu tình cờ đậu trên một cái cây gần đó và nhìn thấy mối nguy hiểm của con Kiến. Hái một chiếc lá, con Bồ câu thả nó xuống nước, để con Kiến đang trèo lên lá được thổi bay an toàn vào bờ. Một người thợ săn chim, ngay sau đó, giăng lưới của mình để bẫy con Bồ câu bất cẩn. Con Kiến nhận ra điều này và cắn vào gót chân của người thợ săn chim. Bị phân tâm bởi cơn đau, người thợ săn thả lưới của mình xuống với một cú giật mạnh, và con Bồ câu, bị đánh thức bởi cảm giác nguy hiểm, đã bay đi.\n\nMột hành động tốt xứng đáng với một hành động tốt khác.
+/**/
+11 CON KIẾN VÀ CON BỒ CÂU
+/**/
+CON BÒ VÀ CON ẾCH\n\nMột con Trâu đang gặm cỏ trên đồng cỏ đầm lầy, tình cờ giẫm phải một đàn Ếch con và giẫm chết gần hết chúng. Một con trốn thoát chạy về báo tin dữ cho mẹ. "Đó là một con thú - một con thú bốn chân to lớn - đã làm thế."\n\n"Lớn à?" Con Ếch già hỏi, và bà phồng mình lên, "to bằng con này à?"\n\n"Lớn hơn nhiều," con Ếch nhỏ nói.\n\n"Thế thì nó to thế sao?" và bà phồng mình lên hơn nữa.\n\n"Đúng vậy, Mẹ ạ, nhưng nó to thật; và nếu mẹ nổ tung thì mẹ cũng không bao giờ đạt được một nửa kích thước của nó." Bực tức vì đứa con coi thường sức mạnh của mình, Ếch mẹ đã thử thêm một lần nữa và thực sự nổ tung.
+/**/
+12 CON TRÒN VÀ CON ẾCH
+/**/
+CON Dơi và CHUỒN\n\nMột con Dơi rơi xuống đất, bị một con Chồn bắt được, nó van xin Chồn đừng lấy mạng nó. Chồn phản đối rằng việc một con chồn thả một con chim đi là trái với tự nhiên. Khi đó, con Dơi khăng khăng rằng nó không phải là chim, và để chứng minh điều đó, nó đã gọi sự chú ý đến cái đầu và đôi tai giống chuột của mình, khiến Chồn bối rối đến mức nó thả Dơi đi.\n\nMột lúc sau, trong một chuyến bay khác, con Dơi lại rơi xuống đất, và một con Chồn khác đã bắt được nó. Khi nhận ra rằng Chồn nghĩ rằng nó là một con chuột, con Dơi phản đối rằng nó có cánh và do đó không phải là chuột, và một lần nữa được phép đi tự do.
+/**/
+13 CON Dơi VÀ CON CHỒN
+/**/
+CON CÁO VÀ CON DÊ\n\nMột con Cáo bị rơi xuống giếng sâu đang loay hoay tìm cách thoát ra. Cuối cùng, một con Dê đến nơi, nhìn thấy Reynard, hỏi xem nước có tốt không và có nhiều không.\n\nGiấu mối nguy hiểm thực sự trong trường hợp của mình, con Cáo trả lời: "Tốt nhất trên thế giới, và nhiều đến mức không thể cạn kiệt. Hãy xuống xem." Sau đó, con Dê nhảy xuống mà không cần phải làm gì thêm. Sau đó, con Cáo xảo quyệt nhảy lên sừng của mình và nhanh nhẹn nhảy ra ngoài, nhận xét với con Dê bị lừa dối, "Nếu bạn có trí thông minh để phù hợp với bộ râu của bạn, bạn sẽ nhìn trước khi bạn nhảy."
+/**/
+14 CON CÁO VÀ CON DÊ
+/**/
+NGƯỜI PHỤ NỮ VÀ CON GÀ MẸ\n\nMột người phụ nữ tiết kiệm nuôi một con gà mái đẻ trứng mỗi sáng. Người phụ nữ cảnh giác nghĩ thầm, "Nếu tôi tăng gấp đôi khẩu phần lúa mạch của con gà mái, nó sẽ đẻ hai lần một ngày." Vì vậy, bà đã thử kế hoạch của mình, và con gà mái trở nên béo và bóng mượt đến nỗi nó ngừng đẻ trứng.\n\nTiết kiệm đôi khi quá mức, và con số không phải lúc nào cũng là sự thật.
+/**/
+15 NGƯỜI PHỤ NỮ VÀ CON GÀ MÁI
+/**/
+CON CHÓ TRONG MÁI ĐĨA\n\nMột con chó đã từng nằm trong máng cỏ và nằm đó gầm gừ với bất kỳ ai đi qua. Những con trâu đến lấy thức ăn cho chúng đã nói: "Thật là một con chó khốn khổ! Không ăn ngũ cốc mà cũng chẳng để ai khác ăn!"
+/**/
+16 CON CHÓ TRONG MÁI ĐĨA
+/**/
+CON CHUỘT, CON ẾCH VÀ CON Diều Hâu\n\nMột con Chuột trong một ngày đen tối đã làm quen với một con Ếch, và chúng cùng nhau lên đường. Lấy cớ là tình cảm và giữ cho bạn đồng hành của mình an toàn khỏi nguy hiểm, con Ếch buộc chân trước của con Chuột vào chân sau của mình, và cứ thế chúng tiếp tục. Mọi chuyện diễn ra khá tốt cho đến khi chúng đến một nơi có nước, và con Ếch, bảo con Chuột hãy can đảm, lao xuống và bắt đầu bơi qua. Chúng mới bơi được nửa đường thì con Ếch đột nhiên lao xuống đáy, kéo theo con Chuột không may mắn theo sau. Nhưng sự vùng vẫy của con Chuột đã gây ra một sự náo động lớn trong nước đến nỗi nó đã thu hút sự chú ý của một con Diều Hâu, con Diều Hâu lao xuống và mang con Chuột đi, cũng mang theo cả con Ếch.\n\nNhững liên minh không cân sức thường kết thúc bằng thảm họa; và kẻ nào định hủy diệt hàng xóm của mình thường sẽ mắc vào bẫy của chính mình.
+/**/
+17 CON CHUỘT, CON ẾCH VÀ CON Diều Hâu
+/**/
+CẬU BÉ CHĂN CỪU VÀ CON SÓI\n\nMột cậu bé chăn cừu, đang chăn đàn cừu của mình ở rìa làng, thường tự mua vui bằng cách hét lên, "Sói! Sói!" Hai hoặc ba lần trò lừa của cậu thành công. Cả làng chạy đến giúp cậu, chỉ để bị chế giễu vì sự đau đớn của họ. Cuối cùng, một ngày nọ, Sói thực sự đã đến. Cậu bé kêu lên như trước, và lần này là thật lòng. Nhưng dân làng, cho rằng cậu bé đang chơi trò cũ, không để ý đến tiếng kêu của cậu, và Sói đã ăn thịt đàn cừu.
+/**/
+18 CẬU BÉ CHĂN CỪU VÀ CON SÓI

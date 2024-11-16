@@ -1,0 +1,59 @@
+CÔ GÁI SỮA VÀ XÔ SỮA CỦA CÔ\n\nDolly, cô gái vắt sữa, là một cô gái ngoan và cẩn thận trong công việc, bà chủ đã đưa cho cô một xô sữa mới.\nVới xô sữa trên đầu, Dolly vui vẻ bước đi trên đường đến thị trấn, nơi cô sẽ bán sữa của mình.\n\n"Với số sữa này," Dolly nói, "tôi sẽ nhận được một shilling, và với số tiền đó tôi sẽ mua hai mươi quả trứng do đàn gà đẹp của hàng xóm chúng ta đẻ. Bà chủ chắc chắn sẽ cho tôi mượn một con gà mái, và, nếu không có bất trắc gì, tôi sẽ nuôi được một tá gà con. Chúng sẽ lớn lên khỏe mạnh trước khi đến phiên chợ tiếp theo, và khi đó gà sẽ được giá cao nhất. Tôi sẽ có thể bán gà của mình với giá một ghi-nê.\n\n"Sau đó, tôi sẽ mua chiếc áo khoác mà tôi đã thấy ở làng hôm nọ, cùng với một chiếc mũ và ruy băng nữa. Và khi tôi đi hội chợ, tôi sẽ thông minh biết bao!\n\n"Robin sẽ ở đó, và sẽ đến và đề nghị làm bạn một lần nữa. Nhưng tôi sẽ không dễ dàng làm lành; và khi anh ấy muốn tôi làm bạn nhảy, tôi sẽ chỉ ngẩng đầu lên và—"\n\nLúc này Dolly lắc đầu một chút, khi thùng sữa rơi xuống, và tất cả sữa đổ ra đất.\n\nDolly tội nghiệp! Đó là lời tạm biệt của cô ấy với trứng, gà, áo khoác, mũ, ruy băng và tất cả mọi thứ.
+/**/
+1 Cô gái vắt sữa và chiếc xô đựng sữa
+/**/
+CON MÈO VÀ CON CÁO\n\nMèo và Cáo đã từng nói chuyện với nhau giữa rừng.\n\n"Tôi không quan tâm chuyện gì xảy ra," Cáo nói, "vì tôi có hàng ngàn trò, bất kỳ trò nào trong số đó cũng có thể giúp tôi thoát khỏi khó khăn. Nhưng xin bà, bà Mèo," nó nói thêm, "bà sẽ làm gì nếu có một cuộc xâm lược?"\n\n"Tôi chỉ có một cách," Puss trả lời. "Nếu điều đó không giúp ích cho tôi, tôi sẽ bị tiêu diệt."\n\n"Tôi rất tiếc cho bà," Cáo nói. "Tôi rất vui lòng dạy bà một hoặc hai trò của tôi, nhưng không khôn ngoan khi tin tưởng người khác. Mỗi chúng ta phải tự chăm sóc bản thân."\n\nNhững lời này vừa nói ra, thì một bầy chó săn đã lao tới và hú lên dữ dội.\n\nMèo, nhờ vào sự bảo vệ đã được chứng minh của mình, chạy lên một cái cây và ngồi bình thản giữa những cành cây. "Đây là cách của tôi," nó nói với Cáo. "Ngươi muốn làm gì?"\n\nCáo, với hàng ngàn mánh khóe của mình, không thể thoát khỏi tầm mắt và trở thành con mồi của đàn chó.
+/**/
+2 CON MÈO VÀ CON CÁO
+/**/
+KHỈ VÀ MÈO\n\nMột con Khỉ và một con Mèo sống trong cùng một gia đình, và thật khó để nói ai là kẻ trộm vĩ đại hơn.\n\nMột ngày nọ, khi chúng đang lang thang cùng nhau, chúng nhìn thấy một số hạt dẻ đang rang trong đống tro của một ngọn lửa.\n\n"Đến đây," con Khỉ xảo quyệt nói, "hôm nay chúng ta sẽ không nhịn đói đâu. Móng vuốt của bạn tốt hơn của tôi cho mục đích này; hãy nhổ hạt dẻ ra khỏi đống tro và bạn sẽ có một nửa."\n\nMèo kéo chúng ra, làm bỏng rất nhiều bàn chân của nó khi làm như vậy. Khi đã lấy cắp hết tất cả, nó quay sang Khỉ để xin phần chiến lợi phẩm của mình; nhưng, thật đáng buồn, nó không thể tìm thấy hạt dẻ nào, vì nó đã ăn hết tất cả.
+/**/
+3 CON KHỈ VÀ CON MÈO
+/**/
+SÓI VÀ NGƯỜI CHĂN NUÔI\n\nTrong một thời gian dài, Sói đã đi theo Cừu mà không cố làm hại một con nào trong số chúng.\n\nNgười chăn cừu canh chừng Sói một lúc, và theo dõi chặt chẽ để Sói không đến quá gần. Nhưng ngày này qua ngày khác trôi qua và Sói không tỏ ra có ý định làm hại bất kỳ con nào trong đàn, anh ta cho phép Sói đến gần hơn, cho đến khi cuối cùng anh ta đến giữa đàn Cừu, và dường như đang canh chừng chúng như một con chó.\n\n"Nó thực sự giúp ích cho mình," Người chăn cừu tự nhủ; "và mình chưa bao giờ thấy nó cố gắng bắt một con cừu hay một con cừu non nào cả."\n\nVì vậy, một ngày nọ, có dịp vào thị trấn, anh ta để đàn cừu của mình cho Sói chăm sóc, người mà anh ta coi là người bảo vệ chúng.\n\nNhưng ngay khi người đàn ông đi khỏi, Sói, thấy cơ hội của mình, lao vào đàn Cừu và tiêu diệt phần lớn chúng.\n\n"Mình đã được đền đáp xứng đáng," Người chăn cừu nói khi trở về. "Tại sao tôi lại không biết cách giao phó đàn Cừu của mình cho kẻ thù tồi tệ nhất của chúng? Sớm hay muộn, bản chất sẽ bộc lộ ra thôi."
+/**/
+4 SÓI VÀ NGƯỜI CHĂN CỪU
+/**/
+CON SÓI, CON CÁO VÀ CON KHỈ\n\nMột con sói bị cáo buộc ăn trộm, con cáo hoàn toàn phủ nhận lời buộc tội, sau đó một con khỉ đảm nhận việc xét xử vụ việc đang được đề cập.\n\nKhi mỗi con đã trình bày đầy đủ vụ việc của mình, con khỉ tuyên bố câu này:\n\n"Tôi hoàn toàn tin rằng anh, Sói, không bao giờ mất những gì anh tuyên bố." Sau đó, quay sang con Cáo, nó nói, "Và tôi tin rằng anh đã làm điều mà anh kiên quyết phủ nhận."
+/**/
+5 CON SÓI, CON CÁO VÀ CON VẸO
+/**/
+NGƯỜI MÙ VÀ CON CHÓ\n\nMột người mù có thói quen phân biệt các loài động vật khác nhau bằng cách chạm vào chúng bằng tay.\n\nNgười ta mang đến cho anh ta một con sói con, với yêu cầu anh ta sờ vào nó và cho biết đó là con gì.\n\nTrong lúc còn nghi ngờ, anh ta nói, "Tôi không biết chắc đó là con của một con cáo hay con của một con sói con; nhưng tôi biết rõ rằng sẽ không an toàn nếu cho nó vào chuồng cừu."
+/**/
+6 NGƯỜI MÙ VÀ CON CHÓ
+/**/
+CHIM TIÊU PHÍ VÀ CHIM ÉN\n\nMột chàng trai trẻ từng là một kẻ tiêu hoang, đã tiêu hết số tiền thừa kế, thậm chí bán hết quần áo ngoài trừ áo choàng, thấy một con Én lướt trên đồng cỏ vào đầu mùa xuân và líu lo vui vẻ. Tin rằng mùa hè thực sự đã đến, anh ta cũng bán luôn áo choàng.\n\nHôm sau, trời có sương giá nghiêm trọng, và anh ta run rẩy, thấy con Én nằm cứng đờ trên mặt đất.\n\n"Con chim bất hạnh," anh ta nói, "nếu mày không đến sớm hơn thời hạn của mày, tao đã không phải khốn khổ như vậy, và mày có thể đã thoát khỏi số phận của mình. Một con Én không làm nên mùa hè."
+/**/
+7 KẺ TIÊU TIÊU VÀ CON ÉN
+/**/
+CON LỢN SƯỚNG VÀ CON CÁO\n\nMột con lợn rừng đứng mài ngà trên một cái cây.\n\n"Ý anh là gì," một con cáo hỏi, "khi nói đến sự chuẩn bị chiến tranh như vậy? Không có kẻ thù nào trong tầm mắt."\n\n"Khi nhìn thấy kẻ thù," con lợn rừng nói, "đã đến lúc phải nghĩ đến điều gì khác."
+/**/
+8 CON LỢN HEO VÀ CON CÁO
+/**/
+HERCULES VÀ NGƯỜI ĐÀN BÀ\n\nKhi một người đàn ông đánh xe ngựa của mình qua một con đường lầy lội, bánh xe bị kẹt chặt trong đất sét, khiến những con ngựa không thể tiến xa hơn được nữa.\n\nNgười đàn ông, không hề cố gắng chút nào để khắc phục vấn đề, đã quỳ xuống và bắt đầu gọi Hercules đến giúp anh ta thoát khỏi rắc rối.\n\n"Anh chàng lười biếng," Hercules nói, "hãy dựa vai vào bánh xe. Hãy khuấy động và làm những gì bạn có thể. Sau đó, nếu bạn muốn sự giúp đỡ từ các vị thần, bạn sẽ có nó. Hãy nhớ câu tục ngữ, Thiên đường giúp đỡ những ai tự giúp mình."
+/**/
+9 HERCULES VÀ NGƯỜI ĐÀN ÔNG
+/**/
+CON LA VÀ BỌN CƯỚP\n\nHai con la, chất đầy hành lý, đang lê bước trên đường cao tốc. Một con chở những chiếc giỏ đựng đầy tiền, con kia chở những bao ngũ cốc.\n\nCon la chở kho báu bước đi với đầu ngẩng cao và những bước đi oai vệ, những chiếc chuông trên cổ rung lên khi đi.\n\nNgười bạn đồng hành của nó đi theo với bước chân nhẹ nhàng, thong thả.\n\nĐột nhiên, một toán cướp lao vào chúng, bị thu hút bởi bước chân mạnh mẽ, kiêu hãnh và tiếng chuông leng keng. Con la chở vàng đã làm ầm ĩ đến nỗi bọn cướp đã túm lấy hành lý của nó, dùng vũ khí làm nó bị thương, và khi nghe thấy tiếng bước chân, chúng đã bỏ chạy.\n\n"Tôi mừng là," người kia nói, "tôi được coi là không quan trọng lắm, vì tôi chẳng mất gì cả, cũng chẳng bị thương tích gì."
+/**/
+10 CON LA VÀ KẺ CƯỚP
+/**/
+CON ÉN VÀ CON QUẠ\n\nCon Én và con Quạ đã từng tranh cãi về bộ lông của chúng. Cuối cùng, con Quạ đã chấm dứt cuộc tranh cãi bằng cách nói rằng, "Lông của anh bây giờ đã đủ khỏe khi trời ấm, nhưng lông của tôi bảo vệ tôi khỏi mùa đông."
+/**/
+11 CON ÉN VÀ CON QUẠ
+/**/
+THẦN JUPITER VÀ CON ONG\n\nMột con ong đã tặng thần Jupiter một lọ mật ong, thần đã tử tế nhận lấy đến nỗi thần đã bảo thần sẽ hỏi xem thần sẽ đổi lại điều gì.\n\nCon ong, đang ấp ủ một mối hận riêng tư vì đã mất một số dự trữ mùa đông của mình, đã mong muốn thần Jupiter rằng bất cứ nơi nào nó đốt, nó đều có thể gây tử vong.\n\nThần Jupiter không muốn để loài người chịu sự thương xót của một loài côn trùng nhỏ bé độc ác, và cảm thấy khó chịu trước bản chất xấu xa thể hiện trong mong muốn của thần. Do đó, thần nói rằng mặc dù, vì lời hứa của mình, thần sẽ trao cho thần sức mạnh để gây hại, nhưng thần phải cẩn thận khi sử dụng sức mạnh đó, vì nơi mà nó đốt, thần sẽ để lại nó, và do đó sẽ mạo hiểm mạng sống của mình.\n\nÁc ý thường gây hại lớn hơn cho người hành động theo nó hơn là người bị nó đốt.
+/**/
+12 JUPITER VÀ CON ONG
+/**/
+HAI NGƯỜI LỮ HÀNH\n\nKhi hai người đàn ông đang đi qua một khu rừng, một người trong số họ cầm một chiếc rìu mà anh ta thấy nằm trên mặt đất. "Nhìn này," anh ta nói với người bạn đồng hành của mình; "Tôi đã tìm thấy một chiếc rìu."\n\n"Đừng nói _tôi_ đã tìm thấy nó," người kia nói, "mà _chúng ta_. Vì chúng ta là bạn đồng hành, chúng ta nên chia sẻ nó với nhau."\n\n"Không," người đầu tiên nói, "Tôi đã tìm thấy chiếc rìu. Nó là của tôi."\n\nHọ chưa đi được xa thì nghe thấy chủ nhân của chiếc rìu đuổi theo họ và gọi họ bằng giọng giận dữ.\n\n"Bây giờ chúng ta sẽ gặp rắc rối," người có chiếc rìu nói.\n\n"Không," người kia nói; "hãy nói _tôi_ sẽ gặp rắc rối, không phải _chúng ta_. Khi anh nghĩ rằng anh đã có giải thưởng, anh sẽ không để tôi chia sẻ nó với anh, và bây giờ anh không thể mong đợi tôi chia sẻ nguy hiểm."
+/**/
+13 HAI NGƯỜI LỮ HÀNH
+/**/
+Đứa trẻ và con sói\n\nMột đứa trẻ, cưỡi trên một tảng đá cao nơi nó cảm thấy an toàn, đã trút mọi lời lăng mạ lên một con sói ở dưới đất.\n\nCon sói trả lời: "Đừng nghĩ rằng, sinh vật nhỏ ngốc nghếch, rằng mày có thể làm phiền tao. Tao coi lời lẽ thô tục mà mày đang dùng không phải đến từ mày, mà từ nơi an toàn mà mày đang đứng. Mày sẽ có tâm trạng khác nếu mày ở dưới đây bên cạnh tao."
+/**/
+14 ĐỨA TRẺ VÀ CON SÓI
+/**/
+BÍ NGÔ VÀ CÂY THÔNG\n\nMột quả bí ngô từng được trồng gần một cây thông lớn và cao quý. Mùa này thuận lợi, và quả bí ngô đã mọc cao trong thời gian ngắn, leo lên cành và quấn quanh chúng, cho đến khi nó phủ kín và phủ lên chính cây thông.\n\nLá rất to và hoa và quả rất đẹp đến nỗi quả bí ngô, khi so sánh chúng với những chiếc kim mỏng manh của cây thông, đã tự tin nghĩ rằng mình có giá trị hơn khi so sánh.\n\n"Tại sao," quả bí ngô nói, "bạn đã mất nhiều năm để phát triển đến tầm vóc này hơn tôi chỉ mất vài ngày."\n\n"Đúng vậy," cây thông nói; "nhưng sau nhiều mùa đông và mùa hè mà tôi đã chịu đựng, nhiều cái lạnh buốt giá và cái nóng thiêu đốt, bạn thấy tôi vẫn giống hệt như tôi của nhiều năm trước. Không gì có thể khuất phục được tôi. Nhưng khi giống nòi của bạn bị thử thách, bệnh dịch hoặc sương giá đầu tiên chắc chắn sẽ hạ gục lòng kiêu hãnh của bạn. Trong một giờ, bạn sẽ bị tước mất mọi vinh quang của mình."
+/**/
+15 QUẢ BÓNG VÀ CÂY THÔNG

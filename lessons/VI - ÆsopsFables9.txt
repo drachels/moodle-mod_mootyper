@@ -1,0 +1,59 @@
+CON NGỰA VÀ CHỦ NGỰA\n\nMột người chủ ngựa, người thường ăn trộm ngô của một con ngựa và bán nó, nhưng lại rất bận rộn suốt ngày trong việc chải chuốt và chải lông cho nó. "Nếu anh thực sự muốn tôi trông bóng mượt và đẹp đẽ," con ngựa nói, "thì hãy cho tôi ít cà ri và nhiều ngô hơn."
+/**/
+1 CON NGỰA VÀ CHÚ RỂ
+/**/
+NGƯỜI THỢ KÈN TRUMPET BỊ BẮT TÙ\n\nMột người chơi kèn trumpet bị bắt làm tù binh trong một trận chiến đã cầu xin tha mạng. "Xin hãy tha cho tôi, tôi cầu xin các người," anh ta nói; "đừng giết tôi mà không có lý do. Tôi không giết ai cả, tôi cũng không mang vũ khí, mà chỉ mang chiếc kèn này."\n\n"Chính vì lý do đó," những người bắt giữ anh ta nói, "chắc chắn anh sẽ phải chết; vì mặc dù không có tinh thần chiến đấu, anh vẫn kích động người khác gây ra bạo lực và đổ máu."\n\nKẻ kích động xung đột còn tệ hơn kẻ tham gia vào cuộc xung đột.
+/**/
+2 NGƯỜI ĐÀN ÔNG KÈN TRUMPE BỊ BẮT TÙ
+/**/
+NGƯỜI LỮ HÀNH KHOA KHOA\n\nMột người đàn ông đã đi du lịch ở những vùng đất xa lạ khoe khoang, khi trở về nhà, về những chiến công vĩ đại mà ông đã thực hiện ở nhiều nơi khác nhau. Ví dụ, ở Rhodes, ông đã thực hiện một cú nhảy phi thường đến nỗi không ai có thể tiếp cận được; và ông nói rằng ông có những nhân chứng ở đó để chứng minh điều đó là như vậy.\n\n"Hoàn toàn có thể," một người nghe ông khoe khoang về điều đó nói, "nhưng hãy cho rằng đây là Rhodes, và thử lại cú nhảy đó."
+/**/
+3 NGƯỜI DU LỊCH KHOA KHOA
+/**/
+HÀNG RÀO VÀ VƯỜN NHO\n\nMột Người Thừa Kế trẻ tuổi ngốc nghếch, người đã chiếm hữu điền trang của người cha thông thái, đã phá bỏ tất cả các hàng rào quanh Vườn nho của mình vì chúng không ra nho. Việc phá bỏ những hàng rào này đã mở đường cho con người và động vật, và những cây nho của ông đã bị phá hủy ngay lập tức. Khi đã quá muộn, anh chàng đơn giản đã học được rằng việc bảo vệ Vườn nho của mình cũng cần thiết như việc sở hữu nó.
+/**/
+4 HÀNG RÀO VÀ VƯỜN NHO
+/**/
+CON CHUỘT VÀ CON CHỒN\n\nMột chú Chuột đói đã khó khăn lắm mới chui được vào một giỏ ngô, thấy trò giải trí này rất hợp với mình, chú đã nhồi nhét và nhét đầy mình đến mức khi chú chuẩn bị chui ra ngoài, chú thấy cái lỗ mà chú đã chui vào quá nhỏ để cho cái thân hình phình to của chú chui qua. Một chú Chồn, bị thu hút đến chỗ đó bởi tiếng kêu của chú, đã khuyên chú như thế này: "Ở yên đó, bạn của tôi, và nhịn ăn cho đến khi bạn gầy đi; vì bạn sẽ không bao giờ thoát ra được cho đến khi bạn trở lại tình trạng như lúc bạn chui vào."
+/**/
+5 CON CHUỘT VÀ CON CHỒN
+/**/
+SÓI VÀ CON CỪU\n\nMột con sói bị chó cắn và không thể di chuyển, đã cầu xin một con cừu đi ngang qua thương hại trường hợp đáng thương của nó và lấy cho nó một ít nước từ một con suối. "Nếu bạn mang cho tôi một ly nước," nó nói, "tôi sẽ tự tìm thấy thịt."\n\n"Vâng," con cừu nói, "tôi không nghi ngờ gì về điều đó; vì nếu tôi đến đủ gần để đưa cho bạn ly nước, bạn sẽ biến tôi thành thịt băm."
+/**/
+6 SÓI VÀ CỪU
+/**/
+MỘT GÓA PHỤ VÀ ĐÀN CỪU CỦA BÀ\n\nMột bà góa nọ, chỉ có một con Cừu và muốn tận dụng tối đa lông cừu của nó, đã cắt lông cừu sát đến mức cắt cả da lẫn lông cừu. Con Cừu, đau đớn vì cách đối xử này, kêu lên: "Tại sao ông lại hành hạ tôi như vậy? Ông chẳng được lợi lộc gì. Máu của tôi sẽ không làm tăng thêm trọng lượng của lông cừu. Nếu ông muốn thịt, hãy gọi Người Đồ Tể, người sẽ chấm dứt sự đau khổ của tôi; nhưng nếu ông chỉ muốn lông cừu, hãy gọi Người Cắt Lông Cừu, người sẽ cắt lông cừu của tôi mà không làm chảy máu tôi."
+/**/
+7 MỘT GÓA PHỤ VÀ ĐÀN CỪU CỦA BÀ
+/**/
+NGƯỜI ĐÀN ÔNG VÀ SƯ TỬ\n\nMột Người đàn ông và một con sư tử đã từng cùng nhau đi du ngoạn và cuối cùng đã có những lời qua tiếng lại về việc ai là sinh vật dũng cảm và mạnh mẽ hơn trong hai con. Khi cuộc tranh cãi trở nên căng thẳng hơn, họ tình cờ đi ngang qua, bên lề đường, bức tượng một người đàn ông đang siết cổ một con sư tử. "Nhìn kìa," Người đàn ông nói. "Bạn có thể có bằng chứng nào khác về sự vượt trội không thể phủ nhận của chúng tôi hơn thế?"\n\n"Đó," Sư tử nói, "là phiên bản câu chuyện của một người đàn ông; hãy để chúng ta trở thành những nhà điêu khắc, và với một con sư tử dưới chân một người đàn ông, bạn sẽ có hai mươi người đàn ông dưới móng vuốt của sư tử."
+/**/
+8 NGƯỜI ĐÀN ÔNG VÀ SƯ TỬ
+/**/
+SƯ TỬ NỮ\n\nMột cuộc tranh cãi lớn đã nổ ra về việc loài nào trong số các loài Thú có thể khoe khoang về gia đình lớn nhất. Lần lượt chúng đến gặp Sư tử cái. "Và có bao nhiêu con," người ta hỏi, "bạn có bao nhiêu con khi sinh?"\n\n"Một con," cô trả lời; "nhưng con đó là Sư tử!"\n\nChất lượng quan trọng hơn số lượng.
+/**/
+9 SƯ TỬ NỮ
+/**/
+CẬU BÉ ĂN CẮP TÁO\n\nMột ông già đã từng thấy một cậu bé thô lỗ trên Cây táo của mình và nghiêm khắc ra lệnh cho cậu bé xuống. Cậu bé trẻ tuổi vô lại trả lời rằng cậu sẽ không xuống.\n\n"Vậy thì ta sẽ đưa ngươi xuống," Ông già nói. Vì vậy, ông ném cành cây và bó cỏ lên người cậu bé, nhưng điều này chỉ khiến cho cậu bé trở thành vật tế thần cười.\n\n"Được thôi," Ông già nói. "Nếu cả lời nói lẫn cỏ đều không thể hạ gục ngươi, ta sẽ thử xem đá có đức tính gì." Nói xong, ông ném đá vào Cậu bé một cách nhiệt tình, cậu bé nhanh chóng bị hạ gục khỏi cây để cầu xin Ông già tha thứ.
+/**/
+10 CẬU BÉ ĂN CẮP TÁO
+/**/
+CON NGỰA CÓ TRỨNG VÀNG\n\nMột người đàn ông may mắn sở hữu một con Ngỗng đẻ cho ông một Quả Trứng Vàng mỗi ngày trong năm. Trong một thời gian, người đàn ông vui mừng vì khoản thu nhập hàng ngày của mình, nhưng trở nên mất kiên nhẫn với khoản thu nhập chậm chạp như vậy, ông đã giết con Ngỗng để lấy hết vàng mà ông nghĩ là có trong con ngỗng. Khi ông mở con ngỗng ra, ông thấy rằng nó giống hệt như tất cả những con ngỗng khác.\n\nMuốn nhiều hơn, ông đã mất tất cả.
+/**/
+11 CON NGỖNG CÓ TRỨNG VÀNG
+/**/
+NGƯỜI GIÀ VÀ CÁI CHẾT\n\nMột Người Lao Động Già, còng lưng vì tuổi tác và công việc, đang nhặt cành cây trong một khu rừng. Mệt mỏi và tuyệt vọng, ông ném bó củi xuống và kêu lên: "Tôi không thể chịu đựng được nữa! Giá mà Thần Chết đến và cứu tôi!"\n\nKhi ông nói, Thần Chết đến và hỏi ông muốn gì. "Xin hãy làm ơn, thưa ngài," Người Đàn Ông trả lời, "hãy giúp tôi nâng bó củi này lên lưng tôi."
+/**/
+12 NGƯỜI GIÀ VÀ CÁI CHẾT
+/**/
+NGƯỜI CHA VÀ HAI CÔ CON GÁI\n\nMột người đàn ông có hai cô con gái gả một người cho một Người làm vườn, một người cho một Người thợ gốm. Khi đến thăm Người làm vườn, ông hỏi con gái mình mọi chuyện thế nào. "Tốt lắm," cô nói; "chúng ta có mọi thứ mình muốn chỉ cần có một trận mưa lớn để tưới cho cây cối là được."\n\nKhi đến nhà Người thợ gốm, ông hỏi cô con gái kia mọi chuyện thế nào. "Chúng ta không muốn gì ngoài việc thời tiết đẹp và nắng nóng này tiếp tục, để ngói của chúng ta được nung tốt."\n\n"Than ôi," Người cha nói, "nếu con muốn thời tiết đẹp và em gái con muốn mưa, thì ta sẽ cầu nguyện cho ai?"
+/**/
+13 NGƯỜI CHA VÀ HAI NGƯỜI CON GÁI
+/**/
+SƯ TỬ BỆNH VÀ CON CÁO\n\nMột con sư tử quá già và yếu để săn mồi thấy rằng nó phải bắt được con mồi, nếu có, bằng cách xảo quyệt. Nó bò vào một góc hang và giả vờ bị bệnh. Tất cả các loài động vật đi qua đều vào để nhìn nó, và khi chúng đến, nó nhảy xổ vào chúng và ăn thịt chúng. Bây giờ, khi điều này đã xảy ra với khá nhiều con, con cáo, người đã đoán ra trò lừa, đã đi qua. Từ một khoảng cách an toàn, nó gọi Sư tử, hỏi thăm sức khỏe của nó. Sư tử nói rằng nó bị bệnh rất nặng và yêu cầu Cáo vào thăm nó. "Tôi rất muốn", con cáo trả lời, "nhưng tôi nhận thấy rằng tất cả các dấu chân đều hướng vào hang, và không có dấu chân nào hướng ra ngoài".
+/**/
+14 SƯ TỬ BỆNH VÀ CON CÁO
+/**/
+NÚI ĐANG LAO ĐỘNG\n\nNgày xưa, có tiếng ầm ầm dữ dội vang lên ở một ngọn núi. Người ta nói rằng đó là lúc Lao động, và rất đông người tụ tập lại, từ gần đến xa, để xem ngọn núi vĩ đại này sẽ sản sinh ra điều gì. Sau thời gian dài mong đợi và suy đoán khôn ngoan từ những người đứng xem, một con chuột đã chui ra.\n\nMột lời hứa tuyệt vời, nhưng màn trình diễn thì tầm thường.
+/**/
+15 NÚI TRONG LAO ĐỘNG

@@ -1,0 +1,71 @@
+CON BÒ VÀ CON BÒ CON\n\nMột con bò đực đang cố gắng hết sức để chui qua một lối đi hẹp dẫn đến chuồng của nó.\n\n"Tôi sẽ đi qua," một con bê non nói, "và chỉ đường cho anh. Tôi đã làm thế nhiều lần rồi."\n\n"Anh đừng có mà làm phiền tôi," con bò đực nói; "Tôi đã biết đường từ trước khi anh sinh ra rồi."
+/**/
+1 CON BÒ VÀ CON BÊ
+/**/
+CON HƯƠU VÀ MẸ\n\nMột chú Hươu con từng nói với Mẹ: "Con không hiểu, Mẹ ơi, tại sao Mẹ lại sợ chó đến vậy. Mẹ lớn hơn chó, và nhanh nhẹn hơn; và Mẹ quen chạy hơn nhiều. Tại sao chỉ cần nhắc đến chó săn là Mẹ lại sợ hãi khủng khiếp như vậy?"\n\nNgười Mẹ mỉm cười với cậu con trai dũng cảm của mình. "Mẹ biết rất rõ," bà nói, "rằng tất cả những gì con nói đều đúng. Mẹ nhìn đôi chân dài của mình, và nhớ lại tất cả những lợi thế mà con nhắc đến, nhưng khi mẹ nghe thấy tiếng sủa của một con chó duy nhất, mẹ lại ngất đi vì sợ hãi."
+/**/
+2 CON HƯƠU VÀ MẸ CỦA NÓ
+/**/
+CON LA VÀ CÁI BÓNG CỦA NÓ\n\nMột ngày rất nóng nực, một Lữ khách thuê một con La cùng với người đánh xe của mình để chở một số hàng hóa đến một nơi xa xôi.\n\nCon đường nằm trên một đồng bằng cát, và vì trời rất nóng, Lữ khách gọi người đánh xe dừng lại để nghỉ ngơi. Để tránh cái nóng trực tiếp của mặt trời đang chiếu rọi hết sức mạnh của nó, Lữ khách tiến tới ngồi xuống dưới bóng của con La.\n\nNhưng một cuộc tranh cãi dữ dội đã nổ ra, vì cái bóng chỉ đủ cho một người, và người đánh xe, một gã háo sắc, đã thô lỗ đẩy Lữ khách sang một bên, tuyên bố chỗ đó cho chính mình, nói rằng: "Khi anh thuê con La này của tôi, anh không nói gì về cái bóng. Nếu bây giờ anh muốn cả cái bóng nữa, anh phải trả tiền cho nó."\n\nCuộc tranh luận trở nên dữ dội đến nỗi họ quên mất con La, nó đã lợi dụng sự tự do của mình và bỏ chạy. Và thế là, trong cuộc tranh cãi về cái bóng, họ đã mất đi bản chất.
+/**/
+3 CON LA VÀ CÁI BÓNG CỦA NÓ
+/**/
+NGƯỜI MÙ VÀ NGƯỜI QUÉT\n\nMột Người Mù, dừng lại ở một đoạn đường xấu, gặp một Người Què, và cầu xin anh ta giúp anh ta thoát khỏi khó khăn mà anh ta đã rơi vào.\n\n"Làm sao tôi có thể," Người Què trả lời, "vì tôi hầu như không thể lê mình đi được? Tôi què, và anh trông rất khỏe."\n\n"Tôi đủ khỏe," người kia nói. "Tôi có thể đi nếu tôi có thể nhìn thấy đường đi."\n\n"Ồ, vậy thì chúng ta có thể giúp đỡ lẫn nhau," Người Què nói. "Nếu anh cõng tôi trên vai, chúng ta sẽ cùng nhau tìm kiếm vận may. Tôi sẽ là đôi mắt của anh, và anh sẽ là đôi chân của tôi."\n\n"Hết lòng," Người Mù nói. "Chúng ta hãy giúp đỡ lẫn nhau." Vì vậy, anh cõng người bạn què của mình lên lưng, và họ tiếp tục cuộc hành trình an toàn và vui vẻ.
+/**/
+4 NGƯỜI MÙ VÀ NGƯỜI QUÉT
+/**/
+HAI CHIẾC BÌNH\n\nMột dòng sông cuốn trôi, trong dòng chảy của nó, hai chiếc Bình, một chiếc làm bằng Đồ gốm và chiếc kia làm bằng Đồng thau.\n\nChiếc Bình Đồng thau có khuynh hướng giao du. "Vì chúng ta phải là bạn đồng hành, chúng ta hãy thân thiện," anh ta nói. "Sự đoàn kết là sức mạnh. Mặc dù chúng ta bị cuốn đi ngoài ý muốn, nhưng than vãn cũng chẳng ích gì. Chúng ta vẫn có thể thấy nhiều điều tốt đẹp."\n\nNhưng Chiếc Bình Đất nói: "Tôi cầu xin anh đừng đến gần tôi như vậy. Tôi sợ anh cũng như sợ dòng sông; vì nếu anh chỉ chạm nhẹ vào tôi, tôi chắc chắn sẽ vỡ tan. Để thực sự giao du và thân thiện, mọi người phải có cách thức và nhu cầu chung."
+/**/
+5 HAI CHIẾC NỒI
+/**/
+CON ẾCH QUACK\n\nNgày xưa có một con Ếch tuyên bố rằng mình là một thầy thuốc uyên bác, có thể chữa lành mọi bệnh tật.\n\nNó còn đi xa hơn khi nói với các loài thú rằng chính chúng mới là người có lỗi khi chúng bị bệnh, vì nếu chúng chịu phục tùng sự chữa trị của nó, nó sẽ giúp chúng khỏe mạnh trở lại.\n\nMột con Cáo nghe thấy vậy đã hỏi: "Sao vậy, khi bạn có thể làm những điều tuyệt vời như vậy cho người khác, bạn không cố gắng sửa lại dáng đi xấu xí và làn da nhăn nheo của mình trước? Những người cho rằng giúp đỡ người khác thì trước tiên phải cải thiện bản thân mình đã."
+/**/
+6 CON ẾCH QUACK
+/**/
+CON SÓI ĐẦU LÔNG CỪU\n\nMột lần nọ, một con sói đã mặc cho mình bộ lông cừu, và bị nhầm là một con trong đàn, nó đã vào chuồng. Nó có cơ hội để chen vào với nhiều con cừu tùy thích; nhưng thời gian để làm như vậy của nó không còn nhiều nữa, vì Người chăn cừu, đã vào chuồng vào ban đêm, đã phát hiện ra nó.\n\nTrói nó vào một cái cây, để nó treo ở đó, vẫn trong bộ lông cừu, như một lời cảnh báo cho những con sói khác có thể đang rình mò xung quanh.\n\nMột số người chăn cừu tình cờ đi ngang qua đã nhìn thấy nó ở đó, và dừng lại để hỏi tại sao cừu lại được phục vụ như vậy. Khi họ đến gần hơn và thấy rằng đó không phải là cừu mà là Sói, Người chăn cừu nói, "Đây là cách tôi phục vụ một con Sói, mặc dù tôi thấy nó mặc trang phục của một con cừu."
+/**/
+7 CON SÓI ĐỘI CỪU
+/**/
+CẬU BÉ VÀ QUẢ FILBERTS\n\nMột cậu bé đã từng thò tay vào một cái bình gần đầy quả Filberts. Cậu bé đã nắm được nhiều nhất có thể trong tay mình; nhưng khi cậu cố rút nắm tay ra, cổ quả hẹp đã ngăn cản cậu làm như vậy. Không muốn mất quả của mình, nhưng không thể lấy được chúng bằng cách rút tay ra, cậu đã bật khóc và than thở cay đắng về số phận khốn khổ của mình. Một người đứng cạnh cuối cùng đã cho cậu lời khuyên khôn ngoan và hợp lý này:\n\n"Hãy hài lòng lấy một nửa số đó, cậu bé của tôi, và cậu sẽ dễ dàng lấy được chúng."
+/**/
+8 CẬU BÉ VÀ NHỮNG NGƯỜI LỚN
+/**/
+NGƯỜI KIẾM TIỀN\n\nMột người keo kiệt chôn một cục vàng dưới đất, ngày nào cũng đến đó để xem.\n\nMột ngày nọ, phát hiện cục vàng đã bị đánh cắp, anh ta bắt đầu giật tóc và than khóc rất to.\n\nMột người hàng xóm nhìn thấy anh ta đã nói: "Xin đừng buồn như vậy. Hãy chôn một hòn đá trong cùng một cái hố và tưởng tượng rằng đó là vàng. Nó cũng có ích cho anh, vì khi vàng còn ở đó, anh đã không sử dụng nó."
+/**/
+9 KẺ KIẾM TIỀN
+/**/
+NGƯỜI GÓA PHỤ VÀ NHỮNG NGƯỜI HỎI NHỎ\n\nMột người góa phụ nổi tiếng là người quản gia, vì bà rất thích dọn dẹp, được hai người hầu gái phục vụ.\n\nBản thân bà bị đánh thức trước bình minh bởi tiếng gà gáy, và bà sẽ dậy ngay lập tức và gọi những người hầu gái của mình.\n\nNhững người hầu gái, những người không thích sự ngăn nắp quá mức như vậy, và những người mệt mỏi vì công việc liên tục như vậy, đã ôm hận với con gà trống tội nghiệp vì đã đánh thức bà chủ của họ dậy sớm như vậy.\n\n"Nếu không có nó," họ nói, "bà chủ sẽ ngủ cho đến khi mặt trời lên cao. Chúng ta hãy giết con gà trống, vì không có cách nào khác để ngăn tiếng gáy lớn của nó."\n\nNhưng bà chủ, không còn nghe thấy tiếng gà trống nữa, không thể biết được thời gian, và thường đánh thức những người hầu gái của mình vào giữa đêm và bắt họ làm việc.
+/**/
+10 BÀ GÓA VÀ CÁC CÔ GÁI NHỎ
+/**/
+NGƯỜI ĐỐT THAN VÀ NGƯỜI ĐÓNG BỎ\n\nMột người đốt than tiếp tục công việc của mình tại nhà riêng. Một ngày nọ, anh gặp một người bạn là người làm nghề này và cầu xin anh ta đến sống cùng mình.\n\n"Chúng ta sẽ là những người bạn tốt hơn nhiều nếu chúng ta sống cùng nhau," anh nói, "và khi đó chi phí nội trợ của chúng ta sẽ giảm đi rất nhiều."\n\nNgười làm nghề này trả lời: "Sự sắp xếp này không phù hợp với tôi chút nào, vì bất kể tôi có cố gắng làm trắng thế nào, than của anh cũng sẽ ngay lập tức chuyển sang màu đen. Tôi e rằng chúng ta sẽ không thể trở thành bạn tốt hơn trong hoàn cảnh như vậy."
+/**/
+11 LÒ ĐỐT THAN VÀ NGƯỜI ĐẦU BẰNG
+/**/
+CON NHÍM VÀ BỌN RẮN\n\nMột ngày nọ, một con Nhím gai góc đi lang thang khắp nơi, tìm kiếm một nơi để sống.\n\nNó tìm thấy một gia đình Rắn trong một hang động ấm áp, và yêu cầu chúng cho nó chia sẻ nơi trú ẩn của chúng.\n\nBầy Rắn đồng ý, mặc dù rất không muốn, và Nhím bò vào nhà của chúng. Nhưng không lâu sau, chúng phát hiện ra rằng những chiếc lông nhọn của nó đâm vào chúng và làm chúng bị thương, và chúng ước gì mình không bao giờ cho nó vào.\n\n"Nhím thân mến, làm ơn đi đi," chúng nói; "bạn quá to và quá gai góc."\n\nNhưng Nhím rất thô lỗ, và nói: "Ồ, không. Nếu bạn không thích ở đây, bạn có thể đi đi. Tôi thấy ở đây rất thoải mái."\n\nĐã quá muộn để bầy Rắn nhận ra rằng việc giữ kẻ xâm nhập ở ngoài dễ hơn là buộc hắn phải đi khi bạn đã cho hắn vào.
+/**/
+12 CON NHÍM VÀ CON RẮN
+/**/
+BÓ GẬY\n\nMột Ông Già có nhiều Người Con, họ thường xuyên cãi nhau. Ông cố gắng làm bạn tốt với họ, nhưng không được. Khi cuộc đời sắp kết thúc, Ông Già gọi tất cả các con lại và chỉ cho họ một bó gậy buộc chặt với nhau.\n\n"Bây giờ," Người Cha nói, "hãy xem các con có thể bẻ gãy bó gậy này không."\n\nMỗi Người Con lần lượt cầm bó gậy và cố gắng hết sức để bẻ gãy nó, nhưng không được. Khi tất cả đã cố gắng và từ bỏ, Người Cha nói, "Hãy tháo bó gậy ra, và mỗi người hãy cầm một cây gậy và xem các con có thể bẻ gãy nó không." Họ có thể làm điều này rất dễ dàng. Sau đó, Người Cha nói: \n\n"Các con thấy khi những cây gậy được buộc lại với nhau thì chúng bền chắc biết bao; nhưng ngay khi chúng được tháo ra, các con đã bẻ gãy chúng một cách dễ dàng. Bây giờ, nếu các con ngừng cãi vã và đứng về phía nhau, các con sẽ giống như bó gậy - không ai có thể làm hại các con; nhưng nếu các con không giữ chặt lấy nhau, các con sẽ yếu đuối như một trong những cây gậy nhỏ đơn độc, mà bất kỳ ai cũng có thể bẻ gãy."
+/**/
+13 BÓ GẬY
+/**/
+CHÓ ĐÁNG YÊU\n\nNgày xưa có một chú Chó thường chạy đến bất kỳ ai mà nó gặp, nhưng rất khẽ đến nỗi không ai nghi ngờ nó làm hại ai cho đến khi nó bắt đầu cắn gót chân người khác.\n\nĐể cảnh báo với người lạ rằng không thể tin tưởng Chó, đồng thời để tự trừng phạt Chó, đôi khi chủ sẽ đeo một chiếc chuông vào cổ Chó và bắt nó kéo một chiếc guốc nặng, rồi buộc chặt chiếc guốc đó vào cổ bằng một sợi xích.\n\nTrong một thời gian, Chó cúi đầu; nhưng khi thấy chiếc chuông và chiếc guốc khiến mọi người chú ý đến mình, nó trở nên tự hào về chúng và chạy khắp chợ để khoe chúng và thu hút sự chú ý đến mình. Thậm chí nó còn đi xa đến mức tự cho mình là sang chảnh với những con chó khác, những con không có dấu hiệu phân biệt như vậy.\n\nMột con chó săn già nhìn thấy nó, nói: "Tại sao mày lại làm ra vẻ mình như vậy, như thể cái chuông và cái guốc của mày là dấu hiệu của công trạng? Chúng thực sự khiến mày được chú ý; nhưng khi hiểu được ý nghĩa của chúng, chúng là dấu hiệu của sự ô nhục—một lời nhắc nhở rằng mày là một con chó vô lễ. Một chuyện là nổi tiếng khi đức tính của chúng ta tạo cơ hội cho điều đó; một chuyện khác là trở nên khét tiếng vì những lỗi lầm của chúng ta."
+/**/
+14 CON CHÓ TINH TỎA
+/**/
+CON CHÓ VÀ CON SÒ\n\nMột con chó, nhìn thấy một con SÒ, tưởng đó là một quả trứng và nuốt nó. Ngay sau đó, chịu đựng nỗi đau đớn tột cùng, nó nói, "Chính sự vội vã tham lam của tôi đã mang đến cho tôi sự đau khổ này."
+/**/
+15 CON CHÓ VÀ CON SÒ
+/**/
+CON CÁO VÀ CON BÁO\n\nCáo và con Báo đã từng tranh cãi xem ai đẹp hơn. Con Báo lần lượt phô bày những đốm khác nhau trên da mình. Con Cáo, thậm chí còn tự hào về trí thông minh của mình hơn là về con người, cuối cùng đã ngắt lời con Báo bằng cách nói: "Nhưng khi tất cả đã nói, tôi đẹp hơn biết bao, người được trang hoàng không chỉ về cơ thể mà còn về tâm trí. Con người phải có giá trị hơn bộ lông của nó."
+/**/
+16 CON CÁO VÀ CON BÁO
+/**/
+CHÓ VÀ DA\n\nMột số Chó, đói lả vì đói, nhìn thấy da bò ngâm trong một con sông, gần một xưởng thuộc da, và nghĩ rằng chúng có thể bị ăn thịt. Không thể với tới chúng, chúng bắt đầu làm việc để uống cạn dòng sông trước, nhưng đã tự làm mình bị say vì uống rất lâu trước khi chúng tới được da bò.
+/**/
+17 CON CHÓ VÀ DA
+/**/
+NGƯỜI TỒN GỖ VÀ NHỮNG CÂY CỐI\n\nMột Người TỒN GỖ đi vào một khu rừng, và làm đơn thỉnh cầu Cây cối cung cấp cho anh ta một cái cán rìu.\n\nCây cối, được tôn trọng bởi sự lịch sự của anh ta, đã chấp thuận yêu cầu của anh ta, và tổ chức một cuộc tham vấn để quyết định xem nên tặng anh ta cây nào.\n\nKhông có tiếng nói phản đối, họ đã chọn cây Tần bì, có vẻ như cây này không được các Cây ưa chuộng. Một số người trong số họ đủ can đảm để nói rằng vận rủi đã đi cùng cây Tần bì, và rằng trong thâm tâm họ không có nghĩa vụ phải thông cảm với những người đốn củi.\n\nNgười TỒN GỖ chặt cây, và lắp cán vào rìu của mình; rồi khiến cho Cây cối kinh hoàng, bắt đầu hành động và bằng những nhát chém mạnh mẽ, nhanh chóng đốn hạ tất cả những gã khổng lồ cao quý nhất của khu rừng.\n\nThan thở quá muộn về số phận của những người bạn đồng hành của mình, một cây Sồi già đã nói với một cây Tuyết tùng bên cạnh:\n\n"Bước đầu tiên đã khiến tất cả chúng ta mất tất cả. Nếu chúng ta không từ bỏ quyền lợi của cây Tần bì một cách dễ dàng như vậy, chúng ta có thể đã tồn tại trong nhiều thế kỷ."
+/**/
+18 NGƯỜI TỪ GỖ VÀ NHỮNG CÂY CỎ

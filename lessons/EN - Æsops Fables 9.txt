@@ -1,0 +1,59 @@
+THE HORSE AND THE GROOM\n\nA Groom, who used to steal a Horse's corn and sell it, was yet very busy all the day long in grooming and wisping him. "If you really wish me," said the Horse, "to look sleek and fine, give me less currying and more corn."
+/**/
+1 THE HORSE AND THE GROOM
+/**/
+THE TRUMPETER TAKEN PRISONER\n\nA Trumpeter who had been taken prisoner in a battle begged hard for his life. "Spare me, I entreat you," said he; "put me not to death without cause. I have killed no one, nor do I carry arms, but only this trumpet."\n\n"For that very reason," said they who held him captive, "you shall the more surely die; for though without the spirit to fight yourself, you stir up others to violence and bloodshed."\n\nHe who incites to strife is worse than he who takes part in it.
+/**/
+2 THE TRUMPETER TAKEN PRISONER
+/**/
+THE BOASTING TRAVELER\n\nA man who had traveled in foreign parts bragged, on his return home, of the great feats he had performed in different places. In Rhodes, for instance, he had taken so extraordinary a leap that no man could approach it; and, he said, he had witnesses there to prove that it was so.\n\n"It is quite possible," said one who heard him boasting of it, "but just suppose this to be Rhodes, and try the leap again."
+/**/
+3 THE BOASTING TRAVELER
+/**/
+THE HEDGE AND THE VINEYARD\n\nA foolish young Heir, who had come into possession of his wise father's estate, broke up all the Hedges about his Vineyard because they bore no grapes. The throwing down of these fences laid his grounds open to man and beast, and his vines were presently destroyed. The simple fellow learned, when it was too late, that it was quite as necessary to protect his Vineyard as to possess it.
+/**/
+4 THE HEDGE AND THE VINEYARD
+/**/
+THE MOUSE AND THE WEASEL\n\nA little starveling Mouse had made his way with some difficulty into a basket of corn, where, finding the entertainment much to his liking, he stuffed and crammed himself to such an extent that when he was ready to get out again, he found the hole by which he had entered too small to allow his puffed-out body to pass through. A Weasel, who was drawn to the spot by his cries, thus counseled him: "Stay where you are, my friend, and fast till you are thin; for you will never come out till you reduce yourself to the same condition as when you went in."
+/**/
+5 THE MOUSE AND THE WEASEL
+/**/
+THE WOLF AND THE SHEEP\n\nA Wolf, that had been bitten by a dog and was unable to move, begged a Sheep that passed by to take pity on his sad case and fetch him some water from a stream. "If you will bring me a drink," said he, "I will find meat myself."\n\n"Yes," said the Sheep, "I make no doubt of it; for if I come near enough to give you the drink, you will make mincemeat of _me_."
+/**/
+6 THE WOLF AND THE SHEEP
+/**/
+A WIDOW AND HER SHEEP\n\nA certain widow, who had only a single Sheep and wished to make the most of his wool, sheared him so closely as to cut his skin as well as his fleece. The Sheep, smarting under this treatment, cried out: "Why do you torture me thus? It is no gain to yourself. My blood will not add to the weight of the wool. If you are after flesh send for the Butcher, who will end my misery; but if it is only wool that you want, send for the Shearer, who will clip my fleece without drawing my blood."
+/**/
+7 A WIDOW AND HER SHEEP
+/**/
+THE MAN AND THE LION\n\nA Man and a Lion were once journeying together and came at length to high words as to which was the braver and stronger creature of the two. As the dispute waxed warmer they happened to pass, on the roadside, the statue of a man strangling a lion. "See there," said the Man. "What more proof can you have of our undeniable superiority than that?"\n\n"That," said the Lion, "is a man's version of the story; let us be the sculptors, and for one lion under the feet of a man, you shall have twenty men under the paws of lions."
+/**/
+8 THE MAN AND THE LION
+/**/
+THE LIONESS\n\nA great stir was once made as to which of the Beasts could boast of the largest family. They came in turn to the Lioness. "And how many," was asked, "do you have at a birth?"\n\n"One," she replied; "but that one is a Lion!"\n\nQuality is before quantity.
+/**/
+9 THE LIONESS
+/**/
+THE BOY WHO STOLE APPLES\n\nAn Old Man once found a rude Boy in his Apple Tree and sternly ordered him to come down. The young rogue answered that he would not.\n\n"Then I will fetch you down," said the Old Man. So he threw twigs and bundles of grass up at him, but this only made the young scapegrace laugh.\n\n"Very well," said the Old Man. "If neither words nor grass will bring you down, I will try what virtue there is in stones." With that he pelted the Boy heartily with stones, which soon brought him down from the tree to beg the Old Man's pardon.
+/**/
+10 THE BOY WHO STOLE APPLES
+/**/
+THE GOOSE WITH THE GOLDEN EGGS\n\nA certain man had the good fortune to possess a Goose which laid him a Golden Egg each day of the year. For a while the man rejoiced in his daily gain, but becoming impatient with so slow an income, he killed the Goose, to get all at once the gold which he thought was inside her. When he had laid her open, he found that she was exactly like all other geese.\n\nWanting more, he lost all.
+/**/
+11 THE GOOSE WITH THE GOLDEN EGGS
+/**/
+THE OLD MAN AND DEATH\n\nAn Old Laborer, bent with age and toil, was gathering brush in a forest. Growing tired and hopeless, he threw down his bundle and cried out: "I can bear this no longer! If only Death would come and relieve me!"\n\nAs he spoke Death came and asked him what it was that he wanted. "Pray, good sir," replied the Man, "do me but the favor to lift this bundle of sticks to my back."
+/**/
+12 THE OLD MAN AND DEATH
+/**/
+A FATHER AND HIS TWO DAUGHTERS\n\nA Man who had two Daughters married one to a Gardener, the other to a Potter. Going to visit at the Gardener's, he asked his Daughter how it fared with her. "Excellently well," said she; "we have all that we want if only we may have a heavy rain to water our plants."\n\nGoing on to the Potter's, he asked his other Daughter how matters went with her. "There is nothing that we want but that this fine weather and hot sun may continue, so that our tiles will bake well."\n\n"Alas," said the Father, "if you wish for fine weather, and your sister for rain, which shall I myself pray for?"
+/**/
+13 A FATHER AND HIS TWO DAUGHTERS
+/**/
+THE SICK LION AND THE FOX\n\nA Lion who was too old and feeble to hunt for prey saw that he must get it, if at all, by cunning. He crept into a corner of his den and feigned sickness. All the animals that came by went in to take a look at him, and, as they came, he sprang upon them and ate them up. Now, when this had happened to a good many, the Fox, who had guessed the trick, came by. From a safe distance he called to the Lion, asking how he did. The Lion said he was very sick and asked the Fox to come in and see him. "So I would, gladly," replied the Fox, "but I notice that all the footprints point into the den, and there are none pointing out."
+/**/
+14 THE SICK LION AND THE FOX
+/**/
+THE MOUNTAIN IN LABOR\n\nIn days of old, a mighty rumbling was heard in a Mountain. It was said to be in Labor, and multitudes of people flocked together, from near and from far, to see what the great Mountain would produce. After long expectation and wise conjecturing from the bystanders, out popped—a mouse.\n\nA magnificent promise, but a paltry performance.
+/**/
+15 THE MOUNTAIN IN LABOR

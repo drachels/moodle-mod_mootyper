@@ -1,0 +1,59 @@
+THE TWO FROGS\n\nOnce there were two Frogs who were dear friends.\n\nOne lived in a deep pond in the woods, where the trees hung over the water, and where no one came to disturb him.\n\nThe other lived in a small pool. This was not a good place for a Frog, or any one else, to live in, for the country road passed through the pool, and all the horses and wagons had to go that way, so that it was not quiet like the pond, and the horses made the water muddy and foul.\n\nOne day the Frog from the pond said to the other, "Do come and live with me; I have plenty of food and water, and nothing to disturb me; and it is so pleasant in my pond. Now here there is very little food, and not much water, and the road passes through your pool, so that you must always be afraid of passers-by."\n\n"Thank you," said the other Frog; "you are very kind, but I am quite content here. There is water enough; those who pass never trouble me; and as to food, I had a good dinner day before yesterday. I am used to this place, you know, and do not like change. But come and see me as often as you can."\n\nThe next time the Frog from the pond came to visit his friend, he could not find him.\n\n"Too late!" sang a Bird, who lived in a tree that overhung the pool.\n\n"What do you mean?" said the Frog.\n\n"Dead and gone!" said the Bird. "Run over by a wagon and killed, two days ago, and a big Hawk came and carried him off."\n\n"Alas! if he had only taken my advice, he might have been well and happy now," said the Frog, as he turned sadly towards home; "but he would have his way, and I have lost my friend."
+/**/
+1 THE TWO FROGS
+/**/
+THE LION AND THE MOUSE\n\nIt once happened that a hungry Lion woke to find a Mouse just under his paw. He caught the tiny creature, and was about to make a mouthful of him, when the little fellow looked up, and began to beg for his life.\n\nIn most piteous tones the Mouse said: "Do not eat me. I meant no harm coming so near you. If you would only spare my life now, O Lion, I would be sure to repay you!"\n\nThe Lion laughed scornfully at this, but it amused him so much that he lifted his paw and let his brave little prisoner go free.\n\nIt befell the great Lion, not long afterward, to be in as evil a case as had been the helpless Mouse. And it came about that his life was to be saved by the keeping of the promise he had ridiculed.\n\nHe was caught by some hunters, who bound him with a strong rope, while they went away to find means for killing him.\n\nHearing his loud groans, the Mouse came promptly to his rescue, and gnawed the great rope till the royal captive could set himself free.\n\n"You laughed," the little Mouse said, "at the idea of my being able to be of service to you. You little thought I should repay you. But you see it has come to pass that you are as grateful to me as I was once to you. The weak have their place in the world as truly as the strong."
+/**/
+2 THE LION AND THE MOUSE
+/**/
+THE MOUSE, THE CAT, AND THE COCK\n\nA young Mouse, that had not seen much of the world, came home one day and said: "O mother! I have had such a fright! I saw a great creature strutting about on two legs. I wonder what it was! On his head was a red cap. His eyes were fierce and stared at me, and he had a sharp mouth.\n\n"All at once he stretched his long neck, and opened his mouth so wide, and roared so loud, that I thought he was going to eat me up, and I ran home as fast as I could. I was sorry that I met him, for I had just seen a lovely animal, greater even than he, and would have made friends with her. She had soft fur like ours, only it was gray and white. Her eyes were mild and sleepy, and she looked at me very gently and waved her long tail from side to side. I thought she wished to speak to me, and I would have gone near her, but that dreadful thing began to roar, and I ran away."\n\n"My dear child," said the mother, "you did well to run away. The fierce thing you speak of would have done you no harm. It was a harmless Cock. But that soft, pretty thing was the Cat, and she would have eaten you up in a minute, for she is the worst enemy you have in the whole world. Appearances are not always to be trusted."
+/**/
+3 THE MOUSE, THE CAT, AND THE COCK
+/**/
+THE AX AND THE TREES\n\nOnce upon a time a man came to a forest to ask the Trees if they would give him some wood to make a handle for his Ax.\n\nThe Trees thought this was very little to ask of them, and they gave him a good piece of hard wood. But as soon as the man had fitted the handle to his Ax, he went to work to chop down all the best Trees in the forest.\n\nAs they fell groaning and crashing to the ground, they said mournfully one to another, "Our kindness was misplaced. We suffer for our own foolishness."
+/**/
+4 THE AX AND THE TREES
+/**/
+THE JACKDAW AND THE SHEEP\n\nA Jackdaw sat chattering upon the back of a Sheep.\n\n"Peace, I pray you, noisy bird," said the Sheep. "You are wearing my life out If I were a dog, you would not think of serving me so."\n\n"That is true," replied the Jackdaw; "you are right. I never meddle with the surly and revengeful; but I love to plague gentle, helpless creatures like you, that can not do me any harm in return."\n\n"I wonder if all cowards are not like the Jackdaw," mused the Sheep, as it went on contentedly browsing on the hillside.
+/**/
+5 THE JACKDAW AND THE SHEEP
+/**/
+THE CAT AND THE COCK\n\nA hungry Cat, who had tried in vain to find a Mouse for her supper, at last caught a young Cock.\n\n"You are a noisy creature," she said to him, "and have lived long enough. You disturb every one in the house by your loud crowing in the morning."\n\n"You are mistaken," answered the Cock; "I disturb no one. I crow to wake the family. They would not know when to get up but for me."\n\n"Never mind," said the Cat; "don't trouble yourself to make excuses; I have had no breakfast and no dinner; I shall eat you for my supper."
+/**/
+6 THE CAT AND THE COCK
+/**/
+THE WOLF AND THE GOAT\n\nA Wolf saw a Goat feeding at the top of a steep precipice, where he could not reach her.\n\n"My dear friend," said the Wolf, "be careful! I am afraid you will fall and break your neck. Do come down to the meadow, where the grass is fresh and green."\n\n"Are you very hungry?" said the Goat. "And is it your dinner time? And would you like to eat me? I think I will not go down to the meadow to-day, thank you."\n\nAnd she capered contentedly about on the edge of the rock, as safe from falling as she was from the greedy Wolf with his false care for her.
+/**/
+7 THE WOLF AND THE GOAT
+/**/
+THE HEN AND THE SWALLOW\n\nA Hen who had no nest of her own found some eggs, and, in the kindness of her heart, thought she would take care of them, and keep them warm.\n\nBut they were the eggs of a viper; and by and by the little snakes began to come out of the shell.\n\nA Swallow, who was passing, stopped to look at them.\n\n"What a foolish creature you were, to hatch those eggs!" said the Swallow. "Don't you know that as soon as the little snakes grow big enough, they will bite some one—probably _you_ first of all?"\n\n"Then," said the Hen, as she stood on one leg and looked at the ugly little snakes, first with one eye and then with the other, "you think I have done more harm than good?"\n\n"I certainly do," said the Swallow, as she flew away. "Good judgment is better than thoughtless kindness."
+/**/
+8 THE HEN AND THE SWALLOW
+/**/
+STONE BROTH\n\nOne very stormy day a Poor Man came to a rich man's house to beg.\n\n"Away with you!" said the servants; "do not come here troubling us."\n\nThen said the Man, "Only let me come in and dry my clothes at your fire." This, the servants thought, would not cost them anything; so they let him come in.\n\nThe Poor Man then asked the cook to let him have a pan, so that he could make some stone broth.\n\n"Stone broth!" said the cook. "I should like to see how you can make broth out of a stone"; so she gave him a pan. The Man filled it with water from the pump, and then put into it a stone from the road. "But you must have some salt," said the cook.\n\n"Do you think so?" courteously replied the stranger. She gave him the salt, and before long she added some peas, some mint, and thyme. At last she brought him all the scraps of meat she could find, so that the Poor Man's broth made him a good dinner.\n\n"You see," said the Man, "that if you only try long enough, and are cheerful, making the best of what you have, you may at last get what you want."
+/**/
+9 STONE BROTH
+/**/
+THE MULE AND THE GRASSHOPPERS\n\nA Mule, hearing some Grasshoppers chirping, was much pleased with the sound, and wished that he could make such sweet music.\n\n"What sort of food do you eat," said he to the Grasshoppers, "that your voices are so charming?"\n\nThe Grasshoppers replied, "We live upon dew."\n\nThe Mule then decided that he too would live upon dew. And in a short time he died of hunger, just from trying to do what he saw others doing, without first learning their reason for it.
+/**/
+10 THE MULE AND THE GRASSHOPPERS
+/**/
+THE GNAT AND THE BULL\n\nA Gnat, who had flown about until he was tired, sat down to rest on the horn of a Bull.\n\nAfter sitting there a long time, he thought he would go home. So he made a loud buzzing noise and said to the Bull, "Would you like to have me stay longer, or shall I go now?"\n\n"Just as you please," said the Bull. "I did not know when you came, and I am sure I shall not miss you when you go away."\n\n"What an amount of self-importance for such a tiny creature," thought the sleepy Bull.
+/**/
+11 THE GNAT AND THE BULL
+/**/
+A FOX AND A CRAB\n\nA hungry Fox surprised a Crab, who had left the sea and was lying upon the beach.\n\n"What good luck, to find a breakfast so easily," said the Fox, as he pounced upon him.\n\n"Well," said the Crab, when he found that he was to be eaten, "this comes of going where I have no business; I should have stayed in the water, where I belonged."
+/**/
+12 A FOX AND A CRAB
+/**/
+THE DONKEY AND THE FROGS\n\nA Donkey was one day walking through a pond, with a load of wood on his back, when his foot slipped and he fell.\n\n"Help, help!" cried the poor Donkey, as he struggled and kicked in the water. But his load was so heavy that he could not rise, and he groaned aloud.\n\nThe Frogs heard his groans but showed no pity. "What a foolish fellow," said they, "to make such a fuss about a little fall into the water. What would you say if you had to live here always, as we do?"
+/**/
+13 THE DONKEY AND THE FROGS
+/**/
+THE NURSE AND THE WOLF\n\nA Wolf, prowling about to find something for supper, heard a Child crying in a house. Listening, he heard the Nurse say, "Stop crying this minute, or I will throw you out of doors to the Wolf."\n\nThe Wolf sat down near the door, thinking within himself, "I shall soon have a good supper."\n\nThe Baby cried and cried, till at last it went to sleep; and then the Wolf heard the Nurse say: "There, that's a good Baby. If the naughty old Wolf comes for my darling, we'll beat him, so we will."\n\nThe Wolf trotted sadly home. On his way he met the Fox.\n\n"What makes you look so sour and so forlorn, my friend?" said the Fox.\n\n"Don't speak to me!" growled the Wolf. "I have lost my supper just because I believed what a Nurse said to a Baby."
+/**/
+14 THE NURSE AND THE WOLF
+/**/
+THE CAT AND THE MARTINS\n\nA Cat, hearing that some Birds who lived in a martin box near by were ill, put on his spectacles and his overcoat, and made himself look as much as possible like a doctor, and went and knocked at their door.\n\n"I hear that you are all sick," said he, "and have come to call on you. Let me in, and I will give you some medicine and cure you."\n\n"No, thank you," said the Birds, who saw his whiskers and knew he was their enemy the Cat; "we are well enough—much better than if we should open our door and let you in."
+/**/
+15 THE CAT AND THE MARTINS

@@ -1,0 +1,59 @@
+THE MILKMAID AND HER PAIL OF MILK\n\nDolly the Milkmaid having been a good girl and careful in her work, her mistress gave her a pail of new milk for herself.\n With the pail upon her head, Dolly tripped gaily along on her way to the town, whither she was going to sell her milk.\n\n"For this milk," said Dolly, "I shall get a shilling, and with it I will buy twenty of the eggs laid by our neighbor's fine fowls. The mistress will surely lend me a hen, and, allowing for all mishaps, I shall raise a good dozen of chicks. They will be well grown before the next fair-time comes around, and it is then that chickens bring the highest price. I shall be able to sell mine for a guinea.\n\n"Then I shall buy that jacket that I saw in the village the other day, and a hat and ribbons too. And when I go to the fair, how smart I shall be!\n\n"Robin will be there, and will come up and offer to be friends again. But I won't make up too easily; and when he wants me for a partner in the dance, I shall just toss up my head and—"\n\nHere Dolly gave her head the least bit of a toss, when down came the pail, and all the milk was spilled upon the ground.\n\nPoor Dolly! it was her good-by to eggs, chickens, jacket, hat, ribbons, and all.
+/**/
+1 THE MILKMAID AND HER PAIL OF MILK
+/**/
+THE CAT AND THE FOX\n\nThe Cat and the Fox were once talking together in the middle of the forest.\n\n"I do not care what happens," said the Fox, "for I have a thousand tricks, any one of which would get me out of difficulty. But pray, Mrs. Puss," he added, "what would you do if there should be an invasion?"\n\n"I have but one course," Puss replied. "If that would not serve me, I should be undone."\n\n"I am sorry for you," said the Fox. "I would gladly teach you one or two of my tricks, but it is not wise to trust another. We must each take care for himself."\n\nThese words were hardly spoken, when a pack of hounds came upon them in full cry.\n\nThe Cat, by means of her one well-proved safeguard, ran up a tree and sat serenely among the branches. "This is my way," she said to the Fox. "What is yours to be?"\n\nThe Fox, with all his thousand tricks, was not able to get out of sight, and fell a prey to the dogs.
+/**/
+2 THE CAT AND THE FOX
+/**/
+THE MONKEY AND THE CAT\n\nA Monkey and a Cat lived in the same family, and it was hard to tell which was the greater thief.\n\nOne day, as they were roaming together, they spied some chestnuts roasting in the ashes of a fire.\n\n"Come," said the cunning Monkey, "we shall not go dinnerless to-day. Your claws are better than mine for the purpose; pull the chestnuts out of the ashes and you shall have half."\n\nPuss pulled them out, burning her paws very much in doing so. When she had stolen every one, she turned to the Monkey for her share of the booty; but, to her chagrin, she could find no chestnuts, for he had eaten them all.
+/**/
+3 THE MONKEY AND THE CAT
+/**/
+THE WOLF AND THE SHEPHERD\n\nFor a long time the Wolf had followed the Sheep without attempting to injure one of them.\n\nThe Shepherd stood on his guard against him for a while, and kept strict watch that he did not come too near. But as day after day passed and the Wolf showed no disposition to injure any of the flock, he allowed him to approach nearer, till at last he came among the Sheep, and seemed to watch over them like a dog.\n\n"He is really quite a help to me," said the Shepherd to himself; "and I have never seen him make the slightest effort to seize a sheep or a lamb."\n\nSo, having occasion to go to town one day, he left his flock in the care of the Wolf, whom he regarded as a guardian over them.\n\nBut no sooner was the man gone, than the Wolf, seeing his opportunity, fell upon the Sheep and destroyed the greater part of them.\n\n"I have been rightly served," said the Shepherd, on his return. "Why did I not know better than to trust my Sheep to their worst enemy? Soon or late, nature will show itself."
+/**/
+4 THE WOLF AND THE SHEPHERD
+/**/
+THE WOLF, THE FOX, AND THE APE\n\nA Wolf accused of theft a Fox, who utterly denied the charge, whereupon an Ape undertook to adjudge the matter in question.\n\nWhen each had fully stated his case, the Ape pronounced this sentence:\n\n"I am fully satisfied that you, Wolf, never lost what you claim." Then turning to the Fox, he said, "And I believe you to have done that which you so stoutly deny."
+/**/
+5 THE WOLF, THE FOX, AND THE APE
+/**/
+THE BLIND MAN AND THE WHELP\n\nA blind Man was accustomed to distinguish different animals by touching them with his hands.\n\nThe whelp of a wolf was brought him, with the request that he should feel it and tell what it was.\n\nBeing in doubt, he said, "I do not quite know whether it is the cub of a fox or the whelp of a wolf; but this I know full well, that it would not be safe to admit it to the sheepfold."
+/**/
+6 THE BLIND MAN AND THE WHELP
+/**/
+THE SPENDTHRIFT AND THE SWALLOW\n\nA young man who had been a great spendthrift, and had run through all the money he had inherited, and even sold all his outer clothing except his cloak, saw a Swallow skimming over the meadows in the early springtime and twittering gayly. Believing that summer was really come, he sold his cloak also.\n\nThe next day there happened to be a severe frost, and, shivering himself, he found the Swallow lying frozen and stiff upon the ground.\n\n"Unhappy bird," he said, "had you not come before your time, I should not now be so wretched, and you might have escaped your fate. A single swallow does not make a summer."
+/**/
+7 THE SPENDTHRIFT AND THE SWALLOW
+/**/
+THE BOAR AND THE FOX\n\nA Boar stood whetting his tusks against a tree.\n\n"What do you mean," asked a Fox, "by such warlike preparation? There is no enemy in sight."\n\n"When the enemy is in sight," said the Boar, "it is time to think of something else."
+/**/
+8 THE BOAR AND THE FOX
+/**/
+HERCULES AND THE WAGONER\n\nAs a Wagoner drove his wagon through a miry lane, the wheels stuck fast in the clay, so that the horses could proceed no further.\n\nThe Man, without making the least effort to remedy the matter, fell upon his knees and began to call upon Hercules to come and help him out of his trouble.\n\n"Lazy fellow," said Hercules, "lay your own shoulder to the wheel. Stir yourself and do what you can. Then, if you want aid from the gods, you shall have it. Remember the proverb, Heaven helps those who help themselves."
+/**/
+9 HERCULES AND THE WAGONER
+/**/
+THE MULES AND THE ROBBERS\n\nTwo Mules, laden with packs, were trudging along the highway. One carried panniers filled with money, the other sacks of grain.\n\nThe Mule that carried the treasure walked with head erect and stately step, jingling the bells about his neck as he went.\n\nHis companion followed at a quiet, easy pace.\n\nSuddenly a band of Robbers sprang upon them, attracted by the strong, proud step and the jingling bells. The Mule that carried the gold made so great an ado that the Robbers seized his pack, wounding him with their weapons, and, hearing footsteps, fled.\n\n"I am glad," said the other, "that I was thought of so little consequence, for I have lost nothing, nor am I hurt with any wound."
+/**/
+10 THE MULES AND THE ROBBERS
+/**/
+THE SWALLOW AND THE CROW\n\nThe Swallow and the Crow were once contending about their plumage. The Crow finally put an end to the dispute by saying, "Your feathers are well enough now while it is warm, but mine protect me against the winter."
+/**/
+11 THE SWALLOW AND THE CROW
+/**/
+JUPITER AND THE BEE\n\nA Bee made Jupiter a present of a pot of honey, which was so kindly taken that he bade her ask what she would in exchange.\n\nThe Bee, who was nursing a private spite for the loss of some of her winter's store, desired of Jupiter that wherever she should set her sting it might be mortal.\n\nJupiter was loath to leave mankind at the mercy of a little spiteful insect, and was annoyed at the ill nature shown in her wish. He said, therefore, that while, for his promise's sake, he would give her the power to harm, she must be careful how she used the power, for where she planted her sting, she would leave it, and would thereby risk her\nown life.\n\nIll will often does greater harm to the one who acts from it than to the one on whom it falls.
+/**/
+12 JUPITER AND THE BEE
+/**/
+THE TWO TRAVELERS\n\nAs two men were traveling through a wood, one of them took up an ax which he saw lying upon the ground. "Look here," said he to his companion; "I have found an ax."\n\n"Don't say _I_ have found it," said the other, "but _we_. As we are companions, we ought to share it between us."\n\n"No," said the first, "I found the ax. It is mine."\n\nThey had not gone far when they heard the owner of the ax pursuing them, and calling out to them in great passion.\n\n"We are in for it now," said he who had the ax.\n\n"Nay," said the other; "say _I_ am in for it, not _we_. When you thought you had a prize, you would not let me share it with you, and now you cannot expect me to share in the danger."
+/**/
+13 THE TWO TRAVELERS
+/**/
+THE KID AND THE WOLF\n\nA Kid, mounted on a high rock where she felt safe, bestowed all manner of abuse upon a Wolf on the ground below.\n\nThe Wolf replied: "Do not think, silly little creature, that you can annoy me. This ill language that you are using I regard as coming, not from you, but from the safe place on which you stand. You would be in a different mood if you were down here by my side."
+/**/
+14 THE KID AND THE WOLF
+/**/
+THE GOURD AND THE PINE\n\nA Gourd was once planted close beside a large and noble Pine Tree. The season was kindly, and the Gourd shot itself up in a short time, climbing by the boughs and twining about them, till it covered and overtopped the Tree itself.\n\nThe leaves were so large and the flowers and fruit so fair that the Gourd, comparing them with the slender needles of the Pine, had the assurance to think itself of greater value in the comparison.\n\n"Why," said the Gourd, "you have been more years in growing to this stature than I have been days."\n\n"That is true," said the Pine; "but after the many winters and summers that I have endured, the many blasting colds and parching heats, you see me the very same that I was long years ago. Nothing has overcome me. But when your race is put to the proof, the first blight or frost is sure to bring down that pride of yours. In an hour you are stripped of all your glory."
+/**/
+15 THE GOURD AND THE PINE

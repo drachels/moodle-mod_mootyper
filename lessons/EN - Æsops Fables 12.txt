@@ -1,0 +1,27 @@
+THE FISHERMAN AND THE LITTLE FISH\n\nAfter toiling all day and catching nothing, a Fisherman pulled up a little Fish. The Fish besought him to let him go, for he was small now, but by and by he would grow to be a big fish and so be worth catching. But the Fisherman answered, "No, no, I have you now, it would be foolish for me to let you go; I might not get you when you had grown bigger."\n\nA bird in the hand is worth two in the bush.
+/**/
+1 THE FISHERMAN AND THE LITTLE FISH
+/**/
+THE FOX AND THE CROW\n\nA Crow snatched a piece of cheese out of a window and flew with it up into a tree, to eat it at leisure. A Fox passing by chanced to look up and saw her. He coveted the prize and thus made his approaches to secure it. "O Crow," said he, "how beautiful are thy wings and how bright are thine eyes! how graceful thy neck! What a pity that such a bird should want only a voice!" Yielding to the flattery, the Crow opened her mouth to surprise the Fox with her caw, when down dropped the cheese, which the Fox, snapping up, ate as he walked away, remarking that whatever he had said of her voice he did not say of her\nbrains.
+/**/
+2 THE FOX AND THE CROW
+/**/
+THE PARTRIDGE AND THE FOWLER\n\nA Partridge, having been taken in the net of a Fowler, cried out piteously, "Spare me, good Master Fowler, and I promise you, on my word, that I will decoy other partridges into your net."\n\n"No," replied the man, "whatever I might have done, I am determined now not to let you go; for no death is too bad for one who is ready to betray his friends."
+/**/
+3 THE PARTRIDGE AND THE FOWLER
+/**/
+THE THIRSTY PIGEON\n\nA Pigeon, pressed by thirst and seeing a glass of water painted on a sign, supposed it to be real. Dashing down at it with all her might, she struck against the hard board, and breaking her wing, she fell helpless to the ground and was soon captured by one who passed by.\n\nGreat haste is not always good speed.
+/**/
+4 THE THIRSTY PIGEON
+/**/
+THE THREE TRADESMEN\n\nThere was a certain city in danger of being besieged, and a council was called accordingly, to consider the best means of fortifying it. A Bricklayer gave his judgment that no material was so good for the purpose as brick. A Carpenter begged leave to suggest that timber would be preferable, upon which a Currier started up and said, "Sirs, when all has been said that can be said, there is nothing in the world like leather."
+/**/
+5 THE THREE TRADESMEN
+/**/
+THE HARES AND THE FROGS\n\nIn desparation over the hard times they had on account of their many enemies, the Hares came together and, after rehearsing their situation, came to the sad conclusion that nothing was left to them but to drown themselves as the most miserable and unfortunate of creatures. They repaired to a pond to throw themselves off a rock into the water and thus make an end of their troubles. A shoal of frogs were sitting around the edge of the pond, and at the approach of the Hares they were startled, and with the greatest confusion jumped into the water. Whereupon the foremost of the Hares said to his fellows: "Nay, then, friends, our case may not be as desperate as we thought. Here are other creatures more faint-hearted than are we."
+/**/
+6 THE HARES AND THE FROGS
+/**/
+THE EAGLE AND THE FOX\n\nAn Eagle and a Fox had lived together as good neighbors, the former on the summit of a high tree, the latter in a hole at the foot of it. One day when the Fox was abroad, the Eagle swooped down and snatched the Fox's cub and carried it up to her nest, thinking that her high dwelling made her secure from the Fox's revenge. The Fox returning upbraided the Eagle for such a breach of confidence and begged to have her young one returned to her. Finding that her entreaties availed nothing, the Fox snatched a brand from an altar fire which had been lighted hard by and proceeded to involve the whole tree in flames. The Eagle, to protect her nest and her own young ones, restored the cub to its mother, which she would not do in answer to the most earnest entreaties.
+/**/
+7 THE EAGLE AND THE FOX

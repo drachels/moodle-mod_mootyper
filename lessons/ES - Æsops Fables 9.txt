@@ -1,0 +1,59 @@
+EL CABALLO Y EL MOZO DE CABALLOS\n\nUn mozo de cuadra, que solía robar el trigo de un caballo y venderlo, estaba muy ocupado todo el día acicalándolo y cepillándolo. "Si realmente quieres que luzca elegante y esbelto", dijo el caballo, "dame menos almohadón y más trigo".
+/**/
+1 EL CABALLO Y EL CABALLERO
+/**/
+EL TROMPETISTA TOMADO PRISIONERO\n\nUn trompetista que había sido tomado prisionero en una batalla suplicaba con vehemencia por su vida. "Perdónenme, les suplico", dijo, "no me den muerte sin causa. No he matado a nadie, ni llevo armas, sino sólo esta trompeta".\n\n"Por eso mismo", dijeron los que lo tenían cautivo, "morirás con mayor seguridad; porque aunque no tengas espíritu de lucha, incitas a otros a la violencia y al derramamiento de sangre".\n\nEl que incita a la contienda es peor que el que toma parte en ella.
+/**/
+2 EL TROMPETISTA TOMADO PRISIONERO
+/**/
+El viajero fanfarrón\n\nUn hombre que había viajado por el extranjero se jactó, al regresar a casa, de las grandes hazañas que había realizado en diferentes lugares. En Rodas, por ejemplo, había dado un salto tan extraordinario que nadie podría igualarlo; y, dijo, tenía testigos allí que demostraban que era así.\n\n"Es muy posible", dijo uno que lo oyó alardear de ello, "pero supongamos que estamos en Rodas y probemos el salto otra vez".
+/**/
+3 EL VIAJERO FANÁTICO
+/**/
+EL SETO Y LA VIÑA\n\nUn joven heredero insensato, que había llegado a poseer las propiedades de su sabio padre, rompió todos los setos que rodeaban su viñedo porque no producían uvas. Al derribar estos setos, sus tierras quedaron expuestas a los hombres y a los animales, y sus viñas quedaron destruidas enseguida. El simple hombre aprendió, cuando ya era demasiado tarde, que era tan necesario proteger su viñedo como poseerlo.
+/**/
+4 EL SETO Y LA VIÑEDO
+/**/
+El ratón y la comadreja\n\nUn ratoncito hambriento había logrado llegar con cierta dificultad a un cesto de trigo, donde, encontrando la diversión muy de su agrado, se llenó y se atiborró hasta tal punto que cuando estaba listo para salir de nuevo, encontró que el agujero por el que había entrado era demasiado pequeño para permitir que su cuerpo hinchado pasara por él. Una comadreja, que fue atraída al lugar por sus gritos, le aconsejó lo siguiente: "Quédate donde estás, amigo mío, y ayuna hasta que estés delgado; porque nunca saldrás de allí hasta que te reduzcas a la misma condición en la que entraste".
+/**/
+5 EL RATÓN Y LA COMADREJA
+/**/
+EL LOBO Y LA OVEJA\n\nUn lobo, que había sido mordido por un perro y no podía moverse, le rogó a una oveja que pasaba por allí que se apiadara de su triste situación y le trajera un poco de agua de un arroyo. "Si me traes de beber", le dijo, "yo mismo buscaré comida".\n\n"Sí", dijo la oveja, "no tengo ninguna duda; porque si me acerco lo suficiente para darte de beber, me harás picadillo".
+/**/
+6 EL LOBO Y LAS OVEJAS
+/**/
+UNA VIUDA Y SUS OVEJAS\n\nUna viuda, que sólo tenía una oveja y quería aprovechar al máximo su lana, la esquilaba tan de cerca que le cortaba la piel y el vellón. La oveja, dolida por este trato, gritó: "¿Por qué me torturas así? No te sirve de nada. Mi sangre no aumentará el peso de la lana. Si buscas carne, manda a buscar al carnicero, que acabará con mi miseria; pero si sólo quieres lana, manda a buscar al esquilador, que me cortará el vellón sin sacarme sangre".
+/**/
+7 UNA VIUDA Y SUS OVEJAS
+/**/
+EL HOMBRE Y EL LEÓN\n\nUn hombre y un león viajaban juntos y finalmente llegaron a discutir sobre cuál de los dos animales era el más valiente y fuerte. Cuando la disputa se acaloró, pasaron por casualidad, al borde del camino, ante la estatua de un hombre estrangulando a un león. "Miren allí", dijo el hombre. "¿Qué mayor prueba pueden tener de nuestra innegable superioridad que esa?"\n\n"Esa", dijo el león, "es la versión de un hombre de la historia; seamos nosotros los escultores, y por un león bajo los pies de un hombre, tendrán veinte hombres bajo las garras de los leones".
+/**/
+8 EL HOMBRE Y EL LEÓN
+/**/
+LA LEONA\n\nUna vez se armó un gran revuelo sobre cuál de las Bestias podía jactarse de tener la familia más numerosa. Se dirigieron por turno a la Leona. "¿Y cuántos", le preguntaron, "tenéis en cada parto?"\n\n"Uno", respondió ella; "¡pero ése es un León!"\n\nLa calidad es antes que la cantidad.
+/**/
+9 LA LEONA
+/**/
+EL NIÑO QUE ROBA MANZANAS\n\nUn anciano encontró una vez a un muchacho rudo en su manzano y le ordenó severamente que bajara. El joven bribón le respondió que no lo haría.\n\n"Entonces te haré bajar", dijo el anciano. Así que le arrojó ramitas y manojos de hierba, pero esto sólo hizo reír al joven bribón.\n\n"Muy bien", dijo el anciano. "Si ni las palabras ni la hierba te derriban, probaré qué virtud hay en las piedras". Después de eso apedreó al muchacho con todas sus fuerzas, lo que pronto lo hizo bajar del árbol para pedir perdón al anciano.
+/**/
+10 EL NIÑO QUE ROBABA MANZANAS
+/**/
+LA OCA DE LOS HUEVOS DE ORO\n\nUn hombre tenía la buena suerte de poseer una Oca que le ponía un Huevo de Oro cada día del año. Durante un tiempo el hombre se regocijó con su ganancia diaria, pero impaciente por un ingreso tan lento, mató a la Oca, para obtener de una vez el oro que creía que estaba dentro de ella. Cuando la abrió, descubrió que era exactamente como todas las demás Ocas.\n\nQueriendo más, lo perdió todo.
+/**/
+11 EL GANSO DE LOS HUEVOS DE ORO
+/**/
+EL VIEJO Y LA MUERTE\n\nUn viejo trabajador, encorvado por la edad y el trabajo, estaba recogiendo ramas en un bosque. Cansado y desesperanzado, arrojó su bulto al suelo y gritó: "¡No puedo soportar esto más! ¡Ojalá la Muerte viniera a aliviarme!"\n\nMientras hablaba, la Muerte se acercó y le preguntó qué era lo que quería. "Por favor, buen señor", respondió el hombre, "hazme el favor de levantar este bulto de ramas y ponerlo sobre mi espalda".
+/**/
+12 EL VIEJO Y LA MUERTE
+/**/
+Un padre y sus dos hijas\n\nUn hombre que tenía dos hijas casó a una con un jardinero y a la otra con un alfarero. Al ir a visitar al jardinero, le preguntó a su hija cómo le iba todo. "Muy bien", dijo ella; "tenemos todo lo que necesitamos, siempre que llueva mucho para regar nuestras plantas".\n\nSe dirigió a la casa del alfarero y le preguntó a su otra hija cómo le iba todo. "No hay nada que necesitemos, salvo que continúe este buen tiempo y el sol abrasador, para que nuestras tejas se cocinen bien".\n\n"Ay", dijo el padre, "si tú deseas buen tiempo y tu hermana lluvia, ¿por cuál de las dos cosas debo rezar?"
+/**/
+13 UN PADRE Y SUS DOS HIJAS
+/**/
+El león enfermo y el zorro\n\nUn león demasiado viejo y débil para cazar presas se dio cuenta de que, si podía, debía conseguirlas con astucia. Se deslizó hasta un rincón de su guarida y fingió estar enfermo. Todos los animales que pasaban por allí se acercaron para echarle un vistazo y, cuando lo hicieron, se abalanzó sobre ellos y se los comió. Cuando esto le pasó a muchos, el zorro, que había adivinado el truco, se acercó. Desde una distancia segura llamó al león y le preguntó cómo estaba. El león le dijo que estaba muy enfermo y le pidió al zorro que entrara a verlo. "Lo haré con mucho gusto", respondió el zorro, "pero me doy cuenta de que todas las huellas apuntan hacia la guarida y ninguna hacia afuera".
+/**/
+14 EL LEÓN ENFERMO Y EL ZORRO
+/**/
+LA MONTAÑA EN PARTO\n\nEn la antigüedad, se oyó un poderoso estruendo en una montaña. Se decía que estaba de parto, y multitudes de personas acudieron, de cerca y de lejos, para ver lo que produciría la gran montaña. Después de una larga espera y de sabias conjeturas por parte de los presentes, apareció un ratón.\n\nUna promesa magnífica, pero un resultado insignificante.
+/**/
+15 LA MONTAÑA EN PARTO

@@ -1,0 +1,71 @@
+IL GRANCHIO E SUA MADRE\n\nDisse un vecchio Granchio a un giovane: "Perché cammini così storto, bambino? Cammina dritto!" "Madre", disse il giovane Granchio, "mostrami la strada, vuoi? Quando ti vedrò prendere la strada dritta, cercherò di seguirti."\n\nL'esempio è meglio del precetto.
+/**/
+1 IL GRANCHIO E SUA MADRE
+/**/
+LA VOLPE E L'UVA\n\nUna Volpe arrivò al tempo della vendemmia in un luogo dove l'uva matura pendeva in grappoli invitanti dal ramo di un albero. "Li prenderò", disse la Volpe. Fece molti balzi e salti, ma non riuscendo ogni volta ad assicurarsi il premio, alla fine se ne andò, borbottando: "Beh, che importa? L'uva è acerba".
+/**/
+2 LA VOLPE E L'UVA
+/**/
+IL LUPO E LA GRU\n\nUn lupo aveva un osso in gola e correva su e giù nella più grande agonia, supplicando ogni animale che incontrava di liberarlo, accennando allo stesso tempo che ci sarebbe stata una ricompensa sostanziosa. Una gru, mossa dalle sue suppliche, si avventurò con il suo lungo collo nella gola del lupo e tirò fuori l'osso. Quando lo ebbe fatto, chiese modestamente la ricompensa promessa. Al che il lupo, sogghignando e mostrando i denti, rispose: "Creatura ingrata, non ti basta aver messo la testa nella bocca di un lupo e averla tirata fuori sana e salva?"
+/**/
+3 IL LUPO E LA GRU
+/**/
+LE FORMICHE E LE CAVALLETTE\n\nUna colonia di formiche era impegnata a fondo nella cura e nella conservazione del loro cibo, che esponevano all'aria in mucchi attorno alla loro abitazione di campagna.\n\nUna cavalletta, che era sopravvissuta all'estate ed era pronta a morire di freddo e fame, si avvicinò con grande umiltà e pregò che potessero alleviare la sua necessità con un chicco di grano o di segale. Una delle formiche gli chiese come aveva trascorso il suo tempo d'estate, che non si era preso la briga di fare scorta come avevano fatto loro.\n\n"Ahimè! signori", disse, "ho trascorso il tempo allegramente e piacevolmente bevendo, cantando e ballando, e non ho mai pensato all'inverno".\n\n"Se è così", rispose la formica, "tutto quello che ho da dire è che coloro che bevono, cantano e ballano d'estate devono morire di fame d'inverno".
+/**/
+4 LE FORMICHE E LE CAVALLETTE
+/**/
+LE RANE CHE CHIEDEVANO UN RE\n\nIl Commonwealth delle Rane, una razza scontenta, stanca della libertà e amante del cambiamento, chiese a Giove di concedere loro un Re.\n\nLa divinità bonaria, per esaudire la loro richiesta con il minor danno possibile, li gettò giù da un Tronco. Lo schizzo li mandò nel più grande terrore e stupore, e all'inizio guardarono il loro nuovo monarca con grande riverenza e si mantennero a rispettosa distanza. Ma a poco a poco, percependo la sua indole amabile e pacifica, si avventurarono gradualmente ad avvicinarlo con maggiore familiarità, finché alla fine concepirono per lui il massimo disprezzo.\n\nInsoddisfatti di questo stato di cose, rinnovarono la loro richiesta a Giove e lo supplicarono di concedere loro un altro Re.\n\nNella sua ira il Tonante inviò loro una Gru, che non appena prese possesso del suo nuovo dominio cominciò a divorare i suoi sudditi, uno dopo l'altro.\n\nErano ora molto più insoddisfatti di prima. Rivolgendosi a Giove una terza volta, furono congedati con il rimprovero che il male di cui si lamentavano si era imprudentemente attirato su se stessi; e che ora non avevano altro rimedio che sottomettersi ad esso con pazienza.
+/**/
+5 LE RANE CHE CHIEDEVANO UN RE
+/**/
+L'ASINO NELLA PELLE DI LEONE\n\nUn asino, dopo aver indossato la pelle di un leone, che aveva trovato ad asciugare sul ciglio della strada, vagava per la foresta e si divertiva a spaventare tutti gli animali che incontrava. Alla fine, incontrando una volpe, cercò di spaventare anche lei; ma la volpe non appena udì il suono della sua voce esclamò: "Forse mi sarei spaventato se non ti avessi sentito ragliare".
+/**/
+6 L'ASINO NELLA PELLE DEL LEONE
+/**/
+I TOPI IN CONSIGLIO\n\nI Topi, essendo tristemente angosciati a causa del loro comune nemico il Gatto, convocarono un consiglio per escogitare un modo per liberarsi dal fastidio. Molti piani furono proposti e respinti, finché alla fine fu suggerito da un giovane Topo di appendere un campanello al collo del Gatto, così che, avendo saputo del suo arrivo, potessero scappare nelle loro tane.\n\nLa proposta fu accolta con applausi e approvata all'unanimità. Dopodiché un vecchio Topo, che era rimasto seduto in silenzio, si alzò e disse: "Va bene, ma chi suonerà il campanello al Gatto?" I Topi si guardarono l'un l'altro, ma nessuno rispose.\n\nIl vecchio Topo disse: "È facile consigliare; ciò che serve è qualcuno che agisca".
+/**/
+7 I TOPI IN CONSIGLIO
+/**/
+IL RAGAZZO E IL LUPO\n\nUn ragazzo, che usciva da solo dal suo pascolo, fu inseguito da un lupo. Con grande presenza di spirito il ragazzo si voltò e disse: "So, amico lupo, che vuoi uccidermi; ma poiché la mia vita sarà breve, che sia allegra. Suona il flauto e fammi fare un altro ballo prima che io muoia". Mentre il lupo suonava il flauto e il ragazzo ballava, alcuni cani, sentendo la musica, corsero sul posto per vedere cosa stava succedendo; e il lupo fu felice di andarsene il più velocemente possibile.
+/**/
+8 IL BAMBINO E IL LUPO
+/**/
+IL FALCO E L'USIGNOLO\n\nL'usignolo, appollaiato su una quercia, fu visto da un falco, che piombò giù e lo afferrò. L'usignolo pregò ardentemente il falco di lasciarla andare, dicendo che non era abbastanza grande per soddisfare la fame di un falco, che avrebbe dovuto trovare molti uccelli più grandi. "Vedi per caso molti uccelli grandi volare in giro?" chiese il falco. "Sarei davvero sciocco a lasciarti andare per il bene di uccelli più grandi che non sono in vista. Un boccone è meglio di niente."
+/**/
+9 IL FALCO E L'USIGNOLO
+/**/
+IL CORVO E LA BROCCA\n\nUn corvo che stava quasi morendo di sete vide una brocca con un po' d'acqua dentro. Chinandosi, trovò l'acqua così bassa che, per quanto si chinasse e si sforzasse, non riuscì a raggiungerla con il becco. Quindi cercò di rovesciare e rompere la brocca. Non era abbastanza forte per farlo. Alla fine, vedendo dei piccoli ciottoli, ne prese molti e li lasciò cadere uno per uno, e così sollevò l'acqua fino all'orlo e si spense la sete.
+/**/
+10 IL CORVO E LA BROCCA
+/**/
+LA FORMICA E LA COLOMBA\n\nAndando a una fontana per placare la sua sete, una formica cadde dentro e stava per annegare. Ma una colomba si trovava appollaiata su un albero vicino e vide il pericolo per la formica. Cogliendo una foglia, la colomba la lasciò cadere nell'acqua, così che la formica che vi era salita sopra fu trasportata in salvo a riva. Un uccellatore, poco dopo, stese la sua rete per intrappolare l'ignara colomba. La formica se ne accorse e morse il tallone dell'uccellatore. Distratto dal dolore, l'uccellatore lasciò cadere la sua rete con un rapido sussulto e la colomba, risvegliata dal senso del pericolo, volò via.\n\nUna buona azione merita l'altra.
+/**/
+11 LA FORMICA E LA COLOMBA
+/**/
+IL BUE E LA RANA\n\nUn bue, che pascolava in un prato paludoso, per caso mise piede tra un certo numero di giovani rane e le calpestò quasi tutte a morte. Una che riuscì a scappare corse dalla madre con la terribile notizia. "È stata una bestia, una bestia a quattro zampe così grande, a farlo."\n\n"Grande?" chiese la vecchia rana, e si gonfiò, "grande come questa?"\n\n"Molto più grande," disse la piccola.\n\n"Beh, era così grande?" e si gonfiò ancora di più.\n\n"Davvero, mamma, ma lo era; e se tu dovessi scoppiare non raggiungeresti mai la metà delle sue dimensioni." Irritata dal fatto che la sua bambina potesse sminuire i suoi poteri, la mamma rana fece un altro tentativo e scoppiò davvero.
+/**/
+12 IL BUE E LA RANA
+/**/
+IL PIPISTRELLO E LE DONOLE\n\nUn pipistrello, cadendo a terra, fu catturato da una donnola, che pregò di non togliergli la vita. La donnola protestò che era contro natura per una donnola lasciare andare un uccello. Al che il pipistrello insistette che non era un uccello e, per dimostrarlo, richiamò l'attenzione sulla sua testa e sulle sue orecchie da topo, il che confuse così tanto la donnola che lasciò andare il pipistrello.\n\nQualche tempo dopo, in un altro volo, il pipistrello cadde di nuovo a terra e un'altra donnola lo catturò. Quando si accorse che la donnola pensava che fosse un topo, il pipistrello affermò che aveva le ali e quindi non era un topo, e gli fu di nuovo permesso di andare libero.
+/**/
+13 IL PIPISTRELLO E LE DONOLE
+/**/
+LA VOLPE E LA CAPRA\n\nUna volpe caduta in un pozzo profondo stava cercando di capire come uscirne. Alla fine una capra arrivò sul posto e, vedendo Reynard, chiese se l'acqua era buona e se ce n'era in abbondanza.\n\nNascondendo il vero pericolo nel suo caso, la volpe rispose: "La migliore del mondo, e così tanta che non può essere esaurita. Scendi e guarda". Dopodiché la capra saltò giù senza ulteriori indugi. A questo punto l'astuta volpe saltò sulle sue corna e saltò fuori agilmente, osservando alla capra ingannata: "Se avessi un cervello all'altezza della tua barba, avresti guardato prima di saltare".
+/**/
+14 LA VOLPE E LA CAPRA
+/**/
+LA DONNA E LA SUA GALLINA\n\nUna donna parsimoniosa teneva una gallina su cui si poteva contare per deporre un uovo ogni mattina. La donna vigile pensò tra sé: "Se raddoppiassi la razione di orzo della mia gallina, deporrebbe due uova al giorno". Così provò il suo piano e la gallina diventò così grassa e liscia che smise del tutto di deporre uova.\n\nA volte la parsimonia esagera e le cifre non sempre sono fatti.
+/**/
+15 LA DONNA E LA SUA GALLINA
+/**/
+IL CANE NELLA MANGIATOIA\n\nUn cane una volta si fece il letto in una mangiatoia e vi giaceva ringhiando e brontolando a chiunque passasse. I buoi che venivano a prendere il loro foraggio dissero: "Che miserabile bastardo! Non mangia il grano né lo lascia mangiare a nessun altro!"
+/**/
+16 IL CANE NELLA MANGIATOIA
+/**/
+IL TOPO, LA RANA E IL FALCO\n\nUn topo in un giorno di sventura fece la conoscenza di una rana e insieme partirono per il loro viaggio. Con la scusa di affetto e di voler tenere al sicuro il suo compagno dai pericoli, la rana legò la zampa anteriore del topo alla sua zampa posteriore e così procedettero. Funzionò abbastanza bene finché non giunsero a un po' d'acqua e la rana, invitando il topo a farsi coraggio, si tuffò e iniziò a nuotare. Erano appena a metà strada quando la rana si tuffò all'improvviso sul fondo, trascinando dietro di sé lo sfortunato topo. Ma la lotta del topo creò un tale trambusto nell'acqua che attirò l'attenzione di un falco che, balzando giù e portando via il topo, portò via anche la rana.\n\nLe alleanze mal assortite finiscono generalmente in un disastro; e colui che persegue la distruzione del suo vicino spesso cade nella sua stessa trappola.
+/**/
+17 IL TOPO, LA RANA E IL FALCO
+/**/
+IL PASTORE E IL LUPO\n\nUn pastore, che badava al suo gregge ai margini di un villaggio, era solito divertirsi a volte gridando: "Al lupo! Al lupo!". Due o tre volte il suo trucco ebbe successo. L'intero villaggio corse in suo aiuto, solo per essere deriso per la sua fatica. Alla fine, un giorno, il lupo arrivò davvero. Il ragazzo gridò come prima, e questa volta sul serio. Ma gli abitanti del villaggio, supponendo che fosse al suo vecchio gioco, non prestarono attenzione alle sue grida e il lupo divorò le pecore.
+/**/
+18 IL PASTORE E IL LUPO

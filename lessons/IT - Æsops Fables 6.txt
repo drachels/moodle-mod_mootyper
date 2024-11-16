@@ -1,0 +1,71 @@
+IL TORO E IL VITELLO\n\nUn toro una volta si sforzava con tutte le sue forze di passare attraverso uno stretto passaggio che conduceva alla sua stalla.\n\n"Passerò", disse un giovane vitello, "e ti mostrerò la strada. L'ho fatto molte volte."\n\n"Risparmiati la fatica", disse il toro; "conoscevo la strada prima che tu nascessi."
+/**/
+1 IL TORO E IL VITELLO
+/**/
+IL CERBIATTO E SUA MADRE\n\nUn giovane Cerbiatto disse una volta a sua Madre: "Non capisco, Madre, come mai tu debba avere così tanta paura dei cani. Sei più grande di un cane e più veloce; e sei molto più abituata a correre. Perché la sola menzione di un segugio ti mette in una paura così terribile?"\n\nLa Madre sorrise al suo coraggioso giovane figlio. "So molto bene", disse, "che tutto ciò che dici è vero. Guardo le mie lunghe gambe e ricordo tutti i vantaggi che menzioni, eppure quando sento l'abbaiare di un solo cane, svengo per il terrore".
+/**/
+2 IL CERBIATTO E LA SUA MADRE
+/**/
+IL MULO E LA SUA OMBRA\n\nUn giorno molto caldo un Viaggiatore noleggiò un Mulo con il suo conducente per trasportare della merce in un luogo lontano.\n\nLa strada attraversava una pianura sabbiosa e, essendo la giornata molto calda, il Viaggiatore chiese al conducente di fermarsi per riposare. Per sfuggire al calore diretto del sole, che splendeva in tutta la sua forza, il Viaggiatore si sedette all'ombra del Mulo.\n\nMa nacque una violenta disputa, perché l'ombra era sufficiente solo per una persona, e il conducente, un tipo vigoroso, spinse bruscamente da parte il Viaggiatore, reclamando il posto per sé, dicendo: "Quando mi hai noleggiato questo Mulo, non hai detto nulla dell'ombra. Se ora vuoi anche quella, devi pagarla."\n\nLa discussione divenne così violenta che dimenticarono il Mulo, che approfittò della sua libertà e scappò via. E così, nel litigare per l'ombra, persero la sostanza.
+/**/
+3 IL MULO E LA SUA OMBRA
+/**/
+IL CIECO E LO ZOPPO\n\nUn Cieco, fermo in un tratto di strada dissestato, incontrò uno Zoppo e lo pregò di aiutarlo a uscire dalla difficoltà in cui era caduto.\n\n"Come potrei", rispose lo Zoppo, "visto che riesco a malapena a trascinarmi? Sono zoppo e tu sembri molto forte."\n\n"Sono abbastanza forte", disse l'altro. "Potrei andare se solo riuscissi a vedere la strada."\n\n"Oh, allora possiamo aiutarci a vicenda", disse lo Zoppo. "Se mi prendi sulle spalle, cercheremo fortuna insieme. Sarò gli occhi per te e tu sarai i piedi per me."\n\n"Con tutto il cuore", disse il Cieco. "Rendiamoci reciprocamente i nostri servizi." Così prese il suo compagno zoppo sulla schiena e viaggiarono in sicurezza e piacere.
+/**/
+4 IL CIECO E LO ZOPPO
+/**/
+I DUE VASI\n\nUn fiume trascinò giù, nel suo corso, due Vasi, uno fatto di Terracotta e l'altro di Ottone.\n\nIl Vaso di Ottone era disposto a essere socievole. "Dato che dobbiamo essere compagni, siamo amichevoli", disse. "L'unione fa la forza. Anche se siamo portati via contro la nostra volontà, non serve a nulla lamentarsi. Potremmo ancora vedere molto di buono."\n\nMa il Vaso di Terracotta disse: "Ti prego di non avvicinarti così tanto a me. Ho paura di te come del fiume; perché se mi tocchi anche solo leggermente, sono sicuro che mi spezzerò. Per essere veramente socievoli e amichevoli le persone devono avere modi e bisogni in comune."
+/**/
+5 I DUE PENTOLI
+/**/
+LA RANA CIARLATANA\n\nC'era una volta una rana che proclamò di essere un medico colto, capace di curare tutte le malattie.\n\nArrivò al punto di dire alle bestie che era colpa loro se erano malate, perché se si fossero sottomesse alle sue cure, le avrebbe riportate in perfetta salute.\n\nUna volpe, sentendolo, chiese: "Come mai, dal momento che puoi fare cose così grandi per gli altri, non provi prima a sistemare la tua brutta andatura e la tua pelle rugosa? Chi si assume la responsabilità di aiutare gli altri dovrebbe prima migliorare se stesso."
+/**/
+6 LA RANA QUARANTA
+/**/
+IL LUPO IN VESTITO DA PECORA\n\nUn lupo una volta si vestì con il vello di una pecora e, scambiato per uno del gregge, entrò nell'ovile. Ebbe la possibilità di fare strada con quante pecore voleva; ma il tempo a sua disposizione fu breve, perché il pastore, giunto nell'ovile durante la notte, lo scoprì.\n\nLo legò a un albero e lo lasciò appeso lì, ancora con il suo vestito da pecora, come avvertimento per gli altri lupi che potevano aggirarsi in giro.\n\nAlcuni pastori che per caso passarono di lì lo videro lì e si fermarono a chiedere perché le pecore dovessero essere servite in quel modo. Quando si avvicinarono e videro che non era una pecora ma un lupo, il pastore disse: "Questo è il modo in cui servo un lupo, anche se lo trovo con l'abito di una pecora".
+/**/
+7 IL LUPO TRAVESTITO DA AGNELLO
+/**/
+IL RAGAZZO E LE NOCCIOLE\n\nUn giorno un ragazzo infilò la mano in una brocca quasi piena di nocciole. Ne afferrò quante più ne poteva contenere la mano; ma quando cercò di tirare fuori il pugno chiuso, la strettezza del collo glielo impedì. Non volendo perdere le noci, ma non riuscendo a prenderle tirando fuori la mano, scoppiò a piangere e si lamentò amaramente della sua dura sorte. Una persona lì presente alla fine gli diede questo saggio e ragionevole consiglio:\n\n"Accontentati di prenderne la metà, ragazzo mio, e le otterrai facilmente."
+/**/
+8 IL RAGAZZO E LE NOCCIOLE
+/**/
+L'Avaro\n\nUn avaro che aveva seppellito un pezzo d'oro nel terreno veniva ogni giorno sul posto per guardarlo.\n\nScoprendo un giorno che era stato rubato, cominciò a strapparsi i capelli e a lamentarsi ad alta voce.\n\nUn vicino, vedendolo, disse: "Ti prego, non rattristarti così. Seppellisci una pietra nello stesso buco e immagina che sia l'oro. Ti servirà altrettanto bene, perché quando l'oro era lì non ne facevi uso."
+/**/
+9 L'AVARONE
+/**/
+LA VEDOVA E LE SUE PICCOLE CAMERIERE\n\nUna vedova che aveva una grande reputazione come governante, perché amava molto pulire, era servita da due piccole cameriere.\n\nLei stessa veniva svegliata prima dell'alba dal canto del gallo, e si alzava subito e chiamava le sue cameriere.\n\nLe cameriere, che non avevano gusto per una pulizia così eccessiva, e che erano tenute stanche da un lavoro così continuo, provavano disprezzo per il povero gallo perché svegliava la loro padrona così presto.\n\n"Se non fosse per lui," dicevano, "la padrona dormirebbe fino al sorgere del sole. Uccidiamo il gallo, poiché non c'è altro modo per fermare il suo forte canto."\n\nMa la padrona, non sentendo più il gallo, non era in grado di dire l'ora, e così spesso svegliava le sue cameriere nel cuore della notte e le metteva al lavoro.
+/**/
+10 LA VEDOVA E LE SUE PICCOLE CAMERIERE
+/**/
+IL CARBONATO E IL FULLER\n\nUn carbonaio esercitava il suo mestiere a casa sua. Un giorno incontrò un amico che era un fuller e lo pregò di andare a vivere con lui.\n\n"Saremo molto più amici se vivremo insieme", disse, "e allora le nostre spese di gestione della casa saranno notevolmente ridotte".\n\nIl fuller rispose: "L'accordo non mi andrebbe per niente bene, perché qualsiasi cosa io mi prendessi la briga di sbiancare, il tuo carboncino si annerirebbe immediatamente. Temo che non potremmo stringere amicizie migliori in tali circostanze".
+/**/
+11 IL BRUCIATORE DI CARBONE E IL FULLER
+/**/
+IL PORCOPINO E I SERPENTI\n\nUn giorno un Porcospino spinoso passò di lì, in cerca di un posto dove vivere.\n\nTrovò una famiglia di Serpenti in una caverna calda e chiese loro di lasciarlo condividere il loro rifugio.\n\nI Serpenti acconsentirono, anche se molto contro la loro volontà, e il Porcospino si insinuò nella loro casa. Ma non passò molto tempo prima che scoprissero che i suoi aculei affilati si conficcavano in loro e li ferivano, e si pentirono di non averlo mai lasciato entrare.\n\n"Caro Porcospino, per favore vattene via", dissero; "sei così grande e così spinoso."\n\nMa il Porcospino fu molto maleducato e disse: "Oh, no. Se non ti piace questo posto, puoi andartene. Lo trovo molto comodo."\n\nEra troppo tardi che i Serpenti impararono che è più facile tenere fuori un intruso che costringerlo ad andare dopo averlo lasciato entrare.
+/**/
+12 IL PORCOPINO E I SERPENTI
+/**/
+IL FASCIO DI BASTONCINI\n\nUn Vecchio aveva molti Figli, che spesso litigavano. Cercò di farli diventare buoni amici, ma non ci riuscì. Quando la fine della sua vita si avvicinò, il Vecchio li chiamò tutti a sé e mostrò loro un fascio di bastoni legati strettamente insieme.\n\n"Ora", disse il Padre, "guardate se riuscite a rompere questo fascio di bastoni."\n\nOgni Figlio a turno prese il fascio e cercò con tutte le sue forze di romperlo, ma non ci riuscì. Quando tutti ci provarono e vi rinunciarono, il Padre disse: "Sciogliete il fascio e ognuno di voi prenda un bastone e vedete se riuscite a romperlo." Questo riuscirono a farlo molto facilmente. Allora il Padre disse:\n\n"Hai visto quando i bastoni erano legati insieme quanto erano forti; ma non appena sono stati sciolti, li hai rotti facilmente. Ora, se smetterete di litigare e vi sosterrete l'un l'altro, sarete come il fascio di bastoni: nessuno può farvi del male; ma se non vi manterrete uniti, sarete deboli come uno dei bastoni da solo, che chiunque\npuò rompere."
+/**/
+13 IL FASCIO DI BASTONCINI
+/**/
+IL CANE DIVERTENTE\n\nC'era una volta un cane che era solito correre verso chiunque incontrasse, ma così silenziosamente che nessuno sospettava che facesse del male finché non cominciò a mordersi i talloni.\n\nPer far capire agli estranei che non ci si poteva fidare del cane, e allo stesso tempo per punire il cane stesso, il padrone a volte gli appendeva un campanello al collo e lo costringeva a trascinare uno zoccolo pesante, che fissava saldamente al collare con una catena.\n\nPer un po' il cane abbassò la testa; ma vedendo che il suo campanello e lo zoccolo lo attiravano l'attenzione, ne divenne orgoglioso e corse in giro per la piazza del mercato per metterli in mostra e attirare l'attenzione su di sé. Arrivò persino a darsi delle arie con gli altri cani, che non avevano alcun segno distintivo.\n\nUn vecchio segugio, vedendolo, disse: "Perché ti esibisci in questo modo, come se il tuo campanello e lo zoccolo fossero segni di merito? In effetti ti mettono in risalto; ma quando se ne comprende il significato, sono segni di disonore, un promemoria che sei un cane maleducato. Una cosa è essere rinomati quando le nostre virtù ne danno occasione; un'altra è diventare famosi per i nostri difetti".
+/**/
+14 IL CANE MALIZIOSO
+/**/
+IL CANE E L'OSTRICA\n\nUn cane, vedendo un'ostrica, la prese per un uovo e la ingoiò. Poco dopo, soffrendo molto, disse: "È stata la mia fretta avida a procurarmi questo tormento".
+/**/
+15 IL CANE E L'OSTRICA
+/**/
+LA VOLPE E IL LEOPARDO\n\nUna volta la Volpe e il Leopardo disputarono su chi fosse il più bello. Il Leopardo esibì, una per una, le varie macchie che ricoprivano la sua pelle. La Volpe, che era ancora più orgogliosa del suo ingegno che della sua persona, alla fine lo interruppe dicendo: "Eppure, quando tutto è detto, quanto sono più bello, io che sono decorato non solo nel corpo ma anche nella mente. La persona dovrebbe avere più valore del suo mantello."
+/**/
+16 LA VOLPE E IL GATTOPARDO
+/**/
+I CANI E LE PELLI\n\nAlcuni Cani, affamati dalla fame, videro delle pelli di mucca immerse in un fiume, vicino a una conceria, e pensarono che potessero essere mangiate. Non riuscendo a raggiungerle, si misero all'opera per prima cosa per bere risalendo il fiume, ma scoppiarono a bere molto prima di raggiungere le pelli.
+/**/
+17 I CANI E LE PELLI
+/**/
+IL BOSCAIOLO E GLI ALBERI\n\nUn Boscaiolo entrò in una foresta e fece una petizione agli Alberi affinché gli fornissero un manico per la sua ascia.\n\nGli Alberi, onorati dalla sua cortesia, accolsero la sua richiesta e tennero una consultazione per decidere chi di loro avrebbe dovuto dargli.\n\nSenza una voce dissenziente, scelsero il Frassino, che, a quanto pare, non è il favorito tra gli Alberi. Alcuni di loro furono abbastanza audaci da dire che la sfortuna era con il Frassino e che in fondo non erano tenuti a provare simpatia per i boscaioli.\n\nIl Boscaiolo tagliò l'Albero e sistemò il manico della sua ascia; poi, con costernazione degli Alberi, si misero al lavoro e, con forti colpi, abbatterono rapidamente tutti i più nobili giganti della foresta.\n\nLamentandosi troppo tardi della sorte dei suoi compagni, una vecchia Quercia osservò a un vicino Cedro:\n\n"Il primo passo ci ha persi tutti. Se non avessimo rinunciato così volentieri ai diritti del Frassino, avremmo potuto resistere per secoli."
+/**/
+18 IL BOSCAIO E GLI ALBERI

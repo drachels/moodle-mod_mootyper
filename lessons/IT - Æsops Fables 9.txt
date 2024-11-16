@@ -1,0 +1,59 @@
+IL CAVALLO E LO STAFFIERO\n\nUno stalliere, che era solito rubare il mais di un cavallo e venderlo, era tuttavia molto impegnato tutto il giorno a strigliarlo e a pettinarlo. "Se vuoi davvero che io", disse il cavallo, "sembri liscio e fine, dammi meno curry e più mais."
+/**/
+1 IL CAVALLO E LO STAFFIERO
+/**/
+IL TROMBETTIERE PRESO PRIGIONIERO\n\nUn trombettiere che era stato fatto prigioniero in una battaglia pregò con insistenza per la sua vita. "Risparmiatemi, vi prego", disse; "non mettetemi a morte senza motivo. Non ho ucciso nessuno, né porto armi, ma solo questa tromba".\n\n"Per questa stessa ragione", dissero coloro che lo tenevano prigioniero, "morirete tanto più sicuramente; perché sebbene non abbiate lo spirito di combattere voi stessi, incitate gli altri alla violenza e allo spargimento di sangue".\n\nChi incita alla contesa è peggiore di chi vi prende parte.
+/**/
+2 IL TROMBETTIERE PRESO PRIGIONIERO
+/**/
+IL VIAGGIATORE VANTAGGIOSO\n\nUn uomo che aveva viaggiato in paesi stranieri si vantò, al suo ritorno a casa, delle grandi imprese che aveva compiuto in diversi luoghi. A Rodi, per esempio, aveva fatto un salto così straordinario che nessun uomo avrebbe potuto avvicinarsi; e, disse, aveva dei testimoni lì per dimostrare che era così.\n\n"È del tutto possibile", disse uno che lo sentì vantarsene, "ma supponiamo che questo sia Rodi e riproviamo il salto".
+/**/
+3 IL VIAGGIATORE VANTAGGIOSO
+/**/
+LA SIEPE E LA VIGNA\n\nUn giovane erede sciocco, che era entrato in possesso della tenuta del suo saggio padre, distrusse tutte le siepi attorno alla sua vigna perché non producevano uva. L'abbattimento di queste recinzioni espose i suoi terreni a uomini e bestie e le sue viti furono subito distrutte. Quell'uomo semplice imparò, quando ormai era troppo tardi, che proteggere la sua vigna era altrettanto necessario che possederla.
+/**/
+4 LA SIEPE E LA VIGNA
+/**/
+IL TOPO E LA DENOMINATA\n\nUn piccolo Topo affamato si era fatto strada con qualche difficoltà in un cesto di mais, dove, trovando il divertimento molto di suo gradimento, si era riempito e stipato a tal punto che quando fu pronto a uscire di nuovo, trovò il buco da cui era entrato troppo piccolo per permettere al suo corpo gonfio di passare. Una Donnola, che era stata attirata sul posto dalle sue grida, gli consigliò così: "Resta dove sei, amico mio, e digiuna finché non sarai magro; perché non uscirai mai finché non ti sarai ridotto alle stesse condizioni di quando sei entrato."
+/**/
+5 IL TOPO E LA DONOLA
+/**/
+IL LUPO E LA PECORA\n\nUn lupo, che era stato morso da un cane e non era in grado di muoversi, pregò una pecora che passava di lì di avere pietà del suo triste caso e di portargli dell'acqua da un ruscello. "Se mi porti da bere", disse, "troverò da mangiare da solo".\n\n"Sì", disse la pecora, "non ne dubito; perché se mi avvicino abbastanza per darti da bere, mi farai a pezzi".
+/**/
+6 IL LUPO E LA PECORA
+/**/
+UNA VEDOVA E LE SUE PECORE\n\nUna certa vedova, che aveva solo una pecora e desiderava sfruttare al meglio la sua lana, la tosò così da tagliare sia la sua pelle che il suo vello. La pecora, dolorante per questo trattamento, gridò: "Perché mi torturi così? Non è un guadagno per te. Il mio sangue non aggiungerà peso alla lana. Se sei alla ricerca di carne manda a chiamare il macellaio, che porrà fine alla mia miseria; ma se è solo la lana che vuoi, manda a chiamare il tosatore, che mi toserà il vello senza farmi sanguinare."
+/**/
+7 UNA VEDOVA E LE SUE PECORE
+/**/
+L'UOMO E IL LEONE\n\nUn uomo e un leone stavano una volta viaggiando insieme e alla fine giunsero a grandi parole su quale fosse la creatura più coraggiosa e forte dei due. Mentre la disputa si faceva più accesa, capitarono loro di passare, sul ciglio della strada, davanti alla statua di un uomo che strangolava un leone. "Guarda lì", disse l'uomo. "Quale prova migliore puoi avere della nostra innegabile superiorità di questa?"\n\n"Questa", disse il leone, "è la versione maschile della storia; lascia che siamo noi gli scultori e per un leone sotto i piedi di un uomo, avrai venti uomini sotto le zampe dei leoni".
+/**/
+8 L'UOMO E IL LEONE
+/**/
+LA LEONESSÀ\n\nUna volta ci fu grande scalpore per quale delle Bestie potesse vantare la famiglia più numerosa. Andarono a turno dalla Leonessa. "E quanti", fu chiesto, "ne hai a ogni nascita?"\n\n"Uno", rispose; "ma quello è un Leone!"\n\nLa qualità viene prima della quantità.
+/**/
+9 LA LEONESSÀ
+/**/
+IL RAGAZZO CHE RUBÒ LE MELE\n\nUn Vecchio una volta trovò un Ragazzo maleducato nel suo Albero di Mele e gli ordinò severamente di scendere. Il giovane mascalzone rispose che non lo avrebbe fatto.\n\n"Allora ti farò scendere io", disse il Vecchio. Così gli lanciò rametti e fasci d'erba, ma questo fece solo ridere il giovane scapestrato.\n\n"Molto bene", disse il Vecchio. "Se né le parole né l'erba ti faranno scendere, proverò quale virtù c'è nelle pietre". Detto questo, scagliò con forza delle pietre sul Ragazzo, che presto lo fecero scendere dall'albero per implorare il perdono del Vecchio.
+/**/
+10 IL RAGAZZO CHE RUBÒ LE MELE
+/**/
+L'OCA DALLE UOVA D'ORO\n\nUn certo uomo ebbe la fortuna di possedere un'oca che gli deponeva un uovo d'oro ogni giorno dell'anno. Per un po' l'uomo si rallegrò del suo guadagno quotidiano, ma diventando impaziente per un reddito così lento, uccise l'oca, per ottenere tutto in una volta l'oro che pensava fosse dentro di lei. Quando l'ebbe aperta, scoprì che era esattamente come tutte le altre oche.\n\nVolendo di più, perse tutto.
+/**/
+11 L'OCA DALLE UOVA D'ORO
+/**/
+IL VECCHIO E LA MORTE\n\nUn Vecchio Lavoratore, curvo per l'età e la fatica, stava raccogliendo sterpaglie in una foresta. Stanco e senza speranza, gettò a terra il suo fagotto e gridò: "Non ne posso più! Se solo la Morte venisse a liberarmi!"\n\nMentre parlava, la Morte arrivò e gli chiese cosa volesse. "Vi prego, buon signore", rispose l'Uomo, "fatemi solo il favore di sollevare questo fascio di sterpaglie sulla mia schiena".
+/**/
+12 IL VECCHIO E LA MORTE
+/**/
+UN PADRE E LE SUE DUE FIGLIE\n\nUn uomo che aveva due figlie, una sposata con un giardiniere e l'altra con un vasaio. Andando a trovare il giardiniere, chiese alla figlia come stesse. "Benissimo", disse lei; "abbiamo tutto ciò che vogliamo se solo possiamo avere una forte pioggia per annaffiare le nostre piante".\n\nAndando dal vasaio, chiese all'altra figlia come andavano le cose. "Non c'è niente che vogliamo se non che questo bel tempo e questo sole caldo continuino, così che le nostre tegole cuociano bene".\n\n"Ahimè", disse il padre, "se tu desideri il bel tempo e tua sorella la pioggia, per chi dovrei pregare?"
+/**/
+13 UN PADRE E LE SUE DUE FIGLIE
+/**/
+IL LEONE MALATO E LA VOLPE\n\nUn leone che era troppo vecchio e debole per cacciare una preda capì che doveva ottenerla, se mai, con l'astuzia. Si infilò in un angolo della sua tana e si finse malato. Tutti gli animali che passavano di lì andarono a dargli un'occhiata e, quando arrivarono, lui balzò su di loro e li divorò. Ora, quando questo era successo a molti, la volpe, che aveva indovinato il trucco, arrivò. Da una distanza di sicurezza chiamò il leone, chiedendo come stava. Il leone disse che era molto malato e chiese alla volpe di entrare a trovarlo. "Lo farei volentieri", rispose la volpe, "ma ho notato che tutte le impronte puntano verso la tana e non ce n'è nessuna che punta verso l'esterno".
+/**/
+14 IL LEONE MALATO E LA VOLPE
+/**/
+LA MONTAGNA IN TRAVAGLIO\n\nNei tempi antichi, si udì un potente brontolio in una Montagna. Si diceva che fosse in travaglio, e moltitudini di persone si radunarono insieme, da vicino e da lontano, per vedere cosa avrebbe prodotto la grande Montagna. Dopo una lunga attesa e sagge congetture degli astanti, saltò fuori: un topo.\n\nUna magnifica promessa, ma una prestazione misera.
+/**/
+15 LA MONTAGNA IN TRAVAGLIO

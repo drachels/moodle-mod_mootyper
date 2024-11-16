@@ -1,0 +1,59 @@
+LA LATTAIA E IL SUO SECCHIELLO DI LATTE\n\nDolly la Lattaia era stata una brava ragazza e attenta nel suo lavoro, così la sua padrona le diede un secchio di latte fresco per sé.\n Con il secchio in testa, Dolly saltellava allegramente lungo la strada per la città, dove avrebbe venduto il suo latte.\n\n"Per questo latte," disse Dolly, "riceverò uno scellino e con quello comprerò venti delle uova deposte dalle belle galline del nostro vicino. La padrona mi presterà sicuramente una gallina e, tenendo conto di tutti gli imprevisti, alleverò una buona dozzina di pulcini. Saranno ben cresciuti prima che arrivi la prossima fiera, ed è allora che le galline raggiungono il prezzo più alto. Potrò vendere i miei per una ghinea.\n\n"Poi comprerò quella giacca che ho visto l'altro giorno al villaggio, e anche un cappello e dei nastri. E quando andrò alla fiera, come sarò furba!\n\n"Robin sarà lì, e verrà e si offrirà di essere di nuovo amica. Ma non mi farò perdonare troppo facilmente; e quando mi vorrà come partner nel ballo, alzerò la testa e—"\n\nQui Dolly diede un leggero movimento alla testa, quando cadde il secchio e tutto il latte si rovesciò a terra.\n\nPovera Dolly! Era il suo addio alle uova, ai polli, alla giacca, al cappello, ai nastri e a tutto il resto.
+/**/
+1 LA LATTAIA E IL SUO SECCHIELLO DI LATTE
+/**/
+IL GATTO E LA VOLPE\n\nIl Gatto e la Volpe stavano una volta parlando tra loro nel mezzo della foresta.\n\n"Non mi interessa cosa succede", disse la Volpe, "perché ho mille trucchi, uno qualsiasi dei quali mi tirerebbe fuori dai guai. Ma di grazia, signora Micio", aggiunse, "cosa faresti se ci fosse un'invasione?"\n\n"Ho solo un piano", rispose il Gatto. "Se non mi servisse, sarei rovinato."\n\n"Mi dispiace per te", disse la Volpe. "Ti insegnerei volentieri uno o due dei miei trucchi, ma non è saggio fidarsi di un altro. Dobbiamo badare a noi stessi."\n\nQueste parole erano appena state pronunciate, quando un branco di cani da caccia li raggiunse a gran voce.\n\nIl Gatto, grazie alla sua unica difesa ben collaudata, corse su un albero e si sedette serenamente tra i rami. "Questo è il mio modo", disse alla Volpe. "Cosa devi essere?"\n\nLa Volpe, con tutti i suoi mille trucchi, non riuscì a togliersi di vista e cadde preda dei cani.
+/**/
+2 IL GATTO E LA VOLPE
+/**/
+LA SCIMMIA E IL GATTO\n\nUna Scimmia e un Gatto vivevano nella stessa famiglia, ed era difficile dire chi fosse il ladro più grande.\n\nUn giorno, mentre vagavano insieme, videro delle castagne arrostite nella cenere di un fuoco.\n\n"Dai," disse l'astuta Scimmia, "non resteremo senza cena oggi. I tuoi artigli sono migliori dei miei per questo scopo; tira fuori le castagne dalla cenere e ne avrai la metà."\n\nIl Gatto le tirò fuori, bruciandosi molto le zampe nel farlo. Quando le ebbe rubate tutte, si rivolse alla Scimmia per la sua parte del bottino; ma, con suo disappunto, non riuscì a trovare castagne, perché lui le aveva mangiate tutte.
+/**/
+3 LA SCIMMIA E IL GATTO
+/**/
+IL LUPO E IL PASTORE\n\nPer molto tempo il Lupo aveva seguito le Pecore senza tentare di ferirne una.\n\nIl Pastore rimase in guardia contro di lui per un po', e fece molta attenzione che non si avvicinasse troppo. Ma poiché giorno dopo giorno il Lupo non mostrava alcuna disposizione a ferire nessuno del gregge, gli permise di avvicinarsi di più, finché alla fine arrivò tra le Pecore e sembrò sorvegliarle come un cane.\n\n"Mi è davvero di grande aiuto", disse il Pastore tra sé; "e non l'ho mai visto fare il minimo sforzo per catturare una pecora o un agnello."\n\nCosì, avendo occasione di andare in città un giorno, lasciò il suo gregge alle cure del Lupo, che considerava come un guardiano su di loro.\n\nMa non appena l'uomo se ne fu andato, il Lupo, vedendo la sua opportunità, si scagliò sulle Pecore e ne distrusse la maggior parte.\n\n"Sono stato servito giustamente," disse il Pastore, al suo ritorno. "Perché non ho saputo fare di meglio che affidare le mie Pecore al loro peggior nemico? Prima o poi, la natura si mostrerà."
+/**/
+4 IL LUPO E IL PASTORE
+/**/
+IL LUPO, LA VOLPE E LA SCIMMIA\n\nUn lupo accusò di furto una volpe, che negò categoricamente l'accusa, dopodiché una scimmia si assunse l'incarico di giudicare la questione in questione.\n\nQuando ciascuno ebbe esposto dettagliatamente il proprio caso, la scimmia pronunciò questa sentenza:\n\n"Sono pienamente convinto che tu, lupo, non hai mai perso ciò che affermi." Poi, rivolgendosi alla volpe, disse: "E credo che tu abbia fatto ciò che neghi così fermamente."
+/**/
+5 IL LUPO, LA VOLPE E LA SCIMMIA
+/**/
+IL CIECO E IL CUCCIOLO\n\nUn cieco era solito distinguere i diversi animali toccandoli con le mani.\n\nGli fu portato il cucciolo di lupo, con la richiesta di toccarlo e di dire di cosa si trattava.\n\nEssendo in dubbio, disse: "Non so bene se si tratti del cucciolo di volpe o di un cucciolo di lupo; ma questo lo so bene, che non sarebbe sicuro ammetterlo nell'ovile".
+/**/
+6 IL CIECO E IL CUCCIOLO
+/**/
+LO SPENDICATORE E LA RONDINE\n\nUn giovane che era stato un grande spendaccione, e aveva speso tutto il denaro che aveva ereditato, e aveva persino venduto tutti i suoi abiti esterni tranne il mantello, vide una Rondine che volava sui prati all'inizio della primavera e cinguettava allegramente. Credendo che l'estate fosse davvero arrivata, vendette anche il mantello.\n\nIl giorno dopo ci fu una forte gelata, e, tremando anche lui, trovò la Rondine che giaceva congelata e rigida a terra.\n\n"Infelice uccello," disse, "se non fossi arrivato prima del tempo, io non sarei così infelice, e tu saresti potuto sfuggire al tuo destino. Una sola rondine non fa un'estate."
+/**/
+7 IL PROFESSIONISTA E LA RONDINE
+/**/
+IL CINGHIALE E LA VOLPE\n\nUn cinghiale stava affilando le sue zanne contro un albero.\n\n"Cosa intendi," chiese una volpe, "con una preparazione così bellicosa? Non c'è nessun nemico in vista."\n\n"Quando il nemico è in vista," disse il cinghiale, "è tempo di pensare a qualcos'altro."
+/**/
+8 IL CINGHIALE E LA VOLPE
+/**/
+ERCOLE E IL CARROZZIERE\n\nMentre un carrettiere guidava il suo carro attraverso una strada fangosa, le ruote si incastrarono saldamente nell'argilla, così che i cavalli non poterono procedere oltre.\n\nL'uomo, senza fare il minimo sforzo per porre rimedio alla situazione, cadde in ginocchio e iniziò a invocare Ercole perché venisse ad aiutarlo a uscire dai suoi guai.\n\n"Pigro", disse Ercole, "metti la tua spalla alla ruota. Muoviti e fai quello che puoi. Poi, se vuoi aiuto dagli dei, lo avrai. Ricorda il proverbio, il cielo aiuta chi si aiuta".
+/**/
+9 ERCOLE E IL CARRELLIERE
+/**/
+I MULI E I LADRI\n\nDue muli, carichi di bagagli, arrancavano lungo la strada maestra. Uno trasportava delle bisacce piene di denaro, l'altro dei sacchi di grano.\n\nIl mulo che trasportava il tesoro camminava con la testa eretta e un passo maestoso, facendo tintinnare i campanelli al collo mentre camminava.\n\nIl suo compagno lo seguiva a passo tranquillo e tranquillo.\n\nAll'improvviso una banda di ladri si lanciò su di loro, attratta dal passo forte e fiero e dai campanelli tintinnanti. Il mulo che trasportava l'oro fece così tanto rumore che i ladri afferrarono il suo zaino, ferendolo con le loro armi e, sentendo dei passi, fuggirono.\n\n"Sono contento", disse l'altro, "di essere stato ritenuto di così poca importanza, perché non ho perso nulla, né sono stato ferito da alcuna ferita."
+/**/
+10 I MULI E I LADRI
+/**/
+LA RONDINE E IL CORVO\n\nUna volta la Rondine e il Corvo litigavano per il loro piumaggio. Il Corvo pose fine alla disputa dicendo: "Le tue piume sono abbastanza belle ora che fa caldo, ma le mie mi proteggono dall'inverno".
+/**/
+11 LA RONDINE E IL CORVO
+/**/
+GIOVE E L'APE\n\nUn'ape fece a Giove un regalo: un vaso di miele, che fu preso così gentilmente che lui le ordinò di chiedere cosa volesse in cambio.\n\nL'ape, che stava covando un rancore segreto per la perdita di parte della sua scorta invernale, chiese a Giove che ovunque avesse messo il suo pungiglione, questo potesse essere mortale.\n\nGiove era riluttante a lasciare l'umanità in balia di un piccolo insetto dispettoso, ed era seccato dalla cattiva natura mostrata nel suo desiderio. Disse, quindi, che mentre, per amore della sua promessa, le avrebbe dato il potere di fare del male, lei doveva stare attenta a come usava quel potere, perché dove avesse piantato il suo pungiglione, lo avrebbe lasciato, e avrebbe così messo a rischio la sua\n\nvita.\n\nLa cattiva volontà spesso fa più male a chi agisce in base a essa che a chi ne subisce le conseguenze.
+/**/
+12 GIOVE E L'APE
+/**/
+I DUE VIAGGIATORI\n\nMentre due uomini stavano viaggiando attraverso un bosco, uno di loro prese un'ascia che vide per terra. "Guarda qui", disse al suo compagno; "Ho trovato un'ascia."\n\n"Non dire _io_ l'ho trovata_, disse l'altro, "ma _noi_. Poiché siamo compagni, dovremmo dividerla tra noi."\n\n"No," disse il primo, "ho trovato l'ascia. È mia."\n\nNon erano andati lontano quando sentirono il proprietario dell'ascia inseguirli e chiamarli con grande rabbia.\n\n"Siamo nei guai ora," disse colui che aveva l'ascia.\n\n"No," disse l'altro; "dì _io_ ci sono nei guai, non _noi_. Quando pensavi di avere un premio, non mi hai lasciato condividerlo con te, e ora non puoi aspettarti che io condivida il pericolo."
+/**/
+13 I DUE VIAGGIATORI
+/**/
+IL BAMBINO E IL LUPO\n\nUn bambino, in groppa a un'alta roccia dove si sentiva al sicuro, infliggeva ogni sorta di insulti a un lupo a terra sottostante.\n\nIl lupo rispose: "Non pensare, stupida piccola creatura, di potermi infastidire. Questo linguaggio cattivo che stai usando lo considero come proveniente non da te, ma dal posto sicuro in cui ti trovi. Saresti di umore diverso se fossi qui al mio fianco."
+/**/
+14 IL BAMBINO E IL LUPO
+/**/
+LA ZUCCA E IL PINO\n\nUna volta una zucca fu piantata vicino a un grande e nobile Pino. La stagione era clemente e la zucca si sviluppò in poco tempo, arrampicandosi sui rami e avvolgendosi attorno a loro, fino a ricoprire e superare l'Albero stesso.\n\nLe foglie erano così grandi e i fiori e i frutti così belli che la zucca, confrontandoli con gli aghi sottili del Pino, ebbe la sicurezza di pensare di avere un valore maggiore nel confronto.\n\n"Perché," disse la zucca, "ci sono voluti più anni per crescere fino a questa statura di quanti io ne abbia impiegati giorni."\n\n"È vero," disse il Pino; "ma dopo i molti inverni ed estati che ho sopportato, i molti freddi torridi e i caldi torridi, mi vedi esattamente lo stesso che ero tanti anni fa. Niente mi ha sopraffatto. Ma quando la tua razza è messa alla prova, la prima piaga o gelo è sicuro che abbatterà quel tuo orgoglio. In un'ora sei spogliato di tutta la tua gloria."
+/**/
+15 LA ZUCCA E IL PINO

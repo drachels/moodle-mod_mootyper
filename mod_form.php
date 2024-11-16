@@ -349,7 +349,7 @@ class mod_mootyper_mod_form extends moodleform_mod {
     private function validation_mootyper_grade(array $data, array $files, array $errors) {
         global $COURSE;
 
-        $mform = $this->_form;
+        $mform =& $this->_form;
 
         $component = "mod_mootyper";
         $itemname = 'mootyper';
@@ -607,12 +607,22 @@ class mod_mootyper_mod_form extends moodleform_mod {
      */
     public function get_data() {
         $data = parent::get_data();
-        if (!$data) {
-            return false;
-        }
+        //if (!$data) {
+        //    return false;
+        //}
+        if ($data) {
+            $itemname = 'mootyper';
+            $component = 'mod_mootyper';
+            $gradepassfieldname = component_gradeitems::get_field_name_for_itemname($component, $itemname, 'gradepass');
 
-        // Turn off completion settings if the checkboxes aren't ticked.
-        if (isset($data->completionexercise)) {
+            // Convert the grade pass value - we may be using a language which uses commas,
+            // rather than decimal points, in numbers. These need to be converted so that
+            // they can be added to the DB.
+            if (isset($data->{$gradepassfieldname})) {
+                $data->{$gradepassfieldname} = unformat_float($data->{$gradepassfieldname});
+            }
+            // Turn off completion settings if the checkboxes aren't ticked.
+        } else if (isset($data->completionexercise)) {
             $autocompletion = !empty($data->completion) && $data->completion == COMPLETION_TRACKING_AUTOMATIC;
             if (empty($data->completionexerciseenabled) || !$autocompletion) {
                 $data->completionexercise = 0;

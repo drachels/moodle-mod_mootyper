@@ -279,7 +279,13 @@ if ($mootyper->lesson != null) {
         }
         $keyboardjs = keyboards::get_instance_layout_js_file($mootyper->layout);
         echo '<script type="text/javascript" src="'.$keyboardjs.'"></script>';
-        echo '<script type="text/javascript" src="typer.js"></script>';
+        // 20241118 If not Amharic, use the regular typer.js file.
+        if (!$keyboardjs == 'Amharic(ETV7)') {
+            echo '<script type="text/javascript" src="typer.js"></script>';
+        } else {
+            // 20241118 Using the Amharic(ETV7) keyboard layout so switch to typer(ETV7).js file.
+            echo '<script type="text/javascript" src="typer(ETV7).js"></script>';
+        }
 ?>
 <div id="mainDiv" align="left">
 <form name='form1' id='form1' method='post' action='<?php echo $insertdir; // phpcs:ignore ?>'> 

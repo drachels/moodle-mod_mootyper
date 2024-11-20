@@ -87,6 +87,9 @@ Moodle Versions
     have the same problem. Made the needed changes in the mod_form.php file. Tested before the
     changes on the moodledemo site and saw the error. Saved the new version of the mod_form.php
     file and the problem went away, so pushed new code to github.
+20241119 MooTyper - Have a request for Amharic keyboard layout. Angie McMillan-Major<aymm@uw.edu>
+    created new typer(ETV7).js file and modified the two keyboard files. I created a modified
+    version of MooTyper to use them. Still needs some testing.
 
 
 

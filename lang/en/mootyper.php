@@ -228,6 +228,7 @@ $string['mootyperclosed'] = 'This MooTyper closed on {$a}.';
 $string['mootyperclosetime'] = 'Close time';
 $string['mootypererror'] = 'You must specify a course_module ID or an instance ID';
 $string['mootyperfieldset'] = 'Custom example fieldset';
+$string['mootyperlessonerror'] = 'There is more than one lesson with the same ID. This MUST be fixed.';
 $string['mootypername'] = 'Test title';
 $string['mootypername_help'] = 'Because of the variety of lessons and exercises you can have, the name should make it clear which MooTyper lesson or exam this acitivity is set for. Markdown syntax is supported.';
 $string['mootyperopen'] = 'This MooTyper will be open on {$a}.';

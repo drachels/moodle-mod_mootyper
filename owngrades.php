@@ -115,6 +115,14 @@ if (!has_capability('mod/mootyper:viewmygrades', context_module::instance($cm->i
         .' = '.$mootyper->requiredgoal.'%';
     echo '&nbsp;&nbsp;&nbsp;&nbsp;'.get_string('requiredwpm', 'mootyper')
         .' = '.$mootyper->requiredwpm;
+
+    echo '<br>'.get_string('continuoustype', 'mootyper')
+        .' = '.$mootyper->continuoustype;
+    echo '&nbsp;&nbsp;&nbsp;&nbsp;'.get_string('countmistypedspaces', 'mootyper')
+        .' = '.$mootyper->countmistypedspaces;
+    echo '&nbsp;&nbsp;&nbsp;&nbsp;'.get_string('countmistakes', 'mootyper')
+        .' = '.$mootyper->countmistakes;
+
     echo '</td>';
 
     // 20240120 Moved and reworked code for link to all the MooTypers in the current course.

@@ -50,18 +50,15 @@ sending an email, leave a comment at
     https://moodle.org/plugins/mod_mootyper
 ===============
 === Deferred to a later version. ===
-20200521 MooTyper_435 - Need to be able to delete un-need lesson files from lesson folder.
-    20240212 See ticket re:may be in v4.2.4 already! Need to VERIFY.
+
 20200521 MooTyper_471 - Need to add missing items to activity edit page - mod_form.php.
 20200708 MooTyper_572 - Need behat tests. WAITING
 20230928 MooTyper_1082 - Need to implement automatic attempts removal for old data. WAITING
-20231007 MooTyper_1127 - Need to prevent exercise delete unless it is the last one
-    in the lesson.
+
 20231014 MooTyper_1100 - Need to revisit cron_task.php as it is not really needed.
 20231019 MooTyper_1102 - See about changing Suspicion to be based on WPM and character
     count of the exercise.
 20231106 MooTyper_1112 - English to Hebrew lessons. See ticket. WAITING
-20240111 MooTyper_1168 - Deleting a MooTyper instance seems to leasve some items undeleted.
 20240115 MooTyper_1170 - Might need a previous_completions.php file. - WAITING
 
 
@@ -73,13 +70,24 @@ sending an email, leave a comment at
 20240326 MooTyper_1227 - Would be nice to have pictures for which finger to use. In progress
     in the MooTyper Keyboard development course with new English(USV5.2)masterlayout version.
 20240524 MooTyper_1248 - Need new KB layout installation code when installing/upgrading MooTyper.
-
+20241028 MooTyper_1334 - Typing Exam timer not stopping at time limit - issue #127.
 
 
 Moodle Versions
 ===============
 === 4.3.1 === pending
-20241028 MooTyper_1333 - Comma in Passing grade - issue #126. Set up new Moodle and course at:
+20200521 MooTyper_435 - Need to be able to delete un-need lesson files from lesson folder.
+    20240212 See ticket re:may be in v4.2.4 already! Need to VERIFY.
+20231007 MooTyper_1127 - Need to prevent exercise delete unless it is the last one
+    in the lesson.
+20240111 MooTyper_1168 - Deleting a MooTyper instance seems to leave some items undeleted.
+
+20240218 MooTyper_1209 - MooTyper - Grades in Moodle are not updated when deleting own MooTyper
+    exercise grades.
+
+20240927 MooTyper_1324bt - MooTyper - Need a Finland Keyboard Layout. Being tested.
+
+20241028 MooTyper_1333bt - Comma in Passing grade - issue #126. Set up new Moodle and course at:
     https://10.0.6.134/moodle405/mod/mootyper/view.php?id=57&forceview=1. This is on the
     RaspberryPi5-1 SBC server. Took a little while for the locales to reconfigure to, all, but
     once I did, changing the  MooTyper Grade to pass worked as expected, without any problems.
@@ -87,10 +95,16 @@ Moodle Versions
     have the same problem. Made the needed changes in the mod_form.php file. Tested before the
     changes on the moodledemo site and saw the error. Saved the new version of the mod_form.php
     file and the problem went away, so pushed new code to github.
-20241119 MooTyper - Have a request for Amharic keyboard layout. Angie McMillan-Major<aymm@uw.edu>
+20241119 MooTyper_1337bt - Have a request for Amharic keyboard layout. Angie McMillan-Major<aymm@uw.edu>
     created new typer(ETV7).js file and modified the two keyboard files. I created a modified
     version of MooTyper to use them. Still needs some testing.
-
+20241120 MooTyper_1339 - Code in erem.php causes Undefined variable for $attemptid. Doing a
+    total rewrite of the code in the file.
+20240102 MooTyper_1347 - The erem.php file needs logging events code added to it. 
+20250103 MooTyper_1348bt - Feature request - along with time limit, precision, and WPM, list
+    continuous, spaces, and keystrokes. Added the needed lines of code in view.php. 320-325.
+    Created new span class to change format of the settings information. Added same info to
+	gview.php and owngrades.php files.
 
 
 === 4.3.0 === (Build: 2024102000)

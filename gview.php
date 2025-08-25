@@ -140,7 +140,12 @@ if (!has_capability('mod/mootyper:viewgrades', context_module::instance($cm->id)
         .' = '.$mootyper->requiredgoal.'%';
     echo '&nbsp;&nbsp;&nbsp;&nbsp;'.get_string('requiredwpm', 'mootyper')
         .' = '.$mootyper->requiredwpm;
-    echo '<br>';
+    echo '<br>'.get_string('continuoustype', 'mootyper')
+        .' = '.$mootyper->continuoustype;
+    echo '&nbsp;&nbsp;&nbsp;&nbsp;'.get_string('countmistypedspaces', 'mootyper')
+        .' = '.$mootyper->countmistypedspaces;
+    echo '&nbsp;&nbsp;&nbsp;&nbsp;'.get_string('countmistakes', 'mootyper')
+        .' = '.$mootyper->countmistakes;
     echo '<table><tr><td>';
 
     // Print group information (A drop down box will be displayed if the user

@@ -309,19 +309,25 @@ if ($mootyper->lesson != null) {
         }
         $tempstr = $tempstr.'&nbsp;&nbsp; '
             .get_string('lsnname', 'mootyper').' = '.$lsnname->lessonname
-            .'&nbsp;&nbsp; '
+            .'&nbsp;'
             .get_string('exercise', 'mootyper', $exercise->exercisename).$count;
         $tempstr = $tempstr.'<br>'
             .get_string('timelimit', 'mootyper').' ('.$reqiredtimelimit.':00)'
-            .'&nbsp;&nbsp; '
+            .'&nbsp;'
             .get_string('requiredgoal', 'mootyper').' ('.$reqiredgoal.'%)'
-            .'&nbsp;&nbsp; '
+            .'&nbsp;'
             .get_string('requiredwpm', 'mootyper').' ('.$reqiredwpm.')';
-        $temp = '<span class="reportlink"><a href="index.php?id='
+        $tempstr = $tempstr.'<br>'
+            .get_string('continuoustype', 'mootyper').' '.$mootyper->continuoustype.''
+            .'&nbsp;'
+            .get_string('countmistypedspaces', 'mootyper').' '.$mootyper->countmistypedspaces.''
+            .'&nbsp;'
+            .get_string('countmistakes', 'mootyper').' '.$mootyper->countmistakes.'';
+        $tempstr = $tempstr.' <a href="index.php?id='
             .$course->id.'">'
             .get_string('viewallmootypers', 'mootyper')
-            .'</a></span>';
-        echo $tempstr.' '.$temp;
+            .'</a>';
+        echo '<span class="settingsinfo">'.$tempstr.'</span>';
 
         ?>
 </h5>

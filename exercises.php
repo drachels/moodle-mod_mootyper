@@ -118,7 +118,7 @@ echo '</select>';
 // Preload not editable by me message for the current user.
 $jlink = get_string('noteditablebyme', 'mootyper');
 if (lessons::is_editable_by_me($USER->id, $id, $lessonpo)) {
-    $deleteurl = $CFG->wwwroot . '/mod/mootyper/erem.php?id='.$id.'&rl='.$lessons[$selectedlessonindex]['id'];
+    $deleteurl = $CFG->wwwroot . '/mod/mootyper/lsnexrem.php?id='.$id.'&rl='.$lessons[$selectedlessonindex]['id'];
     $exporturl = $CFG->wwwroot . '/mod/mootyper/lsnexport.php?id='.$course->id.'&lsn='.$lessons[$selectedlessonindex]['id'];
     echo '<br>';
     echo '</form><br>';
@@ -173,11 +173,11 @@ foreach ($exercises as $ex) {
     if (strlen($exnametocut) > 20) {
         $exnametocut = substr($exnametocut, 0, 20).'...';
     }
-    // If user can edit, create a delete link to the current exercise.
+    // If user can edit, build a delete link to the current exercise.
     $jlink1 = '<a onclick="return confirm(\''
         .get_string('deleteexconfirm', 'mootyper')
         .$lessons[$selectedlessonindex]['lessonname']
-        .'\')" href="erem.php?id='.$id
+        .'\')" href="lsnexrem.php?id='.$id
         .'&re='.$ex->id
         .'&lesson='.$lessonpo.'"><img src="pix/delete.png" alt="'
         .get_string('delete', 'mootyper').'"></a>';
@@ -206,7 +206,10 @@ foreach ($exercises as $ex) {
 echo '</table>';
 
 $url = $CFG->wwwroot . '/mod/mootyper/view.php?id='.$id;
-$deleteurl = $CFG->wwwroot.'/mod/mootyper/erem.php?id='.$id.'&rl='.$lessonpo;
+//$deleteurl = $CFG->wwwroot.'/mod/mootyper/lsnexrem.php?id='.$id.'&rl='.$lessonpo;
+// 20241227 Modified so we have the lesson ID for use in two ways in lsnexrem.php.
+$deleteurl = $CFG->wwwroot.'/mod/mootyper/lsnexrem.php?id='.$id.'&lesson='.$lessonpo.'&rl='.$lessonpo;
+
 $exporturl = $CFG->wwwroot.'/mod/mootyper/lsnexport.php?id='.$course->id.'&lsn='.$lessons[$selectedlessonindex]['id'];
 
 // 20200414 Added a, Return, button. 20200428 added round corners.

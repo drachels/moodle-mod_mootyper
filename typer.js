@@ -59,7 +59,7 @@ function moveCursor(nextPos) {
         $('#crka' + nextPos).addClass('txtBlue');
     }
     keyResult = true;
-    scroll_to_next_line($('#crka' + nextPos));
+    scrollToNextLine($('#crka' + nextPos));
 }
 
 /**
@@ -67,12 +67,12 @@ function moveCursor(nextPos) {
  *
  * @param {DOM object} obj
  */
-function scroll_to_next_line(obj) {
+function scrollToNextLine(obj) {
     var scrollBox = $('#texttoenter');
     if ($(obj).length > 0) {
         scrollBox.animate({
             scrollTop: $(obj).offset().top - scrollBox.offset().top + scrollBox.scrollTop()
-        },10);
+        }, 10);
     }
 }
 
@@ -84,13 +84,13 @@ $(document).ready(function() {
         "opacity": "0.0"
     });
     $("html, body").keyup(function(e) {
-        scroll_to_next_line($('#crka' + currentPos));
+        scrollToNextLine($('#crka' + currentPos));
     })
     .mouseup(function(e) {
         $('#keyboard textarea:last').focus();
     });
     $('#keyboard textarea:last').focus();
-    scroll_to_next_line($("#keyboard"));
+    scrollToNextLine($("#keyboard"));
 });
 
 /**
@@ -127,7 +127,7 @@ function doTheEnd() {
     $.get(juri, function(data) { });
     // At the end, add a scroll bar so student can see all the text and their mistakes.
     $('#texttoenter').css({"overflow-y":"scroll"});
-    scroll_to_next_line($("#reportDiv input:last").focus());
+    scrollToNextLine($("#reportDiv input:last").focus());
 }
 
 /**
@@ -227,7 +227,7 @@ function doStart() {
     var rpUser = $('input[name="rpUser"]').val();
     var juri = appUrl + "/mod/mootyper/atchk.php?status=1&mootyperid=" + rpMootyperId +
         "&userid=" + rpUser + "&time=" + (startTime.getTime() / 1000);
-    $.get(juri, function( data ) {
+    $.get(juri, function(data) {
         $('input[name="rpAttId"]').val(data);
     });
     interval2ID = setInterval('doCheck()', 4000);
@@ -473,7 +473,7 @@ function inittexttoenter(ttext, tinprogress, tmistakes, thits, tstarttime, tatte
 function calculateSpeed(sc) {
     if ((!continuousType && !countMistypedSpaces) || (!continuousType && countMistypedSpaces)) {
         // Normally use this.
-        return (((currentPos + mistakes) * 60) / sc); 
+        return (((currentPos + mistakes) * 60) / sc);
     } else {
         // Use this when set to continuous type.
         return ((currentPos * 60) / sc);
@@ -492,7 +492,7 @@ function calculateAccuracy() {
         return 0;
     }
     // Only correctly typed count.
-    return (((currentPos - mistakes) * 100) / currentPos); 
+    return (((currentPos - mistakes) * 100) / currentPos);
 }
 
 /**
@@ -554,8 +554,8 @@ function countChars(str) {
     //alert(arr);
     for ( var j = 0 ; j<arr.length ; j++) {
         var dem = 0 ;
-        for ( var i = 0 ; i< str.length ; i++ ) {
-            if(str[i] == arr[j]) dem++;
+        for (var i = 0; i < str.length; i++) {
+            if (str[i] == arr[j]) dem++;
         }
         result += "'" + arr[j] + "'=" + dem  + ", " ;
     }
@@ -569,14 +569,14 @@ function separateChars(str) {
     var array = new Array();
     var k = 1 ;
     array[0] = str[0];
-    
-    for(var i = 1 ;    i<str.length ; i++){        
-        for(var j = 0 ; j<=array.length ; j++){
-            if( j == array.length ){
-                array[k] = str[i] ;
-                k++;    
+
+    for (var i = 1; i<str.length; i++) {        
+        for (var j = 0; j<=array.length; j++) {
+            if (j == array.length) {
+                array[k] = str[i];
+                k++;
             }
-            if ( str[i] == array[j] ) break;    
+            if (str[i] == array[j]) break;
         }
     }
     return array;

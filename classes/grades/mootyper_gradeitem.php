@@ -160,9 +160,9 @@ class mootyper_gradeitem extends component_gradeitem {
     /**
      * Get the grade for the specified user.
      *
-     * @param stdClass $gradeduser The user being graded
-     * @param stdClass $grader The user who is grading
-     * @return stdClass The grade value
+     * @param stdClass      $gradeduser The user being graded
+     * @param stdClass|null $grader     The user who is grading (or null for auto-grader)
+     * @return stdClass|null The grade value (or null if none exits)
      * @throws \dml_exception
      */
     public function get_grade_for_user(stdClass $gradeduser, ?stdClass $grader = null): ?stdClass {

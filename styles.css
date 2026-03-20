@@ -42,6 +42,13 @@
     padding: 15px;
 }
 
+#page-mod-mootyper-view .settingsinfo {
+    font-family: Times New Roman, Times, serif;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 0px 0px 0px 0px;
+}
+
 #texttoenter {
     position: relative;
     margin: auto;

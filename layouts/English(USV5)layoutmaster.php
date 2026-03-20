@@ -47,7 +47,7 @@ echo (isset($displaynone) && ($displaynone == true)) ? 'display:none;' : '';
             </div>
         </section>
     </div><br>
-    <div id="keyboard" class="keyboardback">English(USV5) Keyboard Layout<br>
+    <div id="keyboard" class="keyboardback">English(USV5.2) Keyboard Layout<br>
         <section>
             <div class="mtrow" style='float: left; margin-left:5px; font-size: 15px !important; line-height: 15px'>
                 <div id="jkeybackquote" class="finger4">~<br>`</div>

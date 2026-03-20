@@ -1,3 +1,7 @@
+// Korean(KNV7) standalone typer for MooTyper.
+// Complete replacement for typer.js when Korean(KNV7) keyboard layout is in use.
+// Handles Korean IME input via compositionend events (Chrome/Edge/Firefox/Opera).
+// Based on typer.js; Korean-specific changes are marked KNV7.
 var startTime,
     endTime,
     mistakes,
@@ -7,9 +11,6 @@ var startTime,
     started = false,
     ended = false,
     currentChar,
-    startCurrWord,
-    currTypedWord,
-    prevInput,
     fullText,
     intervalID = -1,
     interval2ID = -1,
@@ -34,6 +35,42 @@ var startTime,
     continueSubmitting = false,
     endSaveUrl = '';
 
+// KNV7: set true when compositionend scores a character so the following
+// Opera keypress for the same Korean character can be suppressed.
+var knv7CompScored = false;
+
+// KNV7: Physical key code -> [unshifted Jamo, shifted Jamo].
+var knv7CodeMap = {
+    KeyQ: ['ㅂ', 'ㅃ'], KeyW: ['ㅈ', 'ㅉ'], KeyE: ['ㄷ', 'ㄸ'], KeyR: ['ㄱ', 'ㄲ'],
+    KeyT: ['ㅅ', 'ㅆ'], KeyY: ['ㅛ', 'ㅛ'], KeyU: ['ㅕ', 'ㅕ'], KeyI: ['ㅑ', 'ㅑ'],
+    KeyO: ['ㅐ', 'ㅒ'], KeyP: ['ㅔ', 'ㅖ'], KeyA: ['ㅁ', 'ㅁ'], KeyS: ['ㄴ', 'ㄴ'],
+    KeyD: ['ㅇ', 'ㅇ'], KeyF: ['ㄹ', 'ㄹ'], KeyG: ['ㅎ', 'ㅎ'], KeyH: ['ㅗ', 'ㅗ'],
+    KeyJ: ['ㅓ', 'ㅓ'], KeyK: ['ㅏ', 'ㅏ'], KeyL: ['ㅣ', 'ㅣ'], KeyZ: ['ㅋ', 'ㅋ'],
+    KeyX: ['ㅌ', 'ㅌ'], KeyC: ['ㅊ', 'ㅊ'], KeyV: ['ㅍ', 'ㅍ'], KeyB: ['ㅠ', 'ㅠ'],
+    KeyN: ['ㅜ', 'ㅜ'], KeyM: ['ㅡ', 'ㅡ'],
+    Semicolon: [';', ':'], Quote: ["'", '"'], Comma: [',', '<'], Period: ['.', '>'],
+    Slash: ['/', '?'], BracketLeft: ['[', '{'], BracketRight: [']', '}'],
+    Backslash: ['\\', '|'], Minus: ['-', '_'], Equal: ['=', '+'], Backquote: ['`', '~']
+};
+
+/**
+ * KNV7: Return true if c is a Korean jamo or syllable character.
+ */
+function knv7IsHangul(c) {
+    return typeof c === 'string' && c.length === 1 &&
+        /[\u1100-\u11FF\u3131-\u3163\uAC00-\uD7A3]/.test(c);
+}
+
+/**
+ * KNV7: Update the on-screen input viewer element.
+ */
+function knv7SetViewer(val) {
+    var el = document.getElementById('inputviewer');
+    if (el) {
+        el.textContent = 'Your current input: ' + (val || '');
+    }
+}
+
 /**
  * If not the end of fullText, move cursor to next character.
  * Color the previous character according to result.
@@ -45,26 +82,25 @@ function moveCursor(nextPos) {
         $('#crka' + (nextPos - 1)).removeClass('txtBlue');
         if (keyResult) {
             $('#crka' + (nextPos - 1))
-            .removeClass('txtBlack')
-            .removeClass('txtRed')
-            .addClass('txtGreen');
+                .removeClass('txtBlack')
+                .removeClass('txtRed')
+                .addClass('txtGreen');
         } else {
             if (!(countMistakes)) {
-                // Even with multiple keystrokes on the wrong key, only one mistake is counted.
                 mistakes++;
-                mistakestring += currentChar; // Keep a copy of the wrong letter.
+                mistakestring += currentChar;
             }
             $('#crka' + (nextPos - 1))
-            .removeClass('txtBlack')
-            .removeClass('txtGreen')
-            .addClass('txtRed');
+                .removeClass('txtBlack')
+                .removeClass('txtGreen')
+                .addClass('txtRed');
         }
     }
     if (nextPos < fullText.length) {
         $('#crka' + nextPos).addClass('txtBlue');
     }
     keyResult = true;
-    scroll_to_next_line($('#crka' + nextPos));
+    scrollToNextLine($('#crka' + nextPos));
 }
 
 /**
@@ -72,16 +108,15 @@ function moveCursor(nextPos) {
  *
  * @param {DOM object} obj
  */
-function scroll_to_next_line(obj) {
+function scrollToNextLine(obj) {
     var scrollBox = $('#texttoenter');
     if ($(obj).length > 0) {
         scrollBox.animate({
             scrollTop: $(obj).offset().top - scrollBox.offset().top + scrollBox.scrollTop()
-        },10);
+        }, 10);
     }
 }
 
-// Initialize scrolling text when document is ready.
 $(document).ready(function() {
     $('#keyboard textarea:last').css({
         "height": "16px",
@@ -89,7 +124,7 @@ $(document).ready(function() {
         "opacity": "0.0"
     });
     $("html, body").keyup(function(e) {
-        scroll_to_next_line($('#crka' + currentPos));
+        scrollToNextLine($('#crka' + currentPos));
     })
     .mouseup(function(e) {
         if (ended || (e && e.target && e.target.id === 'btnContinue')) {
@@ -98,7 +133,7 @@ $(document).ready(function() {
         $('#keyboard textarea:last').focus();
     });
     $('#keyboard textarea:last').focus();
-    scroll_to_next_line($("#keyboard"));
+    scrollToNextLine($("#keyboard"));
 
     window.mootyperContinueClickHandler = function(e) {
         if (!ended) {
@@ -142,7 +177,6 @@ $(document).ready(function() {
             return false;
         }
 
-        // Last-resort for very short attempts: create attempt id before final submit.
         var rpMootyperId = $('input[name="rpSityperId"]').val();
         var rpUser = $('input[name="rpUser"]').val();
         var stime = startTime ? (startTime.getTime() / 1000) : (new Date().getTime() / 1000);
@@ -159,7 +193,6 @@ $(document).ready(function() {
         return false;
     };
 
-    // Continue should advance only on pointer click, never by keyboard activation.
     $('#btnContinue')
         .on('keydown keyup keypress', function(e) {
             if (!e) {
@@ -173,7 +206,6 @@ $(document).ready(function() {
         })
         .on('click', window.mootyperContinueClickHandler);
 
-    // After exercise end, ignore Enter/Space globally so keyboard cannot advance.
     $(document).on('keydown keypress keyup', function(e) {
         if (!ended) {
             return true;
@@ -189,13 +221,14 @@ $(document).ready(function() {
 
 /**
  * End of typing.
- *
  */
 function doTheEnd() {
     if (ended) {
         return;
     }
     ended = true;
+    // KNV7: unregister compositionend and compositionupdate scoring listeners.
+    removeEventListener('compositionend', keyPressed);
     removeEventListener('compositionupdate', keyPressed);
     $("#form1").off("keypress", "#tb1", keyPressed);
     $("#form1").off("keyup", "#tb1", keyupFirst);
@@ -203,7 +236,6 @@ function doTheEnd() {
     clearInterval(intervalID);
     clearInterval(interval2ID);
     endTime = new Date();
-    // Update status bar with final data.
     var updateAll = updTimeSpeed();
     differenceT = timeDifference(startTime, endTime);
     var hours = differenceT.getHours();
@@ -241,7 +273,6 @@ function doTheEnd() {
                 endSaveUrl = '';
                 return;
             }
-            // Last resort: create a new attempt id so completion can be finalized and graded.
             var rpMootyperId = $('input[name="rpSityperId"]').val();
             var rpUser = $('input[name="rpUser"]').val();
             var stime = startTime ? (startTime.getTime() / 1000) : (new Date().getTime() / 1000);
@@ -256,84 +287,91 @@ function doTheEnd() {
             });
             return;
         }
-
         endSaveUrl = appUrl + "/mod/mootyper/atchk.php?status=3&attemptid=" + rpAttId;
-
         $.ajax({
             url: endSaveUrl,
             method: 'GET',
             timeout: 3000
-        }).always(function() {
-            // Keep end-save best-effort only; click path will finalize again before submit.
-        });
+        }).always(function() {});
     };
-
     finalizeAfterAttemptReady(20, true);
-    // At the end, add a scroll bar so student can see all the text and their mistakes.
-    $('#texttoenter').css({"overflow-y":"scroll"});
-    scroll_to_next_line($("#reportDiv input:last"));
+    $('#texttoenter').css({"overflow-y": "scroll"});
+    scrollToNextLine($("#reportDiv input:last"));
 }
 
 /**
- * Get the character for the pressed key depending on current keyboard driver.
+ * KNV7: Return the character the user typed for the given event.
+ * Handles Korean IME compositionend data and physical key code mapping.
  *
- * @param {char} e.
- * @returns {keychar}.
+ * @param {Event} e
+ * @returns {string}
  */
 function getPressedChar(e) {
-    var keynum;
-    var keychar;
-    var numcheck;
+    var etype = (e && e.type) ? e.type : '';
+    var key = (e && typeof e.key === 'string') ? e.key : '';
+    var code = (e && typeof e.code === 'string') ? e.code : '';
+    var isShift = !!(e && e.shiftKey);
 
-    // addEventListener('keydown', (event) => {
-    // Th.log('keydown We may have typed a Korean character here '+event.keyCode);
-    // console.log('keydown We need to get the data from compositionupdate '+event.compositionupdate);
-    // });
-    // addEventListener('compositionupdate', (event) => {
-
-    if (event.data) {
-        // console.log('compositionupdate We typed a Korean character here '+event.data);
-        keychar = event.data;
-        // console.log('keychar We transferred event.data to keychar and it is '+keychar);
-
-        if (keychar) {
-            //console.log('if (keychar) was tested and it is '+keychar);
-            return keychar;
+    // KNV7: compositionend delivers the final committed text in event.data.
+    if (etype === 'compositionend') {
+        var data = (e && typeof e.data === 'string') ? e.data : '';
+        if (!data && e && e.originalEvent && typeof e.originalEvent.data === 'string') {
+            data = e.originalEvent.data;
         }
+        if (data) {
+            return data;
+        }
+        // Fallback: last character in the input field.
+        var tb1 = document.getElementById('tb1');
+        if (tb1 && tb1.value) {
+            return tb1.value.charAt(tb1.value.length - 1);
+        }
+        return '';
     }
-    // });
 
-    if (window.event) { // IE.
+    // KNV7: for keypress events, prefer direct Hangul key value.
+    if (key && knv7IsHangul(key)) {
+        return key;
+    }
+
+    // KNV7: map physical key code to Jamo.
+    if (code && Object.prototype.hasOwnProperty.call(knv7CodeMap, code)) {
+        return knv7CodeMap[code][isShift ? 1 : 0];
+    }
+
+    // KNV7: won-sign variants on Korean keyboards.
+    if (key === '\u20a9' || key === '\uffe6') {
+        return '\\';
+    }
+
+    // Standard keyCode fallback for non-Korean keys (space, punctuation, Enter, etc.)
+    var keynum = 0;
+    if (e && e.keyCode) {
         keynum = e.keyCode;
-    } else if (e.which) { // Netscape/Firefox/Opera.
+    } else if (e && e.which) {
         keynum = e.which;
     }
-
     if (keynum === 13) {
-        keychar = '\n';
-        // This hack is needed for Spanish keyboard, which uses 161 for some character.
-    } else if ((!keynum || keynum === 160 || keynum === 161) && (keynum !== 161 && THE_LAYOUT !== 'Spanish')) {
-        keychar = '[not_yet_defined]';
-    } else {
-        keychar = String.fromCharCode(keynum);
+        return '\n';
     }
-    // console.log('We are returning keychar and it is '+keychar);
-
-    return keychar;
+    if (!keynum || keynum === 160 || keynum === 161) {
+        return '[not_yet_defined]';
+    }
+    return String.fromCharCode(keynum);
 }
 
 /**
  * Set the focus.
  *
  * @param {char} e.
- * @returns {bolean}.
+ * @returns {boolean}.
  */
 function focusSet(e) {
-    if(!started) {
+    if (!started) {
         $('#tb1').val('');
-        if (showKeyboard){
+        if (showKeyboard) {
             var thisEl = new keyboardElement(fullText[0]);
-            thisEl.turnOn(0);
+            thisEl.turnOn();
         }
         return true;
     } else {
@@ -344,7 +382,6 @@ function focusSet(e) {
 
 /**
  * Do checks.
- *
  */
 function doCheck() {
     var rpMootyperId = $('input[name="rpSityperId"]').val();
@@ -352,12 +389,11 @@ function doCheck() {
     var rpAttId = $('input[name="rpAttId"]').val();
     var juri = appUrl + "/mod/mootyper/atchk.php?status=2&attemptid=" + rpAttId +
         "&mistakes=" + mistakes + "&hits=" + (currentPos + mistakes);
-    $.get(juri, function( data ) { });
+    $.get(juri, function(data) {});
 }
 
 /**
  * Start exercise and reset data variables.
- *
  */
 function doStart() {
     startTime = new Date();
@@ -372,22 +408,22 @@ function doStart() {
     var rpUser = $('input[name="rpUser"]').val();
     var juri = appUrl + "/mod/mootyper/atchk.php?status=1&mootyperid=" + rpMootyperId +
         "&userid=" + rpUser + "&time=" + (startTime.getTime() / 1000);
-    $.get(juri, function( data ) {
+    $.get(juri, function(data) {
         $('input[name="rpAttId"]').val(data);
     });
     interval2ID = setInterval('doCheck()', 4000);
     rpTimeLimit2 = $('input[name="rpTimeLimit"]').val() * 60;
-
 }
 
 /**
- * Process current key press and proceed based on whether event is keypress or compositionupdate
+ * KNV7: Process a keypress or compositionend event and score it.
+ * compositionend is the primary scoring path for Chrome/Edge/Firefox.
+ * keypress handles space, punctuation, and Opera's Korean keypress fallback.
  *
- * @param {char} e.
- * @returns {bolean}.
+ * @param {Event} e
+ * @returns {boolean}
  */
 function keyPressed(e) {
-    // If reached the end of the lesson, don't let the student continue to type.
     if (ended) {
         if (e && typeof e.preventDefault === 'function') {
             e.preventDefault();
@@ -397,53 +433,43 @@ function keyPressed(e) {
         }
         return false;
     }
-    // If this is the first typed letter, initialize the status bar data.
     if (!started) {
         doStart();
     }
-    console.log("Key pressed: ", e)
-    console.log("Type: ", e.type)
-    if (e.type === "keypress") {
-        return keyCharPressed(e);
-    } else if (e.type === "compositionupdate") {
-        return keyCompPressed(e);
-    } else {
-        console.log("Key event not handled.")
-        return true;
-    }
-}
 
-/**
- * Process current key press and proceed based on typing mode.
- *
- * @param {char} e.
- * @returns {bolean}.
- */
-function keyCharPressed(e) {
-    // Something was typed so go figure out what character it was. and return for further processing.
+    var etype = (e && e.type) ? e.type : '';
+
+    // KNV7: compositionupdate fires during syllable assembly; update viewer only, never score.
+    if (etype === 'compositionupdate') {
+        knv7SetViewer((e && e.data) ? e.data : '');
+        return false;
+    }
+
+    // KNV7: suppress duplicate keypress that fires in Opera immediately after compositionend
+    // scored a Korean character at this position.
+    if (etype === 'keypress' && knv7CompScored) {
+        var k = (e && typeof e.key === 'string') ? e.key : '';
+        knv7CompScored = false;
+        if (knv7IsHangul(k)) {
+            return false; // suppress Opera duplicate
+        }
+        // Non-Korean key (e.g. space): fall through and score normally.
+    }
+
     var keychar = getPressedChar(e);
-   // var keychar = addEventListener('keydown', getPressedChar);
-   // var keychar = addEventListener('compositionstart', getPressedChar);
+    knv7SetViewer(keychar);
 
-    var inputViewer = document.querySelector("#inputviewer");
-    if (inputViewer) {
-        document.getElementById("inputviewer").textContent = "Your current input is: " + keychar;
-    }
-
-    console.log("Current input: ", keychar);
-    console.log("Prev input: ", prevInput);
     if (keychar === currentChar || ((currentChar === '\n' || currentChar === '\r\n' ||
         currentChar === '\n\r' || currentChar === '\r') && (keychar === ' '))) {
-        if (keychar.match("\s")) {
-            startCurrWord = currentPos + 1;
-            currTypedWord = "";
-            wordMistakes = 0;
-        } 
-        moveCursor(currentPos + 1);
-        console.log("keyCharPressed match");
-        // Student is at the end of the exercise or has ran out of time.
-        if ((currentPos === fullText.length - 1) || (rpTimeLimit3 < 0)) {
 
+        // KNV7: mark compositionend as scored to suppress Opera's follow-up keypress.
+        if (etype === 'compositionend') {
+            knv7CompScored = true;
+        }
+
+        moveCursor(currentPos + 1);
+
+        if ((currentPos === fullText.length - 1) || (rpTimeLimit3 < 0)) {
             $('#tb1').val($('#tb1').val() + currentChar);
             var elemOff = new keyboardElement(currentChar);
             elemOff.turnOff();
@@ -452,7 +478,6 @@ function keyCharPressed(e) {
             doTheEnd();
             return true;
         }
-        // Student still has more to type.
         if (currentPos < fullText.length - 1) {
             var nextChar = fullText[currentPos + 1];
             if (showKeyboard) {
@@ -463,7 +488,7 @@ function keyCharPressed(e) {
                     combinedCharWait = true;
                 }
                 var nextE = new keyboardElement(nextChar);
-                nextE.turnOn(0);
+                nextE.turnOn();
             }
             if (isCombined(nextChar)) {
                 $("#form1").off("keypress", "#tb1", keyPressed);
@@ -472,235 +497,32 @@ function keyCharPressed(e) {
         }
         currentChar = fullText[currentPos + 1];
         currentPos++;
-	prevInput = keychar;
+        knv7SetViewer('');
         return true;
-    // Ignore mistyped extra spaces unless set to count them.
+
     } else if (keychar === ' ' && !countMistypedSpaces) {
-	prevInput = keychar;
         return false;
+
     } else {
+        // KNV7: mark compositionend as scored even on mismatch.
+        if (etype === 'compositionend') {
+            knv7CompScored = true;
+        }
+
         if (countMistakes) {
-            // With multiple keystrokes on the wrong key, each wrong keystroke is counted.
-            // Typed the wrong letter so increment mistake count.
             mistakes++;
-            // Keep a copy of the wrong letter.
             mistakestring += currentChar;
         }
-        // Mistake count increased after correct key is typed if disabled and line 37 enabled.
         keyResult = false;
-        // If not set for continuous typing, wait for correct letter.
         if ((!continuousType && !countMistypedSpaces) || (!continuousType && countMistypedSpaces)) {
-            prevInput = keychar;
-	    return false;
-        // If continuous typing, show wrong letter and move on.
+            return false;
         } else if (currentPos < fullText.length - 1) {
-                var nextChar = fullText[currentPos + 1];
-            if (showKeyboard) {
-                    var thisE = new keyboardElement(currentChar);
-                    thisE.turnOff();
-                if (isCombined(nextChar) && (thisE.shift || thisE.alt || thisE.pow || thisE.uppercase_umlaut || thisE.accent)) {
-                        combinedCharWait = true;
-                }
-                    var nextE = new keyboardElement(nextChar);
-                    nextE.turnOn(0);
-            }
-            if (isCombined(nextChar)) {
-                $("#form1").off("keypress", "#tb1", keyPressed);
-                $("#form1").on("keyup", "#tb1", keyupFirst);
-            }
-        }
-        moveCursor(currentPos + 1);
-        // Student is at the end of the exercise or ran out of time.
-        if ((currentPos === fullText.length - 1) || (rpTimeLimit3 < 0)) {
-
-            $('#tb1').val($('#tb1').val() + currentChar);
-            var elemOff = new keyboardElement(currentChar);
-            elemOff.turnOff();
-            currentChar = fullText[currentPos + 1];
-            currentPos++;
-            doTheEnd();
-            return true;
-        }
-        currentChar = fullText[currentPos + 1];
-        currentPos++;
-	prevInput = keychar;
-        return true;
-    }
-}
-
-/**
- * Compares two strings and returns the first index of non-matching characters
- * @param {string} prev;
- * @param {string} curr;
- * @returns {number}.
- */
-function getMismatchIndex(prev, curr) {
-    console.log("Getting mismatch index for prev: ", prev);
-    console.log("and curr: ", curr);
-    var shortest= prev.length;
-    if (curr.length < prev.length) {
-        shortest = curr.length;
-    }
-    for (var i = 0; i < shortest; i++ ) {
-        if (curr[i] != prev[i]) {
-	    //console.log("Returning index: ", i);
-            return i;
-        }
-    }
-    //console.log("Returning shortest: ", shortest);
-    return shortest;
-}
-
-/**
- * Process current compositionupdate and proceed based on typing mode
- * @param {event} e.
- * @returns {boolean}. // false means don't move forward?
- */
-function keyCompPressed(e) {
-    var inputStr = e.data;
-    var inputViewer = document.querySelector("#inputviewer");
-    if (inputViewer) {
-        document.getElementById("inputviewer").textContent = "Your current input is: " + inputStr;
-    }
-    var currWord = fullText.substring(startCurrWord, currentPos); 
-    var mismatch = getMismatchIndex(prevInput, inputStr);
-    var newInput = inputStr.substring(mismatch);
-    console.log("Full inputStr:", inputStr);
-    console.log("currentChar:", currentChar);
-    console.log("New comp input:", newInput);
-    console.log("Prev input: ", prevInput);
-    if (newInput === "") { // backspace?
-        prevInput = inputStr;
-        return false;
-    } else if (newInput === currentChar) { // works for 1 output character (e.g., Amharic), need another condition for multiple output characters (e.g., Japanese "cha" -> "ã¡ã‚ƒ")
-        // move position forward
-        moveCursor(currentPos + 1);
-        console.log("newInput matches");
-        // Student is at the end of the exercise or has ran out of time.
-        if ((currentPos === fullText.length - 1) || (rpTimeLimit3 < 0)) {
-
-            $('#tb1').val($('#tb1').val() + currentChar);
-            var elemOff = new keyboardElement(currentChar);
-            elemOff.turnOff();
-            currentChar = fullText[currentPos + 1];
-            currentPos++;
-            doTheEnd();
-            return true;
-        }
-        // Student still has more to type.
-        if (currentPos < fullText.length - 1) {
             var nextChar = fullText[currentPos + 1];
             if (showKeyboard) {
                 var thisE = new keyboardElement(currentChar);
                 thisE.turnOff();
                 if (isCombined(nextChar) && (thisE.shift || thisE.alt || thisE.pow ||
                     thisE.uppercase_umlaut || thisE.accent)) {
-                    combinedCharWait = true;
-                }
-                var nextE = new keyboardElement(nextChar);
-                nextE.turnOn(0);
-            }
-            if (isCombined(nextChar)) {
-                $("#form1").off("keypress", "#tb1", keyPressed);
-                $("#form1").on("keyup", "#tb1", keyupFirst);
-            }
-        }
-        currTypedWord += currentChar;
-        currentChar = fullText[currentPos + 1];
-        currentPos++;
-        prevInput = inputStr;
-        return true;
-    } else if (isCharSequence(currentChar)) {
-        // check if the current sequence matches the sequence expected for this character
-        const seq = getSequence(currentChar);
-        if (seq.includes(newInput)) { // expected input, highlight next key in sequence but don't move pos forward
-	    console.log("New input in sequence");
-            // Student has run out of time.
-            if (rpTimeLimit3 < 0) {
-                $('#tb1').val($('#tb1').val() + currentChar);
-                var elemOff = new keyboardElement(currentChar);
-                elemOff.turnOff();
-                doTheEnd();
-                return true;
-            }
-            // Student still has more to type.
-            if (currentPos <= fullText.length - 1) {
-		var nextIdx = seq.indexOf(newInput) + 1;
-                if (showKeyboard) {
-                    var thisE = new keyboardElement(newInput);
-                    thisE.turnOff();
-                    // if (isCombined(nextChar) && (thisE.shift || thisE.alt || thisE.pow ||
-                    //     thisE.uppercase_umlaut || thisE.accent)) {
-                    //     combinedCharWait = true;
-                    // }
-                    var nextE = new keyboardElement(seq[nextIdx]);
-                    nextE.turnOn(nextIdx);
-                }
-                // if (isCombined(nextSeqStr)) {
-                //     $("#form1").off("keypress", "#tb1", keyPressed);
-                //     $("#form1").on("keyup", "#tb1", keyupFirst);
-                // }
-            }
-            prevInput = inputStr;
-            return true; 
-        } else { // not expected input for the current char, restart highlighting from sequence 
-	    console.log("New input not in expected sequence");
-            if (countMistakes) {
-                mistakes++;
-                mistakestring += currentChar;
-            }
-            keyResult = false;
-            if ((!continuousType && !countMistypedSpaces) || (!continuousType && countMistypedSpaces)) {
-                if (showKeyboard) {
-                    //prevElem.turnOff(); // may not be the currentChar
-		    var thisE = new keyboardElement(currentChar);
-		    thisE.turnOff();
-                    thisE.turnOn(0);
-                }
-		prevInput = inputStr;
-                return false; // If not set for continuous typing, wait for correct letter.
-            } else if (currentPos < fullText.length - 1) {
-                //if continous typing, show wrong letter and move on.
-                var nextChar = fullText[currentPos + 1];
-                if (showKeyboard) {
-                    var thisE = new keyboardElement(currentChar);
-                    thisE.turnOff();
-                    if (isCombined(nextChar) && (thisE.shift || thisE.alt || thisE.pow || thisE.uppercase_umlaut || thisE.accent)) {
-                        combinedCharWait = true;
-                    }
-                    var nextE = new keyboardElement(nextChar);
-                    nextE.turnOn(0);
-                }
-                if (isCombined(nextChar)) {
-                    $("#form1").off("keypress", "#tb1", keyPressed);
-                    $("#form1").on("keyup", "#tb1", keyupFirst);
-                }
-            }
-            prevInput = inputStr;
-            return false; 
-        }
-    } else {
-	console.log("New input not match and not sequence");
-        if (countMistakes) {
-            // With multiple keystrokes on the wrong key, each wrong keystroke is counted.
-            // Typed the wrong letter so increment mistake count.
-            mistakes++;
-            // Keep a copy of the wrong letter.
-            mistakestring += currentChar;
-        }
-        // Mistake count increased after correct key is typed if disabled and line 37 enabled.
-        keyResult = false;
-        // If not set for continuous typing, wait for correct letter.
-        if ((!continuousType && !countMistypedSpaces) || (!continuousType && countMistypedSpaces)) {
-	    prevInput = inputStr;
-            return false;
-        // If continuous typing, show wrong letter and move on.
-        } else if (currentPos < fullText.length - 1) {
-            var nextChar = fullText[currentPos + 1];
-            if (showKeyboard) {
-                var thisE = new keyboardElement(currentChar);
-                thisE.turnOff();
-                if (isCombined(nextChar) && (thisE.shift || thisE.alt || thisE.pow || thisE.uppercase_umlaut || thisE.accent)) {
                     combinedCharWait = true;
                 }
                 var nextE = new keyboardElement(nextChar);
@@ -712,9 +534,7 @@ function keyCompPressed(e) {
             }
         }
         moveCursor(currentPos + 1);
-        // Student is at the end of the exercise or ran out of time.
         if ((currentPos === fullText.length - 1) || (rpTimeLimit3 < 0)) {
-
             $('#tb1').val($('#tb1').val() + currentChar);
             var elemOff = new keyboardElement(currentChar);
             elemOff.turnOff();
@@ -725,7 +545,7 @@ function keyCompPressed(e) {
         }
         currentChar = fullText[currentPos + 1];
         currentPos++;
-        prevInput = inputStr;
+        knv7SetViewer('');
         return true;
     }
 }
@@ -773,7 +593,9 @@ function timeDifference(t1, t2) {
 }
 
 /**
- * Initialize variables and text to enter.
+ * KNV7: Initialize variables and text to enter.
+ * Registers compositionend (primary Korean scoring path) and keypress
+ * (space, punctuation, and Opera Korean fallback).
  *
  * @param {varchar} ttext.
  * @param {number} tinprogress.
@@ -785,10 +607,14 @@ function timeDifference(t1, t2) {
  * @param {boolean} tshowkeyboard.
  * @param {boolean} tcontinuoustype.
  * @param {boolean} tcountmistypedspaces.
+ * @param {boolean} tcountmistakes.
  */
 function inittexttoenter(ttext, tinprogress, tmistakes, thits, tstarttime, tattemptid, turl,
     tshowkeyboard, tcontinuoustype, tcountmistypedspaces, tcountmistakes) {
-    // Needed for IME (input method editor) when using Korean keyboard layout.
+    // KNV7: compositionend drives Korean character scoring in all browsers.
+    // compositionupdate keeps the viewer updated during syllable assembly.
+    // keypress handles space, punctuation, and Opera's Korean keypress path.
+    addEventListener('compositionend', keyPressed);
     addEventListener('compositionupdate', keyPressed);
     $("#form1").on("keypress", "#tb1", keyPressed);
     showKeyboard = tshowkeyboard;
@@ -798,23 +624,15 @@ function inittexttoenter(ttext, tinprogress, tmistakes, thits, tstarttime, tatte
     fullText = ttext;
     appUrl = turl;
     var tempStr = "";
-    prevInput = "";
-    if (tinprogress){
+    if (tinprogress) {
         $('input[name="rpAttId"]').val(tattemptid);
         startTime = new Date(tstarttime * 1000);
         mistakes = tmistakes;
         currentPos = (thits - tmistakes);
-        //currentChar = fullText[currentPos]; // Current character (trenutni = current).
-        currentChar = fullText.charAt(currentPos);
-	//console.log("currentPos: ", currentPos);
-	//console.log("fullText: ", fullText);
-	//console.log("currentChar: ", currentChar);
-	startCurrWord = 0;
-        currTypedWord = "";
-        if(showKeyboard) {
+        currentChar = fullText[currentPos];
+        if (showKeyboard) {
             var nextE = new keyboardElement(currentChar);
-	    // console.log("First character: ", currentChar);
-            nextE.turnOn(0);
+            nextE.turnOn();
             if (isCombined(currentChar)) {
                 $("#form1").off("keypress", "#tb1", keyPressed);
                 $("#form1").on("keyup", "#tb1", keyupCombined);
@@ -867,10 +685,8 @@ function inittexttoenter(ttext, tinprogress, tmistakes, thits, tstarttime, tatte
  */
 function calculateSpeed(sc) {
     if ((!continuousType && !countMistypedSpaces) || (!continuousType && countMistypedSpaces)) {
-        // Normally use this.
-        return (((currentPos + mistakes) * 60) / sc); 
+        return (((currentPos + mistakes) * 60) / sc);
     } else {
-        // Use this when set to continuous type.
         return ((currentPos * 60) / sc);
     }
 }
@@ -886,22 +702,11 @@ function calculateAccuracy() {
     if (currentPos + mistakes === 0) {
         return 0;
     }
-    // Only correctly typed count.
-    return (((currentPos - mistakes) * 100) / currentPos); 
+    return (((currentPos - mistakes) * 100) / currentPos);
 }
 
 /**
- * Update current time, progress, mistakes presicsion, hits per minute, and words per minute.
- *
- * @param {number} startTime.
- * @param {number} newCas.
- * @param {number} secs.
- * @param {number} tDifference.
- * @param {number} mistakes.
- * @param {number} currentPos.
- * @param {number} fullText.
- * @param {number} currentPos.
- * @param {varchar} mistakestring.
+ * Update current time, progress, mistakes, precision, hits per minute, and words per minute.
  */
 function updTimeSpeed() {
     newCas = new Date();
@@ -910,7 +715,6 @@ function updTimeSpeed() {
         secs = 0;
     }
 
-    // If timelimit is set, subtract elapsed time from the timelimit and set a flag.
     if (rpTimeLimit2 != 0) {
         rpTimeLimit3 = rpTimeLimit2 - secs;
         if (!ended && rpTimeLimit3 <= 0) {
@@ -921,20 +725,15 @@ function updTimeSpeed() {
 
     tDifference = new Date(secs * 1000);
 
-    // Each minute when seconds display is less than 10 seconds, add leading 0:0.
     if (tDifference.getSeconds() < 10) {
         $('#jsTime2').html(tDifference.getMinutes() + ':0' + tDifference.getSeconds());
     } else {
-        // Each time the display is greater than 9 seconds drop the leading zero.
         $('#jsTime2').html(tDifference.getMinutes() + ':' + tDifference.getSeconds());
     }
 
     $('#jsProgress2').html(currentPos + "/" + fullText.length);
-
     $('#jsMistakes2').html(mistakes);
-
     $('#jsSpeed2').html(calculateSpeed(secs).toFixed(2));
-
     $('#jsAcc2').html(calculateAccuracy(fullText, mistakes).toFixed(2));
 
     var gwpm = (calculateSpeed(secs) / 5);
@@ -947,43 +746,40 @@ function updTimeSpeed() {
 
 /**
  * Count the number of characters.
- * Separating characters = separateChars
- * @param {int} dem. Number of mistakes for the current character
+ * @param {string} str.
  * @result {varchar} result.
  */
 function countChars(str) {
     var arr = separateChars(str);
     arr.sort();
-    var arrC = new Array();
-    var result = "" ;
-    //alert(arr);
-    for ( var j = 0 ; j<arr.length ; j++) {
-        var dem = 0 ;
-        for ( var i = 0 ; i< str.length ; i++ ) {
-            if(str[i] == arr[j]) dem++;
+    var result = "";
+    for (var j = 0; j < arr.length; j++) {
+        var dem = 0;
+        for (var i = 0; i < str.length; i++) {
+            if (str[i] == arr[j]) {
+                dem++;
+            }
         }
-        result += "'" + arr[j] + "'=" + dem  + ", " ;
+        result += "'" + arr[j] + "'=" + dem + ", ";
     }
     return result;
 }
 
-// Separation of characters = separateChars
+// Separation of characters.
 function separateChars(str) {
-//console.log('In the separateChars function and str is '+str);
-
     var array = new Array();
-    var k = 1 ;
+    var k = 1;
     array[0] = str[0];
-    
-    for(var i = 1 ;    i<str.length ; i++){        
-        for(var j = 0 ; j<=array.length ; j++){
-            if( j == array.length ){
-                array[k] = str[i] ;
-                k++;    
+    for (var i = 1; i < str.length; i++) {
+        for (var j = 0; j <= array.length; j++) {
+            if (j == array.length) {
+                array[k] = str[i];
+                k++;
             }
-            if ( str[i] == array[j] ) break;    
+            if (str[i] == array[j]) {
+                break;
+            }
         }
     }
     return array;
 }
-

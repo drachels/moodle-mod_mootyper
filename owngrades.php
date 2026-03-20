@@ -46,17 +46,20 @@ $mtmode = optional_param('mtmode', 0, PARAM_INT);  // Is this Mootyper a lesson 
 
 if ($md == 1) {
     $us = 0;
-} else if ($md == 0) {
+} else if ($md == 0 || $md == 2) {
     $se = 0;
 }
+
 if ($id) {
     $cm = get_coursemodule_from_id('mootyper', $id, 0, false, MUST_EXIST);
     $course = $DB->get_record('course', ['id' => $cm->course], '*', MUST_EXIST);
     $mootyper = $DB->get_record('mootyper', ['id' => $cm->instance], '*', MUST_EXIST);
+    $n = $mootyper->id;
 } else if ($n) {
     $mootyper = $DB->get_record('mootyper', ['id' => $n], '*', MUST_EXIST);
     $course = $DB->get_record('course', ['id' => $mootyper->course], '*', MUST_EXIST);
     $cm = get_coursemodule_from_instance('mootyper', $mootyper->id, $course->id, false, MUST_EXIST);
+    $id = $cm->id;
 } else {
     throw new moodle_exception(get_string('mootypererror', 'mootyper'));
 }
@@ -66,7 +69,6 @@ $mtmode = $mootyper->isexam;
 require_login($course, true, $cm);
 $context = context_module::instance($cm->id);
 
-// Prevent anyone but students from typing in address to view my grades.
 if (!has_capability('mod/mootyper:viewmygrades', context_module::instance($cm->id))) {
     redirect('view.php?id='.$id, get_string('invalidaccess', 'mootyper'));
 } else {
@@ -80,6 +82,70 @@ if (!has_capability('mod/mootyper:viewmygrades', context_module::instance($cm->i
     $PAGE->set_cacheable(false);
     echo $OUTPUT->header();
     echo $OUTPUT->heading($mootyper->name);
+    echo '<script>
+    function mootyperConfirmDelete(ev, targetUrl, message) {
+        if (ev && typeof ev.preventDefault === "function") {
+            ev.preventDefault();
+        }
+
+        var dlg = document.getElementById("mootyper-delete-confirm");
+        if (!dlg) {
+            dlg = document.createElement("div");
+            dlg.id = "mootyper-delete-confirm";
+            dlg.style.position = "absolute";
+            dlg.style.zIndex = "9999";
+            dlg.style.maxWidth = "340px";
+            dlg.style.background = "#fff";
+            dlg.style.border = "1px solid #666";
+            dlg.style.borderRadius = "6px";
+            dlg.style.boxShadow = "0 6px 20px rgba(0,0,0,0.25)";
+            dlg.style.padding = "10px";
+            dlg.style.display = "none";
+            dlg.innerHTML = "<div id=\"mootyper-delete-confirm-text\" style=\"margin-bottom:10px;\"></div>"
+                + "<button type=\"button\" id=\"mootyper-delete-confirm-yes\" class=\"btn btn-danger btn-sm\">Yes</button> "
+                + "<button type=\"button\" id=\"mootyper-delete-confirm-no\" class=\"btn btn-secondary btn-sm\">No</button>";
+            document.body.appendChild(dlg);
+            document.getElementById("mootyper-delete-confirm-no").onclick = function() {
+                dlg.style.display = "none";
+            };
+        }
+
+        var txt = document.getElementById("mootyper-delete-confirm-text");
+        if (txt) {
+            txt.textContent = message;
+        }
+
+        var x = 60;
+        var y = 60;
+        if (ev) {
+            x = (typeof ev.pageX === "number") ? ev.pageX : x;
+            y = (typeof ev.pageY === "number") ? ev.pageY : y;
+        }
+        dlg.style.left = x + "px";
+        dlg.style.top = y + "px";
+        dlg.style.display = "block";
+
+        var yes = document.getElementById("mootyper-delete-confirm-yes");
+        if (yes) {
+            yes.onclick = function() {
+                window.location.href = targetUrl;
+            };
+        }
+
+        return false;
+    }
+
+    document.addEventListener("click", function(ev) {
+        var link = ev.target.closest("a.mootyper-delete-link");
+        if (!link) {
+            return;
+        }
+        var msg = link.getAttribute("data-confirm") || "";
+        mootyperConfirmDelete(ev, link.getAttribute("href"), msg);
+    }, true);
+    </script>';
+
+    echo '<a id="grades-top"></a>';
 
     echo '<div align="center" style="font-size:1em;
         font-weight:bold;background: '.$color3.';
@@ -115,10 +181,19 @@ if (!has_capability('mod/mootyper:viewmygrades', context_module::instance($cm->i
         .' = '.$mootyper->requiredgoal.'%';
     echo '&nbsp;&nbsp;&nbsp;&nbsp;'.get_string('requiredwpm', 'mootyper')
         .' = '.$mootyper->requiredwpm;
+
+    echo '<br>'.get_string('continuoustype', 'mootyper')
+        .' = '.$mootyper->continuoustype;
+    echo '&nbsp;&nbsp;&nbsp;&nbsp;'.get_string('countmistypedspaces', 'mootyper')
+        .' = '.$mootyper->countmistypedspaces;
+    echo '&nbsp;&nbsp;&nbsp;&nbsp;'.get_string('countmistakes', 'mootyper')
+        .' = '.$mootyper->countmistakes;
+
     echo '</td>';
 
     // 20240120 Moved and reworked code for link to all the MooTypers in the current course.
     echo '<td class="reportlink">'
+        .'<a href="#gradesbottom">'.get_string('jumpgradesbottom', 'mootyper').'</a>&nbsp;|&nbsp;'
         .'<a href="index.php?id='
         .$course->id.'">'
         .get_string('viewallmootypers', 'mootyper')
@@ -150,6 +225,7 @@ if (!has_capability('mod/mootyper:viewmygrades', context_module::instance($cm->i
     $arrtextadds[$orderby] = $des == -1 || $des == 1 ? '<span class="arrow-s" style="font-size:1em;">
         </span>' : '<span class="arrow-n" style="font-size:1em;"></span>';
     if ($grds != false) {
+        echo '<a id="grades-table"></a>';
         echo '<table style="border-style: solid;"><tr>
             <td><a href="?id='.$id.'&n='.$n.'&orderby=2'.$lnkadd.'">'
             .get_string('fexercise', 'mootyper').$arrtextadds[2].'</a></td>
@@ -178,30 +254,32 @@ if (!has_capability('mod/mootyper:viewmygrades', context_module::instance($cm->i
                 $stil = 'background-color: '.(get_config('mod_mootyper', 'failbgc')).';';
             }
             if ($mtmode == 2) {
-                $removelnk = '<a onclick="return confirm(\''
-                    .get_string('deletegradeconfirm', 'mootyper')
-                    .$gr->firstname.' '
-                    .$gr->lastname.' '
-                    .get_string('exercise_abreviation', 'mootyper').'-'
-                    .$gr->exercisename.'.'
-                    .'\')" href="'.$CFG->wwwroot
+                $deleteurl = $CFG->wwwroot
                     .'/mod/mootyper/attrem.php?c_id='
                     .optional_param('id', 0, PARAM_INT)
                     .'&m_id='.optional_param('n', 0, PARAM_INT)
                     .'&mtmode='.$mtmode
-                    .'&g='.$gr->id.'">'
-                    .get_string('delete', 'mootyper').'</a>';
-            } else {
-                $removelnk = '<a  onclick="return confirm(\''
-                    .get_string('deletegradeconfirm', 'mootyper')
+                    .'&returnanchor=grades-table'
+                    .'&g='.$gr->id;
+                $deletemsg = get_string('deletegradeconfirm', 'mootyper')
                     .$gr->firstname.' '
                     .$gr->lastname.' '
-                    .$gr->exercisename.'.'
-                    .'\')" href="'.$CFG->wwwroot
-                    .'/mod/mootyper/attrem.php?c_id='.optional_param('id', 0, PARAM_INT)
+                    .get_string('exercise_abreviation', 'mootyper').'-'
+                    .$gr->exercisename.'.';
+                $removelnk = '<a href="'.$deleteurl.'" class="mootyper-delete-link" data-confirm="'.s($deletemsg).'">'
+                    .get_string('delete', 'mootyper').'</a>';
+            } else {
+                $deleteurl = $CFG->wwwroot.'/mod/mootyper/attrem.php?c_id='
+                    .optional_param('id', 0, PARAM_INT)
                     .'&m_id='.optional_param('n', 0, PARAM_INT)
-                    .'&g='.$gr->id.'">'
-                    .'</a>';
+                    .'&returnanchor=grades-table'
+                    .'&g='.$gr->id;
+                $deletemsg = get_string('deletegradeconfirm', 'mootyper')
+                    .$gr->firstname.' '
+                    .$gr->lastname.' '
+                    .$gr->exercisename.'.';
+                $removelnk = '<a href="'.$deleteurl.'" class="mootyper-delete-link" data-confirm="'.s($deletemsg).'">'
+                    .get_string('delete', 'mootyper').'</a>';
             }
 
             $fcol = $gr->exercisename;
@@ -392,6 +470,8 @@ if (!has_capability('mod/mootyper:viewmygrades', context_module::instance($cm->i
                 </tr>';
         }
         echo '</table>';
+        echo '<a id="gradesbottom"></a>';
+        echo '<div class="reportlink"><a href="#grades-top">'.get_string('jumpgradestop', 'mootyper').'</a></div>';
 
     } else {
         echo get_string('nogrades', 'mootyper');

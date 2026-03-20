@@ -278,13 +278,24 @@ if ($mootyper->lesson != null) {
             $displaynone = true;
         }
         $keyboardjs = keyboards::get_instance_layout_js_file($mootyper->layout);
-        echo '<script type="text/javascript" src="'.$keyboardjs.'"></script>';
-        // 20241118 If not Amharic, use the regular typer.js file.
-        if (!$keyboardjs == 'Amharic(ETV7)') {
-            echo '<script type="text/javascript" src="typer.js"></script>';
-        } else {
+        $assetversion = (string)$CFG->version;
+        // 20260320 For Korean(KNV7) layout, append a dedicated cache-bust token so stale layout
+        // scripts (which only had onset highlighting) are replaced immediately.
+        $kbcache = (strpos($keyboardjs, 'Korean(KNV7)') !== false) ? '&knv7kb=20260320a' : '';
+        echo '<script type="text/javascript" src="'.$keyboardjs.'?v='.$assetversion.$kbcache.'"></script>';
+        // 20241118 If using the Amharic(ETV7) or Korean(KNV7) keyboard layout,
+        // use the appropriate typer JS file; otherwise use the regular typer.js file.
+        $isamharickeyboard = (strpos($keyboardjs, 'Amharic(ETV7)') !== false);
+        $iskoreankeyboard = (strpos($keyboardjs, 'Korean(KNV7)') !== false);
+        if ($isamharickeyboard) {
             // 20241118 Using the Amharic(ETV7) keyboard layout so switch to typer(ETV7).js file.
-            echo '<script type="text/javascript" src="typer(ETV7).js"></script>';
+            echo '<script type="text/javascript" src="typer(ETV7).js?v='.$assetversion.'"></script>';
+        } else if ($iskoreankeyboard) {
+            // 20260320 Korean(KNV7) standalone typer - complete replacement for typer.js.
+            // Add a dedicated cache-bust token so browsers with stale KNV7 script cache refresh immediately.
+            echo '<script type="text/javascript" src="typer(KNV7).js?v='.$assetversion.'&knv7=20260320b"></script>';
+        } else {
+            echo '<script type="text/javascript" src="typer.js?v='.$assetversion.'"></script>';
         }
 ?>
 <div id="mainDiv" align="left">
@@ -309,19 +320,25 @@ if ($mootyper->lesson != null) {
         }
         $tempstr = $tempstr.'&nbsp;&nbsp; '
             .get_string('lsnname', 'mootyper').' = '.$lsnname->lessonname
-            .'&nbsp;&nbsp; '
+            .'&nbsp;'
             .get_string('exercise', 'mootyper', $exercise->exercisename).$count;
         $tempstr = $tempstr.'<br>'
             .get_string('timelimit', 'mootyper').' ('.$reqiredtimelimit.':00)'
-            .'&nbsp;&nbsp; '
+            .'&nbsp;'
             .get_string('requiredgoal', 'mootyper').' ('.$reqiredgoal.'%)'
-            .'&nbsp;&nbsp; '
+            .'&nbsp;'
             .get_string('requiredwpm', 'mootyper').' ('.$reqiredwpm.')';
-        $temp = '<span class="reportlink"><a href="index.php?id='
+        $tempstr = $tempstr.'<br>'
+            .get_string('continuoustype', 'mootyper').' '.$mootyper->continuoustype.''
+            .'&nbsp;'
+            .get_string('countmistypedspaces', 'mootyper').' '.$mootyper->countmistypedspaces.''
+            .'&nbsp;'
+            .get_string('countmistakes', 'mootyper').' '.$mootyper->countmistakes.'';
+        $tempstr = $tempstr.' <a href="index.php?id='
             .$course->id.'">'
             .get_string('viewallmootypers', 'mootyper')
-            .'</a></span>';
-        echo $tempstr.' '.$temp;
+            .'</a>';
+        echo '<span class="settingsinfo">'.$tempstr.'</span>';
 
         ?>
 </h5>
@@ -402,6 +419,29 @@ if ($mootyper->lesson != null) {
                 .'" class="btn btn-primary btn-sm"  style="border-radius: 8px" name="viewmygrades">'
                 .get_string('viewmygrades', 'mootyper').'</a>';
         }
+        // Attempt recovery buttons to clear stuck in-progress attempts.
+        $canrecoverall = has_capability('mod/mootyper:viewgrades', context_module::instance($cm->id));
+        $showrecovermine = ($mtmode === '2') || $canrecoverall;
+
+        if ($showrecovermine) {
+            $recovermine = new moodle_url('/mod/mootyper/attempt_recovery.php', [
+                'id' => $cm->id,
+                'scope' => 'mine',
+                'sesskey' => sesskey(),
+            ]);
+            echo '&nbsp;<a href="'.$recovermine.'" class="btn btn-secondary btn-sm" style="border-radius: 8px">'
+                .get_string('attemptrecovermine', 'mootyper').'</a>';
+        }
+
+        if ($canrecoverall) {
+            $recoverall = new moodle_url('/mod/mootyper/attempt_recovery.php', [
+                'id' => $cm->id,
+                'scope' => 'all',
+                'sesskey' => sesskey(),
+            ]);
+            echo '&nbsp;<a href="'.$recoverall.'" class="btn btn-secondary btn-sm" style="border-radius: 8px">'
+                .get_string('attemptrecoverall', 'mootyper').'</a>';
+        }
         // Next button is Continue. Hidden until exercise is complete.
         // It is followed by the Status bar and Mistake details.
         ?>
@@ -409,7 +449,8 @@ if ($mootyper->lesson != null) {
             style="border-radius: 8px; visibility: hidden;"
             id="btnContinue"
             name='btnContinue'
-            type="submit"
+            onclick="return (typeof window.mootyperContinueClickHandler === 'function') ? window.mootyperContinueClickHandler(window.event || null) : true;"
+            type="button"
             value=<?php // phpcs:ignore
             echo "'" . get_string('fcontinue', 'mootyper') . "'";?>>
 

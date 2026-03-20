@@ -29,10 +29,11 @@
 
 use mod_mootyper\event\owngrades_deleted;
 use mod_mootyper\event\grade_deleted;
+use mod_mootyper\event\grade_delete_blocked;
 
 require(__DIR__ . '/../../config.php');
 
-global $DB;
+global $DB, $USER;
 
 // NOTE!!!! I think completion stuff is not needed here as the lib.php mootyper_update_grades
 // function always gets invoked after a grade delete.
@@ -44,6 +45,7 @@ $cid = optional_param('c_id', 0, PARAM_INT);  // Course module id (mdl_course_mo
 $context = optional_param('context', 0, PARAM_INT);  // MooTyper id (mdl_mootyper).
 $gradeid = optional_param('g', 0, PARAM_INT);
 $mtmode = optional_param('mtmode', 0, PARAM_INT);
+$returnanchor = optional_param('returnanchor', '', PARAM_ALPHANUMEXT);
 
 $mootyper = $DB->get_record('mootyper', ['id' => $mid], '*', MUST_EXIST);
 $course = $mootyper->course;
@@ -54,7 +56,87 @@ require_login($course, true, $cm);
 
 
 if (isset($gradeid)) {
-    $dbgrade = $DB->get_record('mootyper_grades', ['id' => $gradeid]);
+    $dbgrade = $DB->get_record('mootyper_grades', ['id' => $gradeid, 'mootyper' => $mid]);
+    if (!$dbgrade) {
+        $params = [
+            'objectid' => $mootyper->id,
+            'context' => $context,
+            'other' => [
+                'reason' => 'grade_not_found',
+                'gradeid' => $gradeid,
+                'exercise' => 0,
+                'mode' => $mootyper->isexam,
+            ],
+        ];
+        $event = grade_delete_blocked::create($params);
+        $event->trigger();
+
+        $target = ($mtmode == 2)
+            ? ($CFG->wwwroot . '/mod/mootyper/owngrades.php?id='.$cid.'&n='.$mid)
+            : ($CFG->wwwroot . '/mod/mootyper/gview.php?id='.$cid.'&n='.$mid);
+        if ($returnanchor !== '') {
+            $target .= '#'.$returnanchor;
+        }
+        redirect($target, get_string('invalidaccess', 'mootyper'));
+    }
+
+    // In own-grades mode, users may delete only their own result.
+    if ($mtmode == 2 && (int)$dbgrade->userid !== (int)$USER->id) {
+        $params = [
+            'objectid' => $mootyper->id,
+            'context' => $context,
+            'relateduserid' => $dbgrade->userid,
+            'other' => [
+                'reason' => 'not_owner',
+                'gradeid' => $dbgrade->id,
+                'exercise' => $dbgrade->exercise,
+                'mode' => $mootyper->isexam,
+            ],
+        ];
+        $event = grade_delete_blocked::create($params);
+        $event->trigger();
+
+        $target = $CFG->wwwroot . '/mod/mootyper/owngrades.php?id='.$cid.'&n='.$mid;
+        if ($returnanchor !== '') {
+            $target .= '#'.$returnanchor;
+        }
+        redirect($target, get_string('invalidaccess', 'mootyper'));
+    }
+
+    // Only allow deleting the latest grade in this lesson for this user.
+    $latestgrades = $DB->get_records(
+        'mootyper_grades',
+        ['mootyper' => $mid, 'userid' => $dbgrade->userid],
+        'timetaken DESC, id DESC',
+        'id',
+        0,
+        1
+    );
+    $latestgrade = $latestgrades ? reset($latestgrades) : false;
+    if (!$latestgrade || (int)$latestgrade->id !== (int)$dbgrade->id) {
+        $params = [
+            'objectid' => $mootyper->id,
+            'context' => $context,
+            'relateduserid' => $dbgrade->userid,
+            'other' => [
+                'reason' => 'not_latest',
+                'gradeid' => $dbgrade->id,
+                'exercise' => $dbgrade->exercise,
+                'mode' => $mootyper->isexam,
+            ],
+        ];
+        $event = grade_delete_blocked::create($params);
+        $event->trigger();
+
+        $target = ($mtmode == 2)
+            ? ($CFG->wwwroot . '/mod/mootyper/owngrades.php?id='.$cid.'&n='.$mid)
+            : ($CFG->wwwroot . '/mod/mootyper/gview.php?id='.$cid.'&n='.$mid);
+        if ($returnanchor !== '') {
+            $target .= '#'.$returnanchor;
+        }
+        redirect($target, get_string('attemptdeleteonlylast', 'mootyper'));
+    }
+
     // Changed from attempt_id to attemptid 20180129.
     $DB->delete_records('mootyper_attempts', ['id' => $dbgrade->attemptid]);
     $DB->delete_records('mootyper_grades', ['id' => $dbgrade->id]);
@@ -105,4 +187,9 @@ if ($mtmode == 2) {
     $event->trigger();
     $webdir = $CFG->wwwroot . '/mod/mootyper/gview.php?id='.$cid.'&n='.$mid;
 }
+
+if ($returnanchor !== '') {
+    $webdir .= '#'.$returnanchor;
+}
+
 header('Location: '.$webdir);

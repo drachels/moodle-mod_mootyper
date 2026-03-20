@@ -76,5 +76,7 @@ if ($kb) {
     $event->trigger();
 }
 // 20220126 After deletion, return to the list of layouts so we can delete more, if we need to.
-$webdir = $CFG->wwwroot . '/mod/mootyper/layouts.php?id='.$id;
+$anchor = optional_param('anchor', '', PARAM_TEXT);
+$anchorfrag = $anchor ? ('#' . $anchor) : '';
+$webdir = $CFG->wwwroot . '/mod/mootyper/layouts.php?id='.$id.$anchorfrag;
 header('Location: '.$webdir);

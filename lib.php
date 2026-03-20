@@ -118,7 +118,7 @@ function get_users_of_one_instance($mootyperid) {
 }
 
 /**
- * Get grades for users for this MooTyper.
+ * Get grades for users for this MooTyper. Used in gview.php file.
  *
  * @param int $mootyperid
  * @param int $exerciseid
@@ -200,7 +200,7 @@ function get_typer_grades_adv($mootyperid, $exerciseid, $userid=0, $orderby=-1, 
 }
 
 /**
- * Get grades for one user.
+ * Get grades for one user. Used in owngrades.php file.
  *
  * @param int $sid
  * @param int $uid
@@ -362,17 +362,25 @@ function get_exercise_from_mootyper($mootyperid, $lessonid, $userid) {
     global $DB;
 
     $table = 'mootyper_grades';
-    $select = 'userid='.$userid.' AND mootyper='.$mootyperid.' AND pass=1'; // Is put into the where clause.
+    // Progression should follow completed exercises, not only passed ones.
+    $select = 'userid='.$userid.' AND mootyper='.$mootyperid; // Is put into the where clause.
     $result = $DB->get_records_select($table, $select);
     // Process result if it is not empty.
     if (!is_null($result) && count($result) > 0) {
         $max = 0;
         foreach ($result as $grd) {
-            $exrec = $DB->get_record('mootyper_exercises', ['id' => $grd->exercise]);
+            $exrec = $DB->get_record('mootyper_exercises', ['id' => $grd->exercise, 'lesson' => $lessonid]);
+            if (!$exrec) {
+                continue;
+            }
             $zapst = $exrec->snumber;
             if ($zapst > $max) {
                 $max = $zapst;
             }
+        }
+        if ($max === 0) {
+            // Return with the lesson ID and the first exercise snumber.
+            return $DB->get_record('mootyper_exercises', ['snumber' => 1, 'lesson' => $lessonid]);
         }
         // Return with the lesson ID and the next exercise snumber.
         return $DB->get_record('mootyper_exercises', ['snumber' => ($max + 1), 'lesson' => $lessonid]);

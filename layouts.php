@@ -76,11 +76,23 @@ echo '</tr></thead>';
 echo '<tbody>';
 
 // 20220126 Changed to button with popup confirm. Only an admin can do a layout delete!
-foreach ($layouts as $lo) {
-    // 20220126 List the keyboards by name with a delete button.
-    echo '<tr><td>'.$lo.'</td><td>'
+// 20260309 Improved anchor behavior: after deletion, scroll to next/previous row.
+$layoutnames = array_values($layouts);
+$layoutcount = count($layoutnames);
+for ($i = 0; $i < $layoutcount; $i++) {
+    $lo = $layoutnames[$i];
+    $anchorid = 'layout-' . preg_replace('/[^a-zA-Z0-9_-]/', '', $lo);
+    // Determine anchor for after delete: next layout, or previous if last.
+    $nextanchor = '';
+    if ($i < $layoutcount - 1) {
+        $nextanchor = 'layout-' . preg_replace('/[^a-zA-Z0-9_-]/', '', $layoutnames[$i+1]);
+    } else if ($i > 0) {
+        $nextanchor = 'layout-' . preg_replace('/[^a-zA-Z0-9_-]/', '', $layoutnames[$i-1]);
+    }
+    $anchorparam = $nextanchor ? ('&anchor=' . $nextanchor) : '';
+    echo '<tr id="'.$anchorid.'"><td>'.$lo.'</td><td>'
         .'<a onclick="return confirm(\''.get_string('deletelsnconfirm', 'mootyper').$lo
-        .'\')" href="'.$jlinkklrem.'&kb='.$lo
+        .'\')" href="'.$jlinkklrem.'&kb='.$lo.$anchorparam.'#'.$anchorid
         .'" class="btn btn-warning" style="border-radius: 8px">'
         .get_string('deletekblo', 'mootyper', $lo)
         .'</a></td></tr>';

@@ -278,13 +278,20 @@ if ($mootyper->lesson != null) {
             $displaynone = true;
         }
         $keyboardjs = keyboards::get_instance_layout_js_file($mootyper->layout);
-        echo '<script type="text/javascript" src="'.$keyboardjs.'"></script>';
-        // 20241118 If not Amharic, use the regular typer.js file.
-        if (!$keyboardjs == 'Amharic(ETV7)') {
-            echo '<script type="text/javascript" src="typer.js"></script>';
-        } else {
+        $assetversion = (string)$CFG->version;
+        echo '<script type="text/javascript" src="'.$keyboardjs.'?v='.$assetversion.'"></script>';
+        // 20241118 If using the Amharic(ETV7) or Korean(KNV7) keyboard layout, use the appropriate typer JS file; otherwise use the regular typer.js file.
+        $isamharickeyboard = (strpos($keyboardjs, 'Amharic(ETV7)') !== false);
+        $iskoreankeyboard = (strpos($keyboardjs, 'Korean(KNV7)') !== false);
+        if ($isamharickeyboard) {
             // 20241118 Using the Amharic(ETV7) keyboard layout so switch to typer(ETV7).js file.
-            echo '<script type="text/javascript" src="typer(ETV7).js"></script>';
+            echo '<script type="text/javascript" src="typer(ETV7).js?v='.$assetversion.'"></script>';
+        } else if ($iskoreankeyboard) {
+            // 20260310 Korean(KNV7) uses the base timer logic plus a Korean input addon.
+            echo '<script type="text/javascript" src="typer.js?v='.$assetversion.'"></script>';
+            echo '<script type="text/javascript" src="typer(KNV7).js?v='.$assetversion.'"></script>';
+        } else {
+            echo '<script type="text/javascript" src="typer.js?v='.$assetversion.'"></script>';
         }
 ?>
 <div id="mainDiv" align="left">
@@ -408,6 +415,29 @@ if ($mootyper->lesson != null) {
                 .'" class="btn btn-primary btn-sm"  style="border-radius: 8px" name="viewmygrades">'
                 .get_string('viewmygrades', 'mootyper').'</a>';
         }
+        // Attempt recovery buttons to clear stuck in-progress attempts.
+        $canrecoverall = has_capability('mod/mootyper:viewgrades', context_module::instance($cm->id));
+        $showrecovermine = ($mtmode === '2') || $canrecoverall;
+
+        if ($showrecovermine) {
+            $recovermine = new moodle_url('/mod/mootyper/attempt_recovery.php', [
+                'id' => $cm->id,
+                'scope' => 'mine',
+                'sesskey' => sesskey(),
+            ]);
+            echo '&nbsp;<a href="'.$recovermine.'" class="btn btn-secondary btn-sm" style="border-radius: 8px">'
+                .get_string('attemptrecovermine', 'mootyper').'</a>';
+        }
+
+        if ($canrecoverall) {
+            $recoverall = new moodle_url('/mod/mootyper/attempt_recovery.php', [
+                'id' => $cm->id,
+                'scope' => 'all',
+                'sesskey' => sesskey(),
+            ]);
+            echo '&nbsp;<a href="'.$recoverall.'" class="btn btn-secondary btn-sm" style="border-radius: 8px">'
+                .get_string('attemptrecoverall', 'mootyper').'</a>';
+        }
         // Next button is Continue. Hidden until exercise is complete.
         // It is followed by the Status bar and Mistake details.
         ?>
@@ -415,7 +445,8 @@ if ($mootyper->lesson != null) {
             style="border-radius: 8px; visibility: hidden;"
             id="btnContinue"
             name='btnContinue'
-            type="submit"
+            onclick="return (typeof window.mootyperContinueClickHandler === 'function') ? window.mootyperContinueClickHandler(window.event || null) : true;"
+            type="button"
             value=<?php // phpcs:ignore
             echo "'" . get_string('fcontinue', 'mootyper') . "'";?>>
 

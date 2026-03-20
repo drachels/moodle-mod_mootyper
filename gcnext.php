@@ -33,7 +33,7 @@ require(__DIR__ . '/../../config.php');
 // 20200808 Added for integration with Moodle rating/grades.
 require_once(__DIR__ . '/lib.php');
 
-global $CFG, $DB;
+global $CFG, $DB, $USER;
     require_once($CFG->libdir.'/completionlib.php');
 
 $cmid = optional_param('cmid', 0, PARAM_INT); // Course_module ID.
@@ -69,7 +69,7 @@ if (($passfield == 1) && (optional_param('rpWpmInput', '', PARAM_FLOAT) >= optio
 // based on both precision and wpm, just precision, or just wpm.
 $record = new stdClass();
 $record->mootyper = optional_param('rpSityperId', '', PARAM_INT);
-$record->userid = optional_param('rpUser', '', PARAM_INT);
+$record->userid = $USER->id;
 // 20200915 Changed from float to int.
 $record->grade = optional_param('rpAccInput', '', PARAM_INT);
 $record->mistakes = optional_param('rpMistakesInput', '', PARAM_INT);
@@ -90,6 +90,72 @@ if (stripos($record->mistakedetails, "undefined") !== false) {
 
 // 20200808 Added code for using MooTyper exercise grades as Moodle Ratings.
 $mootyper = $DB->get_record('mootyper', ['id' => $record->mootyper], '*', MUST_EXIST);
+
+// Require a valid, finalized attempt before accepting and storing grade data.
+if (empty($record->attemptid)) {
+    $returnurl = new moodle_url('/mod/mootyper/view.php', ['n' => $record->mootyper]);
+    redirect($returnurl, get_string('attemptsubmitblockedmissing', 'mootyper'));
+}
+
+$attempt = $DB->get_record('mootyper_attempts', [
+    'id' => $record->attemptid,
+    'mootyperid' => $record->mootyper,
+    'userid' => $record->userid,
+]);
+
+if (!$attempt) {
+    $returnurl = new moodle_url('/mod/mootyper/view.php', ['n' => $record->mootyper]);
+    redirect($returnurl, get_string('attemptsubmitblockedmissing', 'mootyper'));
+}
+
+if (!empty($attempt->inprogress)) {
+    $returnurl = new moodle_url('/mod/mootyper/view.php', ['n' => $record->mootyper]);
+    redirect($returnurl, get_string('attemptsubmitblockedinprogress', 'mootyper'));
+}
+
+// Enforce time limit on the server to prevent client-side timer bypass.
+if (!empty($mootyper->timelimit)) {
+    $timelimitseconds = (int)$mootyper->timelimit * 60;
+    $graceseconds = 5;
+    $islate = false;
+    $elapsedsubmitted = max((int)$record->timeinseconds, 0);
+
+    if (!empty($record->attemptid)) {
+        $attempt = $DB->get_record('mootyper_attempts', [
+            'id' => $record->attemptid,
+            'mootyperid' => $record->mootyper,
+            'userid' => $record->userid,
+        ]);
+        if ($attempt) {
+            $elapsedserver = max(0, time() - (int)$attempt->timetaken);
+            // If the attempt is still marked active and already beyond limit, reject.
+            if (!empty($attempt->inprogress) && $elapsedserver > ($timelimitseconds + $graceseconds)) {
+                $islate = true;
+            }
+            // Always reject if submitted elapsed time itself exceeds configured limit.
+            if ($elapsedsubmitted > ($timelimitseconds + $graceseconds)) {
+                $islate = true;
+            }
+        } else if ($elapsedsubmitted > ($timelimitseconds + $graceseconds)) {
+            // Fall back to submitted elapsed time if attempt row is missing.
+            $islate = true;
+        }
+    } else if ($elapsedsubmitted > ($timelimitseconds + $graceseconds)) {
+        $islate = true;
+    }
+
+    if ($islate) {
+        $returnurl = new moodle_url('/mod/mootyper/view.php', ['n' => $record->mootyper]);
+        $message = get_string('timesubmissionrejected', 'mootyper', [
+            'limit' => $timelimitseconds,
+            'elapsed' => $elapsedsubmitted,
+        ]);
+        redirect($returnurl, $message);
+    }
+
+    // Keep persisted elapsed time aligned with the configured hard limit.
+    $record->timeinseconds = min($record->timeinseconds, $timelimitseconds);
+}
 
 // 20230102 Update $record->grade and $record->mistakedetails as needed to get the correct grade or rating.
 if (($mootyper->requiredgoal == 0) && ($mootyper->requiredwpm > 0)) {

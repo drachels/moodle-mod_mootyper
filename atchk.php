@@ -37,7 +37,7 @@ use mod_mootyper\local\results;
 
 require(__DIR__ . '/../../config.php');
 
-global $DB;
+global $DB, $USER;
 
 // For security, added the following 20190202 and things seem to be working correctly.
 require_login();
@@ -52,10 +52,26 @@ $st = optional_param('status', '', PARAM_INT);
 
 if ($st == 1) {
     $record->mootyperid = optional_param('mootyperid', 0, PARAM_INT);
-    $record->userid = optional_param('userid', 0, PARAM_INT);
+    $record->userid = $USER->id;
     $record->timetaken = optional_param('time', 0, PARAM_INT);
     $record->inprogress = 1;
     $record->suspicion = 0;
+
+    // Auto-recover from abandoned/stale in-progress attempts for this user/activity.
+    $staleattempts = $DB->get_records('mootyper_attempts', [
+        'mootyperid' => $record->mootyperid,
+        'userid' => $record->userid,
+        'inprogress' => 1,
+    ]);
+    if ($staleattempts) {
+        $staleids = array_keys($staleattempts);
+        foreach ($staleattempts as $stale) {
+            $stale->inprogress = 0;
+            $DB->update_record('mootyper_attempts', $stale);
+        }
+        $DB->delete_records_list('mootyper_checks', 'attemptid', $staleids);
+    }
+
     $newid = $DB->insert_record('mootyper_attempts', $record, true);
     echo $newid;
 } else if ($st == 2) {

@@ -27,7 +27,9 @@ var startTime,
     tDifference,
     secs,
     rpTimeLimit2,
-    rpTimeLimit3;
+    rpTimeLimit3,
+    continueSubmitting = false,
+    endSaveUrl = '';
 
 /**
  * If not the end of fullText, move cursor to next character.
@@ -87,10 +89,99 @@ $(document).ready(function() {
         scrollToNextLine($('#crka' + currentPos));
     })
     .mouseup(function(e) {
+        if (ended || (e && e.target && e.target.id === 'btnContinue')) {
+            return;
+        }
         $('#keyboard textarea:last').focus();
     });
     $('#keyboard textarea:last').focus();
     scrollToNextLine($("#keyboard"));
+
+    window.mootyperContinueClickHandler = function(e) {
+        if (!ended) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            return false;
+        }
+        if (continueSubmitting) {
+            e.preventDefault();
+            return false;
+        }
+        continueSubmitting = true;
+        var form = document.getElementById('form1');
+        var submitNow = function() {
+            continueSubmitting = false;
+            if (form) {
+                if (typeof form.submit === 'function') {
+                    form.submit();
+                } else {
+                    HTMLFormElement.prototype.submit.call(form);
+                }
+            }
+        };
+
+        var finalizeAndSubmit = function(attid) {
+            if (attid) {
+                var finishUrl = appUrl + "/mod/mootyper/atchk.php?status=3&attemptid=" + attid;
+                $.ajax({
+                    url: finishUrl,
+                    method: 'GET',
+                    timeout: 3000
+                }).always(submitNow);
+            } else {
+                submitNow();
+            }
+        };
+
+        var rpAttId = $('input[name="rpAttId"]').val();
+        if (rpAttId) {
+            finalizeAndSubmit(rpAttId);
+            return false;
+        }
+
+        // Last-resort for very short attempts: create attempt id before final submit.
+        var rpMootyperId = $('input[name="rpSityperId"]').val();
+        var rpUser = $('input[name="rpUser"]').val();
+        var stime = startTime ? (startTime.getTime() / 1000) : (new Date().getTime() / 1000);
+        var startUri = appUrl + "/mod/mootyper/atchk.php?status=1&mootyperid=" + rpMootyperId +
+            "&userid=" + rpUser + "&time=" + stime;
+        $.get(startUri, function(data) {
+            if (data) {
+                $('input[name="rpAttId"]').val(data);
+            }
+        }).always(function() {
+            finalizeAndSubmit($('input[name="rpAttId"]').val());
+        });
+
+        return false;
+    };
+
+    // Continue should advance only on pointer click, never by keyboard activation.
+    $('#btnContinue')
+        .on('keydown keyup keypress', function(e) {
+            if (!e) {
+                return true;
+            }
+            if (e.key === 'Enter' || e.key === ' ' || e.keyCode === 13 || e.keyCode === 32) {
+                e.preventDefault();
+                return false;
+            }
+            return true;
+        })
+        .on('click', window.mootyperContinueClickHandler);
+
+    // After exercise end, ignore Enter/Space globally so keyboard cannot advance.
+    $(document).on('keydown keypress keyup', function(e) {
+        if (!ended) {
+            return true;
+        }
+        if (e && (e.key === 'Enter' || e.key === ' ' || e.keyCode === 13 || e.keyCode === 32)) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            return false;
+        }
+        return true;
+    });
 });
 
 /**
@@ -98,7 +189,14 @@ $(document).ready(function() {
  *
  */
 function doTheEnd() {
+    if (ended) {
+        return;
+    }
     ended = true;
+    removeEventListener('compositionupdate', keyPressed);
+    $("#form1").off("keypress", "#tb1", keyPressed);
+    $("#form1").off("keyup", "#tb1", keyupFirst);
+    $("#form1").off("keyup", "#tb1", keyupCombined);
     clearInterval(intervalID);
     clearInterval(interval2ID);
     endTime = new Date();
@@ -109,6 +207,9 @@ function doTheEnd() {
     var mins = differenceT.getMinutes();
     var secs = differenceT.getSeconds();
     var samoSekunde = converToSeconds(hours, mins, secs);
+    if (rpTimeLimit2 > 0) {
+        samoSekunde = Math.min(samoSekunde, rpTimeLimit2);
+    }
     $('input[name="rpFullHits"]').val((fullText.length + mistakes));
     $('input[name="rpTimeInput"]').val(samoSekunde);
     $('input[name="rpMistakesInput"]').val(mistakes);
@@ -121,13 +222,53 @@ function doTheEnd() {
     $('input[name="rpWpmInput"]').val(wpm);
     $('input[name="rpMistakeDetailsInput"]').val(countChars(mistakestring));
     $('#tb1').attr('disabled', 'disabled');
+    $('#tb1').blur();
+    $('#btnContinue').prop('disabled', false);
     $('#btnContinue').css('visibility', 'visible');
-    var rpAttId = document.form1.rpAttId.value;
-    var juri = appUrl + "/mod/mootyper/atchk.php?status=3&attemptid=" + $('input[name="rpAttId"]').val();
-    $.get(juri, function(data) { });
+    var finalizeAfterAttemptReady = function(retriesLeft, canCreateAttempt) {
+        var rpAttId = $('input[name="rpAttId"]').val();
+        if (!rpAttId) {
+            if (retriesLeft > 0) {
+                setTimeout(function() {
+                    finalizeAfterAttemptReady(retriesLeft - 1, canCreateAttempt);
+                }, 120);
+                return;
+            }
+            if (!canCreateAttempt) {
+                endSaveUrl = '';
+                return;
+            }
+            // Last resort: create a new attempt id so completion can be finalized and graded.
+            var rpMootyperId = $('input[name="rpSityperId"]').val();
+            var rpUser = $('input[name="rpUser"]').val();
+            var stime = startTime ? (startTime.getTime() / 1000) : (new Date().getTime() / 1000);
+            var startUri = appUrl + "/mod/mootyper/atchk.php?status=1&mootyperid=" + rpMootyperId +
+                "&userid=" + rpUser + "&time=" + stime;
+            $.get(startUri, function(data) {
+                if (data) {
+                    $('input[name="rpAttId"]').val(data);
+                }
+            }).always(function() {
+                finalizeAfterAttemptReady(0, false);
+            });
+            return;
+        }
+
+        endSaveUrl = appUrl + "/mod/mootyper/atchk.php?status=3&attemptid=" + rpAttId;
+
+        $.ajax({
+            url: endSaveUrl,
+            method: 'GET',
+            timeout: 3000
+        }).always(function() {
+            // Keep end-save best-effort only; click path will finalize again before submit.
+        });
+    };
+
+    finalizeAfterAttemptReady(20, true);
     // At the end, add a scroll bar so student can see all the text and their mistakes.
     $('#texttoenter').css({"overflow-y":"scroll"});
-    scrollToNextLine($("#reportDiv input:last").focus());
+    scrollToNextLine($("#reportDiv input:last"));
 }
 
 /**
@@ -244,6 +385,12 @@ function doStart() {
 function keyPressed(e) {
     // If reached the end of the lesson, don't let the student continue to type.
     if (ended) {
+        if (e && typeof e.preventDefault === 'function') {
+            e.preventDefault();
+        }
+        if (e && typeof e.stopImmediatePropagation === 'function') {
+            e.stopImmediatePropagation();
+        }
         return false;
     }
     // If this is the first typed letter, initialize the status bar data.
@@ -510,11 +657,21 @@ function calculateAccuracy() {
  */
 function updTimeSpeed() {
     newCas = new Date();
-    tDifference = timeDifference(startTime, newCas);
-    secs = converToSeconds(tDifference.getHours(), tDifference.getMinutes(), tDifference.getSeconds());
+    secs = Math.floor((newCas.getTime() - startTime.getTime()) / 1000);
+    if (secs < 0) {
+        secs = 0;
+    }
 
     // If timelimit is set, subtract elapsed time from the timelimit and set a flag.
-    if (rpTimeLimit2 != 0) rpTimeLimit3 = rpTimeLimit2 - secs;
+    if (rpTimeLimit2 != 0) {
+        rpTimeLimit3 = rpTimeLimit2 - secs;
+        if (!ended && rpTimeLimit3 <= 0) {
+            doTheEnd();
+            return;
+        }
+    }
+
+    tDifference = new Date(secs * 1000);
 
     // Each minute when seconds display is less than 10 seconds, add leading 0:0.
     if (tDifference.getSeconds() < 10) {

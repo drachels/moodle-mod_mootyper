@@ -95,20 +95,13 @@ function keyboardElement(ltr) {
     // phpcs:ignore
     if (isLetter(ltr)) { // Set specified shift key for right or left.
         if (ltr.match(/[ĂÂÊÔĐQWERTASDFGZXCVB]/)) {
-            this.shiftleft = false;
             this.shiftright = true;
         } else if (ltr.match(/[ƯƠYUIOP|HJKL:_+"NM<>?]/)) {
             this.shiftleft = true;
-            this.shiftright = false;
-        } else if (ltr.match(/[1234567890-=]/)) {
-            this.shiftleft = false;
-            this.shiftright = false;
         } else if (ltr.match(/[~!@#$%]/)) {
-            this.shiftleft = false;
             this.shiftright = true;
         } else if (ltr.match(/[\^&*()_+{}|:"<>?]/)) {
             this.shiftleft = true;
-            this.shiftright = false;
         }
     }
     this.turnOn = function() {
@@ -147,10 +140,10 @@ function keyboardElement(ltr) {
             document.getElementById('jkeyenter').classname = "normal";
         }
         if (this.shiftleft) {
-            document.getElementById('jkeyshiftl').className = "normal";
+            document.getElementById('jkeyshiftl').className = "next4";
         }
         if (this.shiftright) {
-            document.getElementById('jkeyshiftr').className = "normal";
+            document.getElementById('jkeyshiftr').className = "next4";
         }
         if (this.alt) {
             document.getElementById('jkeyaltgr').className = "normal";
@@ -167,16 +160,16 @@ function thenFinger(tCrka) {
     if (tCrka === ' ') {
         return 5; // Highlight the spacebar.
         // phpcs:ignore
-    } else if (tCrka.match(/[`~1!'"qaăâ;:đ0)zp\[{/?\-_\]}=+\\|]/i)) {
+    } else if (tCrka.match(/[`~1!'"qaăâ;:đ0)zp\[{/?\-_\]}₫ươ=+\\|]/i)) {
         return 4; // Highlight the correct key above in red.
         // phpcs:ignore
     } else if (tCrka.match(/[2@slwx.>oq̣9(]/i)) {
         return 3; // Highlight the correct key above in green.
         // phpcs:ignore
-    } else if (tCrka.match(/[3#,<eêdik8*c]/i)) {
+    } else if (tCrka.match(/[ê3#,<ediḱ8*c]/i)) {
         return 2; // Highlight the correct key above in yellow.
         // phpcs:ignore
-    } else if (tCrka.match(/[ô4$vrjnuk5%y6^fb7&tghm]/i)) {
+    } else if (tCrka.match(/[ô4$vrjnuk5̀%ỷ6^fb̃7&tghm]/i)) {
         return 1; // Highlight the correct key above in blue.
     } else {
         return 6; // Do not change any highlight.
@@ -203,7 +196,7 @@ function getKeyID(tCrka) {
         return "jkeybackquote";
     } else if (tCrka === '!') {
         return "jkey1";
-    } else if (tCrka === '2' || tCrka === '@') {
+    } else if (tCrka === '@') {
         return "jkey2";
     } else if (tCrka === '#') {
         return "jkey3";
@@ -219,13 +212,13 @@ function getKeyID(tCrka) {
         return "jkey8";
     } else if (tCrka === '(') {
         return "jkey9";
-    } else if (tCrka === ')') {
+    } else if (tCrka === ')' || tCrka === 'đ') {
         return "jkey0";
     } else if (tCrka === '-' || tCrka === '_') {
         return "jkeyminus";
-    } else if (tCrka === '[' || tCrka === '{') {
+    } else if (tCrka === '[' || tCrka === '{' || tCrka === 'ư') {
         return "jkeybracketl";
-    } else if (tCrka === ']' || tCrka === '}') {
+    } else if (tCrka === ']' || tCrka === '}' || tCrka === 'ơ') {
         return "jkeybracketr";
     } else if (tCrka === ';' || tCrka === ':') {
         return "jkeysemicolon";
@@ -237,7 +230,7 @@ function getKeyID(tCrka) {
         return "jkeycomma";
     } else if (tCrka === '.' || tCrka === '>') {
         return "jkeyperiod";
-    } else if (tCrka === '=' || tCrka === '+') {
+    } else if (tCrka === '=' || tCrka === '+' || tCrka === '₫') {
         return "jkeyequals";
     } else if (tCrka === '?' || tCrka === '/') {
         return "jkeyslash";

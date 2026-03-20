@@ -104,11 +104,77 @@ if (!has_capability('mod/mootyper:viewgrades', context_module::instance($cm->id)
     $PAGE->set_cacheable(false);
     echo $OUTPUT->header();
     echo '<link rel="stylesheet" type="text/css" href="styles.css">';
+    echo '<script>
+    function mootyperConfirmDelete(ev, targetUrl, message) {
+        if (ev && typeof ev.preventDefault === "function") {
+            ev.preventDefault();
+        }
+
+        var dlg = document.getElementById("mootyper-delete-confirm");
+        if (!dlg) {
+            dlg = document.createElement("div");
+            dlg.id = "mootyper-delete-confirm";
+            dlg.style.position = "absolute";
+            dlg.style.zIndex = "9999";
+            dlg.style.maxWidth = "340px";
+            dlg.style.background = "#fff";
+            dlg.style.border = "1px solid #666";
+            dlg.style.borderRadius = "6px";
+            dlg.style.boxShadow = "0 6px 20px rgba(0,0,0,0.25)";
+            dlg.style.padding = "10px";
+            dlg.style.display = "none";
+            dlg.innerHTML = "<div id=\"mootyper-delete-confirm-text\" style=\"margin-bottom:10px;\"></div>"
+                + "<button type=\"button\" id=\"mootyper-delete-confirm-yes\" class=\"btn btn-danger btn-sm\">Yes</button> "
+                + "<button type=\"button\" id=\"mootyper-delete-confirm-no\" class=\"btn btn-secondary btn-sm\">No</button>";
+            document.body.appendChild(dlg);
+            document.getElementById("mootyper-delete-confirm-no").onclick = function() {
+                dlg.style.display = "none";
+            };
+        }
+
+        var txt = document.getElementById("mootyper-delete-confirm-text");
+        if (txt) {
+            txt.textContent = message;
+        }
+
+        var x = 60;
+        var y = 60;
+        if (ev) {
+            x = (typeof ev.pageX === "number") ? ev.pageX : x;
+            y = (typeof ev.pageY === "number") ? ev.pageY : y;
+        }
+        dlg.style.left = x + "px";
+        dlg.style.top = y + "px";
+        dlg.style.display = "block";
+
+        var yes = document.getElementById("mootyper-delete-confirm-yes");
+        if (yes) {
+            yes.onclick = function() {
+                window.location.href = targetUrl;
+            };
+        }
+
+        return false;
+    }
+
+    document.addEventListener("click", function(ev) {
+        var link = ev.target.closest("a.mootyper-delete-link");
+        if (!link) {
+            return;
+        }
+        var msg = link.getAttribute("data-confirm") || "";
+        mootyperConfirmDelete(ev, link.getAttribute("href"), msg);
+    }, true);
+    </script>';
     echo $OUTPUT->heading($mootyper->name);
+    echo '<div class="alert alert-info" style="margin-bottom:8px;">'
+        .get_string('logfilterhintblockeddelete', 'mootyper')
+        .'</div>';
+    echo '<a id="grades-top"></a>';
     $temp = '<span class="reportlink"><a href="index.php?id='
         .$course->id.'">'
         .get_string('viewallmootypers', 'mootyper')
-        .'</a></span>';
+        .'</a>&nbsp;|&nbsp;<a href="#gradesbottom">'.get_string('jumpgradesbottom', 'mootyper').'</a></span>';
     echo $temp;
     // 20200620 Changed $htmlout's to echo's.
     echo '<div align="center" style="font-size:1em;
@@ -248,6 +314,7 @@ if (!has_capability('mod/mootyper:viewgrades', context_module::instance($cm->id)
         $arrtextadds[$orderby] = $des == -1 || $des == 1 ? '<span class="arrow-s" style="font-size:1em;">
                                  </span>' : '<span class="arrow-n" style="font-size:1em;"></span>';
 
+        echo '<a id="grades-table"></a>';
         echo '<table style="border-style: solid;"><tr>
             <td><a href="?id='.$id.'&n='.$n.'&orderby=2'.$lnkadd.'">'
             .get_string('student', 'mootyper').$arrtextadds[2].'</a></td>
@@ -295,16 +362,17 @@ if (!has_capability('mod/mootyper:viewgrades', context_module::instance($cm->id)
                 }
 
                 $fcol = get_string('exercise_abreviation', 'mootyper').'-'.$fcol;  // This gets the exercise number.
-                $removelnk = '<a onclick="return confirm(\''
-                    .get_string('deletegradeconfirm', 'mootyper')
-                    .$gr->firstname.' '
-                    .$gr->lastname.' '
-                    .$fcol.'.'
-                    .'\')" href="'.$CFG->wwwroot.'/mod/mootyper/attrem.php?c_id='
+                $deleteurl = $CFG->wwwroot.'/mod/mootyper/attrem.php?c_id='
                     .optional_param('id', 0, PARAM_INT)
                     .'&m_id='.$n
-                    .'&g='.$gr->id
-                    .'">'.get_string('delete', 'mootyper').'</a>';
+                    .'&returnanchor=grades-table'
+                    .'&g='.$gr->id;
+                $deletemsg = get_string('deletegradeconfirm', 'mootyper')
+                    .$gr->firstname.' '
+                    .$gr->lastname.' '
+                    .$fcol.'.';
+                $removelnk = '<a href="'.$deleteurl.'" class="mootyper-delete-link" data-confirm="'.s($deletemsg).'">'
+                    .get_string('delete', 'mootyper').'</a>';
                 $namelnk = '<a href="'.$CFG->wwwroot.'/user/view.php?id='.$gr->u_id
                     .'&amp;course='.$course->id
                     .'">'.$gr->firstname.' '
@@ -488,6 +556,8 @@ if (!has_capability('mod/mootyper:viewgrades', context_module::instance($cm->id)
                     </tr>';
             }
             echo '</table>';
+            echo '<a id="gradesbottom"></a>';
+            echo '<div class="reportlink"><a href="#grades-top">'.get_string('jumpgradestop', 'mootyper').'</a></div>';
         }
     } else {
         echo get_string('nogrades', 'mootyper');

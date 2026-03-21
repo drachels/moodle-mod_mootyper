@@ -26,3 +26,26 @@ Feature: Teacher can remove mootyper grades
     And I follow "mootyper name"
     And I should see "Setup"
     Then I log out
+
+  Scenario: Non-latest grade delete is blocked in view all grades
+    Given the following "users" exist:
+      | username | firstname | lastname | email |
+      | student1 | Student | 1 | student1@example.com |
+    And the following "course enrolments" exist:
+      | user | course | role |
+      | student1 | C1 | student |
+    And I add a "mootyper" to section "1" and I fill the form with:
+      | Name | mootyper guard test |
+      | Description | Guard regression test |
+    And I follow "mootyper guard test"
+    And I should see "Setup"
+    And I log out
+    And I log in as "student1"
+    And I am on the "mootyper guard test" "mootyper activity" page
+    And I seed two completed mootyper grades for the current user
+    And I log out
+    And I log in as "teacher1"
+    And I am on the "mootyper guard test" "mootyper activity" page
+    When I request deletion of the older seeded mootyper grade in view-all mode
+    Then I should see "Delete blocked. You may delete only the latest completed exercise result for that user in this lesson."
+    And the seeded mootyper grades should both still exist

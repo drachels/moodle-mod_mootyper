@@ -42,6 +42,18 @@ use Behat\Mink\Exception\ElementNotFoundException;
  */
 class behat_mod_mootyper extends behat_base {
 
+    /** @var int Seeded mootyper id for delete-guard regression checks. */
+    protected $seededmootyperid = 0;
+
+    /** @var int Seeded user id for delete-guard regression checks. */
+    protected $seededuserid = 0;
+
+    /** @var int Older seeded grade id. */
+    protected $seededoldergradeid = 0;
+
+    /** @var int Newer seeded grade id. */
+    protected $seedednewergradeid = 0;
+
     /**
      * Assert Continue gate behavior directly in the browser:
      * Enter key on Continue must not submit, mouse click must submit.
@@ -185,6 +197,152 @@ class behat_mod_mootyper extends behat_base {
     }
 
     /**
+     * Seed two completed grades so one is non-latest for delete-guard testing.
+     *
+     * @Given /^I seed two completed mootyper grades for the current user$/
+     */
+    public function iseedtwocompletedmootypergradesforthecurrentuser() {
+        global $DB;
+
+        $mootyperid = (int)$this->getSession()->evaluateScript(
+            "parseInt((document.querySelector('input[name=\"rpSityperId\"]') || {}).value || '0', 10);"
+        );
+        $pageuserid = (int)$this->getSession()->evaluateScript(
+            "parseInt((document.querySelector('input[name=\"rpUser\"]') || {}).value || '0', 10);"
+        );
+        if (empty($mootyperid) || empty($pageuserid)) {
+            throw new \Exception('Unable to detect MooTyper id or page user id from current page context.');
+        }
+
+        $mootyper = $DB->get_record('mootyper', ['id' => $mootyperid], '*', MUST_EXIST);
+        $lessonid = (int)$mootyper->lesson;
+        $exercisecandidates = $DB->get_records(
+            'mootyper_exercises',
+            ['lesson' => $lessonid],
+            'snumber ASC, id ASC',
+            'id,snumber',
+            0,
+            2
+        );
+
+        if (count($exercisecandidates) < 2) {
+            throw new \Exception('Need at least two exercises in the selected lesson for delete-guard regression test.');
+        }
+
+        $exercises = array_values($exercisecandidates);
+        $olderexerciseid = (int)$exercises[0]->id;
+        $newerexerciseid = (int)$exercises[1]->id;
+
+        $oldattempt = (object)[
+            'mootyperid' => $mootyperid,
+            'userid' => $pageuserid,
+            'timetaken' => time() - 120,
+            'inprogress' => 0,
+            'suspicion' => 0,
+        ];
+        $oldattemptid = $DB->insert_record('mootyper_attempts', $oldattempt, true);
+
+        $oldgrade = (object)[
+            'mootyper' => $mootyperid,
+            'userid' => $pageuserid,
+            'grade' => 100,
+            'mistakes' => 0,
+            'timeinseconds' => 1,
+            'hitsperminute' => 60,
+            'fullhits' => 1,
+            'precisionfield' => 100,
+            'timetaken' => time() - 120,
+            'exercise' => $olderexerciseid,
+            'pass' => 1,
+            'attemptid' => $oldattemptid,
+            'wpm' => 12,
+            'mistakedetails' => get_string('nomistakes', 'mootyper'),
+        ];
+        $oldergradeid = (int)$DB->insert_record('mootyper_grades', $oldgrade, true);
+
+        $newattempt = (object)[
+            'mootyperid' => $mootyperid,
+            'userid' => $pageuserid,
+            'timetaken' => time() - 60,
+            'inprogress' => 0,
+            'suspicion' => 0,
+        ];
+        $newattemptid = $DB->insert_record('mootyper_attempts', $newattempt, true);
+
+        $newgrade = (object)[
+            'mootyper' => $mootyperid,
+            'userid' => $pageuserid,
+            'grade' => 100,
+            'mistakes' => 0,
+            'timeinseconds' => 1,
+            'hitsperminute' => 60,
+            'fullhits' => 1,
+            'precisionfield' => 100,
+            'timetaken' => time() - 60,
+            'exercise' => $newerexerciseid,
+            'pass' => 1,
+            'attemptid' => $newattemptid,
+            'wpm' => 12,
+            'mistakedetails' => get_string('nomistakes', 'mootyper'),
+        ];
+        $newergradeid = (int)$DB->insert_record('mootyper_grades', $newgrade, true);
+
+        $this->seededmootyperid = $mootyperid;
+        $this->seededuserid = $pageuserid;
+        $this->seededoldergradeid = $oldergradeid;
+        $this->seedednewergradeid = $newergradeid;
+    }
+
+    /**
+     * Request deletion of the older seeded grade via view-all mode URL.
+     *
+     * @When /^I request deletion of the older seeded mootyper grade in view-all mode$/
+     */
+    public function irequestdeletionoftheolderseededmootypergradeinviewallmode() {
+        global $CFG, $DB;
+
+        if (empty($this->seededmootyperid) || empty($this->seededoldergradeid)) {
+            throw new \Exception('Seeded grade context is missing; run the grade seeding step first.');
+        }
+
+        $mootyper = $DB->get_record('mootyper', ['id' => $this->seededmootyperid], '*', MUST_EXIST);
+        $cm = get_coursemodule_from_instance('mootyper', $mootyper->id, $mootyper->course, false, MUST_EXIST);
+        $url = $CFG->wwwroot . '/mod/mootyper/attrem.php?c_id=' . (int)$cm->id
+            . '&m_id=' . (int)$mootyper->id
+            . '&g=' . (int)$this->seededoldergradeid;
+
+        $this->getSession()->visit($url);
+    }
+
+    /**
+     * Assert both seeded grades still exist after blocked delete attempt.
+     *
+     * @Then /^the seeded mootyper grades should both still exist$/
+     */
+    public function theseededmootypergradesshouldbothstillexist() {
+        global $DB;
+
+        if (empty($this->seededoldergradeid) || empty($this->seedednewergradeid)) {
+            throw new \Exception('Seeded grade ids are missing; run the grade seeding step first.');
+        }
+
+        $older = $DB->record_exists('mootyper_grades', ['id' => $this->seededoldergradeid]);
+        $newer = $DB->record_exists('mootyper_grades', ['id' => $this->seedednewergradeid]);
+        $count = (int)$DB->count_records('mootyper_grades', [
+            'mootyper' => $this->seededmootyperid,
+            'userid' => $this->seededuserid,
+        ]);
+
+        if (!$older || !$newer || $count < 2) {
+            throw new \Exception(
+                'Expected both seeded grades to remain. older=' . (int)$older
+                . ' newer=' . (int)$newer
+                . ' count=' . $count
+            );
+        }
+    }
+
+    /**
      * Assert current page points to a specific exercise sequence number.
      *
      * @Then /^the current mootyper exercise snumber should be (\d+)$/
@@ -204,6 +362,112 @@ class behat_mod_mootyper extends behat_base {
         $exercise = $DB->get_record('mootyper_exercises', ['id' => $exerciseid], 'id,snumber', MUST_EXIST);
         if ((int)$exercise->snumber !== (int)$expected) {
             throw new \Exception('Expected exercise snumber ' . (int)$expected . ', got ' . (int)$exercise->snumber . '.');
+        }
+    }
+
+    /**
+     * Assert the live edit-form exercise info list contains the expected text.
+     *
+     * @Then /^the mootyper exercise info should contain "([^"]*)"$/
+     * @param string $expectedtext
+     */
+    public function themootyperexerciseinfoshouldcontain($expectedtext) {
+        $lastseen = '';
+        $this->spin(function() use ($expectedtext, &$lastseen) {
+            $text = $this->getSession()->evaluateScript(
+                'document.getElementById("mootyper-exerciseinfo") ? '
+                . 'document.getElementById("mootyper-exerciseinfo").textContent : "";'
+            );
+            if ($text === null) {
+                return false;
+            }
+            $lastseen = trim((string)$text);
+            return strpos($lastseen, $expectedtext) !== false;
+        }, false, false, new \Exception(
+            'Expected exercise info to contain: ' . $expectedtext
+            . ' | Actual: ' . $lastseen
+            . ' | Lesson change debug: '
+            . (string)$this->getSession()->evaluateScript('window.__mootyperlessonchange || "no_debug";')
+        ));
+    }
+
+    /**
+     * Assert the live edit-form exercise info list does not contain the given text.
+     *
+     * @Then /^the mootyper exercise info should not contain "([^"]*)"$/
+     * @param string $unexpectedtext
+     */
+    public function themootyperexerciseinfoshouldnotcontain($unexpectedtext) {
+        $lastseen = '';
+        $this->spin(function() use ($unexpectedtext, &$lastseen) {
+            $text = $this->getSession()->evaluateScript(
+                'document.getElementById("mootyper-exerciseinfo") ? '
+                . 'document.getElementById("mootyper-exerciseinfo").textContent : "";'
+            );
+            if ($text === null) {
+                return false;
+            }
+            $lastseen = trim((string)$text);
+            return strpos($lastseen, $unexpectedtext) === false;
+        }, false, false, new \Exception('Expected exercise info not to contain: ' . $unexpectedtext . ' | Actual: ' . $lastseen));
+    }
+
+    /**
+     * Change the edit-form lesson selector using JavaScript and trigger its change event.
+     *
+     * @When /^I change the mootyper lesson field to "([^"]*)" using javascript$/
+     * @param string $lessonname
+     */
+    public function ichangethemootyperlessonfieldtousingjavascript($lessonname) {
+        $quotedlesson = json_encode($lessonname);
+        $script = '
+            window.__mootyperlessonchange = "not_set";
+            (function() {
+                var lessonname = ' . $quotedlesson . ';
+                var select = document.getElementById("id_lesson");
+                if (!select) {
+                    window.__mootyperlessonchange = "missing_select";
+                    return;
+                }
+                var matched = false;
+                for (var i = 0; i < select.options.length; i++) {
+                    if (select.options[i].text === lessonname) {
+                        select.selectedIndex = i;
+                        matched = true;
+                        break;
+                    }
+                }
+                if (!matched) {
+                    window.__mootyperlessonchange = "missing_option:" + lessonname;
+                    return;
+                }
+                var evt;
+                if (typeof Event === "function") {
+                    evt = new Event("change", {bubbles: true});
+                } else {
+                    evt = document.createEvent("HTMLEvents");
+                    evt.initEvent("change", true, false);
+                }
+                select.dispatchEvent(evt);
+                if (typeof select.onchange === "function") {
+                    select.onchange();
+                }
+                if (typeof window.__mootyperUpdateLessonExercises === "function") {
+                    window.__mootyperUpdateLessonExercises();
+                }
+                var info = document.getElementById("mootyper-exerciseinfo");
+                var exercise = document.getElementById("id_exercise");
+                var firstoption = exercise && exercise.options.length ? exercise.options[0].text : "no_options";
+                window.__mootyperlessonchange = "ok:value=" + select.value
+                    + "; options=" + (exercise ? exercise.options.length : -1)
+                    + "; first=" + firstoption
+                    + "; info=" + (info ? info.textContent : "missing_info");
+            })();';
+
+        $this->getSession()->executeScript($script);
+        $result = $this->getSession()->evaluateScript('window.__mootyperlessonchange || "empty_result";');
+        if (strpos((string)$result, 'ok:') !== 0) {
+            throw new \Exception('Unable to change mootyper lesson field: ' . $result);
         }
     }
 

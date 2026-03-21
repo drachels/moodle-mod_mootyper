@@ -51,54 +51,138 @@ sending an email, leave a comment at
 ===============
 === Deferred to a later version. ===
 
-20200521 MooTyper_471 - Need to add missing items to activity edit page - mod_form.php.
+20200521 MooTyper_435 - Need to be able to delete un-need lesson files from lesson folder.
+    20240212 See ticket re:may be in v4.2.4 already! Need to VERIFY.
+    2026032104 Verified not fixed: no admin workflow deletes files from mod/mootyper/lessons,
+        and lsnimport.php still auto-imports any lesson file present in that folder.
+20200521 MooTyper_439 - Possible unused function get_typerexercises() and get_typerexercisesfull($lsn = 0) in classes/local/lessons.php.
+20200521 MooTyper_447 - Investigate using Atto for text to type.
+20200521 MooTyper_450 - should combine *_form.php's into mod_form.php like Hot Question does.
+20200521 MooTyper_453 - Need to change, text alignment, from an activity setting to exercise setting.
+20200521 MooTyper_460 - When viewing page exercises.php, lesson in the URL is wrong number.
+20200521 MooTyper_461 - provider.php file NEEDS REWRITE.
+20200521 MooTyper_464 - lib.php function get_typer_grades_adv sort order needs fixing.
+20200521 MooTyper_466 - Export order looks unordered due to sort on lastname.
+20200521 MooTyper_467 - See about adding Tab as a character to type in an exercise.
+20200521 MooTyper_468 - log link where you have deleted own grade returns to view all grades instead of own grades.
+20200521 MooTyper_469 - Pratice lesson grade remove should check it is last grade before removing.
+20200521 MooTyper_470 - Going to add a category does not create nav bar breadcrumb.
+20200521 MooTyper_473 - Activity heading help does not stay toggled open with Boost.
+20200607 MooTyper_495 - Need to verify backup as it appears to be broken.
+20200622 MooTyper_537 - discovered dictation stuff in current code that needs to be eliminated.
+20200629 MooTyper_556 - eins.php when dropdown shows Visible to Only me need to hide Can edit Any teacher in course.
+20200812 MooTyper_590 - mootyper_scale_used and mootyper_scale_used_anywhere not implemented correctly.
+20201007 MooTyper_455 - view.php needs mods for audio.
+20210318 MooTyper_684 - Need Telugu(TEV5) keyboard layout.
+    2026032120 Verified not fixed: no Telugu(TEV5) layout files are present;
+        current repo contains Telugu(V4).php/.js only.
+20210318 MooTyper_685 - Need Thai(THV5) keyboard layout.
+20210318 MooTyper_688 - Need Uyghur(UG_LTV5) keyboard layout.
+    2026032121 Verified not fixed: no Uyghur(UG_LTV5) layout files are present;
+        current repo contains Uyghur(V4).php/.js only.
+20210318 MooTyper_689 - Need Vietnamese(VIV5) keyboard layout.
+    2026032122 Verified fixed for layout availability: Vietnamese(VNIV5).php/.js are present,
+        and Vietnamese(VNTelexV5).php/.js also exist for Telex-style input; additional multimode
+        behavior requests remain tracked under MooTyper_1335.
+20210325 MooTyper_650 - Page reload when Continue is showing wipes out current results.
+20210325 MooTyper_690 - Need work on the documentation on Moodle.
+20210327 MooTyper_693 - lessonname and exercisename fields are too large.
+20210416 MooTyper_587 - Czech(V5) keyboard layout will not correctly type all characters.
+    2026032123 Verified code present: Czech(V5).php/.js files exist; full character-coverage
+        validation is still a manual typing check.
+20210418 MooTyper_702 - Tower 1 ansible playbook upgrading MooTyper gave missing string error.
+20210506 MooTyper_713 - Need to modify import to allow/disallow adding lessons/keyboards.
+20210509 MooTyper_717 - See about making a BS4 based keyboard layout.
+20211005 MooTyper_754 - New capability request for cron to periodically remove grades.
+20220120 MooTyper_436 - Lesson import request to change to file upload.
+20220120 MooTyper_437 - Request for new Audio Exercise Mode.
+20220403 MooTyper_445 - Need to change all refs to audio over to dictation.
+20220403 MooTyper_446 - User ownership stops dictation from working.
+20220403 MooTyper_448 - exercises.php needs mods for audio.
+20220403 MooTyper_449 - eedit.php needs mods for audio.
+20220403 MooTyper_456 - need to modify database tables for MooTyper audio capability.
+20220405 MooTyper_837 - Exercise X of X in view.php needs to be changed to a function.
+20220713 MooTyper_438 - move contents of the csvexport.php file into gview.php file.
+20220723 MooTyper_826 - The Moodle Mobile app is not supported.
+20220724 MooTyper_651 - suspicion from attempts table should be added to the grades table.
+20220808 MooTyper_900 - Need a Tamil keyboard layout.
+20220816 MooTyper_909 - In MooTyper in 10.0.6.136/moodle400 generates two grade_grade entries for each user.
+20221207 MooTyper_974 - Direct access to eedit.php via url should be checked and prevented if not editable by me.
+20230119 MooTyper_994 - Make install of lessons optional during an upgrade.
+20230302 MooTyper_988 - Need a new graph class to do the actual graph for owngrades.php and gview.php.
+20230513 MooTyper_902 - Settings are incomplete on the settings.php and mod_form.php pages.
+20230720 MooTyper_1060 - Completion field null/not null status needs to be checked.
 20230928 MooTyper_1082 - Need to implement automatic attempts removal for old data. WAITING
-
-20231014 MooTyper_1100 - Need to revisit cron_task.php as it is not really needed.
 20231019 MooTyper_1102 - See about changing Suspicion to be based on WPM and character
     count of the exercise.
 20231106 MooTyper_1112 - English to Hebrew lessons. See ticket. WAITING
+20240111 MooTyper_1168 - Deleting a MooTyper instance seems to leave some items undeleted.
+    2026032108 Verified not fixed per tracker evidence: prior testing reported leftover
+        mootyper_attempts and mootyper_grades rows after deleting activities; must re-test on a
+        fresh install using admin/teacher/student flows and confirm mdl_grade_grades and activity
+        completion status behavior.
 20240115 MooTyper_1170 - Might need a previous_completions.php file. - WAITING
-
-
 20240129 MooTyper_1183 - Exercise Completion may need rewrite to account for bad exercise
     grade in Lesson mode.
-
-20240201 MooTyper_1185 - Feature request - Automatically save results at end of an exercise.
-
+20240218 MooTyper_1209 - MooTyper - Grades in Moodle are not updated when deleting own MooTyper
+    exercise grades.
+    2026032109 Verified not fixed: attrem.php calls mootyper_update_grades(), but when a user
+        has no remaining mootyper_grades rows the update path does not explicitly clear the
+        user's gradebook/completion state, so stale values can remain.
 20240326 MooTyper_1227 - Would be nice to have pictures for which finger to use. In progress
     in the MooTyper Keyboard development course with new English(USV5.2)masterlayout version.
 20240524 MooTyper_1248 - Need new KB layout installation code when installing/upgrading MooTyper.
-
+20240813 MooTyper_1295 - Feature request for inverted letters, inverted words, added, or lower/upper case error.
+20241008 MooTyper_1330 - Why is there a /moodledev/blocks/mootyper block setting?.
+20241019 MooTyper_1331 - Need to see about creating group graphs on gview.php page and maybe owngrades.php.
+20241030 MooTyper_1332 - Need a Vietnamese(VNV5) Keyboard Layout.
+20241031 MooTyper_1335 - Request to Add Telex Input Support for Vietnamese Typing in MooTyper.
+20241126 MooTyper_1342 - Feature request - A flush button to reset a MooTyper for a user.
+20250206 MooTyper_1367 - Trying to add help buttons to non-existent form elements.
+20251118 MooTyper_1385 - Feature Request: Allow teachers to customize CSS class colors (finger1, finger2, finger3, finger4) #131.
+20251118 MooTyper_545 - Evaluate current suspicion setting.
+20251118 MooTyper_899 - Delete all from a lesson also needs to delete the physical file.
+20251122 MooTyper_1387 - Using Amharic in Opera - Mistake details widens the page w/each mistake.
 
 Moodle Versions
 ===============
-=== 4.3.1 === pending
-20200521 MooTyper_435 - Need to be able to delete un-need lesson files from lesson folder.
-    20240212 See ticket re:may be in v4.2.4 already! Need to VERIFY.
-20200708 MooTyper_572 - Need behat tests. WAITING. 20260311 Started working on adding behat
-    tests as needed. Currently have 15.
-20231007 MooTyper_1127 - Need to prevent exercise delete unless it is the last one
-    in the lesson for the user of the grade.
-20260312 MooTyper_1127bt - Added server-side guard so only the latest exercise result in a
-    lesson can be deleted per user. Added blocked-delete event logging and a Logs filter hint
-    on gview.php for quick auditing.
-20260312 MooTyper_1185bt - Fixed Continue button regression after pointer-only submit hardening.
-    Multiple Enter/Space are ignored at end, and Continue now advances on mouse click as expected.
-20260320 MooTyper_472bt - Reopened Korean keyboard layout development ticket. Replaced the
+=== 5.0.0 === pending
+20200521 MooTyper_471bt - Need to add missing items to activity edit page - mod_form.php.
+    2026032101 Moved from Deferred into active 5.0.0 pending and resumed verification.
+    2026032102 Added Mode, Lesson, and Exam Exercise controls to mod_form.php, plus an
+        Exercises in lesson reference list that now updates immediately when Lesson changes.
+    2026032103 Extended Exercises in lesson list to mod_setup.php Settings page for
+        Lesson and Practice modes; list refreshes server-side on every lesson selection change.
+20200521 MooTyper_472bt - Reopened Korean keyboard layout development ticket. Replaced the
     KNV7 addon approach with standalone typer(KNV7).js and updated view.php to load only the
     standalone file for Korean layouts.
     2026032001 Added Korean IME compositionend scoring with duplicate keypress suppression for
     Opera, preserving Chrome and Edge behavior for admin and student roles.
     2026032002 Enhanced Korean keyboard guidance to highlight all keys needed to assemble each
     syllable in a single character position, similar to Amharic multi-step guidance.
-20240111 MooTyper_1168 - Deleting a MooTyper instance seems to leave some items undeleted.
-
-20240218 MooTyper_1209 - MooTyper - Grades in Moodle are not updated when deleting own MooTyper
-    exercise grades.
-
+20200708 MooTyper_572bt - Need behat tests. WAITING. 20260311 Started working on adding behat
+    tests as needed. Currently have 15.
+    2026032101 Added targeted Behat coverage for mod_form.php creation flow and live lesson
+        switch refresh of the Exercises in lesson list on the edit form.
+    2026032102 Verified current coverage includes 17 feature files / 18 scenarios in
+        mod/mootyper/tests/behat; ticket scope (need behat tests) appears satisfied.
+    2026032106 Added a targeted regression scenario to protect ticket 1127 by verifying
+        non-latest grade deletion is blocked and existing results remain intact.
+20231007 MooTyper_1127bt - Need to prevent exercise delete unless it is the last one
+    in the lesson for the user of the grade.
+    20260312 Added server-side guard so only the latest exercise result in a lesson can be
+        deleted per user. Added blocked-delete event logging and a Logs filter hint on gview.php
+        for quick auditing.
+    2026032105 Verified fixed in attrem.php: delete now allowed only for latest user result
+        in the activity lesson context, with blocked attempts logged via grade_delete_blocked.
+20240201 MooTyper_1185bt - Fixed Continue button regression after pointer-only submit hardening.
+    Multiple Enter/Space are ignored at end, and Continue now advances on mouse click as expected.
+    2026032107 Verified fixed: end-of-exercise Continue advances on pointer click while Enter/Space
+        no longer retrigger completion submits.
 20240927 MooTyper_1324bt - MooTyper - Need a Finland Keyboard Layout. Being tested.
-
+    2026032110 Verified code present: layouts/Finland(FIV5).php and layouts/Finland(FIV5).js
+        exist, and db/install.php imports layout PHP files into mootyper_layouts on install;
+        manual typing validation remains the final check.
 20241028 MooTyper_1333bt - Comma in Passing grade - issue #126. Set up new Moodle and course at:
     https://10.0.6.134/moodle405/mod/mootyper/view.php?id=57&forceview=1. This is on the
     RaspberryPi5-1 SBC server. Took a little while for the locales to reconfigure to, all, but
@@ -107,24 +191,58 @@ Moodle Versions
     have the same problem. Made the needed changes in the mod_form.php file. Tested before the
     changes on the moodledemo site and saw the error. Saved the new version of the mod_form.php
     file and the problem went away, so pushed new code to github.
+    2026032111 Verified fixed in mod_form.php: grade-to-pass input is normalized with
+        unformat_float() during validation/get_data, so comma decimals are accepted and stored
+        as DB-safe numeric values.
 20241028 MooTyper_1334bt - Typing Exam timer not stopping at time limit - issue #127. Pertinant
     code has been modified and harden to ensure time limit does not rely just on client side
     code, but also uses server side code to ensure no time drift.
+    2026032112 Verified fixed: typer.js ends attempt when the client timer reaches zero, and
+        gcnext.php enforces a server-side timelimit (with grace window) and rejects late submits.
 20241119 MooTyper_1337bt - Have a request for Amharic keyboard layout. Angie McMillan-Major<aymm@uw.edu>
     created new typer(ETV7).js file and modified the two keyboard files. I created a modified
     version of MooTyper to use them. Still needs some testing.
+    2026032113 Verified code present: layouts/Amharic(ETV7).php and layouts/Amharic(ETV7).js
+        exist, and view.php loads typer(ETV7).js when this layout is selected; manual typing
+        validation remains the final check.
 20241120 MooTyper_1339r - Code in erem.php causes Undefined variable for $attemptid. Doing a
     total rewrite of the code in the file.
+    2026032114 Verified fixed: erem.php is no longer in the active codebase, and grade/attempt
+        deletion now runs through attrem.php using the fetched grade record ($dbgrade->attemptid)
+        rather than an undefined standalone $attemptid variable.
 20240102 MooTyper_1347r - The erem.php file needs logging events code added to it. 
+    2026032115 Verified fixed: delete logging is implemented in attrem.php, which triggers
+        grade_deleted and owngrades_deleted on successful deletions and
+        grade_delete_blocked on blocked delete attempts.
 20250103 MooTyper_1348bt - Feature request - along with time limit, precision, and WPM, list
     continuous, spaces, and keystrokes. Added the needed lines of code in view.php. 320-325.
     Created new span class to change format of the settings information. Added same info to
 	gview.php and owngrades.php files.
+    2026032116 Verified fixed: view.php, gview.php, and owngrades.php all display
+        timelimit, requiredgoal, requiredwpm, continuoustype, countmistypedspaces,
+        and countmistakes; styles.css includes the settingsinfo formatting class for view.php.
 20260309 MooTyper_1433bt - Need anchor point when deleting a keyboard layout. Anchors are now
     working.
-220260310 MooTyper_1434bt - Feature request - Need broken attempt reset button/s. Admin and
+    2026032117 Verified fixed: layouts.php assigns per-row anchor IDs and passes an
+        anchor parameter targeting the next (or previous) layout row after delete,
+        and klrem.php redirects back to layouts.php with that anchor fragment.
+220260310 MooTyper_1434 - Feature request - Need broken attempt reset button/s. Admin and
     teachers see, Reset my stuck attempt and Reset stuck attempts (all users) and students
     see, Reset my stuck attempt, only in Practice mode.
+    2026032118 Verified not fixed: in view.php the recovery buttons are gated by
+        $showrecovermine = ($mtmode === '2') || $canrecoverall, so users with
+        mod/mootyper:viewgrades (admin/teacher) still see recovery buttons outside Practice mode;
+        attempt_recovery.php also has no Practice-mode check.
+    2026032124 Verified fixed: view.php now shows recovery controls only when
+        $mtmode === '2' (students get mine; users with mod/mootyper:viewgrades also get all),
+        and attempt_recovery.php now blocks non-Practice mode requests.
+    2026032125 Quick role/mode matrix check passed (scripted): Practice mode shows
+        student mine-only and teacher/admin mine+all; non-Practice mode shows no recovery
+        buttons and endpoint access is denied.
+20260312 MooTyper_1435bt - Feature Request - Need an anchor point when deleting grades.
+    2026032119 Verified fixed: gview.php and owngrades.php pass returnanchor=grades-table
+        to attrem.php, and attrem.php appends that anchor on redirects after blocked or
+        successful grade deletion so users return to the grades table position.
 
 === 4.3.0 === (Build: 2024102000)
 20240227 MooTyper_1215bt - Duplicate or Restore activity always winds up in Exam mode. Found

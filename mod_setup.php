@@ -373,6 +373,20 @@ if ($modepo == 0 || is_null($modepo)) { // If mode is 0, this is a lesson?
             $htmlout .= '<option value="'.$lessons[$ij]['id'].'">'.$lessons[$ij]['lessonname'].'</option>';
         }
     }
+    // 20260321 MooTyper_471bt - Show exercises in the selected lesson for teacher reference.
+    $htmlout .= '</select></td></tr>';
+    $lessonexercises = lessons::get_exercises_by_lesson($lessonpo);
+    $htmlout .= '<tr><td>' . get_string('exercisesinthelesson', 'mootyper') . '</td><td>';
+    if (!empty($lessonexercises)) {
+        $htmlout .= '<ol>';
+        foreach ($lessonexercises as $ex) {
+            $htmlout .= '<li>' . s($ex['exercisename']) . '</li>';
+        }
+        $htmlout .= '</ol>';
+    } else {
+        $htmlout .= '<p class="text-muted">' . get_string('noexercisesinthelesson', 'mootyper') . '</p>';
+    }
+    $htmlout .= '</td></tr>';
 } else if ($modepo == 1) { // Or, if mode is 1, this is an exam?
     $htmlout .= '<option value="0">'.get_string('sflesson', 'mootyper').'</option>
         <option value="1" selected="true">'.get_string('isexamtext', 'mootyper').'</option>
@@ -411,6 +425,20 @@ if ($modepo == 0 || is_null($modepo)) { // If mode is 0, this is a lesson?
             $htmlout .= '<option value="'.$lessons[$ij]['id'].'">'.$lessons[$ij]['lessonname'].'</option>';
         }
     }
+    // 20260321 MooTyper_471bt - Show exercises in the selected lesson for teacher reference.
+    $htmlout .= '</select></td></tr>';
+    $lessonexercises = lessons::get_exercises_by_lesson($lessonpo);
+    $htmlout .= '<tr><td>' . get_string('exercisesinthelesson', 'mootyper') . '</td><td>';
+    if (!empty($lessonexercises)) {
+        $htmlout .= '<ol>';
+        foreach ($lessonexercises as $ex) {
+            $htmlout .= '<li>' . s($ex['exercisename']) . '</li>';
+        }
+        $htmlout .= '</ol>';
+    } else {
+        $htmlout .= '<p class="text-muted">' . get_string('noexercisesinthelesson', 'mootyper') . '</p>';
+    }
+    $htmlout .= '</td></tr>';
 }
 // Add the time limit.
 $htmlout .= '</select></td></tr><tr><td>'

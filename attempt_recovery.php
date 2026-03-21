@@ -37,6 +37,11 @@ require_sesskey();
 $context = context_module::instance($cm->id);
 require_capability('mod/mootyper:view', $context);
 
+// Recovery is a Practice mode workflow only.
+if ((string)$mootyper->mode !== '2') {
+    print_error('nopermissions', 'error');
+}
+
 $params = ['mootyperid' => $mootyper->id, 'inprogress' => 1];
 
 if ($scope === 'all') {

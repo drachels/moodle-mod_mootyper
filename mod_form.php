@@ -108,6 +108,40 @@ class mod_mootyper_mod_form extends moodleform_mod {
         // MooTyper activity setup, Options settings.
         $mform->addElement('header', 'optionhdr', get_string('options', 'mootyper'));
 
+        // 20260321 MooTyper_471bt - Mode selector (0 = Lesson, 1 = Exam, 2 = Practice).
+        $modes = [
+            0 => get_string('sflesson', 'mootyper'),
+            1 => get_string('isexamtext', 'mootyper'),
+            2 => get_string('practice', 'mootyper'),
+        ];
+        $mform->addElement('select', 'isexam', get_string('fmode', 'mootyper'), $modes);
+        $mform->addHelpButton('isexam', 'fmode', 'mootyper');
+        $mform->setDefault('isexam', $mootyperconfig->isexam);
+
+        // 20260321 MooTyper_471bt - Lesson selector.
+        $rawlessons = lessons::get_typerlessons();
+        $lessonoptions = [];
+        foreach ($rawlessons as $ls) {
+            $lessonoptions[$ls['id']] = $ls['lessonname'];
+        }
+        $mform->addElement('select', 'lesson', get_string('excategory', 'mootyper'), $lessonoptions);
+        $mform->addHelpButton('lesson', 'excategory', 'mootyper');
+
+        // 20260321 MooTyper_471bt - Exercise selector (Exam mode only).
+        // Options are populated in definition_after_data() from the selected lesson.
+        $mform->addElement('select', 'exercise', get_string('fexercise', 'mootyper'), []);
+        $mform->hideIf('exercise', 'isexam', 'neq', '1');
+
+        // 20260321 MooTyper_471bt - Exercise list for reference (all modes).
+        // Shows all exercises in the selected lesson so teachers can verify the lesson choice.
+        // Populated in definition_after_data(). Save and return to refresh after changing lesson.
+        $mform->addElement(
+            'static',
+            'exerciseinfo',
+            get_string('exercisesinthelesson', 'mootyper'),
+            '<div id="mootyper-exerciseinfo"></div>'
+        );
+
         // 20191223 Added a dropdown slector for timelimit.
         $tlimit = [];
         for ($i = 0; $i <= 10; $i++) {
@@ -245,6 +279,125 @@ class mod_mootyper_mod_form extends moodleform_mod {
         $this->standard_coursemodule_elements();
         $this->apply_admin_defaults();
         $this->add_action_buttons();
+    }
+
+    /**
+     * Populate exercise dropdown and reference list from the currently selected lesson.
+     *
+     * Called after form data is applied, so the submitted or DB-saved lesson ID is
+     * available via getElementValue(). This means:
+     * - On edit: correct exercises for the saved lesson are shown immediately.
+     * - After saving a lesson change: exercises update on the next form open.
+     */
+    public function definition_after_data() {
+        global $DB;
+
+        parent::definition_after_data();
+        $mform = $this->_form;
+
+        // Resolve the lesson currently in the form (submitted POST value or saved instance).
+        $lessonid = $mform->getElementValue('lesson');
+        if (is_array($lessonid)) {
+            $lessonid = (int)reset($lessonid);
+        } else {
+            $lessonid = (int)$lessonid;
+        }
+
+        if ($lessonid > 0) {
+            $rawexercises = lessons::get_exercises_by_lesson($lessonid);
+
+            // Populate the exercise select used in Exam mode.
+            $exerciseoptions = [];
+            foreach ($rawexercises as $ex) {
+                $exerciseoptions[$ex['id']] = $ex['exercisename'];
+            }
+            $mform->getElement('exercise')->load($exerciseoptions);
+
+            // Build the reference list of all exercises for lesson verification (all modes).
+            if (!empty($rawexercises)) {
+                $html = '<div id="mootyper-exerciseinfo"><ol>';
+                foreach ($rawexercises as $ex) {
+                    $html .= '<li>' . s($ex['exercisename']) . '</li>';
+                }
+                $html .= '</ol></div>';
+            } else {
+                $html = '<div id="mootyper-exerciseinfo"><p class="text-muted">'
+                    . get_string('noexercisesinthelesson', 'mootyper') . '</p></div>';
+            }
+            $mform->getElement('exerciseinfo')->setValue($html);
+        } else {
+            $emptyexerciseoptions = [];
+            $mform->getElement('exercise')->load($emptyexerciseoptions);
+            $mform->getElement('exerciseinfo')->setValue(
+                '<div id="mootyper-exerciseinfo"><p class="text-muted">'
+                . get_string('noexercisesinthelesson', 'mootyper') . '</p></div>'
+            );
+        }
+
+        // Build lesson->exercise map for client-side refresh when lesson selection changes.
+        $exerciserecords = $DB->get_records(
+            'mootyper_exercises',
+            null,
+            'lesson, snumber, id',
+            'id, lesson, exercisename'
+        );
+        $exercisebylesson = [];
+        foreach ($exerciserecords as $record) {
+            $lessonkey = (string)(int)$record->lesson;
+            if (!isset($exercisebylesson[$lessonkey])) {
+                $exercisebylesson[$lessonkey] = [];
+            }
+            $exercisebylesson[$lessonkey][] = [
+                'id' => (int)$record->id,
+                'name' => $record->exercisename,
+            ];
+        }
+
+        $jsonmap = json_encode($exercisebylesson, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT);
+        if ($jsonmap === false) {
+            $jsonmap = '{}';
+        }
+        $noexmsg = json_encode(get_string('noexercisesinthelesson', 'mootyper'));
+
+        $script = '<script>(function(){'
+            . 'var exerciseByLesson = ' . $jsonmap . ';'
+            . 'var noExercisesMsg = ' . $noexmsg . ';'
+            . 'var lessonSelect = document.getElementById("id_lesson");'
+            . 'var exerciseSelect = document.getElementById("id_exercise");'
+            . 'var exerciseInfo = document.getElementById("mootyper-exerciseinfo");'
+            . 'if (!lessonSelect || !exerciseSelect || !exerciseInfo) { return; }'
+            . 'var escapeHtml = function(str) {'
+            . 'return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/\"/g, "&quot;").replace(/\'/g, "&#039;");'
+            . '};'
+            . 'var renderInfo = function(items) {'
+            . 'if (!items.length) { return "<p class=\"text-muted\">" + escapeHtml(noExercisesMsg) + "</p>"; }'
+            . 'var html = "<ol>";'
+            . 'for (var i = 0; i < items.length; i++) { html += "<li>" + escapeHtml(items[i].name) + "</li>"; }'
+            . 'html += "</ol>";'
+            . 'return html;'
+            . '};'
+            . 'var updateLessonExercises = function() {'
+            . 'var lessonid = String(lessonSelect.value || "");'
+            . 'var items = exerciseByLesson[lessonid] || [];'
+            . 'var previous = String(exerciseSelect.value || "");'
+            . 'while (exerciseSelect.options.length) { exerciseSelect.remove(0); }'
+            . 'var selectedFound = false;'
+            . 'for (var i = 0; i < items.length; i++) {'
+            . 'var opt = document.createElement("option");'
+            . 'opt.value = String(items[i].id);'
+            . 'opt.text = items[i].name;'
+            . 'if (opt.value === previous) { selectedFound = true; }'
+            . 'exerciseSelect.add(opt);'
+            . '}'
+            . 'if (selectedFound) { exerciseSelect.value = previous; }'
+            . 'else if (exerciseSelect.options.length) { exerciseSelect.selectedIndex = 0; }'
+            . 'exerciseInfo.innerHTML = renderInfo(items);'
+            . '};'
+            . 'window.__mootyperUpdateLessonExercises = updateLessonExercises;'
+            . 'lessonSelect.addEventListener("change", updateLessonExercises);'
+            . 'updateLessonExercises();'
+            . '})();</script>';
+        $mform->addElement('html', $script);
     }
 
     /**
@@ -607,9 +760,9 @@ class mod_mootyper_mod_form extends moodleform_mod {
      */
     public function get_data() {
         $data = parent::get_data();
-        //if (!$data) {
-        //    return false;
-        //}
+        // if (!$data) {
+        // return false;
+        // }
         if ($data) {
             $itemname = 'mootyper';
             $component = 'mod_mootyper';

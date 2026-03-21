@@ -419,9 +419,10 @@ if ($mootyper->lesson != null) {
                 .'" class="btn btn-primary btn-sm"  style="border-radius: 8px" name="viewmygrades">'
                 .get_string('viewmygrades', 'mootyper').'</a>';
         }
-        // Attempt recovery buttons to clear stuck in-progress attempts.
+        // Attempt recovery buttons are shown only in Practice mode.
         $canrecoverall = has_capability('mod/mootyper:viewgrades', context_module::instance($cm->id));
-        $showrecovermine = ($mtmode === '2') || $canrecoverall;
+        $showrecovermine = ($mtmode === '2');
+        $showrecoverall = ($mtmode === '2') && $canrecoverall;
 
         if ($showrecovermine) {
             $recovermine = new moodle_url('/mod/mootyper/attempt_recovery.php', [
@@ -433,7 +434,7 @@ if ($mootyper->lesson != null) {
                 .get_string('attemptrecovermine', 'mootyper').'</a>';
         }
 
-        if ($canrecoverall) {
+        if ($showrecoverall) {
             $recoverall = new moodle_url('/mod/mootyper/attempt_recovery.php', [
                 'id' => $cm->id,
                 'scope' => 'all',

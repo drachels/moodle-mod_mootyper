@@ -367,7 +367,7 @@ function doStart() {
     started = true;
     keyResult = true;
     currentChar = fullText[currentPos];
-    intervalID = setInterval('updTimeSpeed()', 1000);
+    intervalID = setInterval(updTimeSpeed, 1000);
     var rpMootyperId = $('input[name="rpSityperId"]').val();
     var rpUser = $('input[name="rpUser"]').val();
     var juri = appUrl + "/mod/mootyper/atchk.php?status=1&mootyperid=" + rpMootyperId +
@@ -375,7 +375,7 @@ function doStart() {
     $.get(juri, function( data ) {
         $('input[name="rpAttId"]').val(data);
     });
-    interval2ID = setInterval('doCheck()', 4000);
+    interval2ID = setInterval(doCheck, 4000);
     rpTimeLimit2 = $('input[name="rpTimeLimit"]').val() * 60;
 
 }
@@ -401,14 +401,11 @@ function keyPressed(e) {
     if (!started) {
         doStart();
     }
-    console.log("Key pressed: ", e)
-    console.log("Type: ", e.type)
     if (e.type === "keypress") {
         return keyCharPressed(e);
     } else if (e.type === "compositionupdate") {
         return keyCompPressed(e);
     } else {
-        console.log("Key event not handled.")
         return true;
     }
 }
@@ -430,17 +427,14 @@ function keyCharPressed(e) {
         document.getElementById("inputviewer").textContent = "Your current input is: " + keychar;
     }
 
-    console.log("Current input: ", keychar);
-    console.log("Prev input: ", prevInput);
     if (keychar === currentChar || ((currentChar === '\n' || currentChar === '\r\n' ||
         currentChar === '\n\r' || currentChar === '\r') && (keychar === ' '))) {
         if (keychar.match("\s")) {
             startCurrWord = currentPos + 1;
             currTypedWord = "";
             wordMistakes = 0;
-        } 
+        }
         moveCursor(currentPos + 1);
-        console.log("keyCharPressed match");
         // Student is at the end of the exercise or has ran out of time.
         if ((currentPos === fullText.length - 1) || (rpTimeLimit3 < 0)) {
 
@@ -535,14 +529,12 @@ function keyCharPressed(e) {
  * @returns {number}.
  */
 function getMismatchIndex(prev, curr) {
-    console.log("Getting mismatch index for prev: ", prev);
-    console.log("and curr: ", curr);
     var shortest= prev.length;
     if (curr.length < prev.length) {
         shortest = curr.length;
     }
     for (var i = 0; i < shortest; i++ ) {
-        if (curr[i] != prev[i]) {
+        if (curr[i] !== prev[i]) {
 	    //console.log("Returning index: ", i);
             return i;
         }
@@ -562,20 +554,14 @@ function keyCompPressed(e) {
     if (inputViewer) {
         document.getElementById("inputviewer").textContent = "Your current input is: " + inputStr;
     }
-    var currWord = fullText.substring(startCurrWord, currentPos); 
     var mismatch = getMismatchIndex(prevInput, inputStr);
     var newInput = inputStr.substring(mismatch);
-    console.log("Full inputStr:", inputStr);
-    console.log("currentChar:", currentChar);
-    console.log("New comp input:", newInput);
-    console.log("Prev input: ", prevInput);
     if (newInput === "") { // backspace?
         prevInput = inputStr;
         return false;
     } else if (newInput === currentChar) { // works for 1 output character (e.g., Amharic), need another condition for multiple output characters (e.g., Japanese "cha" -> "ã¡ã‚ƒ")
         // move position forward
         moveCursor(currentPos + 1);
-        console.log("newInput matches");
         // Student is at the end of the exercise or has ran out of time.
         if ((currentPos === fullText.length - 1) || (rpTimeLimit3 < 0)) {
 
@@ -614,7 +600,6 @@ function keyCompPressed(e) {
         // check if the current sequence matches the sequence expected for this character
         const seq = getSequence(currentChar);
         if (seq.includes(newInput)) { // expected input, highlight next key in sequence but don't move pos forward
-	    console.log("New input in sequence");
             // Student has run out of time.
             if (rpTimeLimit3 < 0) {
                 $('#tb1').val($('#tb1').val() + currentChar);
@@ -642,9 +627,8 @@ function keyCompPressed(e) {
                 // }
             }
             prevInput = inputStr;
-            return true; 
-        } else { // not expected input for the current char, restart highlighting from sequence 
-	    console.log("New input not in expected sequence");
+            return true;
+        } else { // not expected input for the current char, restart highlighting from sequence
             if (countMistakes) {
                 mistakes++;
                 mistakestring += currentChar;
@@ -677,10 +661,9 @@ function keyCompPressed(e) {
                 }
             }
             prevInput = inputStr;
-            return false; 
+            return false;
         }
     } else {
-	console.log("New input not match and not sequence");
         if (countMistakes) {
             // With multiple keystrokes on the wrong key, each wrong keystroke is counted.
             // Typed the wrong letter so increment mistake count.
@@ -821,8 +804,8 @@ function inittexttoenter(ttext, tinprogress, tmistakes, thits, tstarttime, tatte
             }
         }
         started = true;
-        intervalID = setInterval('updTimeSpeed()', 1000);
-        interval2ID = setInterval('doCheck()', 3000);
+        intervalID = setInterval(updTimeSpeed, 1000);
+        interval2ID = setInterval(doCheck, 3000);
         for (var i = 0; i < currentPos; i++) {
             var tChar = ttext[i];
             if (tChar === '\n') {
@@ -868,7 +851,7 @@ function inittexttoenter(ttext, tinprogress, tmistakes, thits, tstarttime, tatte
 function calculateSpeed(sc) {
     if ((!continuousType && !countMistypedSpaces) || (!continuousType && countMistypedSpaces)) {
         // Normally use this.
-        return (((currentPos + mistakes) * 60) / sc); 
+        return (((currentPos + mistakes) * 60) / sc);
     } else {
         // Use this when set to continuous type.
         return ((currentPos * 60) / sc);
@@ -887,7 +870,7 @@ function calculateAccuracy() {
         return 0;
     }
     // Only correctly typed count.
-    return (((currentPos - mistakes) * 100) / currentPos); 
+    return (((currentPos - mistakes) * 100) / currentPos);
 }
 
 /**
@@ -911,7 +894,7 @@ function updTimeSpeed() {
     }
 
     // If timelimit is set, subtract elapsed time from the timelimit and set a flag.
-    if (rpTimeLimit2 != 0) {
+    if (rpTimeLimit2 !== 0) {
         rpTimeLimit3 = rpTimeLimit2 - secs;
         if (!ended && rpTimeLimit3 <= 0) {
             doTheEnd();
@@ -954,13 +937,12 @@ function updTimeSpeed() {
 function countChars(str) {
     var arr = separateChars(str);
     arr.sort();
-    var arrC = new Array();
     var result = "" ;
     //alert(arr);
     for ( var j = 0 ; j<arr.length ; j++) {
         var dem = 0 ;
         for ( var i = 0 ; i< str.length ; i++ ) {
-            if(str[i] == arr[j]) dem++;
+            if(str[i] === arr[j]) dem++;
         }
         result += "'" + arr[j] + "'=" + dem  + ", " ;
     }
@@ -971,17 +953,17 @@ function countChars(str) {
 function separateChars(str) {
 //console.log('In the separateChars function and str is '+str);
 
-    var array = new Array();
+    var array = [];
     var k = 1 ;
     array[0] = str[0];
-    
-    for(var i = 1 ;    i<str.length ; i++){        
+
+    for(var i = 1 ;    i<str.length ; i++){
         for(var j = 0 ; j<=array.length ; j++){
-            if( j == array.length ){
+            if( j === array.length ){
                 array[k] = str[i] ;
-                k++;    
+                k++;
             }
-            if ( str[i] == array[j] ) break;    
+            if ( str[i] === array[j] ) break;
         }
     }
     return array;

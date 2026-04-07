@@ -1,0 +1,13 @@
+Open GitHub issues missing from upgrade.txt
+Generated: 2026-04-05
+
+42	Special characters not working for swiss french in mac
+57	Spanish accent marks not working on Linux or Mac
+71	I is only me?
+109	german layout v4 switches ö from "finger 4" to normal
+114	Scheduled task fails repeatedly with no output
+115	Bug: Accent letters not working in German layout
+129	Lessons cannot be deleted
+130	Spanish accent marks not working on Chromebook
+132	Error in lesson ES - AesopsFables1.txt
+133	Error in settings when install

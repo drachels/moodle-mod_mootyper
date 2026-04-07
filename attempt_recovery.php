@@ -25,7 +25,7 @@
 require(__DIR__ . '/../../config.php');
 
 $id = required_param('id', PARAM_INT); // Course module ID.
-$scope = optional_param('scope', 'mine', PARAM_ALPHA); // mine|all.
+$scope = optional_param('scope', 'mine', PARAM_ALPHA); // Mine|all.
 
 $cm = get_coursemodule_from_id('mootyper', $id, 0, false, MUST_EXIST);
 $course = $DB->get_record('course', ['id' => $cm->course], '*', MUST_EXIST);

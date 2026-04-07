@@ -403,7 +403,7 @@ function doStart() {
     started = true;
     keyResult = true;
     currentChar = fullText[currentPos];
-    intervalID = setInterval('updTimeSpeed()', 1000);
+    intervalID = setInterval(updTimeSpeed, 1000);
     var rpMootyperId = $('input[name="rpSityperId"]').val();
     var rpUser = $('input[name="rpUser"]').val();
     var juri = appUrl + "/mod/mootyper/atchk.php?status=1&mootyperid=" + rpMootyperId +
@@ -411,7 +411,7 @@ function doStart() {
     $.get(juri, function(data) {
         $('input[name="rpAttId"]').val(data);
     });
-    interval2ID = setInterval('doCheck()', 4000);
+    interval2ID = setInterval(doCheck, 4000);
     rpTimeLimit2 = $('input[name="rpTimeLimit"]').val() * 60;
 }
 
@@ -639,8 +639,8 @@ function inittexttoenter(ttext, tinprogress, tmistakes, thits, tstarttime, tatte
             }
         }
         started = true;
-        intervalID = setInterval('updTimeSpeed()', 1000);
-        interval2ID = setInterval('doCheck()', 3000);
+        intervalID = setInterval(updTimeSpeed, 1000);
+        interval2ID = setInterval(doCheck, 3000);
         for (var i = 0; i < currentPos; i++) {
             var tChar = ttext[i];
             if (tChar === '\n') {
@@ -715,7 +715,7 @@ function updTimeSpeed() {
         secs = 0;
     }
 
-    if (rpTimeLimit2 != 0) {
+    if (rpTimeLimit2 !== 0) {
         rpTimeLimit3 = rpTimeLimit2 - secs;
         if (!ended && rpTimeLimit3 <= 0) {
             doTheEnd();
@@ -756,7 +756,7 @@ function countChars(str) {
     for (var j = 0; j < arr.length; j++) {
         var dem = 0;
         for (var i = 0; i < str.length; i++) {
-            if (str[i] == arr[j]) {
+            if (str[i] === arr[j]) {
                 dem++;
             }
         }
@@ -767,16 +767,16 @@ function countChars(str) {
 
 // Separation of characters.
 function separateChars(str) {
-    var array = new Array();
+    var array = [];
     var k = 1;
     array[0] = str[0];
     for (var i = 1; i < str.length; i++) {
         for (var j = 0; j <= array.length; j++) {
-            if (j == array.length) {
+            if (j === array.length) {
                 array[k] = str[i];
                 k++;
             }
-            if (str[i] == array[j]) {
+            if (str[i] === array[j]) {
                 break;
             }
         }

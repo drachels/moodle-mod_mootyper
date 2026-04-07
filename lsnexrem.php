@@ -67,6 +67,78 @@ $exes = lessons::get_exercises_by_lesson($lessonpo);
 
 // 20241231 Block of code to delete a lesson and all of the exercises in it.
 if ($lessonid) {
+    $lessonid = (int)$lessonid;
+    $lessonrecord = $DB->get_record('mootyper_lessons', ['id' => $lessonid], '*', MUST_EXIST);
+
+    // Delete the physical lesson file when deleting the lesson.
+    $lessonfilepath = $CFG->dirroot . '/mod/mootyper/lessons/' . $lessonrecord->lessonname . '.txt';
+    if (is_file($lessonfilepath) && !unlink($lessonfilepath)) {
+        throw new moodle_exception('errorcannotdeletefile', 'moodle', '', $lessonfilepath);
+    }
+
+    // Determine which activities currently reference this lesson.
+    $mootypers = $DB->get_records('mootyper', ['lesson' => $lessonid]);
+    $mootyperscount = count($mootypers);
+
+    // Protect non-admin users from breaking multiple activities at once.
+    if (($mootyperscount > 1) && !is_siteadmin()) {
+        throw new moodle_exception(get_string('mootyperlessonerror', 'mootyper'));
+    }
+
+    // If any activity points to this lesson, re-point to another lesson first.
+    $fallbacklesson = null;
+    if ($mootyperscount > 0) {
+        $sql = "SELECT id, lessonname FROM {mootyper_lessons}
+                  WHERE id <> :lessonid
+               ORDER BY LOWER(lessonname) ASC";
+        $fallbacklesson = $DB->get_record_sql($sql, ['lessonid' => $lessonid], IGNORE_MULTIPLE);
+        if (!$fallbacklesson) {
+            throw new moodle_exception(get_string('mootyperlessonerror', 'mootyper'));
+        }
+
+        foreach ($mootypers as $mootyper) {
+            $mootyper->lesson = $fallbacklesson->id;
+            $DB->update_record('mootyper', $mootyper);
+        }
+    }
+
+    // Delete checks/attempts/grades that belong to exercises in this lesson.
+    $exercises = $DB->get_records('mootyper_exercises', ['lesson' => $lessonid]);
+    foreach ($exercises as $exercise) {
+        $grades = $DB->get_records('mootyper_grades', ['exercise' => $exercise->id]);
+        foreach ($grades as $grade) {
+            if (!empty($grade->attemptid)) {
+                $DB->delete_records('mootyper_checks', ['id' => $grade->attemptid]);
+                $DB->delete_records('mootyper_attempts', ['id' => $grade->attemptid]);
+            }
+        }
+        $DB->delete_records('mootyper_grades', ['exercise' => $exercise->id]);
+    }
+
+    // Delete exercises and then the lesson itself.
+    $DB->delete_records('mootyper_exercises', ['lesson' => $lessonid]);
+    $DB->delete_records('mootyper_lessons', ['id' => $lessonid]);
+
+    // Trigger module lesson_deleted event.
+    $params = [
+        'objectid' => $lessonid,
+        'context' => $context,
+        'other' => [
+            'lesson' => $lessonrecord->lessonname,
+        ],
+    ];
+    $event = lesson_deleted::create($params);
+    $event->trigger();
+
+    // Return to exercises with a valid lesson selected when possible.
+    $returnlessonid = $fallbacklesson ? $fallbacklesson->id : 0;
+    $webdir = $CFG->wwwroot . '/mod/mootyper/exercises.php?id=' . $id;
+    if ($returnlessonid > 0) {
+        $webdir .= '&lesson=' . $returnlessonid;
+    }
+    header('Location: ' . $webdir);
+    exit;
+
     // 20241231 Get the lesson and count to see if there is an error of more than one.
     $lessons = $DB->get_records('mootyper_lessons', ['id' => $lessonid]);
 
@@ -77,6 +149,12 @@ if ($lessonid) {
     if ($lessonscount == 1) {
         foreach ($lessons as $lesson) {
             // Go ahead and remove the lesson.
+
+            // Delete the physical lesson file when deleting the lesson.
+            $lessonfilepath = $CFG->dirroot . '/mod/mootyper/lessons/' . $lesson->lessonname . '.txt';
+            if (is_file($lessonfilepath) && !unlink($lessonfilepath)) {
+                throw new moodle_exception('errorcannotdeletefile', 'moodle', '', $lessonfilepath);
+            }
 
 
 

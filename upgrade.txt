@@ -158,8 +158,8 @@ GitHub # | GitHub issue title | MooTyper ticket | Upgrade status | Notes
 20260322 MooTyper_1450 - Need to check all the KB layout *.js files for code style errors.
 Moodle Versions
 ===============
-=== 5.1.0 === pending
 
+=== 5.1.0 === pending
 20230513 MooTyper_902bt - Settings are incomplete on the settings.php and mod_form.php pages.
     20260405 Folded GitHub issue #133 into MooTyper_902 and moved from Deferred;
         fix was included in v5.0.0 (Build: 2026032100).
@@ -174,8 +174,6 @@ Moodle Versions
         Check 5 passed: return path landed on Exercises with a valid remaining lesson selected.
 20260322 MooTyper_1467bt - Error in lesson ES - AesopsFables1.txt #132.
     20260405 Moved from Deferred; updated files were included in recent 5.0.0 (Build: 2026032100) release.
-
-
 
 === 5.0.0 === 2026032100
 20200521 MooTyper_471r - Need to add missing items to activity edit page - mod_form.php.
@@ -293,6 +291,7 @@ Moodle Versions
     20240918 for English(USV5) EnglishWKeypad(USV6).
 
     
+
 === 4.2.9 === (Build: 2024061300)
 20240129 MooTyper_1182v - Lesson Completion needs rewrite to account for when exercises are
     20240129 set to less than max. I made a change in the "if" at about line 136, in the code of the
@@ -333,8 +332,6 @@ Moodle Versions
     is no longer $mform->createElement('checkbox', but is now, $mform->createElement
     ('selectyesno'. The yes-no selection is automatically translated as 1 or 0.
 
-
-
 === 4.2.7 === (Build: 2024013100)
 20230929 MooTyper_1083v - In lib.php, function mootyper_get_completion_state($course, $cm,
     20230929 $userid, $type), needs to be removed. See ticket. This function has currently been
@@ -362,7 +359,6 @@ Moodle Versions
     extra completion code that I had added into the lib.php files. These five undefineds
     were part of my addition that I have now removed and things are working as expected.
 
-
 === 4.2.6 === 2023121000
 20231204 MooTyper_1125v - Need to see about moving $style1 and $style, lines 155/156
     20231204 of exercises.php to styles.css file. Added a, .style1 and .style2 into the styles.css
@@ -373,6 +369,7 @@ Moodle Versions
     20231210 Merged pull request that fixes this.
 20231210 MooTyper_1130v - Module only update completion progress when the instance is
     20231210 updated. #120. Restored missing function. Testing shows completion now works.
+
 === 4.2.5 === 20231206
 20231204 MooTyper_1124v - Deleting an exercise from the exercises.php page seems to
     20231204 possibly be broken/not working. In line 53(57) of the erem.php, I had left a right
@@ -463,8 +460,6 @@ Moodle Versions
 20230406 MooTyper_1032v - Invalid event functions defined in \mod_mootyper\event
     20230406 \course_exercises_viewed. Deleted deprecated legacy log code as need in all the new,
     MooTyper v4.2.3, files.
-
-
 
 === 4.2.2 === posted 20230118
 20221008 MooTyper_930v - In exam mode, WPM by itself, does not generate a grade. See the
@@ -588,7 +583,6 @@ Moodle Versions
     20210722 Added one new string and two needed files. Sheduled tasks reports success.
 20210722 MooTyper - Need to remove from view.php, a line of code. See ticket for details.
     Removed the line of code and replaced with $PAGE-&gt;requires-&gt;jquery().
-
 
 === 4.0.0 === release 2021041600
 20210325 MooTyper_619/259 - Need to add capability to add names to exercise name numbers.
@@ -1152,7 +1146,6 @@ Moodle 3.1 and below as they were not getting flipped as expected.
 20180404 - Deleted Hebrew(V4RTL) and Hebrew(V4LTR) as they are replaced by Hebrew(V4)dual.
 20180404 - Cleaned code and pushed to github for new release.
 
-
 === 3.4.3 STABLE === released 2018031200
 20180208 - Started development on Hebrew(V4) Keyboard layout at request of Eyal Laifer.
 20180209 - Abandoned files from Eyal and started over. By EOD I have Hebrew characters working
@@ -1244,7 +1237,6 @@ the beginning without being fourced to complete and take a "bad" grade. With
 either of those two lines, the code for suspicious grades did not work.
 20171025 - Finished fixing _POST and _GET in all files pushed to git and published new version 3.3.1.
 
-
 === 3.3.0 STABLE === released 2017092901
 NOTE: Moodle 3.2 implements new Graph API, so this MooTyper will be
 for MooTyper 3.2 and 3.3 only.
@@ -1287,7 +1279,6 @@ internal "or" checks and changed it to (V3)
 20170929 - Released MooTyper 3.3 STABLE.
 
 === 3.2.0 STABLE ===
-
 20170720 - Completed codechecker fixes.
 20170811 - Since last entry been working off and on, on getting V2 keyboards to render "the same" in both Boost
 and Clean. Finally got it today by cutting the padding back to 1px along with width of 39px and height of 30px.
@@ -1527,7 +1518,6 @@ required changes in code:
 No updates for about a year and a half.
 
 === 2.7 ===
-
 * 2.6.6 (Build: 2014120500) (2014120500)Moodle 2.7
   Release date: Friday, 5 December 2014, 11:17 AM
 * 2.6.5 (Build: 2014102300) (2014102300)Moodle 2.7
@@ -1542,7 +1532,6 @@ No updates for about a year and a half.
 === No releases for 2.4, 2.5, 2.6 ===
 
 === 2.3 === released 20140803
-
 * 2.6 (Build: 2014080300) (2014080300)Moodle 2.3
   Release date: Sunday, 3 August 2014, 7:51 AM
 * 2.4 (Build: 2014071200) (2014071200)Moodle 2.3
@@ -1553,7 +1542,6 @@ No updates for about a year and a half.
   Release date: Thursday, 21 February 2013, 4:39 PM
 
 === 2.2 ===
-
 * 2.2 (Build: 2013012100) (2013012100)Moodle 2.2
   Release date: Monday, 21 January 2013, 11:40 AM
 * 2.1 (Build: 2012101200) (2012101200)Moodle 2.2

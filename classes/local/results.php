@@ -60,24 +60,98 @@ class results {
 
     /**
      * Check for suspicous results.
-     * @param int $checks
+     * @param array $checks
      * @param int $starttime
+     * @param int $timelimitminutes
+     * @param int $exercisechars
      * @return boolean
      */
-    public static function suspicion($checks, $starttime) {
+    public static function suspicion($checks, $starttime, $timelimitminutes = 0, $exercisechars = 0) {
+        if (count($checks) < 2) {
+            return false;
+        }
+
+        usort($checks, function($a, $b) {
+            return (int)$a['checktime'] <=> (int)$b['checktime'];
+        });
+
+        $timelimitseconds = max(0, (int)$timelimitminutes) * 60;
+        // Ticket 545: for timed activities at 10+ minutes, don't use a fixed 10-minute suspicion trigger.
+        if ($timelimitseconds >= 600) {
+            $maxgapseconds = $timelimitseconds + 120;
+        } else if ($timelimitseconds > 0) {
+            $maxgapseconds = max(120, min(300, (int)($timelimitseconds / 2)));
+        } else {
+            $maxgapseconds = 300;
+        }
+
+        $activeintervals = 0;
+        $intervals = 0;
+        $firsttotal = (int)$checks[0]['mistakes'] + (int)$checks[0]['hits'];
+        $lasttotal = $firsttotal;
+        $lastchecktime = (int)$checks[0]['checktime'];
+        $lastactivechecktime = $lastchecktime;
+
         for ($i = 1; $i < count($checks); $i++) {
-            // 20220724 Translate says udarci = blows. English might be better to use, strokes1 and 2, or check1 and check2?
-            $udarci1 = $checks[$i]['mistakes'] + $checks[$i]['hits'];
-            $udarci2 = $checks[($i - 1)]['mistakes'] + $checks[($i - 1)]['hits'];
-            // 20220724 If current hit count is suddenly 60 strokes higher than last check, mark as suspicious.
-            if ($udarci2 > ($udarci1 + 60)) {
+            $currenttotal = (int)$checks[$i]['mistakes'] + (int)$checks[$i]['hits'];
+            $currentchecktime = (int)$checks[$i]['checktime'];
+
+            // Large counter rollback indicates tampering or corrupted payload.
+            if ($lasttotal > ($currenttotal + 60)) {
                 return true;
             }
-            // 20220724 If it has been more than ten minutes since the last check, mark as suspicious.
-            if ($checks[($i - 1)]['checktime'] > ($starttime + 300)) {
+
+            $delta = max(0, $currenttotal - $lasttotal);
+            $gap = max(0, $currentchecktime - $lastchecktime);
+            $intervals++;
+            if ($delta > 0) {
+                $activeintervals++;
+                $lastactivechecktime = $currentchecktime;
+            }
+
+            // Detect unusually long silent gaps only when there is no progress in that interval.
+            if ($gap > $maxgapseconds && $delta === 0) {
                 return true;
+            }
+
+            $lasttotal = $currenttotal;
+            $lastchecktime = $currentchecktime;
+        }
+
+        // If user appears to be typing steadily, do not apply any additional suspicion heuristics.
+        $activeratio = $intervals > 0 ? ($activeintervals / $intervals) : 0;
+        if ($activeratio >= 0.20) {
+            return false;
+        }
+
+        // For timed exercises, compare typing rate vs exercise length before flagging as suspicious.
+        if ($timelimitseconds > 0 && $exercisechars > 0 && $lastchecktime > (int)$starttime) {
+            $elapsed = $lastchecktime - (int)$starttime;
+            $typedchars = max(0, $lasttotal - $firsttotal);
+            $actualcps = $elapsed > 0 ? ($typedchars / $elapsed) : 0;
+            $requiredcps = $exercisechars / $timelimitseconds;
+            $completionratio = $exercisechars > 0 ? ($typedchars / $exercisechars) : 0;
+
+            // Ticket 545 follow-up: detect "typed for a while, then stopped" on timed tests.
+            // Example: student starts at normal speed then idles for a long tail until timeout.
+            $idletrailseconds = max(0, $lastchecktime - $lastactivechecktime);
+            $activeelapsed = max(1, $lastactivechecktime - (int)$starttime);
+            $activecps = $typedchars > 0 ? ($typedchars / $activeelapsed) : 0;
+            $activewpm = $activecps * 12;
+            $idlesuspicionthreshold = max(120, (int)($timelimitseconds * 0.30));
+            if ($idletrailseconds >= $idlesuspicionthreshold
+                && $completionratio < 0.90
+                && $typedchars >= 120
+                && $activewpm >= 20) {
+                return true;
+            }
+
+            // If user is typing at a plausible pace for the timed exercise, do not flag.
+            if ($actualcps >= ($requiredcps * 0.25)) {
+                return false;
             }
         }
+
         return false;
     }
 

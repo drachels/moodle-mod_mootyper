@@ -29,7 +29,7 @@ $tasks = [
     [
         'classname' => 'mod_mootyper\task\cron_task',
         'blocking' => 0,
-        'minute' => '*',
+        'minute' => 'R',
         'hour' => '*',
         'day' => '*',
         'month' => '*',

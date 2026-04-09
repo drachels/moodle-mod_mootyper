@@ -245,7 +245,7 @@ function doTheEnd() {
     if (rpTimeLimit2 > 0) {
         samoSekunde = Math.min(samoSekunde, rpTimeLimit2);
     }
-    $('input[name="rpFullHits"]').val((fullText.length + mistakes));
+    $('input[name="rpFullHits"]').val((currentPos + mistakes));
     $('input[name="rpTimeInput"]').val(samoSekunde);
     $('input[name="rpMistakesInput"]').val(mistakes);
     var speed = calculateSpeed(samoSekunde);

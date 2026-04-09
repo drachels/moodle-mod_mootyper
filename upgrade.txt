@@ -58,7 +58,6 @@ sending an email, leave a comment at
 
 GitHub issue to MooTyper ticket mapping table:
 GitHub # | GitHub issue title | MooTyper ticket | Upgrade status | Notes
-71 | I is only me? | MooTyper_556 | pending-triage | Confidence: Medium. Rationale: Likely related to visibility/"Only me" behavior in eins.php workflow.
 114 | Scheduled task fails repeatedly with no output | MooTyper_1100 | pending-triage | Confidence: Medium. Rationale: Likely related to existing cron_task.php review work.
 115 | Bug: Accent letters not working in German layout | MooTyper_1466 | pending-triage | Confidence: High. Rationale: Tracked as 20231026 MooTyper_1466 - Bug: Accent letters not working in German layout #115.
 
@@ -68,10 +67,19 @@ GitHub # | GitHub issue title | MooTyper ticket | Upgrade status | Notes
     20240212 See ticket re:may be in v4.2.4 already! Need to VERIFY.
     2026032104 Verified not fixed: no admin workflow deletes files from mod/mootyper/lessons,
         and lsnimport.php still auto-imports any lesson file present in that folder.
+20200521 MooTyper_438 - move contents of the csvexport.php file into gview.php file.
 20200521 MooTyper_439 - Possible unused function get_typerexercises() and get_typerexercisesfull($lsn = 0) in classes/local/lessons.php.
+20200521 MooTyper_436 - Lesson import request to change to file upload.
+20200521 MooTyper_437 - Request for new Audio Exercise Mode.
+20200521 MooTyper_445 - Need to change all refs to audio over to dictation.
+20200521 MooTyper_446 - User ownership stops dictation from working.
 20200521 MooTyper_447 - Investigate using Atto for text to type.
+20200521 MooTyper_448 - exercises.php needs mods for audio.
+20200521 MooTyper_449 - eedit.php needs mods for audio.
+20200521 MooTyper_456 - need to modify database tables for MooTyper audio capability.
 20200521 MooTyper_450 - should combine *_form.php's into mod_form.php like Hot Question does.
 20200521 MooTyper_453 - Need to change, text alignment, from an activity setting to exercise setting.
+20200521 MooTyper_455 - view.php needs mods for audio.
 20200521 MooTyper_460 - When viewing page exercises.php, lesson in the URL is wrong number.
 20200521 MooTyper_461 - provider.php file NEEDS REWRITE.
 20200521 MooTyper_464 - lib.php function get_typer_grades_adv sort order needs fixing.
@@ -80,12 +88,14 @@ GitHub # | GitHub issue title | MooTyper ticket | Upgrade status | Notes
 20200521 MooTyper_468 - log link where you have deleted own grade returns to view all grades instead of own grades.
 20200521 MooTyper_469 - Pratice lesson grade remove should check it is last grade before removing.
 20200521 MooTyper_470 - Going to add a category does not create nav bar breadcrumb.
-20200521 MooTyper_473 - Activity heading help does not stay toggled open with Boost.
 20200607 MooTyper_495 - Need to verify backup as it appears to be broken.
-20200622 MooTyper_537 - discovered dictation stuff in current code that needs to be eliminated.
-20200629 MooTyper_556 - eins.php when dropdown shows Visible to Only me need to hide Can edit Any teacher in course.
+20200612 MooTyper_537 - discovered dictation stuff in current code that needs to be eliminated.
+20200629 MooTyper_556 - eins.php when dropdown shows Visible to Only me need to hide Can
+    edit Any teacher in course.
+20200801 MooTyper_587 - Czech(V5) keyboard layout will not correctly type all characters.
+    2026032123 Verified code present: Czech(V5).php/.js files exist; full character-coverage
+        validation is still a manual typing check.
 20200812 MooTyper_590 - mootyper_scale_used and mootyper_scale_used_anywhere not implemented correctly.
-20201007 MooTyper_455 - view.php needs mods for audio.
 20210318 MooTyper_684 - Need Telugu(TEV5) keyboard layout.
     2026032120 Verified not fixed: no Telugu(TEV5) layout files are present;
         current repo contains Telugu(V4).php/.js only.
@@ -98,26 +108,15 @@ GitHub # | GitHub issue title | MooTyper ticket | Upgrade status | Notes
         and Vietnamese(VNTelexV5).php/.js also exist for Telex-style input; additional multimode
         behavior requests remain tracked under MooTyper_1335.
 20210325 MooTyper_650 - Page reload when Continue is showing wipes out current results.
+20201106 MooTyper_651 - suspicion from attempts table should be added to the grades table.
 20210325 MooTyper_690 - Need work on the documentation on Moodle.
 20210327 MooTyper_693 - lessonname and exercisename fields are too large.
-20210416 MooTyper_587 - Czech(V5) keyboard layout will not correctly type all characters.
-    2026032123 Verified code present: Czech(V5).php/.js files exist; full character-coverage
-        validation is still a manual typing check.
 20210418 MooTyper_702 - Tower 1 ansible playbook upgrading MooTyper gave missing string error.
 20210506 MooTyper_713 - Need to modify import to allow/disallow adding lessons/keyboards.
 20210509 MooTyper_717 - See about making a BS4 based keyboard layout.
 20211005 MooTyper_754 - New capability request for cron to periodically remove grades.
-20220120 MooTyper_436 - Lesson import request to change to file upload.
-20220120 MooTyper_437 - Request for new Audio Exercise Mode.
-20220403 MooTyper_445 - Need to change all refs to audio over to dictation.
-20220403 MooTyper_446 - User ownership stops dictation from working.
-20220403 MooTyper_448 - exercises.php needs mods for audio.
-20220403 MooTyper_449 - eedit.php needs mods for audio.
-20220403 MooTyper_456 - need to modify database tables for MooTyper audio capability.
 20220405 MooTyper_837 - Exercise X of X in view.php needs to be changed to a function.
-20220713 MooTyper_438 - move contents of the csvexport.php file into gview.php file.
 20220723 MooTyper_826 - The Moodle Mobile app is not supported.
-20220724 MooTyper_651 - suspicion from attempts table should be added to the grades table.
 20220808 MooTyper_900 - Need a Tamil keyboard layout.
 20220816 MooTyper_909 - In MooTyper in 10.0.6.136/moodle400 generates two grade_grade entries for each user.
 20221207 MooTyper_974 - Direct access to eedit.php via url should be checked and prevented if not editable by me.
@@ -125,6 +124,18 @@ GitHub # | GitHub issue title | MooTyper ticket | Upgrade status | Notes
 20230302 MooTyper_988 - Need a new graph class to do the actual graph for owngrades.php and gview.php.
 20230720 MooTyper_1060 - Completion field null/not null status needs to be checked.
 20230928 MooTyper_1082 - Need to implement automatic attempts removal for old data. WAITING
+    2026040801 BT planning checklist:
+        1) Add a scheduled housekeeping task that closes stale in-progress attempts after a
+           configurable timeout.
+        2) Delete orphaned mootyper_checks rows (no matching attemptid) older than a
+           configurable age window.
+        3) Add plugin settings for enable/disable, stale timeout, orphan-retention days,
+           and batch size.
+        4) Process rows in bounded batches and log scanned/updated/deleted counts for each run.
+        5) Keep the task idempotent and safe for retries; no changes to non-matching rows.
+        6) Add an optional scheduled reset workflow for selected Practice mode activities
+            (candidate scope under MooTyper_754): use reset_mootyper_instance() on matching
+            IDs using a defined schedule, with dry-run/logging and explicit opt-in selection.
 20231019 MooTyper_1102 - See about changing Suspicion to be based on WPM and character
     count of the exercise.
 20231026 MooTyper_1466 - Bug: Accent letters not working in German layout #115
@@ -153,13 +164,25 @@ GitHub # | GitHub issue title | MooTyper ticket | Upgrade status | Notes
 20241126 MooTyper_1342 - Feature request - A flush button to reset a MooTyper for a user.
 20250206 MooTyper_1367 - Trying to add help buttons to non-existent form elements.
 20251118 MooTyper_1385 - Feature Request: Allow teachers to customize CSS class colors (finger1, finger2, finger3, finger4) #131.
-20251118 MooTyper_545 - Evaluate current suspicion setting.
 20251122 MooTyper_1387 - Using Amharic in Opera - Mistake details widens the page w/each mistake.
 20260322 MooTyper_1450 - Need to check all the KB layout *.js files for code style errors.
 Moodle Versions
 ===============
 
 === 5.1.0 === pending
+20200521 MooTyper_473bt - Issue #71 Activity heading help does not stay toggled open with Boost.
+    2026040701 Tested against Moodle 3.11 and lower in both Boost and Classic:
+        the overview_help icon/string is shown.
+    2026040702 Tested against Moodle 4.0 and higher in both Boost and Classic:
+        the overview_help display path appears deprecated (icon/string not shown).
+20200621 MooTyper_545bt - Evaluate current suspicion setting.
+    2026040901 Moved from Deferred after rework of suspicion evaluation.
+    2026040902 Suspicion now tracks counter rollback anomalies and long no-progress gaps
+        between check intervals in classes/local/results.php.
+    2026040903 In timed exercises, suspicion now compares typed pace against exercise
+        length/timelimit context and uses an early-stall check (good initial pace,
+        long idle tail, low completion ratio).
+    2026040904 Corrected full-hits tracking in all active typing scripts.
 20230513 MooTyper_902bt - Settings are incomplete on the settings.php and mod_form.php pages.
     20260405 Folded GitHub issue #133 into MooTyper_902 and moved from Deferred;
         fix was included in v5.0.0 (Build: 2026032100).
@@ -213,7 +236,7 @@ Moodle Versions
         exist, and db/install.php imports layout PHP files into mootyper_layouts on install;
         manual typing validation remains the final check.
 20241028 MooTyper_1333r - Comma in Passing grade - issue #126. Set up new Moodle and course at:
-    20241028 https://10.0.6.134/moodle405/mod/mootyper/view.php?id=57&forceview=1. This is on the
+    https://10.0.6.134/moodle405/mod/mootyper/view.php?id=57&forceview=1. This is on the
     RaspberryPi5-1 SBC server. Took a little while for the locales to reconfigure to, all, but
     once I did, changing the  MooTyper Grade to pass worked as expected, without any problems.
     Made an update to the issue#126 on github. User says they have correct locales and still
@@ -275,370 +298,373 @@ Moodle Versions
 
 === 4.3.0 === (Build: 2024102000)
 20240227 MooTyper_1215bt - Duplicate or Restore activity always winds up in Exam mode. Found
-    20240227 code error with comparison in restore_mootyper_stepslib.php file. See ticket for details. 
+    code error with comparison in restore_mootyper_stepslib.php file. See ticket for details.
 20240516 MooTyper_1240bt - Need Español Lantin America V5 and V6 keyboard layouts. Created and
-    20240516 verfied the code as needed in the four files.
+    verfied the code as needed in the four files.
 20240517 MooTyper_1242bt - Need new KB layout, EnglishInternationalWKeypad(INTLV6). Made changes
-    20240517 as needed to create the working layout.
+    as needed to create the working layout.
 20240706 MooTyper_1259bt - Need to change all occurences of, // @codingStandardsIgnoreLine, over
-    20240706 to, // phpcs:ignore. Changed
+    to, // phpcs:ignore. Changed
 20240902 MooTyper_1312bt - MooTyper - High delay in large courses #125. Added missing $record->userid
-    20240902 and now seems to work correctly.
+    and now seems to work correctly.
 20240902 MooTyper_1313bt - MooTyper - number_format(): Passing null to parameter #1 ($num) of
-    20240902 type float is deprecated. Found suggestion to switch from using, number_format();, over
+    type float is deprecated. Found suggestion to switch from using, number_format();, over
     to using, sprintf();, instead. See ticker for details of actual code change.
 20240918 MooTyper_1320bt - Need a Maori Keyboard Layout. Created the two files based off the one's
-    20240918 for English(USV5) EnglishWKeypad(USV6).
+    for English(USV5) EnglishWKeypad(USV6).
 
     
 
 === 4.2.9 === (Build: 2024061300)
 20240129 MooTyper_1182v - Lesson Completion needs rewrite to account for when exercises are
-    20240129 set to less than max. I made a change in the "if" at about line 136, in the code of the
+    set to less than max. I made a change in the "if" at about line 136, in the code of the
     custom_completion.php file.
 20240331 MooTyper_1228v - Need to make an English International Keyboard Layout. Created two
-    20240331 needed files based English(UKV5) then modified as needed.
+    needed files based English(UKV5) then modified as needed.
 20240410 MooTyper_1234v - Sort arrows on gview.php and owngrades.php should be part of the sort link.
-    20240410 Changed code in gview.php and owngrades.php to include the arrows as part of the sort link.
+    Changed code in gview.php and owngrades.php to include the arrows as part of the sort link.
     See the ticket for further details.    
 20240424 MooTyper_1236v - The lsnimport.php needs to ignore Eclipse IDE period folders. Added an
-    20240424 "if" that checks to skip any file name that starts with a period.
+    "if" that checks to skip any file name that starts with a period.
 20240517 MooTyper_1241v - EnglishWKeypad(USV6).php indents are mostly incorrect. Changed indents
-    20240517 as needed to align code in the file. Changed version to 6.1 in this file and the .js file.
+    as needed to align code in the file. Changed version to 6.1 in this file and the .js file.
 20240611 MooTyper_1252v - New codechecker shows language file needs to be sorted. Completed changes
-    20240611 as directed by codechecker. Found a duplicate string name and renamed both: deletekb and
+    as directed by codechecker. Found a duplicate string name and renamed both: deletekb and
     deletedblo in the layouts.php file.
 
 === 4.2.8 === (Build: 2024032100)
 20231014 MooTyper_1100v - Need to revisit cron_task.php as it is not really needed. Commented
-    20231014 out as not currently needed.
+    out as not currently needed.
 20240110 MooTyper_1164v - Completion does not work for, Require lesson completion,
-    20240110 by itself. See ticket for current progress. Possibly still needs work.
+    by itself. See ticket for current progress. Possibly still needs work.
 20240215 MooTyper_1207v - Lesson completion not staying checked. Changed the setting from just
-    20240215 the checkbox, to require an input of 1. Added a help button.
+    the checkbox, to require an input of 1. Added a help button.
 20240215 MooTyper_1208v - Upon later change to deactivate, completion item must be set to 0.
-    20240215 Discovered I was using hard coded words, instead of the needed string with the new
+    Discovered I was using hard coded words, instead of the needed string with the new
     $suffix added. Added help buttons for each completion.
 20240223 MooTyper_1212v - MooTyper - Duplicate fails when using PostgreSQL data base in
-    20240223 MooTyper v4.2.7 and lower. Changed the three affected SQL's in the
+    MooTyper v4.2.7 and lower. Changed the three affected SQL's in the
     backup_mootyper_stepslib.php file, so that JOIN's use ON.
 20240223 MooTyper_1214v - MooTyper v4.2.8 fails when used with PostgreSQL Data Base. See
-    20240223 the code for details. Added GROUP BY as needed, where needed. Modified other code in
+    the code for details. Added GROUP BY as needed, where needed. Modified other code in
     custom_completion.php as needed to get the correct completion results.
 20240227 MooTyper_1216v - Layout - Spanish(V5) needs to remove a non-breaking space from
-    20240227 the 5 key. Removed one non-breaking space.
+    the 5 key. Removed one non-breaking space.
 20240303 MooTyper_1219v - Lesson Completion - Need to prevent values other than 0 or 1. 
-    20240303 Modified the file, mod?form.php for the, $completionlessongroup, so the the group item
+    Modified the file, mod?form.php for the, $completionlessongroup, so the the group item
     is no longer $mform->createElement('checkbox', but is now, $mform->createElement
     ('selectyesno'. The yes-no selection is automatically translated as 1 or 0.
 
 === 4.2.7 === (Build: 2024013100)
 20230929 MooTyper_1083v - In lib.php, function mootyper_get_completion_state($course, $cm,
-    20230929 $userid, $type), needs to be removed. See ticket. This function has currently been
+    $userid, $type), needs to be removed. See ticket. This function has currently been
     removed.
 20231212 MooTyper_1131v - Deleting an exercise leaves orphaned grades if a user has already
-    20231212 completed the exercise. Current code warns the teacher that an orphaned grade needs to
+    completed the exercise. Current code warns the teacher that an orphaned grade needs to
     be deleted. See also, MooTyper_1165.
 20240110 MooTyper_1165v - There is some hard coded text, Need to delete., in gview.php
-    20240110 at about line 287. Converted the hard coded text to a string and added code to use
+    at about line 287. Converted the hard coded text to a string and added code to use
     it in the gview.php page at about line 286.
 20240110 MooTyper_1166v - When a teacher deletes an exercise result on gview.php, it does
-    20240110 not reset the completion status of the student. When I fixed the completionexercise
+    not reset the completion status of the student. When I fixed the completionexercise
     SQL for PostgreSQL, MariaDB, and MySQL, this finally started working correctly.
 20240119 MooTyper_1176v - Sql in var $finalexercisecompletesql fails because it's missing,
-    20240119 Group By #121. Modified the SQL to use two versions based on the DB type. Reworked the
+    Group By #121. Modified the SQL to use two versions based on the DB type. Reworked the
     SQL to one simpler and also works for PostgreSQL, MariaDB and MySQL.
 20240120 MooTyper_1177v - Heading on the owngrades page is not formatting correctly. Added
-    20240120 a sub-table. See the ticket for details.
+    a sub-table. See the ticket for details.
 20240120 MooTyper_1178v - Cannot sort data based on the exercise name. Added the code
-    20240120 that was missing. Sort by exercise name now works like the other columns on the page.
+    that was missing. Sort by exercise name now works like the other columns on the page.
 20240121 MooTyper_1179v - The custom_completion.php file needs to use simplified $params.
-    20240121 Made a LOT of changes. See the ticket for details. 
+    Made a LOT of changes. See the ticket for details. 
 20240128 MooTyper_1181v - Warning: Undefined property: stdClass::$completionexercise, plus
-    20240128 the other four. Once I got the PostgreSQL straightened out, I was able to remove the
+    the other four. Once I got the PostgreSQL straightened out, I was able to remove the
     extra completion code that I had added into the lib.php files. These five undefineds
     were part of my addition that I have now removed and things are working as expected.
 
 === 4.2.6 === 2023121000
 20231204 MooTyper_1125v - Need to see about moving $style1 and $style, lines 155/156
-    20231204 of exercises.php to styles.css file. Added a, .style1 and .style2 into the styles.css
+    of exercises.php to styles.css file. Added a, .style1 and .style2 into the styles.css
     file. In the exercises.php file, for testing I commented out the line 155 and 156. I
     then modified lines 158, 159, 160, and 199 to use class="style1" and then in two
     places in line 195 I modified it to use class="style2".
 20231210 MooTyper_1129v - Error in new instances with "Activity completion" configured #118.
-    20231210 Merged pull request that fixes this.
+    Merged pull request that fixes this.
 20231210 MooTyper_1130v - Module only update completion progress when the instance is
-    20231210 updated. #120. Restored missing function. Testing shows completion now works.
+    updated. #120. Restored missing function. Testing shows completion now works.
 
 === 4.2.5 === 20231206
 20231204 MooTyper_1124v - Deleting an exercise from the exercises.php page seems to
-    20231204 possibly be broken/not working. In line 53(57) of the erem.php, I had left a right
+    possibly be broken/not working. In line 53(57) of the erem.php, I had left a right
     parenthesis when converting from array() to [].
 20231204 MooTyper_1126v - Deleting a lesson from exercises.php page seems to be broken.
-    20231204 In line 53(57) of the erem.php, I had left a right parenthesis when converting from
+    In line 53(57) of the erem.php, I had left a right parenthesis when converting from
     array() to [].
 
 === 4.2.4 === 2023110200
 20201006 MooTyper_629v - Request for Home Row Keys color settings. Have applied a
-    20201006 one-off method to new French(BelgianFRBV5) layout. Modified the .js file to produce
+    one-off method to new French(BelgianFRBV5) layout. Modified the .js file to produce
     the desired colors for the keys.
 20230215 MooTyper_1011v - Need to add an on/off toggle or check box for each bar
-    20230215 on the grade charts. Added need code to ownview.php. Did a copy and paste for gview.php.
+    on the grade charts. Added need code to ownview.php. Did a copy and paste for gview.php.
     ***Need to fix dropdowns to NOT have one blank line as an option.
 20230510 MooTyper_1040v - Deprecated: Implicit conversion from float 1674064081.5 to int
-    20230510 loses precision owngrades.php. Added round() to owngrades.php line 264 and to gview.php
+    loses precision owngrades.php. Added round() to owngrades.php line 264 and to gview.php
     line 365.
 20230513 MooTyper_645v - Need Completion tracking based on Precision, WPM, exercises,
-    20230513 lesson, and grade. Got it working, but may need further development. Added
+    lesson, and grade. Got it working, but may need further development. Added
     required new completion fields to mdl_mootyper table.
 20230515 MooTyper_1044v - In Lesson mode, when anyone removes a grade, the Moodle Gradebook
-    20230515 is not updated. In attrem.php, I added a new call to mootyper_update_grades() in lib.php.
+    is not updated. In attrem.php, I added a new call to mootyper_update_grades() in lib.php.
 20230613 MooTyper_1054v - MooTyper Backup and Restore seems to be broken. Backup/restore only
-    20230613 works on same server and give errors on another server due to not updating all ID's.
+    works on same server and give errors on another server due to not updating all ID's.
     Rewrote both the backup and restore code to correctly create and link to new ID's.
 20230614 MooTyper_1055v - Missing child tree for exercises in the backup_mootyper_stepslib.php
-    20230614 file. As part of my work on MooTyper_1054, I have added the missing code and tested it.
+    file. As part of my work on MooTyper_1054, I have added the missing code and tested it.
     It seems to be working correctly now.
 20230707 MooTyper_1057v - MooTyper - Deleting a MooTyper activity does not delete related attempts.
-    20230707 Realized that the attemptid in mootyper_grades is NOT being updated during the restore! Once
+    Realized that the attemptid in mootyper_grades is NOT being updated during the restore! Once
     this was changed in restore_mootyper_stepslib.php file, both deleting an individual grade, as
     well as removing a MooTyper activity, removes attempts from the mootyper_attempts table.
 20230707 MooTyper_1058v - MooTyper - Reset MooTyper Instance does not delete checks. Added code
-    20230707 to delete checks based on attemptid when executing function reset_mootyper_instance($mootyperid).
+    to delete checks based on attemptid when executing function reset_mootyper_instance($mootyperid).
 20230708 MooTyper_1059v - MooTyper - Backup does not include teacher created lessons and exercises.
-    20230708 The code to fix this was developed and included as part of MooTyper_1054.
+    The code to fix this was developed and included as part of MooTyper_1054.
 20230729 MooTyper_1063v - The mdl_mootyper_grades, mistakedetails, field size of 255 is too small.
-    20230729 Upgrade DB field size to 1333. Could not go bigger with varchar. 20231005 Had to make another
+    Upgrade DB field size to 1333. Could not go bigger with varchar. 20231005 Had to make another
     change from varchar 1333 to text.
 20230810 MooTyper_1065v - In line 344 of provider.php, mootyper should be mootyperid. Made the code
-    20230810 merge so it is now mootyperid in line 344 of the provider.php file.
+    merge so it is now mootyperid in line 344 of the provider.php file.
 20230920 MooTyper_1074v - Grade pages need the Completed column moved two places to the right.
-    20230920 Completed the moves in owngrades.php and being tested. 20230920 Made the same
+    Completed the moves in owngrades.php and being tested. 20230920 Made the same
     code moves in gview.php. 20230920 Made the needed changes in the csvexport.php file.
 20230926 MooTyper_1078v - Need to implement suffix on mod_form.php for Moodle 4.3. Made all the
-    20230926 needed changes in public function add_completion_rules() {. Made all the needed code changes
+    needed changes in public function add_completion_rules() {. Made all the needed code changes
     in public function completion_rule_enabled($data) {.
 20230927 MooTyper_1079v - No one in a group has any attempts causes multiple errors in gview.php.
-    20230927 Added an additional AND clause check to make sure at least one memeber of the group being
+    Added an additional AND clause check to make sure at least one memeber of the group being
     viewed has made an attempt at an exercise. 
 20230927 MooTyper_1080v - Latest codechecker requires convert from long array(), to short array [].
-    20230927 Changed all arrays to short array form, []. There was a "boat load" so see ticket for details.
+    Changed all arrays to short array form, []. There was a "boat load" so see ticket for details.
 20230927 MooTyper_1081v - Latest codechecker says "Import statements must not begin with a leading
-    20230927 backslash." Removed all leading backslashes. There were many of them so see ticket for details.
+    backslash." Removed all leading backslashes. There were many of them so see ticket for details.
 20231019 MooTyper_1103v - In the new Italian v5.1 keyboard layout, the shift and enter keys, color
-    20231019 is wrong. Made needed code changes in the .js file.
+    is wrong. Made needed code changes in the .js file.
 20231029 MooTyper_1106v - German(v5) layouts do not properly handle ê é è characters. Made needed
-    20231029 changes to both the German(V5) and German(V5)-icons layouts.
+    changes to both the German(V5) and German(V5)-icons layouts.
 20231029 MooTyper_1107v - Syntax error in line 174 of mootyper/classes/local/lessons.php file. Fixed
-    20231029 by adding code to include the missing closing quotation mark.
+    by adding code to include the missing closing quotation mark.
 20231029 MooTyper_1108v - Need Arabic(ARV5)dual layout. Created the files some time ago and now
-    20231029 have tested the layout.
+    have tested the layout.
 20231030 MooTyper_1109v - Remove attempt does not work when using View all grades and Visible group
-    20231030 is not All participants. Changed code to ensure $n is always set to $mootyper->id. See ticket
+    is not All participants. Changed code to ensure $n is always set to $mootyper->id. See ticket
     for details. 
 20231101 MooTyper_1111v - Completion rules are missing from the Default activity completion page.
-    20231101 Added missing function in lib.php file and missing language description strings.
+    Added missing function in lib.php file and missing language description strings.
 
 === 4.2.3 === 20230420
 20230105 MooTyper_982v - Need to enable new, Grade, bar to the chart. Added a new
-    20230105 series 4 for grades. Temporarily commented out series 1 for hits per minute,
+    series 4 for grades. Temporarily commented out series 1 for hits per minute,
     resulting in a x-axis that goes from 0 to 100.
 20230123 MooTyper_996v - Need to add AM / PM to date format for gview.php and owngrades.php. 
-    20230123 Changed the settings.php page code, down around line 143 from this: 'M d, Y G:i' to this:
+    Changed the settings.php page code, down around line 143 from this: 'M d, Y G:i' to this:
     'M d, Y G:i A'. Once I went to the MooTyper settings page, added the A there, it started
     showing AM and PM with the times.
 20230206 MooTyper_1009v - Need to remove V4 layouts that also have a V5 version. Removed
-    20230206 copies of keyboard layouts that have both a V4 and V5 layout. 
+    copies of keyboard layouts that have both a V4 and V5 layout. 
 20230207 MooTyper_1010v - A user has requested a German(V5) KB Layout. I duplicated the
-    20230207 German(V5)-icons files as just, German(V5). I then modified the php file to no longer
+    German(V5)-icons files as just, German(V5). I then modified the php file to no longer
     use the icons, but instead, to use the words, like I did in the German(V4) php file.
 20230224 MooTyper_699v - Create Hindi(HIV5) KB Layout. Dropping this ticket because the
-    20230224 Hindi alphabet is not in the Courier New font file so it is not compatible with
+    Hindi alphabet is not in the Courier New font file so it is not compatible with
     view.php and typer.js files.
 20230224 MooTyper_1013v - Need to see about selecting KB Layout based on name instead of ID.
-    20230224 New code provided as a merged pulled request for item #110.
+    New code provided as a merged pulled request for item #110.
+    2026040703 Re-verified in current code/runtime: default layout by name resolves
+        through keyboards::get_id_of_layout_by_layoutname(); with overwrite enabled,
+        configured name English(USV5) maps to installed layout id 116.
 20230406 MooTyper_1032v - Invalid event functions defined in \mod_mootyper\event
-    20230406 \course_exercises_viewed. Deleted deprecated legacy log code as need in all the new,
+    \course_exercises_viewed. Deleted deprecated legacy log code as need in all the new,
     MooTyper v4.2.3, files.
 
 === 4.2.2 === posted 20230118
 20221008 MooTyper_930v - In exam mode, WPM by itself, does not generate a grade. See the
-    20221008 ticket for specific details. Added one string, modified a $sql, added automatic
+    ticket for specific details. Added one string, modified a $sql, added automatic
     feedback, and added multiple if checks to create the correct raw grade needed
     by the Moodle rating and grading systems.
 20230103 MooTyper_980v - In practice and lesson modes, WPM by itself, does not generate
-    20230103 the correct rating for the grade book. Deferred to MooTyper_930 as the fix for it
+    the correct rating for the grade book. Deferred to MooTyper_930 as the fix for it
     will also fix this ticket.
 20230105 MooTyper_981v - Need new grade/rating coloumn for grade table on grade pages.
-    20230105 Made needed changes in gview.php, lib.php, owngrades.php, and results.php. I now
+    Made needed changes in gview.php, lib.php, owngrades.php, and results.php. I now
     am getting a grade column when viewing the owngrades.php page and the gview.php
     page. Might want to see about adding the grade data to the charts.
 20230106 MooTyper_983v - Need new grade data added to CSV download file.  Made code
-    20230106 changes to gview.php and csvexport.php. Data is now in the download.
+    changes to gview.php and csvexport.php. Data is now in the download.
 20230107 MooTyper_984v - Sort controls on gview.php and owngrades.php pages are not
-    20230107 working correctly. Fixed them, both pages, and they now appear to be working
+    working correctly. Fixed them, both pages, and they now appear to be working
     correctly.
 20230108 MooTyper_985v - Need date/time added to CSVexport file name. Added code
-    20230108 that pastes the current date and time into the file name, just before the .csv
+    that pastes the current date and time into the file name, just before the .csv
     at the end of the file name.
 20230108 MooTyper_986v - Postgresql generates errors in proposed MooTyper v4.2.2. 
-    20230108 The Moodle ratings table expects an integer, so I changed the code to give 0 decimals.
+    The Moodle ratings table expects an integer, so I changed the code to give 0 decimals.
     Also, with PostgreSQL the $exercises table order is scrambled. Fixed by sorting
     the table before use. See the ticket for exact details.
 20230114 MooTyper_991v - Got debug message regarding duplicate values in column 'firstname'.
-    20230114 The function in lib.php had an SQL that was getting unique users by firstname. The
+    The function in lib.php had an SQL that was getting unique users by firstname. The
     fix was to reorder the SQL and get the users id first. 
 20230116 MooTyper_992v - In gcnext.php, line 60 not giving fail when % fails and WPM passes.
-    20230116 Fixed by modifying line 60 to require %pass and WPMpass for green background, no
+    Fixed by modifying line 60 to require %pass and WPMpass for green background, no
     matter what the mode is. Otherwise the background should be red. See ticket for
     details.
 20230116 MooTyper_993v - Need to see about adding Count, Max, Min, or Sum to the grades
-    20230116 reports based on rating setting. Have made needed code changes to result.php, gview.php,
+    reports based on rating setting. Have made needed code changes to result.php, gview.php,
     and owngrades.php. The rating info only shows up when ratings are being used.
 
 === 4.2.1 === released 20221207
 20200521 MooTyper_458v - Site admin should be able to see who created and can edit an
-    20200521 exercise or a lesson. Added the needed information code to eedit.php.
+    exercise or a lesson. Added the needed information code to eedit.php.
 20211121 MooTyper_757v - Issue#99 at github Error in phpUnit for core_calender.
     20220413 Got a pull request that fixes this. More info at:
     https://github.com/drachels/moodle-mod_mootyper/issues/99. I've applied
     the pull request, but have not had time to verify the fix.
 20220413 MooTyper_843v - When using PostgreSQL, View all grades, is broken for, All
-    20220413 participants. In gview.php, about line 153, changed $groups = ''; to $groups = 0;
+    participants. In gview.php, about line 153, changed $groups = ''; to $groups = 0;
 20220505 MooTyper_836v - Completion file custom_completion.php needs work especially for
-    20220505 completexercise. 20220813 Added four missing functions for completionlesson to the
+    completexercise. 20220813 Added four missing functions for completionlesson to the
     mod_form.php file so that now the extra selection check box shows when setting the
     completion requirements.
 20220729 MooTyper_901v - Need two new strings in eedit.php about line 287 and 289
-    20220729 regarding changing lesson info. Added the two new strings, "This lesson was
+    regarding changing lesson info. Added the two new strings, "This lesson was
     included with the MooTyper plugin." and "Created in course:."
 20220816 MooTyper_908v - Grade to pass in Whole MooTyper grading should automatically
-    20220816 use the defaultprecision. Made changes in the mod_form.php file.
+    use the defaultprecision. Made changes in the mod_form.php file.
 20220922 MooTyper_923v - I think the, Export/edit exercises, link needs to be moved up
-    20220922 in the nav link hierarchy. In the lib.php file, down around line 1196, I moved the
+    in the nav link hierarchy. In the lib.php file, down around line 1196, I moved the
     code for the, Export/edit exercises, link so that it gets added to the navigation
     hierarchy sooner. Still visible only if the teacher can edit the lesson being used.
 20221023 MooTyper_940v - Need to create new icons, monologo.svg and monologo.png.
-    20221023 Created both icons and they are being used in this Moodle 4.x.x site.
+    Created both icons and they are being used in this Moodle 4.x.x site.
 20221127 MooTyper_967v - #108 From the MooTyper settings page, other Moodtype nav links
-    20221127 are broken. The fix is to specify the the complete path. e.g. $link = new
+    are broken. The fix is to specify the the complete path. e.g. $link = new
     moodle_url('/mod/mootyper/eins.php', array('id' => $cm->id)); See ticket for
     specific changes that were made.
 
 === 4.2.0 === released 20220403
 20220128 MooTyper_814 - Need string for authorid on the exercises.php page button. Added
-    20220128 the string and code needed to display it about line 148 of file exercises.php. 
+    the string and code needed to display it about line 148 of file exercises.php. 
 20220128 MooTyper_699 - Create Hindi(HIV5) KB Layout. Created the initial versions of the
-    20220128 two files and started modifications.
+    two files and started modifications.
 20220220 MooTyper_819 - Missing basic completion information on view page issue #102. The
-    20220220 same person who opened this issue, provided a solution via pull request that added the
+    same person who opened this issue, provided a solution via pull request that added the
     needed code in the renderer.php file down around line 66.
 20220219 MooTyper_821 - Issue #104 - Data Privacy is broken. Made the needed changes then
-    20220219 also got a pull request for this. Export requests do work.
+    also got a pull request for this. Export requests do work.
 20220322 MooTyper_799 - Need new Moodle 4.0 icon. Discovered I can just make two copies
-    20220322 of the switch with a branch check for greater than m3.11. The copy of the switch for
+    of the switch with a branch check for greater than m3.11. The copy of the switch for
     Moodle 4.0 and above should contain the new case FEATURE_MOD_PURPOSE: return
     MOD_PURPOSE_ASSESSMENT; 
 
 === 4.1.1 === released 20220128
 20220122 MooTyper_613 - Would be nice to have a link to index.php on grade pages.
-    20220122 Added links to index.php on the view.php, gview.php, and owngrades.php pages.
+    Added links to index.php on the view.php, gview.php, and owngrades.php pages.
     Added links for when lesson is complete and when exam is complete.
 20220125 MooTyper_547 - Duplicating a MooTyper does not set the cursor color correctly.
-    20220125 Originally thought I had this fixed in MooTyper v3.9.0. However, I finally have
+    Originally thought I had this fixed in MooTyper v3.9.0. However, I finally have
     tracked the problem to line 77, in file, backup_mootyper_stepslib.php where the
     variable, cursocolor was mistyped as coursorcolor.
 20220125 MooTyper_718 - Exercises.php file need fix dev stuff in the big top button.
-    20220125 Modified the code in exercises.php so it now shows, Author ID: xx, Lesson visible
+    Modified the code in exercises.php so it now shows, Author ID: xx, Lesson visible
     to: xxx, and Can edit: xxx. After testing, will need to turn Author ID: into
     a language string.
 20220126 MooTyper_442 - Set return url in layouts.php, to return to same MooTyper.
-    20220126 Change button url and it appears to be working correctly. 
+    Change button url and it appears to be working correctly. 
 20220126 MooTyper_415 - Need a layout add/remove page. Added and tested code. Switched
-    20220126 to using buttons with popup confirm window.
+    to using buttons with popup confirm window.
 
 === 4.1.0 === released 2022011700
 20220117 MooTyper_808 - Avoid storing absolute paths in database (mootyper_layouts).
-    20220117 Completed pull request and now testing MooTyper v4.1.0. Duplicate of
+    Completed pull request and now testing MooTyper v4.1.0. Duplicate of
     MooTyper_635, which I closed also.
 
 === 4.0.1 === released 2021072200
 20210416 MooTyper_701 - Exception - Return value of mootyper_grade_item_update() must
-    20210416 be an instance of void, none returned. Made two changes in the moodle3dev lib.php
+    be an instance of void, none returned. Made two changes in the moodle3dev lib.php
     file to remove the :void in the function line of the code.
 20210507 MooTyper_714 - Turkmen(TKV5) pull request. Did the pull request, then fixed
-    20210507 missing shift indicators for all of row 1 and for a few other letters in other
+    missing shift indicators for all of row 1 and for a few other letters in other
     rows. № was missing from blue row and there were 3 non-existent keys included.
     Also converted all \r\n over to \n.
 20210507 MooTyper_715 - Owngrades.php stats table missing right vertical border.
-    20210507 Tracked it down to an extra table cell definition at about line 205.
+    Tracked it down to an extra table cell definition at about line 205.
 20210511 MooTyper_465 - Convert owngrades.php and gview.php grade tables to BS4 table.
-    20210511 I think I have these two files fixed. Will still need to do others, but will do
+    I think I have these two files fixed. Will still need to do others, but will do
     another ticket for them.
 20210626 MooTyper_755 - recent activity causes a debug meesage.
-    20210626 Added a branch
+    Added a branch
    check so that M3.10 and below use the old, user_picture and M3.11 and above
    will use the new, \core_user\fields, code.
 20210722 MooTyper_747 - Convert from lib.php cron function to /classes/task/cron_task.php.
-    20210722 Added one new string and two needed files. Sheduled tasks reports success.
+    Added one new string and two needed files. Sheduled tasks reports success.
 20210722 MooTyper - Need to remove from view.php, a line of code. See ticket for details.
     Removed the line of code and replaced with $PAGE-&gt;requires-&gt;jquery().
 
 === 4.0.0 === release 2021041600
 20210325 MooTyper_619/259 - Need to add capability to add names to exercise name numbers.
-    20210325 Done and testing.
+    Done and testing.
 20210326 MooTyper_441/180 - Use current MooTyper for layouts.php background color.
-    20210326 Implemented.
+    Implemented.
 20210327 MooTyper_459/198 - It would be nice if a Lesson name could be edited. Got this
-    20210327 and 619 working today. Still need to add exercise names to lesson file exports
+    and 619 working today. Still need to add exercise names to lesson file exports
     and detect them for imports.
 20210327 MooTyper_692/296 - Need exercise names added in lsnexport and lsnimport. At 1550
-    20210327 got the lsnexport.php file working. Exercise name is added right after the break
+    got the lsnexport.php file working. Exercise name is added right after the break
     indicator for the exercise texttotype, followed by another break indicator,
     unless it is the last exercise name.
 20210331 MooTyper_675/280 - Create Icelandic KB Layout.
-    20210331 Created files and tested.
+    Created files and tested.
 20210408 MooTyper_694/298 - Invalid get_string() identifier: 'mootyper:rate' #95.
-    20210408 Added string.
+    Added string.
 
 === 3.9.6 === release 2021032000
 20201224 MooTyper_660 - Aesop's Fables needs to be split into multiple files.
-    20201224 Done.
+    Done.
 20201225 MooTyper_662 - View.php has lots of space period space errors.
-    20201225 Fixed as needed.
+    Fixed as needed.
 20201230 MooTyper_663 - owngrades.php grade table right border does not render in some
-    20201230 browsers was due to incorrect td count in some rows. Checked and now renders
+    browsers was due to incorrect td count in some rows. Checked and now renders
     correctly in Firefox, Chrome, Edge, Opera, and Safari.
 20210304 MooTyper_653 - Need to format all KB layout files. Fixed lots of minor
-    20210304 format errors and tags.
+    format errors and tags.
 20200317 MooTyper_674 - Need Estonia(EEV5) KB layout.
-    20200317 Created files and tested.
+    Created files and tested.
 20210318 MooTyper_676 - Need Danish(DNV5) KB layout.
-    20210318 Created files and tested.
+    Created files and tested.
 20210318 MooTyper_677 - Need Hungarian(HUV5) KB layout.
-    20210318 Created files and tested.
+    Created files and tested.
 20210318 MooTyper_679 - Need Italian(ITV5) KB layout.
-    20210318 Created files and tested.
+    Created files and tested.
 20210318 MooTyper_680 - Need Norwegian(NOV5) KB layout.
-    20210318 Created files and tested.
+    Created files and tested.
 20210318 MooTyper_681 - Need Russian(RUV5) KB layout.
-    20210318 Created files and tested.
+    Created files and tested.
 20210319 MooTyper_682 - Need Serbian(SR_CRV5) KB layout.
-    20210319 Created files and tested.
+    Created files and tested.
 20210319 MooTyper_683 - Need Swedish(SEV5) KB layout.
-    20210319 Created files and tested.
+    Created files and tested.
 20210319 MooTyper_686 - Need Turkish(TRV5) KB layout.
-    20210319 Created files and tested.
+    Created files and tested.
 20210319 MooTyper_687 - Need Ukrainian(UKV5) keyboard layout.
-    20210319 Created files and tested.
+    Created files and tested.
 20210320 MooTyper_646 - Need French(V5) and FrenchWKeypad(V6) KB layouts. Created
-    20210320 and tested. The carat,^, is on two keys, row 1 on the nine key as an Alt,
+    and tested. The carat,^, is on two keys, row 1 on the nine key as an Alt,
     and row 2 on the key to the right of P. THe highlight defaults to the row 2
     key without Alt being highlighted.
 
 === 3.9.5 === released 2020111000
 20201109 MooTyper_643 - Bad grade can be wiped out by a page reload, fixed. Atchk.php
-    20201109 was missing the, use \mod_mootyper\local\results;, and results::suspicion.
+    was missing the, use \mod_mootyper\local\results;, and results::suspicion.
 
 === 3.9.4 === released 2020110100
 20201027 Fixed keytop round borders on Spanish, Portugues(P), and German V6 layouts.
@@ -652,58 +678,58 @@ Moodle Versions
 20200728 Added four new fields to table mootyper. assessed, asstimestart,
     assessedtimefinished, and scale.
 20200730 MooTyper_567 - Investigate adding median, mode and range to the bottom
-    20200730 of grade tables. Code in place and pushed to github.
+    of grade tables. Code in place and pushed to github.
 20200808 MooTyper_562 - Need to integrate MooTyper grades into Moodle
-    20200808 Grades/Rating system, is FINALLY working. Still need to fix delete part.
+    Grades/Rating system, is FINALLY working. Still need to fix delete part.
 
 === 3.9.1+ === released 20200810
 20200715 MooTyper_577 - File upgrade.php missing final upgrade_mod_savepoint. Added
-    20200715 missing line of code and pushed to github.
+    missing line of code and pushed to github.
 
 === 3.9.1 === released 2020070800
 20200708 MooTyper_570 - mod_setup.php can be directly accessed by students. 20200708
-    20200708 Pushed to MT V3.9.1 code on github.
+    Pushed to MT V3.9.1 code on github.
 20200708 MooTyper_569 - lsnimport.php can be directly accessed by students. 20200708
-    20200708 Pushed to MT V3.9.1 code on github.
+    Pushed to MT V3.9.1 code on github.
 20200708 MooTyper_568 - gview.php can be directly accessed by students. 20200708
-    20200708 Pushed to MT V3.9.1 code on github.
+    Pushed to MT V3.9.1 code on github.
 20200708 MooTyper_565 - eins.php can be directly accessed by students. 20200708
-    20200708 Pushed to MT V3.9.1 code on github.
+    Pushed to MT V3.9.1 code on github.
 20200708 MooTyper_566 - eedit.php can be directly accessed by students. Duplicate
-    20200708 of MT_416. Fixed in current version. 20200708 Pushed to MT V3.9.1 code on github.
+    of MT_416. Fixed in current version. 20200708 Pushed to MT V3.9.1 code on github.
 20200708 MooTyper_416 - Students can type in address for eedit.php. 20200708
-    20200708 Pushed to MT V3.9.1 code on github.
+    Pushed to MT V3.9.1 code on github.
 20200708 MooTyper_559 - exercises.php can be directly accessed by students. 20200708
-    20200708 Pushed to MT V3.9.1 code on github.
+    Pushed to MT V3.9.1 code on github.
 20200708 MooTyper_563 - REMOVED FUNCTION - change variable name in lib.php function
-    20200708 get_grade_averages($grads). 20200708 Pushed to MT V3.9.1 code on github.
+    get_grade_averages($grads). 20200708 Pushed to MT V3.9.1 code on github.
 20200708 MooTyper_418 - Change $id to $cmid like other plugins. Needed for enhanced
-    20200708 navigation. 20200708 Pushed to MT V3.9.1 code on github.
+    navigation. 20200708 Pushed to MT V3.9.1 code on github.
 20200708 MooTyper_432 - eins.php about line 207, ... is hard coded. Removed the
-    20200708 ellipse. 20200708 Pushed to MT V3.9.1 code on github.
+    ellipse. 20200708 Pushed to MT V3.9.1 code on github.
 20200630 MooTyper_560 - mod_form.php page, under MooTyper Administration, the link
-    20200630 is broken. Have a fix inplace and being tested. 20200708 Pushed to MT V3.9.1
+    is broken. Have a fix inplace and being tested. 20200708 Pushed to MT V3.9.1
     code on github.
 20200708 MooTyper_558 - mod_setup.php has duplicate lines of code for timelimit,
-    20200708 requiredgoal, and requiredwpm. Removed duplicate lines of code. 20200708
+    requiredgoal, and requiredwpm. Removed duplicate lines of code. 20200708
     Pushed to MT V3.9.1 code on github.
 20200708 MooTyper_546 - delete a grade doesn't work correctly. Fixed. 20200708
-    20200708 Pushed to MT V3.9.1 code on github.
+    Pushed to MT V3.9.1 code on github.
 20200708 MooTyper_474 - Vietnamese keyboard unable to type some characters.
-    20200708 Pushed to MT V3.9.1 code on github.
+    Pushed to MT V3.9.1 code on github.
 20200708 MooTyper_462 - Need Uyghur keyboard layout - RTL. 20200708 Pushed
-    20200708 to MT V3.9.1 code on github. Created course on m3x demo site.
+    to MT V3.9.1 code on github. Created course on m3x demo site.
 20200708 MooTyper_425 - Cancel on eins.php should go to view.php instead of
-    20200708 exercises.php. 20200708 Pushed to MT V3.9.1 code on github.
+    exercises.php. 20200708 Pushed to MT V3.9.1 code on github.
 20200708 MooTyper_422 - MT Slovenian layout needs multiple keys adjusted.
-    20200708 Pushed to MT V3.9.1 code on github. Changed spacing layout
+    Pushed to MT V3.9.1 code on github. Changed spacing layout
     on multiple keytops.
 20200708 MooTyper_452 - Change align from center to left for audio and
-    20200708 buttons 20200708 Pushed to MT V3.9.1 code on github.
+    buttons 20200708 Pushed to MT V3.9.1 code on github.
 20200708 MooTyper_440 - Arabic(V4)dual - space bar showing shift is needed.
-    20200708 Deleted extra layouts. 20200708 Pushed to MT V3.9.1 code on github.
+    Deleted extra layouts. 20200708 Pushed to MT V3.9.1 code on github.
 20200708 MooTyper_434 - CSS .normal does not work correctly in current version.
-    20200708 Pushed to MT V3.9.1 code on github. Made various tweaks to the css.
+    Pushed to MT V3.9.1 code on github. Made various tweaks to the css.
 
 === 3.9.0 === released 2020062003
 20200618 I have thrown away six months worth of development work, and as of today
@@ -711,35 +737,35 @@ Moodle Versions
     I developed, and am applying them here, while doing lots of testing to make
     sure that I am not breaking anything.
 20200620 MooTyper_411 - View all grades does not support groups, changed status
-    20200620 to, Being tested.
+    to, Being tested.
 20200620 MooTyper_542 - in gview change $htmlout's to echo's. Makes the code
-    20200620 more consistent with the rest of MooTyper, and easier to make changes.
+    more consistent with the rest of MooTyper, and easier to make changes.
 20200624 MooTyper_411 - View all grades does not support groups. Made change
-    20200624 to case, in lib.php. In gview.php (View all grades) added code to
+    to case, in lib.php. In gview.php (View all grades) added code to
     support Separate and Visible groups, groupmode. The change also fixed the
     missing, Exercise, dropdown, so that, View by exercise, is now working again.
 20200624 MooTyper_463 - lsnexport.php incorrect inline SQL needs to be fixed.
-    20200624 Changed code to use $params.
+    Changed code to use $params.
 20200624 MooTyper_547 - Duplicating a MooTyper does not set the cursor color correctly.
-    20200624 There was an error in mod_setup.php, line 219, which was using the keyboard
+    There was an error in mod_setup.php, line 219, which was using the keyboard
     background color, instead of using the cursor color.
 20200625 MooTyper_548 - if (lessons::is_editable_by_me($USER->id, $id, $lessonpo))
-    20200625 giving wrong results. Second if, second $id should have been $crs.
+    giving wrong results. Second if, second $id should have been $crs.
 20200625 MooTyper_549 - classes/local/lessons.php function is_user_enrolled incorrect
-    20200625 inline SQL needs to be fixed. Changed to use $params.
+    inline SQL needs to be fixed. Changed to use $params.
 20200625 MooTyper_550 - Keyboard layout EnglishWKeypad(USV6) incorrectly renders
-    20200625 in Opera. Fixed by adding one pixel to the width of the background in css.
+    in Opera. Fixed by adding one pixel to the width of the background in css.
 20200625 MooTyper_551 - Change exercises.php table background color to same as
-    20200625 current MooTyper color. Eliminates DB get for MooTyper configuration.
+    current MooTyper color. Eliminates DB get for MooTyper configuration.
 20200625 MooTyper_552 - Change eedit.php table background color to same as
-    20200625 current MooTyper color. Adds DB get for current MooTyper.
+    current MooTyper color. Adds DB get for current MooTyper.
 20200625 MooTyper_553 - Change eins.php table background color to same as
-    20200625 current MooTyper color. Adds DB get for current MooTyper.
+    current MooTyper color. Adds DB get for current MooTyper.
 20200627 MooTyper_558 - mod_setup.php has duplicate lines of code for timelimit,
-    20200627 requiredgoal, and requiredwpm. Removed 30 (10x3) duplicate lines and replaced
+    requiredgoal, and requiredwpm. Removed 30 (10x3) duplicate lines and replaced
     them with a copy of just the 10 needed lines.
 20200628 MooTyper_557 - view.php Edit/edit exercises link should only be visible
-    20200628 if I can edit the current lesson. Changed the if around line 353 to also
+    if I can edit the current lesson. Changed the if around line 353 to also
     check the lesson visibility. Hide Settings button if not editable by me.
 20200629 Released MooTyper v3.9.0. Closed 36 tickets with this release.
 
@@ -747,27 +773,27 @@ Moodle Versions
 20191227 - Issue #81 at github - Missing space between user name and exercise name in
 the graph when viewing all grades. Fixed and pushed to github master branch.
 20191228 MooTyper_319 - Mistake details error reporting added just below the status bar.
-    20191228 Added mistake-details error reporting below the status bar.
+    Added mistake-details error reporting below the status bar.
 20191229 - Bumped version to 3.8.3 and pushed to github.
 20191229 MooTyper_332 - Added new field, mistakedetails to table mdl_mootyper_grades.
-    20191229 Added field mistakedetails to mdl_mootyper_grades.
+    Added field mistakedetails to mdl_mootyper_grades.
 20191229 MooTyper_319 - Added code to place countChars(mistakestring) into new field.
-    20191229 Added code to store countChars(mistakestring) in mistakedetails.
+    Added code to store countChars(mistakestring) in mistakedetails.
 20191230 MooTyper_319 - Added code in gview.php and owngrades.php, to place data from
 the, mdl_mootyper_grades->mistakedetails, field, into the grades table in the,
 Mistakes, column for, View all grades, and, View my grades.
     20191230 Updated gview.php and owngrades.php to show mistakedetails in the Mistakes
     column for both view-all and view-my grades.
 20191231 MooTyper_333 - Converted hard coded, Mistake details, to a language string.
-    20191231 Wrapped the output in a div so it can be left aligned.
+    Wrapped the output in a div so it can be left aligned.
 20191231 - Experimenting with .tb1 settings in styles.css to try and keep the hidden
 textarea from creating a blank line below the, Mistake details. Might need to make
 a single row, two column table, for them.
 20200102 MooTyper_320 - layout_imported, line 222 in lsnimport.php fixed.
-    20200102 Fixed layout_imported handling at line 222 in lsnimport.php.
+    Fixed layout_imported handling at line 222 in lsnimport.php.
 20200103 - Minor fix and publish, Armenian(V5) layout.
 20200103 MooTyper_264 - Changed Export to .csv link to a BS4 style primary button.
-    20200103 Updated View all grades to use a BS4 primary button for Export to .csv.
+    Updated View all grades to use a BS4 primary button for Export to .csv.
 20200103 MooTyper_335 - Added, Mistake details, data to the, Mistakes, column
 to the, Export to .csv, file output data.
     20200103 Added Mistake details to the Mistakes column in Export to .csv output.
@@ -781,36 +807,36 @@ to the, Export to .csv, file output data.
     lesson and exercises are not editable by the person viewing the page. This move also
     fixed the download link in the table, and shows, 'Not editable by me." message.
 20191211 MooTyper_315 - locallib.php function is editable by me $crs is setup wrong.
-    20191211 Fixed bug when checking iseditable by me. If mdl_mootyper_lessons->editable
+    Fixed bug when checking iseditable by me. If mdl_mootyper_lessons->editable
     was set to a 1, teachers in course, current course was NOT being compared to the
     lesson->courseid, like it should.
 20191211 MooTyper_317 - Many strings use Exercise/s when it should be, Lesson/s.
-    20191211 Changed language strings to use Lesson/lesson instead of Exercise/exercise.
+    Changed language strings to use Lesson/lesson instead of Exercise/exercise.
 20191211 MooTyper_318 - Need Romanian(V5) keyboard layout.
-    20191211 Romanian(V5) working. Able to type all in Lorem Ipsum. Ready for Beta release.
+    Romanian(V5) working. Able to type all in Lorem Ipsum. Ready for Beta release.
 20191213 - Bumped version to 3.8.2 and moved a copy to m3x.drachels.com site.
 20191214 MooTyper_168 - Need to see about creating a required WPM.
-    20191214 Added requiredwpm setting and implemented the needed code and strings.
+    Added requiredwpm setting and implemented the needed code and strings.
     Seems to be working fine.
 20191214 MooTyper_181 - Would be nice to have a text color setting for keytops.
-    20191214 Added settings for keytoptextc but not the code to implement it, yet.
+    Added settings for keytoptextc but not the code to implement it, yet.
 20191214 MooTyper_311 - Need to investigate adding an exercise time limit.
-    20191214 Added settings for timelimit, but not the code to implement it, yet.
+    Added settings for timelimit, but not the code to implement it, yet.
 20191215 MooTyper_181 - Would be nice to have a text color setting for keytops.
-    20191215 Added code for keytoptextc and it appears to be working correctly.
+    Added code for keytoptextc and it appears to be working correctly.
 20191222 MooTyper_325, MooTyper_322, and MooTyper_324 - Once setup is complete going to
     settings does not show correct mode; need to work on Exam Mode needing an exercise
     id; and exam mode shows only exercise 1 no matter what is selected.
     20191222 Fixed multiple bugs with mode setting. Mainly fixed bug where exam mode
     would only show exercise 1, when others were selected.
 20191223 MooTyper_323 - mod_setup.php does not use default setting for mode.
-    20191223 Finally realized the mistake I was making and now have this working so
+    Finally realized the mistake I was making and now have this working so
     that during the initial activity setup, get the site default mode. Then check to
     see if the activity has something in isexam. First time there will not be. Any
     time someone later clicks on Settings, there will be something in isexam, and use
     it.
 20191224 MooTyper_311 - Need to investigate adding an exercise time limit.
-    20191224 Exercise timelimit coded and appears to be working correctly.
+    Exercise timelimit coded and appears to be working correctly.
 20191224 MooTyper_326 and MooTyper_327 - gview.php and owngrades.php do not show
     timelimit above the grade table.
     20191224 Added timelimit setting to the labels above the grade tables in gview.php
@@ -821,12 +847,12 @@ to the, Export to .csv, file output data.
     positive number down to a zero. Discovered that I could not do the same for
     timelimit and for %. Fixed and testing. Added MooTyper_328.
 20191225 MooTyper_329 - Need to add timelimit to the csv file export.
-    20191225 Added timelimit to the first line of output in the csvexport file.
+    Added timelimit to the first line of output in the csvexport file.
 20191226 MooTyper_168 - Need to see about creating a required WPM.
-    20191226 Required WPM code needed to be changed as in older Moodles it was
+    Required WPM code needed to be changed as in older Moodles it was
     resetting to site defaultwpm each time you went to Settings page.
 20191226 MooTyper_330 - Need a Cancel button on the mod_setup.php settings page.
-    20191226 For convenience, I added a Cancel button to the settings page.
+    For convenience, I added a Cancel button to the settings page.
 
 === 3.8.1 === released 2019120800
 20191124 - Fixed PostrgreSQL compatibility error in locallib.php function get_mootyperlessons.
@@ -836,41 +862,41 @@ $lsnnamepo has to be set to -1, otherwise when starting a new exercise for the c
 lesson/category, the optional parameter 'lesson' goes to the $lessonpo. The first part
 was missing.
 20191130 MooTyper_284 - Need exercise complete event for logging.
-    20191130 Added exercise_completed event and pushed to github.
+    Added exercise_completed event and pushed to github.
 20191201 MooTyper_304 - Need exam complete event for logging.
-    20191201 Added exam_completed event, modified examdone string, and pushed to github.
+    Added exam_completed event, modified examdone string, and pushed to github.
 20191201 MooTyper_301 - The links and Continue button needs to be changed to BS4 type on
     view.php.
     20191201 Converted the links and Continue button above the status bar to small primary
     buttons, and replaced the vertical bar with a single space.
 20191202 MooTyper_257 - Need a layout add/remove page.
-    20191202 Started Manage MooTyper layouts capability so admins can remove unused keyboard
+    Started Manage MooTyper layouts capability so admins can remove unused keyboard
     layouts.
 20191202 MooTyper_306 - Moodle lists MooTyper 3.8.0 as having warnings and errors.
-    20191202 Started working through Moodle-reported warnings and errors for the 3.8.0
+    Started working through Moodle-reported warnings and errors for the 3.8.0
     release.
 20191203 - Added new donated German(V4)-icons keyboard layout from pmaneggia.
 20191203 - Temporarily added suggested new permissions for mod/mootyper:viewcategory
 and mod/mootyper:editcategory. Discussing what is needed with pmaneggia. I think
 just checking for site admin is the best way to go.
 20191203 MooTyper_307 - Need German(V5)-icons keyboard layout.
-    20191203 Created German(V5)-icons layout files, published to github, and requested
+    Created German(V5)-icons layout files, published to github, and requested
     feedback before final checks.
 20191203 MooTyper_190 - Need to investigate adding Event lesson_completed.php.
-    20191203 Implemented lesson_completed event and confirmed it was working.
+    Implemented lesson_completed event and confirmed it was working.
 20191206 - Lots of code cleanup in various files.
 20191207 - More code cleanup and bumped version for release.
 20191208 - Made two small string changes and bumped version date for release.
 
 === 3.8.0+ === released 2019112400
 20191119 MooTyper_295 - Mod_setup.php Confirm button not compatible with Safari browser.
-    20191119 Changed the Confirm button in mod_setup.php to BS4 markup so it behaves
+    Changed the Confirm button in mod_setup.php to BS4 markup so it behaves
     correctly in Safari and other browsers.
 20191119 MooTyper_294 - On page, Import Lesson / KB Layouts, change Continue link to a btn.
-    20191119 Replaced the Continue link with a Continue button on the
+    Replaced the Continue link with a Continue button on the
     lsnimport.php-generated Import Lesson / KB Layout page.
 20191119 MooTyper_293 - Convert Import Lesson / KB Layout to BS4 table.
-    20191119 Converted the Import Lesson / KB Layout listing from plain text to a BS4
+    Converted the Import Lesson / KB Layout listing from plain text to a BS4
     table, using hover with light rows for existing items and success rows for newly
     added items.
 
@@ -906,13 +932,13 @@ and added event, export_viewallgrades_to_csv.
 and Vietnamese trying to get rid of Moodle reported BOM character in each file.
 20191114 - Code cleanup in typer.js.
 20191117 MooTyper_291 - eins.php needs a Cancel button.
-    20191117 Changed Confirm to btn-primary and added Cancel in eins.php, returning to
+    Changed Confirm to btn-primary and added Cancel in eins.php, returning to
     exercises.php at the same exercise when possible (or first in list).
 20191117 MooTyper_290 - eedit.php needs a Cancel button.
-    20191117 Changed Confirm to btn-primary and added Cancel in eedit.php, returning to
+    Changed Confirm to btn-primary and added Cancel in eedit.php, returning to
     exercises.php at the same exercise when possible (or first in list).
 20191117 MooTyper_263 - Need event for csvexport.
-    20191117 Completed the export event for the text link; BS4-button path still needed
+    Completed the export event for the text link; BS4-button path still needed
     follow-up.
 
 === 3.7.0 === released 2019102100
@@ -933,7 +959,7 @@ was in the default settings for mode.
 20190412 - As of 11:30 AM, I have finally gotten my Korean(V5) keyboard to start
 recognizing Korean characters, without breaking other layouts.
 20190413 MooTyper_200 - Add new exercise/category should automatically add to one being viewed.
-    20190413 Added a link above the exercises table to eins.php with the lesson name
+    Added a link above the exercises table to eins.php with the lesson name
     preselected so a new exercise is added to the lesson being viewed.
     20190413 Added a supporting language string as part of this exercise-editing update.
 20190414 - Added Ex- to the exercise name in the popup when students remove owngrade.
@@ -996,14 +1022,14 @@ Changed language string lesson_removed to lesson_deleted.
 Changed language string exercise_removed to exercise_deleted.
 20190313 - Began work on Belgian(DutchV5) keyboard layout.
 20190315 MooTyper_191 - Keyboard layout - Belgian(DutchV5).
-    20190315 Finished the Belgian(DutchV5) layout, corrected one shiftright key that
+    Finished the Belgian(DutchV5) layout, corrected one shiftright key that
     should have been shiftleft, and verified the fix.
 20190315 MooTyper_173 - Confirm on eedit.php should return to caller.
-    20190315 Fixed eedit.php so Confirm returns to the correct caller context.
+    Fixed eedit.php so Confirm returns to the correct caller context.
 20190315 MooTyper_192 - eins.php insert exercise does not take you to the new lesson view.
-    20190315 Fixed eins.php so insert exercise returns to the correct lesson view.
+    Fixed eins.php so insert exercise returns to the correct lesson view.
 20190315 MooTyper_193 - erem.php after removing an exercise you do not go to the correct lesson.
-    20190315 Fixed erem.php so removing an exercise returns to the correct lesson.
+    Fixed erem.php so removing an exercise returns to the correct lesson.
 20190319 - Added confirm popup when deleting a grade from gview.php, View all grades.
 20190316 - Added confirm popup when deleting a grade from owngrades.php, Vy my grades.
 20190316 - Add mew string for the two new confirm popups.

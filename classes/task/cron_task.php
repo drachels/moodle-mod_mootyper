@@ -16,8 +16,6 @@
 
 namespace mod_mootyper\task;
 defined('MOODLE_INTERNAL') || die(); // phpcs:ignore
-use context_module;
-use stdClass;
 
 /**
  * A schedule task for mootyper cron.
@@ -43,9 +41,8 @@ class cron_task extends \core\task\scheduled_task {
     /**
      * Run mootyper cron.
      */
-    public function execute() {
-        // 20210722 Converted from old cron to task.
-        // 20240212 Commented out as not currently needed.
-        return true;
+    public function execute(): void {
+        // Keep this task as a lightweight heartbeat until recurring maintenance work is added.
+        mtrace('mod_mootyper cron_task: no scheduled maintenance actions configured.');
     }
 }

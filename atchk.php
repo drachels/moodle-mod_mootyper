@@ -36,6 +36,7 @@
 use mod_mootyper\local\results;
 
 require(__DIR__ . '/../../config.php');
+require_once(__DIR__ . '/lib.php');
 
 global $DB, $USER;
 
@@ -83,6 +84,7 @@ if ($st == 1) {
 } else if ($st == 3) {
     $attid = optional_param('attemptid', 0, PARAM_INT);
     $attemptold = $DB->get_record('mootyper_attempts', ['id' => $attid], '*', MUST_EXIST);
+    $mootyper = $DB->get_record('mootyper', ['id' => $attemptold->mootyperid], '*', MUST_EXIST);
     $attemptnew = new stdClass();
     $attemptnew->id = $attemptold->id;
     $attemptnew->mootyperid = $attemptold->mootyperid;
@@ -94,8 +96,20 @@ if ($st == 1) {
     foreach ($dbchcks as $c) {
         $checks[] = ['id' => $c->id, 'mistakes' => $c->mistakes, 'hits' => $c->hits, 'checktime' => $c->checktime];
     }
+
+    $exercisechars = 0;
+    if (!empty($mootyper->isexam) && !empty($mootyper->exercise)) {
+        $exercise = get_exercise_record($mootyper->exercise);
+    } else {
+        $exercise = get_exercise_from_mootyper($attemptold->mootyperid, $mootyper->lesson, $attemptold->userid);
+    }
+    if (is_object($exercise) && !empty($exercise->texttotype)) {
+        $normalizedtext = str_replace('\\n', "\n", $exercise->texttotype);
+        $exercisechars = core_text::strlen($normalizedtext);
+    }
+
     // Check for suspicious results for the current exercise.
-    if (results::suspicion($checks, $attemptold->timetaken)) {
+    if (results::suspicion($checks, $attemptold->timetaken, (int)$mootyper->timelimit, $exercisechars)) {
         $attemptnew->suspicion = 1;
     } else {
         $attemptnew->suspicion = $attemptold->suspicion;

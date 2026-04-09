@@ -29,7 +29,30 @@ var startTime,
     rpTimeLimit2,
     rpTimeLimit3,
     continueSubmitting = false,
-    endSaveUrl = '';
+    endSaveUrl = '',
+    lastKeyChar = null,
+    lastKeyTimeMs = 0;
+
+/**
+ * Detect keyboard auto-repeat so held keys do not inflate progress/hits.
+ *
+ * @param {Event} e
+ * @param {string} keychar
+ * @returns {boolean}
+ */
+function isAutoRepeatKey(e, keychar) {
+    if (e && e.repeat === true) {
+        return true;
+    }
+    var now = Date.now();
+    var isrepeat = false;
+    if (keychar && lastKeyChar === keychar && (now - lastKeyTimeMs) < 40) {
+        isrepeat = true;
+    }
+    lastKeyChar = keychar;
+    lastKeyTimeMs = now;
+    return isrepeat;
+}
 
 /**
  * If not the end of fullText, move cursor to next character.
@@ -210,7 +233,8 @@ function doTheEnd() {
     if (rpTimeLimit2 > 0) {
         samoSekunde = Math.min(samoSekunde, rpTimeLimit2);
     }
-    $('input[name="rpFullHits"]').val((fullText.length + mistakes));
+    // Full hits should reflect what was actually typed, not total exercise length.
+    $('input[name="rpFullHits"]').val((currentPos + mistakes));
     $('input[name="rpTimeInput"]').val(samoSekunde);
     $('input[name="rpMistakesInput"]').val(mistakes);
     var speed = calculateSpeed(samoSekunde);
@@ -400,6 +424,12 @@ function keyPressed(e) {
 
     // Something was typed so go figure out what character it was. and return for further processing.
     var keychar = getPressedChar(e);
+    if (isAutoRepeatKey(e, keychar)) {
+        if (e && typeof e.preventDefault === 'function') {
+            e.preventDefault();
+        }
+        return false;
+    }
    // var keychar = addEventListener('keydown', getPressedChar);
    // var keychar = addEventListener('compositionstart', getPressedChar);
 

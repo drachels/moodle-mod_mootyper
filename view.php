@@ -279,6 +279,7 @@ if ($mootyper->lesson != null) {
         }
         $keyboardjs = keyboards::get_instance_layout_js_file($mootyper->layout);
         $assetversion = (string)$CFG->version;
+        $typercache = '20260409c';
         // 20260320 For Korean(KNV7) layout, append a dedicated cache-bust token so stale layout
         // scripts (which only had onset highlighting) are replaced immediately.
         $kbcache = (strpos($keyboardjs, 'Korean(KNV7)') !== false) ? '&knv7kb=20260320a' : '';
@@ -289,13 +290,13 @@ if ($mootyper->lesson != null) {
         $iskoreankeyboard = (strpos($keyboardjs, 'Korean(KNV7)') !== false);
         if ($isamharickeyboard) {
             // 20241118 Using the Amharic(ETV7) keyboard layout so switch to typer(ETV7).js file.
-            echo '<script type="text/javascript" src="typer(ETV7).js?v='.$assetversion.'"></script>';
+            echo '<script type="text/javascript" src="typer(ETV7).js?v='.$assetversion.'&t='.$typercache.'"></script>';
         } else if ($iskoreankeyboard) {
             // 20260320 Korean(KNV7) standalone typer - complete replacement for typer.js.
             // Add a dedicated cache-bust token so browsers with stale KNV7 script cache refresh immediately.
-            echo '<script type="text/javascript" src="typer(KNV7).js?v='.$assetversion.'&knv7=20260320b"></script>';
+            echo '<script type="text/javascript" src="typer(KNV7).js?v='.$assetversion.'&knv7=20260320b&t='.$typercache.'"></script>';
         } else {
-            echo '<script type="text/javascript" src="typer.js?v='.$assetversion.'"></script>';
+            echo '<script type="text/javascript" src="typer.js?v='.$assetversion.'&t='.$typercache.'"></script>';
         }
 ?>
 <div id="mainDiv" align="left">

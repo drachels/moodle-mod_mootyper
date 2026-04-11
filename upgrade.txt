@@ -63,12 +63,13 @@ GitHub # | GitHub issue title | MooTyper ticket | Upgrade status | Notes
 
 20170704 MooTyper_1465 - Special characters not working for swiss french in mac #42.
 20180315 MooTyper_1468 - Spanish accent marks not working on Linux or Mac #57 nor Chromebooks #130.
+    2026041011 Connectivity restored; Linux validation can proceed on Raspberry Pi host
+        10.0.6.58 via VNC. Mac/Chromebook runtime checks remain pending.
 20200521 MooTyper_435 - Need to be able to delete un-need lesson files from lesson folder.
     20240212 See ticket re:may be in v4.2.4 already! Need to VERIFY.
     2026032104 Verified not fixed: no admin workflow deletes files from mod/mootyper/lessons,
         and lsnimport.php still auto-imports any lesson file present in that folder.
 20200521 MooTyper_438 - move contents of the csvexport.php file into gview.php file.
-20200521 MooTyper_439 - Possible unused function get_typerexercises() and get_typerexercisesfull($lsn = 0) in classes/local/lessons.php.
 20200521 MooTyper_436 - Lesson import request to change to file upload.
 20200521 MooTyper_437 - Request for new Audio Exercise Mode.
 20200521 MooTyper_445 - Need to change all refs to audio over to dictation.
@@ -157,11 +158,7 @@ GitHub # | GitHub issue title | MooTyper ticket | Upgrade status | Notes
     in the MooTyper Keyboard development course with new English(USV5.2)masterlayout version.
 20240524 MooTyper_1248 - Need new KB layout installation code when installing/upgrading MooTyper.
 20240813 MooTyper_1295 - Feature request for inverted letters, inverted words, added, or lower/upper case error.
-20241008 MooTyper_1330 - Why is there a /moodledev/blocks/mootyper block setting?.
 20241019 MooTyper_1331 - Need to see about creating group graphs on gview.php page and maybe owngrades.php.
-20241030 MooTyper_1332 - Need a Vietnamese(VNV5) Keyboard Layout.
-20241031 MooTyper_1335 - Request to Add Telex Input Support for Vietnamese Typing in MooTyper.
-20241126 MooTyper_1342 - Feature request - A flush button to reset a MooTyper for a user.
 20250206 MooTyper_1367 - Trying to add help buttons to non-existent form elements.
 20251118 MooTyper_1385 - Feature Request: Allow teachers to customize CSS class colors (finger1, finger2, finger3, finger4) #131.
 20251122 MooTyper_1387 - Using Amharic in Opera - Mistake details widens the page w/each mistake.
@@ -170,6 +167,12 @@ Moodle Versions
 ===============
 
 === 5.1.0 === pending
+20200521 MooTyper_439bt - Possible unused function get_typerexercises() and
+    get_typerexercisesfull($lsn = 0) in classes/local/lessons.php.
+    2026041001 Confirmed no call sites in plugin and removed both functions from
+        classes/local/lessons.php.
+    2026041002 Completed broader classes/local helper scan; removed additional
+        unreferenced methods get_grades_avg() and get_renderer_factory().
 20200521 MooTyper_473bt - Issue #71 Activity heading help does not stay toggled open with Boost.
     2026040701 Tested against Moodle 3.11 and lower in both Boost and Classic:
         the overview_help icon/string is shown.
@@ -186,6 +189,41 @@ Moodle Versions
 20230513 MooTyper_902bt - Settings are incomplete on the settings.php and mod_form.php pages.
     20260405 Folded GitHub issue #133 into MooTyper_902 and moved from Deferred;
         fix was included in v5.0.0 (Build: 2026032100).
+20241030 MooTyper_1332bt - Need a Vietnamese(VNV5) Keyboard Layout.
+    2026041003 Confirmed layout is installable/selectable via generic layout import.
+    2026041004 Fixed Vietnamese(VNV5) and Vietnamese(VNIV5) JS key reset handling and
+        corrected VNIV5 layout identifiers/header text.
+20241031 MooTyper_1335bt - Request to Add Telex Input Support for Vietnamese Typing in MooTyper.
+    2026041005 Fixed Telex driver runtime defects in combined-character flow
+        (showKeyboard variable usage, end handler call, mistake counter, and key reset behavior).
+    2026041012 Expanded Telex combined-character detection and normalized Vietnamese
+        accented letters to base keys so highlighting no longer falls into undefined
+        next6 styling (home-row shift/drop) and extra accent-mark characters type correctly.
+    2026041014 Accepted IME-composed character completion directly from textarea state
+        so letter-plus-mark input modes can advance reliably even when key events vary.
+    2026041101 Reduced false Telex mistake counts during in-progress IME composition
+        and corrected scoring math so precision and net WPM remain valid (non-negative).
+    2026041102 Added a lightweight typing-page diagnostic line showing active layout name
+        and the latest IME-detected character stream to speed reproducible field reports.
+    2026041103 Normalized cumulative IME compositionupdate payloads (for example VIE TL)
+        to the latest character so unshifted number-row typing is scored per key correctly.
+    2026041104 Limited compositionupdate key processing to Korean(KNV7) so Vietnamese
+        Telex combined-character input is not double-processed across current/next characters.
+    2026041105 Restored compositionupdate fallback for IME environments where keypress is
+        restricted, while ignoring compositionupdate during combined-character targets.
+    2026041106 Added temporary per-error diagnostics (expected->typed) to clarify each
+        counted mistake, including VNTelex combined-character mismatch paths.
+    2026041107 Ignored compositionupdate pre-events unless they match the current target
+        character, fixing Chrome student sessions where spaces were being marked incorrect.
+    2026041108 Normalized IME-altered intermediate keyup input (for example å-style keys)
+        to Telex base letters so VNTelex no longer adds false mistakes when output is correct.
+    2026041109 Deferred VNTelex mismatch counting until IME commits a character at the
+        current position, preventing false mistakes while all letters render correct.
+    2026041110 Removed temporary on-page diagnostics (ime/err) after validation and
+        confirmed pass on three Vietnamese sentence exercises using Chrome + VIE TL.
+20241126 MooTyper_1342bt - Feature request - A flush button to reset a MooTyper for a user.
+    2026041111 Expanded teacher/admin flush controls on gview.php to show in Lesson,
+        Exam, and Practice modes, so filtered or whole-group resets can be done faster.
 20251118 MooTyper_899bt - Delete all from a lesson also needs to delete the physical file.
     20260405 Folded GitHub issue #129 into MooTyper_899 and moved from Deferred;
         started code review of lesson-delete/file-delete path for 5.1.0.
@@ -197,6 +235,13 @@ Moodle Versions
         Check 5 passed: return path landed on Exercises with a valid remaining lesson selected.
 20260322 MooTyper_1467bt - Error in lesson ES - AesopsFables1.txt #132.
     20260405 Moved from Deferred; updated files were included in recent 5.0.0 (Build: 2026032100) release.
+20260411 MooTyper_1469bt - The klrem.php file does not fail gracefully if the physical file is
+    already missing .
+    2026041101 Hardened klrem.php deletion path to use $CFG->dirroot.'/mod/mootyper'
+        instead of getcwd(), and treat already-missing layout files as non-fatal.
+    2026041102 Live validation passed: deleting Spanish(V4) from layouts.php completed
+        cleanly when physical layout files were absent, with DB cleanup and normal return.
+
 
 === 5.0.0 === 2026032100
 20200521 MooTyper_471r - Need to add missing items to activity edit page - mod_form.php.
@@ -291,6 +336,8 @@ Moodle Versions
     2026032125 Quick role/mode matrix check passed (scripted): Practice mode shows
         student mine-only and teacher/admin mine+all; non-Practice mode shows no recovery
         buttons and endpoint access is denied.
+    2026041013 Fixed warning in attempt_recovery.php from undefined $mootyper->mode;
+        Practice-mode guard now correctly checks $mootyper->isexam.
 20260312 MooTyper_1435r - Feature Request - Need an anchor point when deleting grades.
     2026032119 Verified fixed: gview.php and owngrades.php pass returnanchor=grades-table
         to attrem.php, and attrem.php appends that anchor on redirects after blocked or

@@ -241,7 +241,7 @@ function doTheEnd() {
     $('input[name="rpAccInput"]').val(calculateAccuracy(fullText, mistakes).toFixed(2));
     $('input[name="rpSpeedInput"]').val(speed);
     var gwpm = (speed / 5);
-    var wpm = (speed / 5) - (mistakes / (samoSekunde / 60));
+    var wpm = Math.max(0, (speed / 5) - (mistakes / (samoSekunde / 60)));
     $('#jsWpm2').html((gwpm.toFixed(1)) + " | " + (wpm.toFixed(1)));
     $('input[name="rpWpmInput"]').val(wpm);
     $('input[name="rpMistakeDetailsInput"]').val(countChars(mistakestring));
@@ -304,7 +304,6 @@ function doTheEnd() {
 function getPressedChar(e) {
     var keynum;
     var keychar;
-    var numcheck;
 
     // addEventListener('keydown', (event) => {
     // Th.log('keydown We may have typed a Korean character here '+event.keyCode);
@@ -312,14 +311,29 @@ function getPressedChar(e) {
     // });
     // addEventListener('compositionupdate', (event) => {
 
-    if (event.data) {
+    if (e && typeof e.data === 'string' && e.data.length > 0) {
         // console.log('compositionupdate We typed a Korean character here '+event.data);
-        keychar = event.data;
+        keychar = e.data;
+        if (keychar.length > 1) {
+            // Some IMEs (for example VIE TL) emit cumulative composition text.
+            // For scoring, use only the latest composed character.
+            keychar = keychar.charAt(keychar.length - 1);
+        }
         // console.log('keychar We transferred event.data to keychar and it is '+keychar);
 
         if (keychar) {
             //console.log('if (keychar) was tested and it is '+keychar);
             return keychar;
+        }
+    }
+
+    // Modern browsers provide the final character in e.key, including accented letters.
+    if (e && typeof e.key === 'string') {
+        if (e.key === 'Enter') {
+            return '\n';
+        }
+        if (e.key.length === 1) {
+            return e.key;
         }
     }
     // });
@@ -332,7 +346,7 @@ function getPressedChar(e) {
     if (keynum === 13) {
         keychar = '\n';
         // This hack is needed for Spanish keyboard, which uses 161 for some character.
-    } else if ((!keynum || keynum === 160 || keynum === 161) && (keynum !== 161 && THE_LAYOUT !== 'Spanish')) {
+    } else if (!keynum || keynum === 160 || keynum === 161) {
         keychar = '[not_yet_defined]';
     } else {
         keychar = String.fromCharCode(keynum);
@@ -422,8 +436,22 @@ function keyPressed(e) {
         doStart();
     }
 
+    // Combined-character layouts handle composed letters in keyupCombined.
+    // Ignore compositionupdate here for combined targets to avoid double-processing.
+    if (e && e.type === 'compositionupdate' && typeof isCombined === 'function' && isCombined(currentChar)) {
+        return false;
+    }
+
     // Something was typed so go figure out what character it was. and return for further processing.
     var keychar = getPressedChar(e);
+
+    // In some IME/browser combinations (for example Chrome + Vietnamese IME),
+    // compositionupdate can fire with carry-over text before the actual keypress.
+    // Ignore those pre-events unless they match the current target exactly.
+    if (e && e.type === 'compositionupdate' && keychar !== currentChar) {
+        return false;
+    }
+
     if (isAutoRepeatKey(e, keychar)) {
         if (e && typeof e.preventDefault === 'function') {
             e.preventDefault();
@@ -578,7 +606,8 @@ function timeDifference(t1, t2) {
  */
 function inittexttoenter(ttext, tinprogress, tmistakes, thits, tstarttime, tattemptid, turl,
     tshowkeyboard, tcontinuoustype, tcountmistypedspaces, tcountmistakes) {
-    // Needed for IME (input method editor) when using Korean keyboard layout.
+    // Keep compositionupdate fallback for IME environments where keypress is limited.
+    // keyPressed() filters this while combined-char handlers are active.
     addEventListener('compositionupdate', keyPressed);
     $("#form1").on("keypress", "#tb1", keyPressed);
     showKeyboard = tshowkeyboard;
@@ -668,8 +697,8 @@ function calculateAccuracy() {
     if (currentPos + mistakes === 0) {
         return 0;
     }
-    // Only correctly typed count.
-    return (((currentPos - mistakes) * 100) / currentPos);
+    // Accuracy is correct hits divided by total keystrokes affecting score.
+    return ((currentPos * 100) / (currentPos + mistakes));
 }
 
 /**
@@ -720,7 +749,7 @@ function updTimeSpeed() {
     $('#jsAcc2').html(calculateAccuracy(fullText, mistakes).toFixed(2));
 
     var gwpm = (calculateSpeed(secs) / 5);
-    var nwpm = ((calculateSpeed(secs) / 5) - (mistakes / (secs / 60)));
+    var nwpm = Math.max(0, ((calculateSpeed(secs) / 5) - (mistakes / (secs / 60))));
     $('#jsWpm2').html((gwpm.toFixed(1)) + " | " + (nwpm.toFixed(1)));
     if (mistakestring) {
         $('#jsDetailMistake').html(countChars(mistakestring));

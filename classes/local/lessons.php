@@ -24,7 +24,6 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 namespace mod_mootyper\local;
-use mod_mootyper\local\lessons;
 defined('MOODLE_INTERNAL') || die(); // phpcs:ignore
 /**
  * Utility class for counting keyboards and so on.
@@ -143,29 +142,10 @@ class lessons {
     }
 
     /**
-     * Get current exercise name for current lesson.
-     *
-     * @return string
-     */
-    public static function get_typerexercises() {
-        global $USER, $CFG, $DB;
-        $params = [];
-        $exestoreturn = [];
-        $sql = "SELECT id, exercisename
-                FROM ".$CFG->prefix."mootyper_exercises";
-        if ($exercises = $DB->get_records_sql($sql, $params)) {
-            foreach ($exercises as $ex) {
-                $exestoreturn[$ex->id] = $ex->exercisename;
-            }
-        }
-        return $exestoreturn;
-    }
-
-    /**
      * Get current exercise for current lesson.
      *
      * @param int $less
-     * @return string
+        * @return array
      */
     public static function get_exercises_by_lesson($less) {
         global $DB;
@@ -202,32 +182,6 @@ class lessons {
             }
         }
         return $max + 1;
-    }
-
-    /**
-     * Get info for this lesson.
-     *
-     * @param int $lsn
-     * @return array
-     */
-    public static function get_typerexercisesfull($lsn = 0) {
-        global $USER, $CFG, $DB;
-        $params = [];
-        $toreturn = [];
-        $sql = "SELECT * FROM ".$CFG->prefix."mootyper_exercises WHERE lesson=".$lsn." OR 0=".$lsn;
-        if ($exercises = $DB->get_records_sql($sql, $params)) {
-            foreach ($exercises as $ex) {
-                $exestoreturn = [];
-                $exestoreturn['id'] = $ex->id;
-                $exestoreturn['exercisename'] = $ex->exercisename;
-                $exestoreturn['texttotype'] = $ex->texttotype;
-                $exestoreturn['snumber'] = $ex->snumber;
-                $exestoreturn['dictationdata'] = $ex->dictationdata;
-                $exestoreturn['dictationdataformat'] = $ex->dictationdataformat;
-                $toreturn[] = $exestoreturn;
-            }
-        }
-        return $toreturn;
     }
 
     /** 160322 Modified Where clause. Previously, it was comparing a

@@ -45,18 +45,18 @@ if ($kb) {
     // 20220126 Search and retrieve the layout by name.
     $kbrecord = $DB->get_record('mootyper_layouts', ['name' => $kb], '*', MUST_EXIST);
 
-    // 20220126 Get the absolute path to the current working directory.
-    $pathtodir = getcwd();
+    // 20260411 Use plugin dirroot so deletion path is independent of runtime cwd.
+    $pathtodir = $CFG->dirroot.'/mod/mootyper';
     // 20220126 Create an absolute pointer to the php and js files that are to be deleted.
     $filepointer1 = $pathtodir.'/layouts/'.$kb.'.php';
     $filepointer2 = $pathtodir.'/layouts/'.$kb.'.js';
 
-    // 20220126 Use unlink() function to delete the two physical files for the layout being deleted.
-    if (!unlink($filepointer1)) {
+    // 20220126 Delete physical layout files when present; missing files are allowed.
+    if (file_exists($filepointer1) && !unlink($filepointer1)) {
         echo ("$filepointer1 cannot be deleted due to an error.");
         die;
     }
-    if (!unlink($filepointer2)) {
+    if (file_exists($filepointer2) && !unlink($filepointer2)) {
         echo ("$filepointer2 cannot be deleted due to an error.");
         die;
     }

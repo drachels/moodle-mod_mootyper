@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * This file defines the Vietnamese(VNV5.0)keyboard layout.
+ * This file defines the Vietnamese(VNIV5.0)keyboard layout.
  *
  * @package    mod_mootyper
  * @copyright  2024 onwards AL Rachels (drachels@drachels.com)
@@ -30,7 +30,7 @@
 echo (isset($displaynone) && ($displaynone == true)) ? 'display:none;' : '';
 ?>
 ">
-<div id="keyboard" class="keyboardback">Vietnamese(VNV5) Keyboard Layout<br>
+<div id="keyboard" class="keyboardback">Vietnamese(VNIV5) Keyboard Layout<br>
     <section>
         <div class="mtrow" style='float: left; margin-left:5px; font-size: 15px !important; line-height: 15px'>
             <div id="jkeybackquote" class="normal" style='text-align:left;'><b>~<br>`</b></div>

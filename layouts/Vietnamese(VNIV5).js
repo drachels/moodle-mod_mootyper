@@ -1,5 +1,5 @@
 /**
- * @fileOverview Vietnamese(VNV5.0) keyboard driver.
+ * @fileOverview Vietnamese(VNIV5.0) keyboard driver.
  * @author <a href="mailto:drachels@drachels.com">AL Rachels</a>
  * @version 5.0
  * @since 20241026
@@ -38,12 +38,10 @@ function keyupFirst(event) {
  */
 function keyboardElement(ltr) {
     this.chr = ltr.toLowerCase();
-    if (this.chr === '\n' || this.chr === '\r\n' || this.chr === '\n\r' || this.chr === '\r') {
-        this.shiftleft = false;
-        this.shiftright = false;
-        this.alt = false;
-        this.accent = false;
-    }
+    this.shiftleft = false;
+    this.shiftright = false;
+    this.alt = false;
+    this.accent = false;
 
         // phpcs:ignore
     if (ltr.match(/[ƯƠÔYUIOP|HJKL:~_+"NM<>?]/)) {
@@ -66,7 +64,8 @@ function keyboardElement(ltr) {
         this.alt = true;
         // phpcs:ignore
     } else if (ltr.match(/[`ăâêộ̀̉̃́đ-₫\\;',./]/)) {
-        this.shift = false;
+        this.shiftleft = false;
+        this.shiftright = false;
         this.alt = false;
         this.accent = false;
 
@@ -127,7 +126,7 @@ function keyboardElement(ltr) {
             document.getElementById(getKeyID(this.chr)).className = "normal";
         }
         if (this.chr === '\n' || this.chr === '\r\n' || this.chr === '\n\r' || this.chr === '\r') {
-            document.getElementById('jkeyenter').classname = "normal";
+            document.getElementById('jkeyenter').className = "normal";
         }
         if (this.shiftleft) {
             document.getElementById('jkeyshiftl').className = "normal";

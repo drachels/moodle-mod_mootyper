@@ -11,9 +11,167 @@
  * @returns {string} The character.
  */
 function isCombined(chr) {
- 	//return false;
-	return (chr == 'ă' || chr == 'â' || chr == 'ê' || chr == 'ô');
-	//return (chr == '´' || chr == '`');
+	return /[ăâđêôơưáàảãạắằẳẵặấầẩẫậéèẻẽẹếềểễệíìỉĩịóòỏõọốồổỗộớờởỡợúùủũụứừửữựýỳỷỹỵ]/i.test(chr);
+}
+
+var combinedChar = false;
+var telexProgress = "";
+
+/**
+ * Return Telex key sequence for a Vietnamese target character.
+ * @param {string} chr The target character.
+ * @returns {string} Telex sequence.
+ */
+function telexSequenceForChar(chr) {
+    var c = (chr || "").toLowerCase();
+    switch (c) {
+        case 'á': return 'as';
+        case 'à': return 'af';
+        case 'ả': return 'ar';
+        case 'ã': return 'ax';
+        case 'ạ': return 'aj';
+        case 'ă': return 'aw';
+        case 'ắ': return 'aws';
+        case 'ằ': return 'awf';
+        case 'ẳ': return 'awr';
+        case 'ẵ': return 'awx';
+        case 'ặ': return 'awj';
+        case 'â': return 'aa';
+        case 'ấ': return 'aas';
+        case 'ầ': return 'aaf';
+        case 'ẩ': return 'aar';
+        case 'ẫ': return 'aax';
+        case 'ậ': return 'aaj';
+
+        case 'é': return 'es';
+        case 'è': return 'ef';
+        case 'ẻ': return 'er';
+        case 'ẽ': return 'ex';
+        case 'ẹ': return 'ej';
+        case 'ê': return 'ee';
+        case 'ế': return 'ees';
+        case 'ề': return 'eef';
+        case 'ể': return 'eer';
+        case 'ễ': return 'eex';
+        case 'ệ': return 'eej';
+
+        case 'í': return 'is';
+        case 'ì': return 'if';
+        case 'ỉ': return 'ir';
+        case 'ĩ': return 'ix';
+        case 'ị': return 'ij';
+
+        case 'ó': return 'os';
+        case 'ò': return 'of';
+        case 'ỏ': return 'or';
+        case 'õ': return 'ox';
+        case 'ọ': return 'oj';
+        case 'ô': return 'oo';
+        case 'ố': return 'oos';
+        case 'ồ': return 'oof';
+        case 'ổ': return 'oor';
+        case 'ỗ': return 'oox';
+        case 'ộ': return 'ooj';
+        case 'ơ': return 'ow';
+        case 'ớ': return 'ows';
+        case 'ờ': return 'owf';
+        case 'ở': return 'owr';
+        case 'ỡ': return 'owx';
+        case 'ợ': return 'owj';
+
+        case 'ú': return 'us';
+        case 'ù': return 'uf';
+        case 'ủ': return 'ur';
+        case 'ũ': return 'ux';
+        case 'ụ': return 'uj';
+        case 'ư': return 'uw';
+        case 'ứ': return 'uws';
+        case 'ừ': return 'uwf';
+        case 'ử': return 'uwr';
+        case 'ữ': return 'uwx';
+        case 'ự': return 'uwj';
+
+        case 'ý': return 'ys';
+        case 'ỳ': return 'yf';
+        case 'ỷ': return 'yr';
+        case 'ỹ': return 'yx';
+        case 'ỵ': return 'yj';
+
+        case 'đ': return 'dd';
+        default: return c;
+    }
+}
+
+/**
+ * Normalize Vietnamese combined letters to their physical Telex base key.
+ * @param {string} chr The current character.
+ * @returns {string} Base key character.
+ */
+function normalizeVietnameseBaseChar(chr) {
+    if (!chr || typeof chr !== 'string') {
+        return chr;
+    }
+    var c = chr.toLowerCase();
+    if (/[ăâáàảãạắằẳẵặấầẩẫậ]/.test(c)) {
+        return 'a';
+    }
+    if (/[đ]/.test(c)) {
+        return 'd';
+    }
+    if (/[êéèẻẽẹếềểễệ]/.test(c)) {
+        return 'e';
+    }
+    if (/[íìỉĩị]/.test(c)) {
+        return 'i';
+    }
+    if (/[ôơóòỏõọốồổỗộớờởỡợ]/.test(c)) {
+        return 'o';
+    }
+    if (/[ưúùủũụứừửữự]/.test(c)) {
+        return 'u';
+    }
+    if (/[ýỳỷỹỵ]/.test(c)) {
+        return 'y';
+    }
+    return c;
+}
+
+/**
+ * Normalize IME-altered keyup input to a Telex-friendly base key.
+ * @param {string} chr The latest typed key character.
+ * @returns {string} Normalized key character.
+ */
+function normalizeTelexInputKey(chr) {
+    if (!chr || typeof chr !== 'string') {
+        return chr;
+    }
+    var c = chr.toLowerCase();
+    if (c.length !== 1) {
+        return c;
+    }
+    if (c === ' ') {
+        return c;
+    }
+    if (typeof c.normalize === 'function') {
+        c = c.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    }
+    return normalizeVietnameseBaseChar(c);
+}
+
+/**
+ * Determine whether input is still composing the same Vietnamese base letter.
+ * @param {string} typedChar The latest textarea character.
+ * @param {string} targetChar The target character at current position.
+ * @returns {boolean} True when composition is still in progress.
+ */
+function isCompositionInProgress(typedChar, targetChar) {
+    if (!typedChar || !targetChar) {
+        return false;
+    }
+    if (typedChar === targetChar) {
+        return false;
+    }
+    return normalizeVietnameseBaseChar(typedChar) === normalizeVietnameseBaseChar(targetChar);
 }
 
 /**
@@ -26,8 +184,73 @@ function keyupCombined(e) {
 		return false;
 	if(!started)
 		doStart();
-	var keychar = getPressedChar(e);
-	if(keychar == '[not_yet_defined]') {
+    var rawkeychar = getPressedChar(e);
+    if (typeof rawkeychar === 'string' && rawkeychar.length === 1) {
+        rawkeychar = rawkeychar.toLowerCase();
+    }
+    var keychar = normalizeTelexInputKey(rawkeychar);
+    var targetchar = (currentChar || '').toLowerCase();
+    if (rawkeychar === targetchar) {
+        telexProgress = "";
+        if (showKeyboard) {
+            var thisE1 = new keyboardElement(currentChar);
+            thisE1.turnOff();
+        }
+        if (currentPos == fullText.length - 1) {
+            doTheEnd();
+            return true;
+        }
+        if (currentPos < fullText.length - 1) {
+            var nextChar1 = fullText[currentPos + 1];
+            if (showKeyboard) {
+                var nextE1 = new keyboardElement(nextChar1);
+                nextE1.turnOn();
+            }
+            if (!isCombined(nextChar1)) {
+                $("#form1").off("keyup", "#tb1");
+                $("#form1").on("keypress", "#tb1", keyPressed);
+            }
+        }
+        moveCursor(currentPos + 1);
+        currentChar = fullText[currentPos + 1];
+        currentPos++;
+        return true;
+    }
+    var expected = telexSequenceForChar(currentChar);
+    if (typeof expected === 'string' && expected.length > 1) {
+        if (keychar === expected.charAt(telexProgress.length)) {
+            telexProgress += keychar;
+            if (telexProgress.length < expected.length) {
+                return true;
+            }
+            telexProgress = "";
+            if (showKeyboard) {
+                var thisE2 = new keyboardElement(currentChar);
+                thisE2.turnOff();
+            }
+            if (currentPos == fullText.length - 1) {
+                doTheEnd();
+                return true;
+            }
+            if (currentPos < fullText.length - 1) {
+                var nextChar2 = fullText[currentPos + 1];
+                if (showKeyboard) {
+                    var nextE2 = new keyboardElement(nextChar2);
+                    nextE2.turnOn();
+                }
+                if (!isCombined(nextChar2)) {
+                    $("#form1").off("keyup", "#tb1");
+                    $("#form1").on("keypress", "#tb1", keyPressed);
+                }
+            }
+            moveCursor(currentPos + 1);
+            currentChar = fullText[currentPos + 1];
+            currentPos++;
+            return true;
+        }
+        telexProgress = "";
+    }
+    if(rawkeychar == '[not_yet_defined]') {
 		combinedChar = true;
 		return true;
 	}
@@ -36,21 +259,28 @@ function keyupCombined(e) {
 		return true;
 	}
 	var currentText = $('#tb1').val();
+    if (currentText.length <= currentPos) {
+        // IME is still composing; no new character committed yet.
+        return true;
+    }
 	var lastChar = currentText.substring(currentText.length-1);
-	if(combinedChar && lastChar==currentChar) 
+    if (isCompositionInProgress(lastChar, currentChar)) {
+        return true;
+    }
+    if(lastChar == currentChar)
 	// && ((currentChar.toUpperCase() == currentChar && e.shiftKey) || (currentChar.toUpperCase() != currentChar))) 
 	{
-		if(show_keyboard){
+        if (showKeyboard) {
 			var thisE = new keyboardElement(currentChar);
 			thisE.turnOff();
 		}
 		if(currentPos == fullText.length-1) { // END. 
-			doKonec();
+            doTheEnd();
 			return true;
 		}
 		if(currentPos < fullText.length-1){
 			var nextChar = fullText[currentPos+1];
-			if(show_keyboard){
+            if (showKeyboard) {
 				var nextE = new keyboardElement(nextChar);
 				nextE.turnOn();
 			}
@@ -59,7 +289,8 @@ function keyupCombined(e) {
 				$("#form1").on("keypress", "#tb1", keyPressed);
 			}
 		}
-		combinedChar = false;
+        combinedChar = false;
+        telexProgress = "";
 		moveCursor(currentPos+1);
 		currentChar = fullText[currentPos+1];
 		currentPos++;
@@ -67,8 +298,9 @@ function keyupCombined(e) {
 	}
 	else
 	{
-		combinedChar = false;
-		napake++;
+        combinedChar = false;
+        telexProgress = "";
+        mistakes++;
 		var tbval = $('#tb1').val();
 		$('#tb1').val(tbval.substring(0, currentPos));
 		return false;
@@ -92,6 +324,10 @@ function keyupFirst(event) {
  */
 function keyboardElement(ltr) {
     this.chr = ltr.toLowerCase();
+    this.shiftleft = false;
+    this.shiftright = false;
+    this.alt = false;
+    this.accent = false;
     // phpcs:ignore
     if (isLetter(ltr)) { // Set specified shift key for right or left.
         if (ltr.match(/[ĂÂÊÔĐQWERTASDFGZXCVB]/)) {
@@ -137,13 +373,13 @@ function keyboardElement(ltr) {
             document.getElementById(getKeyID(this.chr)).className = "normal";
         }
         if (this.chr === '\n' || this.chr === '\r\n' || this.chr === '\n\r' || this.chr === '\r') {
-            document.getElementById('jkeyenter').classname = "normal";
+            document.getElementById('jkeyenter').className = "normal";
         }
         if (this.shiftleft) {
-            document.getElementById('jkeyshiftl').className = "next4";
+            document.getElementById('jkeyshiftl').className = "normal";
         }
         if (this.shiftright) {
-            document.getElementById('jkeyshiftr').className = "next4";
+            document.getElementById('jkeyshiftr').className = "normal";
         }
         if (this.alt) {
             document.getElementById('jkeyaltgr').className = "normal";
@@ -157,6 +393,7 @@ function keyboardElement(ltr) {
  * @returns {number}.
  */
 function thenFinger(tCrka) {
+    tCrka = normalizeVietnameseBaseChar(tCrka);
     if (tCrka === ' ') {
         return 5; // Highlight the spacebar.
         // phpcs:ignore
@@ -182,6 +419,7 @@ function thenFinger(tCrka) {
  * @returns {string}.
  */
 function getKeyID(tCrka) {
+    tCrka = normalizeVietnameseBaseChar(tCrka);
     if (tCrka === ' ') {
         return "jkeyspace";
     } else if (tCrka === ',') {
@@ -236,17 +474,6 @@ function getKeyID(tCrka) {
         return "jkeyslash";
     } else if (tCrka === '~' || tCrka === '`') {
         return "jkeybackquote";
-    } else if (tCrka === 'ă' || tCrka === 'â' || tCrka === 'á' || tCrka === 'à' || tCrka === 'ả' || tCrka === 'ã' || tCrka === 'ạ') {
-        return "jkeya";
-    } else if (tCrka === 'ê') {
-        return "jkeye";
-    } else if (tCrka === 'ô') {
-        return "jkeyo";
-    } else if (tCrka === 'ư') {
-        return "jkeyu";
-    } else if (tCrka === 'đ') {
-        return "jkeyd";
-
     } else {
         return "jkey" + tCrka;
     }

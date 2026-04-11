@@ -199,6 +199,20 @@ if (!has_capability('mod/mootyper:viewmygrades', context_module::instance($cm->i
         .get_string('viewallmootypers', 'mootyper')
         .'</a></td></tr></table>';
 
+    if ((string)$mtmode === '2') {
+        $flushurl = new moodle_url('/mod/mootyper/attempt_flush.php', [
+            'id' => $cm->id,
+            'scope' => 'mine',
+            'sesskey' => sesskey(),
+        ]);
+        $flushmsg = get_string('flushresultsconfirmmine', 'mootyper');
+        echo '<div style="margin:8px 0;">'
+            .'<a href="'.$flushurl->out(false).'" class="btn btn-warning btn-sm mootyper-delete-link"'
+            .' data-confirm="'.s($flushmsg).'">'
+            .get_string('flushresultsmine', 'mootyper')
+            .'</a></div>';
+    }
+
     // Update the library.
     if ($des == -1 || $des == 0) {
         $grds = get_typergradesuser(optional_param('n', 0, PARAM_INT), $USER->id, $orderby, 0);

@@ -189,7 +189,7 @@ function getKeyID(tCrka) {
         return "jkey9";
     } else if (tCrka === '=') {
         return "jkey0";
-    } else if (tCrka === "'" || tCrka === '?' || tCrka === '\') {
+    } else if (tCrka === "'" || tCrka === '?' || tCrka === '\\') {
         return "jkeyapostrophe";
     } else if (tCrka === '¿' || tCrka === '¡') {
         return "jkey¿";

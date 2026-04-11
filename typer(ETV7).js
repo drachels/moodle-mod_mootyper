@@ -283,7 +283,6 @@ function doTheEnd() {
 function getPressedChar(e) {
     var keynum;
     var keychar;
-    var numcheck;
 
     // addEventListener('keydown', (event) => {
     // Th.log('keydown We may have typed a Korean character here '+event.keyCode);
@@ -291,14 +290,24 @@ function getPressedChar(e) {
     // });
     // addEventListener('compositionupdate', (event) => {
 
-    if (event.data) {
+    if (e && typeof e.data === 'string' && e.data.length > 0) {
         // console.log('compositionupdate We typed a Korean character here '+event.data);
-        keychar = event.data;
+        keychar = e.data;
         // console.log('keychar We transferred event.data to keychar and it is '+keychar);
 
         if (keychar) {
             //console.log('if (keychar) was tested and it is '+keychar);
             return keychar;
+        }
+    }
+
+    // Modern browsers provide the final character in e.key, including accented letters.
+    if (e && typeof e.key === 'string') {
+        if (e.key === 'Enter') {
+            return '\n';
+        }
+        if (e.key.length === 1) {
+            return e.key;
         }
     }
     // });
@@ -312,7 +321,7 @@ function getPressedChar(e) {
     if (keynum === 13) {
         keychar = '\n';
         // This hack is needed for Spanish keyboard, which uses 161 for some character.
-    } else if ((!keynum || keynum === 160 || keynum === 161) && (keynum !== 161 && THE_LAYOUT !== 'Spanish')) {
+    } else if (!keynum || keynum === 160 || keynum === 161) {
         keychar = '[not_yet_defined]';
     } else {
         keychar = String.fromCharCode(keynum);

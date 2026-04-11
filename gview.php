@@ -289,6 +289,34 @@ if (!has_capability('mod/mootyper:viewgrades', context_module::instance($cm->id)
         echo '</td></tr></table></form>';
     }
 
+    if ((string)$mtmode === '0' || (string)$mtmode === '1' || (string)$mtmode === '2') {
+        $examflush = ((string)$mtmode === '1');
+        $flushparams = [
+            'id' => $cm->id,
+            'scope' => 'filtered',
+            'user' => $examflush ? 0 : $us,
+            'exercise' => $examflush ? 0 : $se,
+            'jmode' => $md,
+            'sesskey' => sesskey(),
+        ];
+        $flushurl = new moodle_url('/mod/mootyper/attempt_flush.php', $flushparams);
+        $flushmsg = $examflush
+            ? get_string('flushresultsconfirmall', 'mootyper')
+            : get_string('flushresultsconfirmfiltered', 'mootyper');
+        if ((string)$mtmode === '2') {
+            $flushlabel = get_string('flushresultspracticefilteredall', 'mootyper');
+        } else {
+            $flushlabel = $examflush
+                ? get_string('flushresultsall', 'mootyper')
+                : get_string('flushresultsfiltered', 'mootyper');
+        }
+        echo '<div style="margin:8px 0;">'
+            .'<a href="'.$flushurl->out(false).'" class="btn btn-warning btn-sm mootyper-delete-link"'
+            .' data-confirm="'.s($flushmsg).'">'
+            .$flushlabel
+            .'</a></div>';
+    }
+
     if ($des == -1) {
         $des = 0;
     }

@@ -26,7 +26,6 @@ namespace mod_mootyper\local;
 
 defined('MOODLE_INTERNAL') || die(); // phpcs:ignore
 
-use mod_mootyper\local\factories\renderer as renderer_factory;
 use mod_mootyper\local\factories\legacy_data_mapper as legacy_data_mapper_factory;
 use mod_mootyper\local\factories\entity as entity_factory;
 use mod_mootyper\local\factories\exporter as exporter_factory;
@@ -45,25 +44,6 @@ use mod_mootyper\local\factories\url as url_factory;
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class container {
-    /**
-     * Create the renderer factory.
-     *
-     * @return renderer_factory
-     */
-    public static function get_renderer_factory(): renderer_factory {
-        global $PAGE;
-
-        return new renderer_factory(
-            self::get_legacy_data_mapper_factory(),
-            self::get_exporter_factory(),
-            self::get_vault_factory(),
-            self::get_manager_factory(),
-            self::get_entity_factory(),
-            self::get_builder_factory(),
-            self::get_url_factory(),
-            $PAGE
-        );
-    }
 
     /**
      * Create the legacy data mapper factory.

@@ -30,7 +30,7 @@
 echo (isset($displaynone) && ($displaynone == true)) ? 'display:none;' : '';
 ?>
 ">
-<div id="keyboard" class="keyboardback">Tamil(V5) Keyboard Layout based on US English file<br>
+<div id="keyboard" class="keyboardback">Tamil 99 (V5) Keyboard Layout<br>
     <section>
         <div class="mtrow" style='float: left; margin-left:5px; font-size: 15px !important; line-height: 15px'>
             <div id="jkeybackquote" class="normal" style='text-align:center;'>~<br>`</div>
@@ -59,13 +59,12 @@ echo (isset($displaynone) && ($displaynone == true)) ? 'display:none;' : '';
             <div id="jkeyy" class="normal" style='text-align:center;'>ஶ்ரீ<br>ள</div>
             <div id="jkeyu" class="normal" style='text-align:center;'>ஶ<br>ற</div>
             <div id="jkeyi" class="normal" style='text-align:center;'>&nbsp;<br>ன</div>
-            <div id="jkeyட" class="normal" style='text-align:center;'>[<br>ட</div>
-            <div id="jkeyண" class="normal" style='text-align:center;'>]<br>ண</div>
-            <div id="jkeyச" class="normal" style='text-align:center;'>{<br>ச</div>
-            <div id="jkeyஞ" class="normal" style='text-align:center;'>}<br>ஞ</div>
-            <div id="jkey\" class="normal" style='text-align:center; width: 75px;'>|<br>\</div>
+            <div id="jkeyo" class="normal" style='text-align:center;'>[<br>ட</div>
+            <div id="jkeyp" class="normal" style='text-align:center;'>]<br>ண</div>
+            <div id="jkeybracketl" class="normal" style='text-align:center;'>{<br>ச</div>
+            <div id="jkeybracketr" class="normal" style='text-align:center;'>}<br>ஞ</div>
         </div>
-
+        <div id="jkeyenter" class="normal" style="width: 45px; margin-right:5px; float: right; height: 85px;">Enter</div>
         <div class="mtrow" style='float: left; margin-left:5px; font-size: 15px !important; line-height: 15px'>
             <div id="jkeycaps" class="normal" style="width: 85px;">Caps lock</div>
             <div id="jkeya" class="finger4" style='text-align:center;'>௹<br>அ</div>
@@ -75,25 +74,25 @@ echo (isset($displaynone) && ($displaynone == true)) ? 'display:none;' : '';
             <div id="jkeyg" class="normal" style='text-align:center;'>&nbsp;<br>எ</div>
             <div id="jkeyh" class="normal" style='text-align:center;'>&nbsp;<br>க</div>
             <div id="jkeyj" class="finger1" style='text-align:center;'>&nbsp;<br>ப</div>
-            <div id="jkeyk" class="finger2" style='text-align:center;'>&nbsp;<br>ம</div>
-            <div id="jkeyl" class="finger3" style='text-align:center;'>&nbsp;<br>த</span></div>
-            <div id="jkeyந" class="finger4" style='text-align:center;'>&nbsp;<br>ந</div>
-            <div id="jkeyய" class="normal" style='text-align:center;'>&nbsp;<br>ய</div>
-            <div id="jkeyenter" class="normal" style="width: 90px;">Enter</div>
+            <div id="jkeyk" class="finger2" style='text-align:center;'>"<br>ம</div>
+            <div id="jkeyl" class="finger3" style='text-align:center;'>:<br>த</div>
+            <div id="jkeysemicolon" class="finger4" style='text-align:center;'>;<br>ந</div>
+            <div id="jkeyapostrophe" class="normal" style='text-align:center;'>'<br>ய</div>
+            <div id="jkeybackslash" class="normal" style='text-align:center;'>|<br>\</div>
         </div>
     </div>
         <div class="mtrow" style='float: left; margin-left:5px; font-size: 15px !important; line-height: 15px'>
             <div id="jkeyshiftl" class="normal" style="width: 107px;">Shift</div>
-            <div id="jkeyy" class="normal" style='text-align:center;'>௳<br>ஔ</div>
+            <div id="jkeyz" class="normal" style='text-align:center;'>௳<br>ஔ</div>
             <div id="jkeyx" class="normal" style='text-align:center;'>௴<br>ஓ</div>
             <div id="jkeyc" class="normal" style='text-align:center;'>௵<br>ஒ</div>
-            <div id="jkeyv" class="normal" style='text-align:center;'>௶<br>௶</div>
+            <div id="jkeyv" class="normal" style='text-align:center;'>௶<br>வ</div>
             <div id="jkeyb" class="normal" style='text-align:center;'>௷<br>ங</div>
             <div id="jkeyn" class="normal" style='text-align:center;'>ௐ<br>ல</div>
             <div id="jkeym" class="normal" style='text-align:center;'>/<br>ர</div>
             <div id="jkeycomma" class="normal" style='text-align:center;'>&lt;<br>,</div>
             <div id="jkeyperiod" class="normal" style='text-align:center;'>&gt;<br>.</div>
-            <div id="jkeyminus" class="normal" style='text-align:center;'>?<br>ழ</div>
+            <div id="jkeyslash" class="normal" style='text-align:center;'>?<br>ழ</div>
             <div id="jkeyshiftr" class="normal" style="width: 107px; border-right-style: solid;">Shift</div>
         </div>
         <div class="mtrow" style='float: left; margin-left:5px; font-size: 15px !important; line-height: 15px'>

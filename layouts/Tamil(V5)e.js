@@ -33,22 +33,50 @@ function keyupFirst(event) {
 }
 
 /**
+ * Normalize Tamil multi-character tokens so one physical key highlights correctly.
+ * @param {string} ltr The current expected character.
+ * @param {number} [pos] Optional text index for token lookahead.
+ * @returns {string}
+ */
+function tamilDisplayToken(ltr, pos) {
+    var basePos = (typeof pos === 'number') ? pos : currentPos;
+
+    if (!ltr || typeof fullText === 'undefined' || typeof basePos === 'undefined') {
+        return ltr;
+    }
+
+    // Shift+T in Tamil99 outputs க்ஷ (ka + virama + ssa).
+    if (ltr === 'க' && fullText[basePos + 1] === '்' && fullText[basePos + 2] === 'ஷ') {
+        return 'க்ஷ';
+    }
+
+    // Shift+Y in Tamil99 outputs ஶ்ரீ (sha + virama + ra + ii sign).
+    if (ltr === 'ஶ' && fullText[basePos + 1] === '்' && fullText[basePos + 2] === 'ர' &&
+            fullText[basePos + 3] === 'ீ') {
+        return 'ஶ்ரீ';
+    }
+
+    return ltr;
+}
+
+/**
  * Check for character typed so flags can be set.
  * @param {string} ltr The current letter.
  */
-function keyboardElement(ltr) {
-    this.chr = ltr.toLowerCase();
+function keyboardElement(ltr, pos) {
+    var keytoken = tamilDisplayToken(ltr, pos);
+    this.chr = keytoken.toLowerCase();
     this.alt = false;
-    if (isLetter(ltr)) { // Set specified shift key for right or left.
-        if (ltr.match(/[ஸWERTASDFGZXCVB]/)) {
+    if (keytoken === 'க்ஷ') {
+        this.shiftright = true; // Shift+T - left-hand key, right shift.
+    } else if (keytoken === 'ஶ்ரீ') {
+        this.shiftleft = true; // Shift+Y - right-index key, left shift.
+    } else if (isLetter(keytoken)) { // Set specified shift key for right or left.
+        // phpcs:ignore
+        if (keytoken.match(/[~!@#$%ஸஷஜஹ௹௺௸ஃ௳௴௵௶௷]/)) {
             this.shiftright = true;
-        } else if (ltr.match(/[YUIOPHJKLNM]/)) {
-            this.shiftleft = true;
-        }
-    } else {
-        if (ltr.match(/[~!@#$%]/)) {
-            this.shiftright = true;
-        } else if (ltr.match(/[\^&*()_+{}|:"<>?]/)) {
+        // phpcs:ignore
+        } else if (keytoken.match(/[\^&*()_+\[\]{}\|:"';?<>ஶௐ\/]/)) {
             this.shiftleft = true;
         }
     }
@@ -76,7 +104,7 @@ function keyboardElement(ltr) {
     this.turnOff = function() {
         if (isLetter(this.chr)) {
         // phpcs:ignore
-            if (this.chr.match(/[asdfjkl;]/i)) {
+            if (this.chr.match(/[asdfjkl;அ௹இ௺உ௸்ஃபம"த:ந]/)) {
                 document.getElementById(getKeyID(this.chr)).className = "finger" + thenFinger(this.chr.toLowerCase());
             } else {
                 document.getElementById(getKeyID(this.chr)).className = "normal";
@@ -85,7 +113,7 @@ function keyboardElement(ltr) {
             document.getElementById(getKeyID(this.chr)).className = "normal";
         }
         if (this.chr === '\n' || this.chr === '\r\n' || this.chr === '\n\r' || this.chr === '\r') {
-            document.getElementById('jkeyenter').classname = "normal";
+            document.getElementById('jkeyenter').className = "normal";
         }
         if (this.shiftleft) {
             document.getElementById('jkeyshiftl').className = "normal";
@@ -107,20 +135,22 @@ function keyboardElement(ltr) {
 function thenFinger(tCrka) {
     if (tCrka === ' ') {
         return 5; // Highlight the spacebar.
+    } else if (tCrka === 'க்ஷ' || tCrka === 'ஶ்ரீ') {
+        return 1; // T/Y ligatures - index finger.
     // phpcs:ignore
-    } else if (tCrka.match(/[`~1!ஆஸaz0)p;:/?\-_[{'"=+\]}\\|]/i)) {
-        return 4; // Highlight the correct key above in red.
+    } else if (tCrka.match(/[`~1!0)ஆஸண\]ச{ஞ}\\|அ௹ஔ௳ந;ய'?ழ_\-=+]/)) {
+        return 4; // Highlight the correct key above in red (pinky).
     // phpcs:ignore
-    } else if (tCrka.match(/[2@wsx9(ol.>]/i)) {
-        return 3; // Highlight the correct key above in green.
+    } else if (tCrka.match(/[2@9(ஈஷட\[இ௺ஓ௴த:\.>]/)) {
+        return 3; // Highlight the correct key above in green (ring).
     // phpcs:ignore
-    } else if (tCrka.match(/[3#edc8*ik,<]/i)) {
-        return 2; // Highlight the correct key above in yellow.
+    } else if (tCrka.match(/[3#8*னஉ௸ஒ௵ம",<]/)) {
+        return 2; // Highlight the correct key above in yellow (middle).
     // phpcs:ignore
-    } else if (tCrka.match(/[4$rfv5%tgb6^yhn7&ujm]/i)) {
-        return 1; // Highlight the correct key above in blue.
+    } else if (tCrka.match(/[4$5%6\^7&ஐஹ்ஃவ௶ஏஎங௷ளறஶகபலௐர\/]/)) {
+        return 1; // Highlight the correct key above in blue (index).
     } else {
-        return 6; // Do not change any highlight.
+        return 4; // Safe fallback to avoid assigning undefined class next6.
     }
 }
 
@@ -161,23 +191,73 @@ function getKeyID(tCrka) {
     } else if (tCrka === '=' || tCrka === '+') {
         return "jkeyequals";
     } else if (tCrka === 'ஆ' || tCrka === 'ஸ') {
-        return "jkeyஆ";
-    } else if (tCrka === '[' || tCrka === '{') {
+        return "jkeyq";
+    } else if (tCrka === 'ஈ' || tCrka === 'ஷ') {
+        return "jkeyw";
+    } else if (tCrka === 'ஊ' || tCrka === 'ஜ') {
+        return "jkeye";
+    } else if (tCrka === 'ஐ' || tCrka === 'ஹ') {
+        return "jkeyr";
+    } else if (tCrka === 'ஏ' || tCrka === 'க்ஷ') {
+        return "jkeyt";
+    } else if (tCrka === 'ள' || tCrka === 'ஶ்ரீ') {
+        return "jkeyy";
+    } else if (tCrka === 'ற' || tCrka === 'ஶ') {
+        return "jkeyu";
+    } else if (tCrka === 'ன') {
+        return "jkeyi";
+    } else if (tCrka === 'ட' || tCrka === '[') {
+        return "jkeyo";
+    } else if (tCrka === 'ண' || tCrka === ']') {
+        return "jkeyp";
+    } else if (tCrka === 'ச' || tCrka === '{') {
         return "jkeybracketl";
-    } else if (tCrka === ']' || tCrka === '}') {
+    } else if (tCrka === 'ஞ' || tCrka === '}') {
         return "jkeybracketr";
-    } else if (tCrka === ';' || tCrka === ':') {
+    } else if (tCrka === 'அ' || tCrka === '௹') {
+        return "jkeya";
+    } else if (tCrka === 'இ' || tCrka === '௺') {
+        return "jkeys";
+    } else if (tCrka === 'உ' || tCrka === '௸') {
+        return "jkeyd";
+    } else if (tCrka === '்' || tCrka === 'ஃ') {
+        return "jkeyf";
+    } else if (tCrka === 'எ') {
+        return "jkeyg";
+    } else if (tCrka === 'க') {
+        return "jkeyh";
+    } else if (tCrka === 'ப') {
+        return "jkeyj";
+    } else if (tCrka === 'ம' || tCrka === '"') {
+        return "jkeyk";
+    } else if (tCrka === 'த' || tCrka === ':') {
+        return "jkeyl";
+    } else if (tCrka === 'ந' || tCrka === ';') {
         return "jkeysemicolon";
-    } else if (tCrka === "'" || tCrka === '"') {
-        return "jkeycrtica";
+    } else if (tCrka === 'ய' || tCrka === "'") {
+        return "jkeyapostrophe";
+    } else if (tCrka === 'ஔ' || tCrka === '௳') {
+        return "jkeyz";
+    } else if (tCrka === 'ஓ' || tCrka === '௴') {
+        return "jkeyx";
+    } else if (tCrka === 'ஒ' || tCrka === '௵') {
+        return "jkeyc";
+    } else if (tCrka === 'வ' || tCrka === '௶') {
+        return "jkeyv";
+    } else if (tCrka === 'ங' || tCrka === '௷') {
+        return "jkeyb";
+    } else if (tCrka === 'ல' || tCrka === 'ௐ') {
+        return "jkeyn";
+    } else if (tCrka === 'ர' || tCrka === '/') {
+        return "jkeym";
+    } else if (tCrka === 'ழ' || tCrka === '?') {
+        return "jkeyslash";
     } else if (tCrka === "\\" || tCrka === '|') {
         return "jkeybackslash";
     } else if (tCrka === ',' || tCrka === '<') {
         return "jkeycomma";
     } else if (tCrka === '.' || tCrka === '>') {
         return "jkeyperiod";
-    } else if (tCrka === '?' || tCrka === '/') {
-        return "jkeyslash";
     } else {
         return "jkey" + tCrka;
     }

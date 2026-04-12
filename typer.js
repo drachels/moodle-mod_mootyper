@@ -31,7 +31,8 @@ var startTime,
     continueSubmitting = false,
     endSaveUrl = '',
     lastKeyChar = null,
-    lastKeyTimeMs = 0;
+    lastKeyTimeMs = 0,
+    suppressPhantomUntilMs = 0;
 
 /**
  * Detect keyboard auto-repeat so held keys do not inflate progress/hits.
@@ -61,30 +62,55 @@ function isAutoRepeatKey(e, keychar) {
  * @param {number} nextPos Next cursor position.
  */
 function moveCursor(nextPos) {
-    if (nextPos > 0 && nextPos <= fullText.length) {
-        $('#crka' + (nextPos - 1)).removeClass('txtBlue');
-        if (keyResult) {
-            $('#crka' + (nextPos - 1))
-            .removeClass('txtBlack')
-            .removeClass('txtRed')
-            .addClass('txtGreen');
-        } else {
-            if (!(countMistakes)) {
-                // Even with multiple keystrokes on the wrong key, only one mistake is counted.
-                mistakes++;
-                mistakestring += currentChar; // Keep a copy of the wrong letter.
+    var startPos = currentPos;
+    var endPos = Math.min(nextPos - 1, fullText.length - 1);
+
+    if (nextPos > 0 && nextPos <= fullText.length && endPos >= startPos) {
+        for (var p = startPos; p <= endPos; p++) {
+            $('#crka' + p).removeClass('txtBlue');
+            if (keyResult) {
+                $('#crka' + p)
+                .removeClass('txtBlack')
+                .removeClass('txtRed')
+                .addClass('txtGreen');
+            } else {
+                $('#crka' + p)
+                .removeClass('txtBlack')
+                .removeClass('txtGreen')
+                .addClass('txtRed');
             }
-            $('#crka' + (nextPos - 1))
-            .removeClass('txtBlack')
-            .removeClass('txtGreen')
-            .addClass('txtRed');
+        }
+        if (!keyResult && !(countMistakes)) {
+            // Even with multiple keystrokes on the wrong key, only one mistake is counted.
+            mistakes++;
+            mistakestring += currentChar; // Keep a copy of the wrong letter.
         }
     }
-    if (nextPos < fullText.length) {
-        $('#crka' + nextPos).addClass('txtBlue');
+
+    var visiblePos = nextPos;
+    while (visiblePos < fullText.length && $('#crka' + visiblePos).css('display') === 'none') {
+        visiblePos++;
+    }
+    if (visiblePos < fullText.length) {
+        $('#crka' + visiblePos).addClass('txtBlue');
     }
     keyResult = true;
-    scrollToNextLine($('#crka' + nextPos));
+    scrollToNextLine($('#crka' + visiblePos));
+}
+
+/**
+ * Snap an index forward to the next visible text span.
+ * Hidden spans are placeholders for multi-codepoint display clusters.
+ *
+ * @param {number} pos Candidate index.
+ * @returns {number}
+ */
+function nextVisiblePos(pos) {
+    var p = pos;
+    while (p < fullText.length && $('#crka' + p).css('display') === 'none') {
+        p++;
+    }
+    return p;
 }
 
 /**
@@ -217,6 +243,7 @@ function doTheEnd() {
     }
     ended = true;
     removeEventListener('compositionupdate', keyPressed);
+    removeEventListener('compositionend', keyPressed);
     $("#form1").off("keypress", "#tb1", keyPressed);
     $("#form1").off("keyup", "#tb1", keyupFirst);
     $("#form1").off("keyup", "#tb1", keyupCombined);
@@ -315,9 +342,32 @@ function getPressedChar(e) {
         // console.log('compositionupdate We typed a Korean character here '+event.data);
         keychar = e.data;
         if (keychar.length > 1) {
-            // Some IMEs (for example VIE TL) emit cumulative composition text.
-            // For scoring, use only the latest composed character.
-            keychar = keychar.charAt(keychar.length - 1);
+            // If a multi-character token exactly matches the upcoming target sequence,
+            // keep it intact (for example Tamil99 ligatures like க்ஷ / ஶ்ரீ).
+            // Otherwise keep legacy behavior used by some IMEs (for example VIE TL)
+            // that emit cumulative composition text and use only the latest character.
+            var upcoming = '';
+            if (typeof fullText === 'string' && typeof currentPos === 'number') {
+                upcoming = fullText.substring(currentPos, currentPos + keychar.length);
+            }
+            if (keychar !== upcoming) {
+                // Some IMEs emit cumulative payloads. Prefer the longest suffix
+                // that still matches the upcoming target text before falling back.
+                var bestsuffix = '';
+                var maxsuffix = Math.min(keychar.length, fullText.length - currentPos);
+                for (var slen = maxsuffix; slen >= 1; slen--) {
+                    var suffix = keychar.substring(keychar.length - slen);
+                    if (fullText.substring(currentPos, currentPos + slen) === suffix) {
+                        bestsuffix = suffix;
+                        break;
+                    }
+                }
+                if (bestsuffix) {
+                    keychar = bestsuffix;
+                } else {
+                    keychar = keychar.charAt(keychar.length - 1);
+                }
+            }
         }
         // console.log('keychar We transferred event.data to keychar and it is '+keychar);
 
@@ -333,6 +383,10 @@ function getPressedChar(e) {
             return '\n';
         }
         if (e.key.length === 1) {
+            return e.key;
+        }
+        if (e.key.length > 1 && typeof fullText === 'string' && typeof currentPos === 'number' &&
+                fullText.substring(currentPos, currentPos + e.key.length) === e.key) {
             return e.key;
         }
     }
@@ -366,7 +420,7 @@ function focusSet(e) {
     if(!started) {
         $('#tb1').val('');
         if (showKeyboard){
-            var thisEl = new keyboardElement(fullText[0]);
+            var thisEl = new keyboardElement(fullText[0], 0);
             thisEl.turnOn();
         }
         return true;
@@ -442,14 +496,64 @@ function keyPressed(e) {
         return false;
     }
 
+    var requiredAdvance = 1;
+    if (typeof getDisplayClusterAt === 'function' && typeof fullText === 'string' &&
+            typeof currentPos === 'number') {
+        var cinfo = getDisplayClusterAt(fullText, currentPos);
+        if (cinfo && cinfo.skip > 0) {
+            requiredAdvance = cinfo.skip + 1;
+        }
+    }
+
     // Something was typed so go figure out what character it was. and return for further processing.
     var keychar = getPressedChar(e);
 
+    // IME fallback: when key events don't carry the committed glyphs reliably,
+    // derive the latest committed input directly from the textarea tail.
+    if (typeof fullText === 'string' && typeof currentPos === 'number') {
+        var tbtext = $('#tb1').val();
+        if (typeof tbtext === 'string' && tbtext.length > currentPos) {
+            var tail = tbtext.substring(currentPos);
+            var maxlen = Math.min(tail.length, fullText.length - currentPos);
+            var bestmatch = '';
+            for (var m = maxlen; m >= 1; m--) {
+                var candidate = tail.substring(0, m);
+                if (fullText.substring(currentPos, currentPos + m) === candidate) {
+                    bestmatch = candidate;
+                    break;
+                }
+            }
+            if (bestmatch && (typeof keychar !== 'string' || keychar === '[not_yet_defined]' ||
+                    keychar.length === 0 || (keychar.length === 1 && bestmatch.length > 1))) {
+                keychar = bestmatch;
+            }
+        }
+    }
+
+    // After accepting some IME/multi-codepoint inputs, browsers can emit trailing
+    // key events that should not count as new input for the next character.
+    // During this short window, only allow input that matches the upcoming target text.
+    if (Date.now() < suppressPhantomUntilMs) {
+        var upcomingTarget = fullText.substring(currentPos);
+        var hasmatch = (typeof keychar === 'string' && keychar.length > 0 &&
+            upcomingTarget.indexOf(keychar) === 0);
+        if (!hasmatch) {
+            return false;
+        }
+    }
+
     // In some IME/browser combinations (for example Chrome + Vietnamese IME),
     // compositionupdate can fire with carry-over text before the actual keypress.
-    // Ignore those pre-events unless they match the current target exactly.
-    if (e && e.type === 'compositionupdate' && keychar !== currentChar) {
-        return false;
+    // Ignore those pre-events unless they match the current target sequence.
+    if (e && (e.type === 'compositionupdate' || e.type === 'compositionend')) {
+        var compMatch = (keychar === currentChar);
+        if (!compMatch && typeof keychar === 'string' && keychar.length > 1 &&
+                fullText.substring(currentPos, currentPos + keychar.length) === keychar) {
+            compMatch = true;
+        }
+        if (!compMatch) {
+            return false;
+        }
     }
 
     if (isAutoRepeatKey(e, keychar)) {
@@ -458,35 +562,104 @@ function keyPressed(e) {
         }
         return false;
     }
+
+    // Some IME/browser paths emit placeholder key codes before commit.
+    // Treat them as no-op so they do not taint next valid cursor advance.
+    if (keychar === '[not_yet_defined]') {
+        return false;
+    }
+
+    // For multi-codepoint display clusters (for example Tamil99 க்ஷ/ஶ்ரீ),
+    // ignore partial prefix commits and wait for the full cluster commit.
+    if (requiredAdvance > 1 && typeof keychar === 'string' && keychar.length > 0 &&
+            keychar.length < requiredAdvance &&
+            fullText.substring(currentPos, currentPos + keychar.length) === keychar) {
+        return false;
+    }
    // var keychar = addEventListener('keydown', getPressedChar);
    // var keychar = addEventListener('compositionstart', getPressedChar);
 
-    if (keychar === currentChar || ((currentChar === '\n' || currentChar === '\r\n' ||
+    var multiMatch = false;
+    var clusterTarget = '';
+    if (requiredAdvance > 1) {
+        clusterTarget = fullText.substring(currentPos, currentPos + requiredAdvance);
+    }
+
+    if (requiredAdvance > 1 && typeof keychar === 'string' && keychar.length > requiredAdvance &&
+            keychar.substring(keychar.length - requiredAdvance) === clusterTarget) {
+        keychar = clusterTarget;
+    }
+
+    if (typeof keychar === 'string' && keychar.length > 1 &&
+            keychar.length >= requiredAdvance &&
+            fullText.substring(currentPos, currentPos + keychar.length) === keychar) {
+        multiMatch = true;
+    }
+
+    if (requiredAdvance > 1 && !multiMatch && keychar === currentChar) {
+        // Some IME/keymap paths emit only the first codepoint for a combined keypress.
+        // Treat that as the full cluster commit for this target position.
+        keychar = clusterTarget;
+        multiMatch = true;
+    }
+
+    if (requiredAdvance > 1 && !multiMatch && e && typeof e.code === 'string' &&
+            typeof getKeyID === 'function' && typeof keyboardElement === 'function') {
+        var expectedKeyId = getKeyID(clusterTarget);
+        var expectedCode = '';
+        if (expectedKeyId === 'jkeyt') {
+            expectedCode = 'KeyT';
+        } else if (expectedKeyId === 'jkeyy') {
+            expectedCode = 'KeyY';
+        }
+
+        if (expectedCode && e.code === expectedCode) {
+            var expectedElem = new keyboardElement(currentChar, currentPos);
+            var needsShift = !!(expectedElem.shiftleft || expectedElem.shiftright);
+            if (!needsShift || e.shiftKey) {
+                // Fallback path for cases where browser events report physical key only.
+                keychar = clusterTarget;
+                multiMatch = true;
+            }
+        }
+    }
+
+    // For multi-codepoint cluster targets, only a full cluster commit should be scored.
+    // Ignore intermediate/noisy events so they do not count as wrong keypresses.
+    if (requiredAdvance > 1 && !multiMatch) {
+        return false;
+    }
+
+    var advance = multiMatch ? keychar.length : 1;
+
+    if (((keychar === currentChar) && requiredAdvance === 1) || multiMatch || ((currentChar === '\n' || currentChar === '\r\n' ||
         currentChar === '\n\r' || currentChar === '\r') && (keychar === ' '))) {
-        moveCursor(currentPos + 1);
+        var nextPos = nextVisiblePos(currentPos + advance);
+        moveCursor(nextPos);
+        suppressPhantomUntilMs = Date.now() + 120;
 
         // Student is at the end of the exercise or has ran out of time.
-        if ((currentPos === fullText.length - 1) || (rpTimeLimit3 < 0)) {
+        if ((nextPos >= fullText.length) || (rpTimeLimit3 < 0)) {
 
             $('#tb1').val($('#tb1').val() + currentChar);
-            var elemOff = new keyboardElement(currentChar);
+            var elemOff = new keyboardElement(currentChar, currentPos);
             elemOff.turnOff();
-            currentChar = fullText[currentPos + 1];
-            currentPos++;
+            currentPos = nextPos;
+            currentChar = fullText[currentPos];
             doTheEnd();
             return true;
         }
         // Student still has more to type.
-        if (currentPos < fullText.length - 1) {
-            var nextChar = fullText[currentPos + 1];
+        if (nextPos < fullText.length) {
+            var nextChar = fullText[nextPos];
             if (showKeyboard) {
-                var thisE = new keyboardElement(currentChar);
+                var thisE = new keyboardElement(currentChar, currentPos);
                 thisE.turnOff();
                 if (isCombined(nextChar) && (thisE.shift || thisE.alt || thisE.pow ||
                     thisE.uppercase_umlaut || thisE.accent)) {
                     combinedCharWait = true;
                 }
-                var nextE = new keyboardElement(nextChar);
+                var nextE = new keyboardElement(nextChar, nextPos);
                 nextE.turnOn();
             }
             if (isCombined(nextChar)) {
@@ -494,8 +667,8 @@ function keyPressed(e) {
                 $("#form1").on("keyup", "#tb1", keyupFirst);
             }
         }
-        currentChar = fullText[currentPos + 1];
-        currentPos++;
+        currentPos = nextPos;
+        currentChar = fullText[currentPos];
         return true;
     // Ignore mistyped extra spaces unless set to count them.
     } else if (keychar === ' ' && !countMistypedSpaces) {
@@ -508,21 +681,22 @@ function keyPressed(e) {
             // Keep a copy of the wrong letter.
             mistakestring += currentChar;
         }
-        // Mistake count increased after correct key is typed if disabled and line 37 enabled.
-        keyResult = false;
         // If not set for continuous typing, wait for correct letter.
         if ((!continuousType && !countMistypedSpaces) || (!continuousType && countMistypedSpaces)) {
             return false;
         // If continuous typing, show wrong letter and move on.
         } else if (currentPos < fullText.length - 1) {
-                var nextChar = fullText[currentPos + 1];
+                // For continuous typing, mark this position as incorrect and advance.
+                keyResult = false;
+                var nextPos = nextVisiblePos(currentPos + 1);
+                var nextChar = fullText[nextPos];
             if (showKeyboard) {
-                    var thisE = new keyboardElement(currentChar);
+                var thisE = new keyboardElement(currentChar, currentPos);
                     thisE.turnOff();
                 if (isCombined(nextChar) && (thisE.shift || thisE.alt || thisE.pow || thisE.uppercase_umlaut || thisE.accent)) {
                         combinedCharWait = true;
                 }
-                    var nextE = new keyboardElement(nextChar);
+                var nextE = new keyboardElement(nextChar, nextPos);
                     nextE.turnOn();
             }
             if (isCombined(nextChar)) {
@@ -530,22 +704,41 @@ function keyPressed(e) {
                 $("#form1").on("keyup", "#tb1", keyupFirst);
             }
         }
-        moveCursor(currentPos + 1);
+        var nextPos = nextVisiblePos(currentPos + 1);
+        moveCursor(nextPos);
+        suppressPhantomUntilMs = Date.now() + 120;
         // Student is at the end of the exercise or ran out of time.
-        if ((currentPos === fullText.length - 1) || (rpTimeLimit3 < 0)) {
+        if ((nextPos >= fullText.length) || (rpTimeLimit3 < 0)) {
 
             $('#tb1').val($('#tb1').val() + currentChar);
-            var elemOff = new keyboardElement(currentChar);
+            var elemOff = new keyboardElement(currentChar, currentPos);
             elemOff.turnOff();
-            currentChar = fullText[currentPos + 1];
-            currentPos++;
+            currentPos = nextPos;
+            currentChar = fullText[currentPos];
             doTheEnd();
             return true;
         }
-        currentChar = fullText[currentPos + 1];
-        currentPos++;
+        currentPos = nextPos;
+        currentChar = fullText[currentPos];
         return true;
     }
+}
+
+/**
+ * Group known Tamil99 multi-codepoint key outputs into one display token
+ * for the scrolling text area while keeping underlying index positions.
+ * @param {string} text Full source text.
+ * @param {number} pos Current index.
+ * @returns {{display: string, skip: number}}
+ */
+function getDisplayClusterAt(text, pos) {
+    if (text[pos] === 'க' && text[pos + 1] === '்' && text[pos + 2] === 'ஷ') {
+        return {display: 'க்ஷ', skip: 2};
+    }
+    if (text[pos] === 'ஶ' && text[pos + 1] === '்' && text[pos + 2] === 'ர' && text[pos + 3] === 'ீ') {
+        return {display: 'ஶ்ரீ', skip: 3};
+    }
+    return {display: text[pos], skip: 0};
 }
 
 /**
@@ -609,6 +802,7 @@ function inittexttoenter(ttext, tinprogress, tmistakes, thits, tstarttime, tatte
     // Keep compositionupdate fallback for IME environments where keypress is limited.
     // keyPressed() filters this while combined-char handlers are active.
     addEventListener('compositionupdate', keyPressed);
+    addEventListener('compositionend', keyPressed);
     $("#form1").on("keypress", "#tb1", keyPressed);
     showKeyboard = tshowkeyboard;
     continuousType = tcontinuoustype;
@@ -622,9 +816,10 @@ function inittexttoenter(ttext, tinprogress, tmistakes, thits, tstarttime, tatte
         startTime = new Date(tstarttime * 1000);
         mistakes = tmistakes;
         currentPos = (thits - tmistakes);
+        currentPos = nextVisiblePos(currentPos);
         currentChar = fullText[currentPos]; // Current character (trenutni = current).
         if(showKeyboard) {
-            var nextE = new keyboardElement(currentChar);
+            var nextE = new keyboardElement(currentChar, currentPos);
             nextE.turnOn();
             if (isCombined(currentChar)) {
                 $("#form1").off("keypress", "#tb1", keyPressed);
@@ -635,25 +830,46 @@ function inittexttoenter(ttext, tinprogress, tmistakes, thits, tstarttime, tatte
         intervalID = setInterval(updTimeSpeed, 1000);
         interval2ID = setInterval(doCheck, 3000);
         for (var i = 0; i < currentPos; i++) {
-            var tChar = ttext[i];
+            var info = getDisplayClusterAt(ttext, i);
+            var tChar = info.display;
             if (tChar === '\n') {
                 tempStr += "<span id='crka" + i + "' class='txtGreen'>&darr;</span><br>";
             } else {
                 tempStr += "<span id='crka" + i + "' class='txtGreen'>" + tChar + "</span>";
             }
+            if (info.skip > 0) {
+                for (var hs = 1; hs <= info.skip; hs++) {
+                    tempStr += "<span id='crka" + (i + hs) + "' class='txtGreen' style='display:none'></span>";
+                }
+                i += info.skip;
+            }
         }
-        tempStr += "<span id='crka" + currentPos + "' class='txtBlue'>" + currentChar + "</span>";
+        var cinfo = getDisplayClusterAt(ttext, currentPos);
+        tempStr += "<span id='crka" + currentPos + "' class='txtBlue'>" + cinfo.display + "</span>";
+        if (cinfo.skip > 0) {
+            for (var chs = 1; chs <= cinfo.skip; chs++) {
+                tempStr += "<span id='crka" + (currentPos + chs) + "' class='txtBlue' style='display:none'></span>";
+            }
+        }
         for (var j = currentPos + 1; j < ttext.length; j++) {
-            var tChar = ttext[j];
+            var ninfo = getDisplayClusterAt(ttext, j);
+            var tChar = ninfo.display;
             if (tChar === '\n') {
                 tempStr += "<span id='crka" + j + "' class='txtBlack'>&darr;</span><br>";
             } else {
                 tempStr += "<span id='crka" + j + "' class='txtBlack'>" + tChar + "</span>";
             }
+            if (ninfo.skip > 0) {
+                for (var nhs = 1; nhs <= ninfo.skip; nhs++) {
+                    tempStr += "<span id='crka" + (j + nhs) + "' class='txtBlack' style='display:none'></span>";
+                }
+                j += ninfo.skip;
+            }
         }
     } else {
         for (var i = 0; i < ttext.length; i++) {
-            var tChar = ttext[i];
+            var info = getDisplayClusterAt(ttext, i);
+            var tChar = info.display;
             if (i === 0) {
                 tempStr += "<span id='crka" + i + "' class='txtBlue'>" + tChar + "</span>";
                 if (isCombined(tChar)) {
@@ -664,6 +880,13 @@ function inittexttoenter(ttext, tinprogress, tmistakes, thits, tstarttime, tatte
                 tempStr += "<span id='crka" + i + "' class='txtBlack'>&darr;</span><br>";
             } else {
                 tempStr += "<span id='crka" + i + "' class='txtBlack'>" + tChar + "</span>";
+            }
+            if (info.skip > 0) {
+                var hiddenClass = (i === 0) ? 'txtBlue' : 'txtBlack';
+                for (var hs = 1; hs <= info.skip; hs++) {
+                    tempStr += "<span id='crka" + (i + hs) + "' class='" + hiddenClass + "' style='display:none'></span>";
+                }
+                i += info.skip;
             }
         }
     }

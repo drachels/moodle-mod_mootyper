@@ -118,7 +118,6 @@ GitHub # | GitHub issue title | MooTyper ticket | Upgrade status | Notes
 20211005 MooTyper_754 - New capability request for cron to periodically remove grades.
 20220405 MooTyper_837 - Exercise X of X in view.php needs to be changed to a function.
 20220723 MooTyper_826 - The Moodle Mobile app is not supported.
-20220808 MooTyper_900 - Need a Tamil keyboard layout.
 20220816 MooTyper_909 - In MooTyper in 10.0.6.136/moodle400 generates two grade_grade entries for each user.
 20221207 MooTyper_974 - Direct access to eedit.php via url should be checked and prevented if not editable by me.
 20230119 MooTyper_994 - Make install of lessons optional during an upgrade.
@@ -186,6 +185,11 @@ Moodle Versions
         length/timelimit context and uses an early-stall check (good initial pace,
         long idle tail, low completion ratio).
     2026040904 Corrected full-hits tracking in all active typing scripts.
+20220808 MooTyper_900bt - Need a Tamil keyboard layout.
+    2026041201 Moved from Deferred to 5.1.0 pending after Tamil(V5)e layout and
+        typer.js combined-character flow updates passed row-level validation.
+    2026041202 Verified left-shift guidance for < and > by updating Tamil(V5)e.js
+        shift-side mapping; upper row 2 now highlights and scores correctly in testing.
 20230513 MooTyper_902bt - Settings are incomplete on the settings.php and mod_form.php pages.
     20260405 Folded GitHub issue #133 into MooTyper_902 and moved from Deferred;
         fix was included in v5.0.0 (Build: 2026032100).

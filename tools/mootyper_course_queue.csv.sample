@@ -1,0 +1,6 @@
+# donorcourseid,targetcourseid,targetlanguage,layoutname,destinationfullname,destinationshortname,create,categoryid
+1086,1094,hi,Hindi(HIV5),Hindi Demo,Hindi-demo,0,0
+1086,1095,fr,French(BelgianFRBV5),Belgium(French) Demo,Belgium(French)-demo,0,0
+1086,1096,nl,Belgium(DutchV5),Belgium(Dutch) Demo,Belgium(Dutch)-demo,0,0
+# Example creating a brand-new course:
+#1086,0,hi,Hindi(HIV5),Hindi New Demo,Hindi-new-demo,1,1

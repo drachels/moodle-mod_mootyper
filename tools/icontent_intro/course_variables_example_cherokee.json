@@ -1,0 +1,16 @@
+{
+  "COURSE_NAME": "Cherokee MooTyper Guided Intro",
+  "LANGUAGE_NAME": "Cherokee",
+  "AUDIENCE": "new and returning Cherokee language learners",
+  "KEYBOARD_LAYOUT": "Cherokee (course-selected layout)",
+  "LESSON_FOCUS": "word and phrase typing fluency",
+  "PILOT_GOAL": "This pilot adds repeatable writing practice that can be used in class, at home, or in lab sessions.",
+  "KEYBOARD_NOTES": "If key output is unexpected, re-check browser focus and selected keyboard input mode before retrying.",
+  "LEARNING_PATH_NOTES": "Short, frequent sessions are preferred over occasional long sessions.",
+  "TEACHER_NOTES": "Encourage retries and reward measurable improvement in accuracy first, then speed.",
+  "PROGRAM_NAME": "Cherokee MooTyper Pilot",
+  "CLOSING_MESSAGE": "The main value is practical: consistent, measurable writing practice in Moodle.",
+  "READINESS_CHECK_BLOCK": "<h4>Readiness Check</h4><ul><li>I can access the Cherokee keyboard on my device.</li><li>I know where to find Lesson 1 and retry an attempt.</li></ul>",
+  "LEARNING_INTENT_CHECK_BLOCK": "<h4>Learning Intent Check</h4><p>In one sentence, why does typing practice help language learning?</p>",
+  "INSTRUCTOR_FEEDBACK_BLOCK": "<h4>Instructor Feedback Capture</h4><p>What part of this intro should be clearer before students start?</p>"
+}

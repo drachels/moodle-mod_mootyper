@@ -1,0 +1,44 @@
+{
+  "metadata": {
+    "name": "MooTyper Intro v1",
+    "pagecontentformat": 1,
+    "showtitle": 1,
+    "layout": 1,
+    "showbgimage": 1,
+    "transitioneffect": "0"
+  },
+  "pages": [
+    {
+      "title": "Page 1: Welcome and Purpose",
+      "content": "<h3>Welcome and Purpose</h3><p>Welcome to {{COURSE_NAME}}.</p><p>This guided introduction supports {{LANGUAGE_NAME}} writing fluency through structured keyboard practice in Moodle.</p><p>The audience for this course is {{AUDIENCE}}.</p><p>The current lesson focus is {{LESSON_FOCUS}}.</p><p>{{PILOT_GOAL}}</p>"
+    },
+    {
+      "title": "Page 2: Why Keyboard Practice Matters for Language Learning",
+      "content": "<h3>Why Keyboard Practice Matters</h3><p>Typing reinforces recognition, recall, and production.</p><ol><li>Visual pattern recognition in {{LANGUAGE_NAME}} script.</li><li>Motor memory linked to writing.</li><li>Confidence in written output.</li><li>Accuracy gains from immediate feedback.</li></ol><p>Keyboard layout used in this course: <strong>{{KEYBOARD_LAYOUT}}</strong>.</p>"
+    },
+    {
+      "title": "Page 3: Getting Started in This Course",
+      "content": "<h3>Getting Started</h3><ol><li>Open orientation and keyboard notes.</li><li>Complete one short warm-up activity.</li><li>Start Lesson 1 and retry at least once.</li></ol><p>Best early habit: short, frequent practice with immediate repeats.</p>{{READINESS_CHECK_BLOCK}}"
+    },
+    {
+      "title": "Page 4: The Keyboard Layout",
+      "content": "<h3>The Keyboard Layout</h3><p>This course uses <strong>{{KEYBOARD_LAYOUT}}</strong> so students can type directly in the target script.</p><ol><li>Spend time orienting to key positions.</li><li>Use early activities for familiarization.</li><li>Build consistency before speed.</li></ol><p>{{KEYBOARD_NOTES}}</p>"
+    },
+    {
+      "title": "Page 5: How MooTyper Activities Work",
+      "content": "<h3>How MooTyper Works</h3><ol><li>Students type prompted text.</li><li>They receive immediate feedback.</li><li>Attempts can be repeated.</li><li>Results can feed Moodle gradebook.</li></ol><p>Cycle: attempt, review, repeat, improve.</p>{{LEARNING_INTENT_CHECK_BLOCK}}"
+    },
+    {
+      "title": "Page 6: Suggested Learning Path (Beginner to Advanced)",
+      "content": "<h3>Suggested Learning Path</h3><ol><li>Keyboard orientation.</li><li>Beginner symbol and word patterns.</li><li>Vocabulary reinforcement.</li><li>Intermediate mixed review.</li><li>Phrase-level typing.</li><li>Applied fluency practice.</li></ol><p>{{LEARNING_PATH_NOTES}}</p>"
+    },
+    {
+      "title": "Page 7: For Teachers: Setup, Monitoring, and Feedback",
+      "content": "<h3>For Teachers</h3><ol><li>Assign structured typing practice.</li><li>Monitor completion and performance.</li><li>Identify students who need support.</li><li>Use repeated attempts to track growth.</li></ol><p>{{TEACHER_NOTES}}</p>{{INSTRUCTOR_FEEDBACK_BLOCK}}"
+    },
+    {
+      "title": "Page 8: What This Pilot Can Become",
+      "content": "<h3>What This Pilot Can Become</h3><ol><li>Expand lesson sets by level and theme.</li><li>Align activities with curriculum units.</li><li>Add benchmark activities.</li><li>Refine sequence from learner and teacher feedback.</li></ol><p>Program context: {{PROGRAM_NAME}}.</p><p>{{CLOSING_MESSAGE}}</p>"
+    }
+  ]
+}

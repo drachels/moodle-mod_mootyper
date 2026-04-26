@@ -1,0 +1,16 @@
+{
+  "COURSE_NAME": "<Course Name>",
+  "LANGUAGE_NAME": "<Language Name>",
+  "AUDIENCE": "<Audience>",
+  "KEYBOARD_LAYOUT": "<Layout Name>",
+  "LESSON_FOCUS": "<Lesson Focus>",
+  "PILOT_GOAL": "<Short pilot goal statement>",
+  "KEYBOARD_NOTES": "<Optional keyboard/device note>",
+  "LEARNING_PATH_NOTES": "<Optional sequencing note>",
+  "TEACHER_NOTES": "<Optional grading/monitoring note>",
+  "PROGRAM_NAME": "<Program name>",
+  "CLOSING_MESSAGE": "<Closing message>",
+  "READINESS_CHECK_BLOCK": "<h4>Readiness Check</h4><ul><li>I can access the target keyboard on my device.</li><li>I know where to find Lesson 1 and retry an attempt.</li></ul>",
+  "LEARNING_INTENT_CHECK_BLOCK": "<h4>Learning Intent Check</h4><p>In one sentence, why does typing practice help language learning?</p>",
+  "INSTRUCTOR_FEEDBACK_BLOCK": "<h4>Instructor Feedback Capture</h4><p>What part of this intro should be clearer before students start?</p>"
+}

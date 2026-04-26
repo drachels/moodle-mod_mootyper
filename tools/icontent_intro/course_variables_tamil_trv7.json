@@ -1,0 +1,16 @@
+{
+  "COURSE_NAME": "Tamil MooTyper Guided Intro",
+  "LANGUAGE_NAME": "Tamil",
+  "AUDIENCE": "new and returning Tamil language learners",
+  "KEYBOARD_LAYOUT": "Tamil (TRV7)",
+  "LESSON_FOCUS": "core word and phrase typing fluency",
+  "PILOT_GOAL": "This pilot adds consistent, repeatable writing practice that fits class, lab, and independent learning.",
+  "KEYBOARD_NOTES": "Use the Tamil (TRV7) layout selected for this course and confirm browser focus before each attempt.",
+  "LEARNING_PATH_NOTES": "Build stable accuracy first, then increase speed through short repeat sessions.",
+  "TEACHER_NOTES": "Track retries and celebrate measurable gains in accuracy, completion, and confidence.",
+  "PROGRAM_NAME": "MooTyper Asia Demo - Tamil",
+  "CLOSING_MESSAGE": "The practical outcome is measurable Tamil writing practice in a familiar Moodle workflow.",
+  "READINESS_CHECK_BLOCK": "<h4>Readiness Check</h4><ul><li>I can access the Tamil (TRV7) keyboard on my device.</li><li>I know where to find Lesson 1 and retry an attempt.</li></ul>",
+  "LEARNING_INTENT_CHECK_BLOCK": "<h4>Learning Intent Check</h4><p>In one sentence, why does typing practice help language learning?</p>",
+  "INSTRUCTOR_FEEDBACK_BLOCK": "<h4>Instructor Feedback Capture</h4><p>What part of this intro should be clearer before students start?</p>"
+}

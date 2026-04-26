@@ -1,0 +1,16 @@
+{
+  "COURSE_NAME": "South Korea MooTyper Guided Intro",
+  "LANGUAGE_NAME": "Korean",
+  "AUDIENCE": "new and returning Korean language learners",
+  "KEYBOARD_LAYOUT": "South Korean (KRV7)",
+  "LESSON_FOCUS": "core word and phrase typing fluency",
+  "PILOT_GOAL": "This pilot adds consistent, repeatable writing practice that fits class, lab, and independent work.",
+  "KEYBOARD_NOTES": "Use the South Korean (KRV7) layout selected for this course, and confirm browser focus before typing attempts.",
+  "LEARNING_PATH_NOTES": "Build stable accuracy first, then increase speed in short repeat sessions.",
+  "TEACHER_NOTES": "Track retries and highlight measurable growth in accuracy and completion consistency.",
+  "PROGRAM_NAME": "MooTyper Asia Demo - South Korea",
+  "CLOSING_MESSAGE": "The practical outcome is measurable writing practice in a familiar Moodle workflow.",
+  "READINESS_CHECK_BLOCK": "<h4>Readiness Check</h4><ul><li>I can access the South Korean (KRV7) keyboard on my device.</li><li>I know where to find Lesson 1 and retry an attempt.</li></ul>",
+  "LEARNING_INTENT_CHECK_BLOCK": "<h4>Learning Intent Check</h4><p>In one sentence, why does typing practice help language learning?</p>",
+  "INSTRUCTOR_FEEDBACK_BLOCK": "<h4>Instructor Feedback Capture</h4><p>What part of this intro should be clearer before students start?</p>"
+}

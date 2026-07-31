@@ -149,7 +149,7 @@ function add_keyboard_layout($dafile) {
  * @param int $lsn
  */
 function update_exercises_file($dafile, $lsnid, $lsn) {
-    global $DB, $CFG, $USER;
+    global $DB, $CFG, $USER, $showexistingitems, $hiddenlessonrows;
     // 202104010 Added this new function.
     // Scan the mootyper lessons folder for lessonname.txt files.
     $thefile = $CFG->dirroot . "/mod/mootyper/lessons/" . $dafile;
@@ -203,8 +203,12 @@ function update_exercises_file($dafile, $lsnid, $lsn) {
                     . get_string('exercise_name_added', 'mootyper', $fexercisename) . '</b></td></tr>';
             } else if (($record->texttotype == $fexercise) && ($record->exercisename == $fexercisename)) {
                 // If no changes, then do not need to do anything.
-                $notaddmsg = get_string('lsnimportnotadd', 'mootyper');
-                echo "<tr class='table-dark text-dark'><td>$lsn</td><td>" . $notaddmsg . '</td></tr>';
+                if ($showexistingitems) {
+                    $notaddmsg = get_string('lsnimportnotadd', 'mootyper');
+                    echo "<tr class='table-dark text-dark'><td>$lsn</td><td>" . $notaddmsg . '</td></tr>';
+                } else {
+                    $hiddenlessonrows++;
+                }
             } else if (($record->texttotype == $fexercise) && !($record->exercisename == $fexercisename)) {
                 // If the text is the same but the exercise name is different, then change it.
                 $record->exercisename = $fexercisename;
@@ -225,6 +229,11 @@ function update_exercises_file($dafile, $lsnid, $lsn) {
 // Actual page starts here.
 $id = optional_param('id', 0, PARAM_INT); // Course ID.
 $lsn = optional_param('lsn', 0, PARAM_INT); // Lesson ID to download.
+$showexistingitems = optional_param('showexisting', 0, PARAM_BOOL);
+$runimport = optional_param('runimport', 0, PARAM_BOOL);
+$embedded = optional_param('embedded', 0, PARAM_BOOL);
+$hiddenlessonrows = 0;
+$hiddenlayoutrows = 0;
 $cm = get_coursemodule_from_id('mootyper', $id, 0, false, MUST_EXIST);
 $course = $DB->get_record('course', ['id' => $cm->course], '*', MUST_EXIST);
 
@@ -247,22 +256,102 @@ if (!(has_capability('mod/mootyper:aftersetup', $context))) {
 }
 
 // Print the page header.
-$PAGE->set_url('/mod/mootyper/exercises.php', ['id' => $course->id]);
+$PAGE->set_url('/mod/mootyper/lsnimport.php', ['id' => $cm->id, 'showexisting' => $showexistingitems]);
 $PAGE->set_title(get_string('etitle', 'mootyper'));
 $PAGE->set_heading(get_string('eheading', 'mootyper'));
 
 // Other things you may want to set - remove if not needed.
 $PAGE->set_cacheable(false);
 
+// Count candidate files up front so users see progress context before the scan starts.
+$pth = $CFG->dirroot . "/mod/mootyper/lessons";
+$res = scandir($pth);
+$lessonfilecount = 0;
+for ($i = 0; $i < count($res); $i++) {
+    if (is_file($pth . "/" . $res[$i])) {
+        $lessonfilecount++;
+    }
+}
+
+$pth2 = $CFG->dirroot . "/mod/mootyper/layouts";
+$res2 = scandir($pth2);
+$layoutfilecount = 0;
+for ($j = 0; $j < count($res2); $j++) {
+    if (is_file($pth2 . "/" . $res2[$j]) && (substr($res2[$j], (strripos($res2[$j], '.') + 1)) == 'php')) {
+        $layoutfilecount++;
+    }
+}
+
+$scaninfo = new stdClass();
+$scaninfo->lessons = $lessonfilecount;
+$scaninfo->layouts = $layoutfilecount;
+
+if (!$runimport) {
+    echo $OUTPUT->header();
+    echo '<b>' . get_string('lsnimport', 'mootyper') . '</b><br><br>';
+    $showchangesclass = $showexistingitems ? 'btn btn-secondary' : 'btn btn-primary';
+    $showallclass = $showexistingitems ? 'btn btn-primary' : 'btn btn-secondary';
+    $showchangesurl = new moodle_url('/mod/mootyper/lsnimport.php', ['id' => $cm->id, 'showexisting' => 0]);
+    $showallurl = new moodle_url('/mod/mootyper/lsnimport.php', ['id' => $cm->id, 'showexisting' => 1]);
+    echo '<div class="mb-3">';
+    echo '<a href="' . $showchangesurl . '" class="' . $showchangesclass . '" style="border-radius: 8px; margin-right: 8px;">'
+        . get_string('lsnimportshowchangesonly', 'mootyper') . '</a>';
+    echo '<a href="' . $showallurl . '" class="' . $showallclass . '" style="border-radius: 8px;">'
+        . get_string('lsnimportshowall', 'mootyper') . '</a>';
+    echo '</div>';
+    echo '<div class="text-muted" style="margin-bottom: 12px;">'
+        . get_string('lsnimportfilterhelp', 'mootyper') . '</div>';
+    echo '<div class="alert alert-info" role="status" style="margin-bottom: 12px;">';
+    echo '<strong>' . get_string('lsnimportprocessing', 'mootyper') . '</strong><br>';
+    echo get_string('lsnimportprocessingdetails', 'mootyper', $scaninfo);
+    echo '</div>';
+    $runurl = new moodle_url('/mod/mootyper/lsnimport.php', [
+        'id' => $cm->id,
+        'showexisting' => $showexistingitems ? 1 : 0,
+        'runimport' => 1,
+        'embedded' => 1,
+    ]);
+    echo '<div id="lsnimport-loading-note" class="text-muted" style="margin-bottom: 12px;">'
+        . get_string('lsnimportstarting', 'mootyper') . '</div>';
+    echo '<noscript><a href="' . $runurl . '" class="btn btn-primary" style="border-radius: 8px;">'
+        . get_string('lsnimportstartrun', 'mootyper') . '</a></noscript>';
+    echo '<iframe id="lsnimport-results-frame" src="' . $runurl . '" '
+        . 'title="' . s(get_string('lsnimportresultsframe', 'mootyper')) . '" '
+        . 'style="width: 100%; min-height: 900px; border: 0;"></iframe>';
+    echo '<script>'
+        . 'document.getElementById("lsnimport-results-frame").addEventListener("load", function() {'
+        . 'var note = document.getElementById("lsnimport-loading-note");'
+        . 'if (note) { note.textContent = ' . json_encode(get_string('lsnimportloaded', 'mootyper')) . '; }'
+        . '});'
+        . '</script>';
+    echo $OUTPUT->footer();
+    return;
+}
+
 // Output starts here.
-echo $OUTPUT->header();
-echo '<b>' . get_string('lsnimport', 'mootyper') . '</b><br><br>';
+if (!$embedded) {
+    echo $OUTPUT->header();
+    echo '<b>' . get_string('lsnimport', 'mootyper') . '</b><br><br>';
+    $showchangesclass = $showexistingitems ? 'btn btn-secondary' : 'btn btn-primary';
+    $showallclass = $showexistingitems ? 'btn btn-primary' : 'btn btn-secondary';
+    $showchangesurl = new moodle_url('/mod/mootyper/lsnimport.php', ['id' => $cm->id, 'showexisting' => 0]);
+    $showallurl = new moodle_url('/mod/mootyper/lsnimport.php', ['id' => $cm->id, 'showexisting' => 1]);
+    echo '<div class="mb-3">';
+    echo '<a href="' . $showchangesurl . '" class="' . $showchangesclass . '" style="border-radius: 8px; margin-right: 8px;">'
+        . get_string('lsnimportshowchangesonly', 'mootyper') . '</a>';
+    echo '<a href="' . $showallurl . '" class="' . $showallclass . '" style="border-radius: 8px;">'
+        . get_string('lsnimportshowall', 'mootyper') . '</a>';
+    echo '</div>';
+    echo '<div class="text-muted" style="margin-bottom: 12px;">'
+        . get_string('lsnimportfilterhelp', 'mootyper') . '</div>';
+    echo '<div class="alert alert-info" role="status" style="margin-bottom: 12px;">';
+    echo '<strong>' . get_string('lsnimportprocessing', 'mootyper') . '</strong><br>';
+    echo get_string('lsnimportprocessingdetails', 'mootyper', $scaninfo);
+    echo '</div>';
+}
 echo '<b>' . get_string('sflesson', 'mootyper') . '</b><br>';
 echo '<table class="table table-hover" style="width:100%">';
 echo '<tbody>';
-// Set pointer to lessons folder, then get all lesson names in there.
-$pth = $CFG->dirroot . "/mod/mootyper/lessons";
-$res = scandir($pth);
 
 for ($i = 0; $i < count($res); $i++) {
     if (is_file($pth . "/" . $res[$i])) {
@@ -301,15 +390,16 @@ for ($i = 0; $i < count($res); $i++) {
 }
 echo '</tbody>';
 echo '</table>';
+if (!$showexistingitems && $hiddenlessonrows > 0) {
+    echo '<div class="text-muted" style="margin-bottom: 12px;">'
+        . get_string('lsnimporthiddenrows', 'mootyper', $hiddenlessonrows) . '</div>';
+}
 echo '<br><b>' . get_string('layout', 'mootyper') . '</b><br>';
 echo '<table class="table table-hover" style="width:100%">';
 echo '<thead class="thead-dark">';
 echo get_string('layout', 'mootyper');
 echo '</thead>';
 echo '<tbody>';
-// Set pointer to keyboard layouts folder, then get all names in there.
-$pth2 = $CFG->dirroot . "/mod/mootyper/layouts";
-$res2 = scandir($pth2);
 for ($j = 0; $j < count($res2); $j++) {
     if (is_file($pth2 . "/" . $res2[$j]) && ( substr($res2[$j], (strripos($res2[$j], '.') + 1)) == 'php')) {
         // Get a filename from the lessons folder.
@@ -324,7 +414,11 @@ for ($j = 0; $j < count($res2); $j++) {
 
         if ($importkbl = $DB->get_record_sql($sql)) {
             // If it's true the name is already in the database, do nothing.
-            echo "<tr class='table-dark text-dark'><td>$kbl</td><td>" . get_string('kblimportnotadd', 'mootyper') . '</td></tr>';
+            if ($showexistingitems) {
+                echo "<tr class='table-dark text-dark'><td>$kbl</td><td>" . get_string('kblimportnotadd', 'mootyper') . '</td></tr>';
+            } else {
+                $hiddenlayoutrows++;
+            }
         } else {
             // If it's not found in the db, then add the new layout to the database.
             echo "<tr class='table-success'><td><b>$kbl</td><td>" . get_string('kblimportadd', 'mootyper') . '</b></td></tr>';
@@ -347,10 +441,17 @@ for ($j = 0; $j < count($res2); $j++) {
 }
 echo '</tbody>';
 echo '</table>';
+if (!$showexistingitems && $hiddenlayoutrows > 0) {
+    echo '<div class="text-muted" style="margin-bottom: 12px;">'
+        . get_string('lsnimporthiddenrows', 'mootyper', $hiddenlayoutrows) . '</div>';
+}
 
 $jlnk2 = $CFG->wwwroot . '/mod/mootyper/exercises.php?id=' . $id;
 // 11/19/19 Change from a, Continue, link to a, Continue, button.
-$fcontinuelink = '<a href="' . $jlnk2 . '" class="btn btn-primary"  style="border-radius: 8px">';
+$targettop = $embedded ? ' target="_top"' : '';
+$fcontinuelink = '<a href="' . $jlnk2 . '" class="btn btn-primary"  style="border-radius: 8px"' . $targettop . '>';
 echo $fcontinuelink . get_string('fcontinue', 'mootyper') . '</a><br>';
-echo $OUTPUT->footer();
+if (!$embedded) {
+    echo $OUTPUT->footer();
+}
 return;

@@ -35,7 +35,7 @@ Installation
 * Visit your Moodle site as administrator to install plugin via web interface
 
 Contact
-=======
+========
 
 Feel free to contact me at drachels@drachels.com
 
@@ -221,6 +221,9 @@ Moodle Versions
         keytops, voiced and small kana, punctuation, and mixed real-world lines.
     2026073018 Expanded JPV7 punctuation mapping for additional brackets and
         full-width forms used in JP_09 so highlight guidance remains available.
+    2026073101 Updated lessons/JP_Japanese KB Testing.txt to match the current
+        10-exercise Japanese test set, so future sync+import runs carry the
+        same lesson content now stored in the database.
 20260730 MooTyper_1522bt - Feature Request - Add filter capability to the audio/video
     field in mootyper_exercises.
     2026073001 Enabled Moodle filter rendering for dictationdata in exercises.php
@@ -236,7 +239,10 @@ Moodle Versions
         editor wrapper tags, preserving plain-text <> character sequences for typing.
     2026072907 Clarified eedit.php dictation media label/help text so it explicitly
         states this field is only for Dictation-mode audio/video typing prompts.
-
+20260731 MooTyper_1523 - Feature Request - Make the lsnimport.php file UI more user friendly.
+    2026073101 Modified the page render to give the option to see the page the old, full listing,
+    way or with a much more user friendly version that only list new items and reports totals
+    for items already in the database.
 
 === 5.1.0 === (Build: 20260428)
 20200521 MooTyper_435r - Need to be able to delete un-need lesson files from lesson folder.
@@ -501,7 +507,7 @@ Moodle Versions
     2026032114 Verified fixed: erem.php is no longer in the active codebase, and grade/attempt
         deletion now runs through attrem.php using the fetched grade record ($dbgrade->attemptid)
         rather than an undefined standalone $attemptid variable.
-20240102 MooTyper_1347r - The erem.php file needs logging events code added to it. 
+20240102 MooTyper_1347r - The erem.php file needs logging events code added to it.
     2026032115 Verified fixed: delete logging is implemented in attrem.php, which triggers
         grade_deleted and owngrades_deleted on successful deletions and
         grade_delete_blocked on blocked delete attempts.
@@ -554,7 +560,7 @@ Moodle Versions
 20240918 MooTyper_1320bt - Need a Maori Keyboard Layout. Created the two files based off the one's
     for English(USV5) EnglishWKeypad(USV6).
 
-    
+
 
 === 4.2.9 === (Build: 2024061300)
 20240129 MooTyper_1182v - Lesson Completion needs rewrite to account for when exercises are
@@ -564,7 +570,7 @@ Moodle Versions
     needed files based English(UKV5) then modified as needed.
 20240410 MooTyper_1234v - Sort arrows on gview.php and owngrades.php should be part of the sort link.
     Changed code in gview.php and owngrades.php to include the arrows as part of the sort link.
-    See the ticket for further details.    
+    See the ticket for further details.
 20240424 MooTyper_1236v - The lsnimport.php needs to ignore Eclipse IDE period folders. Added an
     "if" that checks to skip any file name that starts with a period.
 20240517 MooTyper_1241v - EnglishWKeypad(USV6).php indents are mostly incorrect. Changed indents
@@ -589,7 +595,7 @@ Moodle Versions
     custom_completion.php as needed to get the correct completion results.
 20240227 MooTyper_1216v - Layout - Spanish(V5) needs to remove a non-breaking space from
     the 5 key. Removed one non-breaking space.
-20240303 MooTyper_1219v - Lesson Completion - Need to prevent values other than 0 or 1. 
+20240303 MooTyper_1219v - Lesson Completion - Need to prevent values other than 0 or 1.
     Modified the file, mod?form.php for the, $completionlessongroup, so the the group item
     is no longer $mform->createElement('checkbox', but is now, $mform->createElement
     ('selectyesno'. The yes-no selection is automatically translated as 1 or 0.
@@ -615,7 +621,7 @@ Moodle Versions
 20240120 MooTyper_1178v - Cannot sort data based on the exercise name. Added the code
     that was missing. Sort by exercise name now works like the other columns on the page.
 20240121 MooTyper_1179v - The custom_completion.php file needs to use simplified $params.
-    Made a LOT of changes. See the ticket for details. 
+    Made a LOT of changes. See the ticket for details.
 20240128 MooTyper_1181v - Warning: Undefined property: stdClass::$completionexercise, plus
     the other four. Once I got the PostgreSQL straightened out, I was able to remove the
     extra completion code that I had added into the lib.php files. These five undefineds
@@ -682,7 +688,7 @@ Moodle Versions
     in public function completion_rule_enabled($data) {.
 20230927 MooTyper_1079v - No one in a group has any attempts causes multiple errors in gview.php.
     Added an additional AND clause check to make sure at least one memeber of the group being
-    viewed has made an attempt at an exercise. 
+    viewed has made an attempt at an exercise.
 20230927 MooTyper_1080v - Latest codechecker requires convert from long array(), to short array [].
     Changed all arrays to short array form, []. There was a "boat load" so see ticket for details.
 20230927 MooTyper_1081v - Latest codechecker says "Import statements must not begin with a leading
@@ -697,7 +703,7 @@ Moodle Versions
     have tested the layout.
 20231030 MooTyper_1109v - Remove attempt does not work when using View all grades and Visible group
     is not All participants. Changed code to ensure $n is always set to $mootyper->id. See ticket
-    for details. 
+    for details.
 20231101 MooTyper_1111v - Completion rules are missing from the Default activity completion page.
     Added missing function in lib.php file and missing language description strings.
 
@@ -705,12 +711,12 @@ Moodle Versions
 20230105 MooTyper_982v - Need to enable new, Grade, bar to the chart. Added a new
     series 4 for grades. Temporarily commented out series 1 for hits per minute,
     resulting in a x-axis that goes from 0 to 100.
-20230123 MooTyper_996v - Need to add AM / PM to date format for gview.php and owngrades.php. 
+20230123 MooTyper_996v - Need to add AM / PM to date format for gview.php and owngrades.php.
     Changed the settings.php page code, down around line 143 from this: 'M d, Y G:i' to this:
     'M d, Y G:i A'. Once I went to the MooTyper settings page, added the A there, it started
     showing AM and PM with the times.
 20230206 MooTyper_1009v - Need to remove V4 layouts that also have a V5 version. Removed
-    copies of keyboard layouts that have both a V4 and V5 layout. 
+    copies of keyboard layouts that have both a V4 and V5 layout.
 20230207 MooTyper_1010v - A user has requested a German(V5) KB Layout. I duplicated the
     German(V5)-icons files as just, German(V5). I then modified the php file to no longer
     use the icons, but instead, to use the words, like I did in the German(V4) php file.
@@ -746,13 +752,13 @@ Moodle Versions
 20230108 MooTyper_985v - Need date/time added to CSVexport file name. Added code
     that pastes the current date and time into the file name, just before the .csv
     at the end of the file name.
-20230108 MooTyper_986v - Postgresql generates errors in proposed MooTyper v4.2.2. 
+20230108 MooTyper_986v - Postgresql generates errors in proposed MooTyper v4.2.2.
     The Moodle ratings table expects an integer, so I changed the code to give 0 decimals.
     Also, with PostgreSQL the $exercises table order is scrambled. Fixed by sorting
     the table before use. See the ticket for exact details.
 20230114 MooTyper_991v - Got debug message regarding duplicate values in column 'firstname'.
     The function in lib.php had an SQL that was getting unique users by firstname. The
-    fix was to reorder the SQL and get the users id first. 
+    fix was to reorder the SQL and get the users id first.
 20230116 MooTyper_992v - In gcnext.php, line 60 not giving fail when % fails and WPM passes.
     Fixed by modifying line 60 to require %pass and WPMpass for green background, no
     matter what the mode is. Otherwise the background should be red. See ticket for
@@ -792,7 +798,7 @@ Moodle Versions
 
 === 4.2.0 === released 20220403
 20220128 MooTyper_814 - Need string for authorid on the exercises.php page button. Added
-    the string and code needed to display it about line 148 of file exercises.php. 
+    the string and code needed to display it about line 148 of file exercises.php.
 20220128 MooTyper_699 - Create Hindi(HIV5) KB Layout. Created the initial versions of the
     two files and started modifications.
 20220220 MooTyper_819 - Missing basic completion information on view page issue #102. The
@@ -803,7 +809,7 @@ Moodle Versions
 20220322 MooTyper_799 - Need new Moodle 4.0 icon. Discovered I can just make two copies
     of the switch with a branch check for greater than m3.11. The copy of the switch for
     Moodle 4.0 and above should contain the new case FEATURE_MOD_PURPOSE: return
-    MOD_PURPOSE_ASSESSMENT; 
+    MOD_PURPOSE_ASSESSMENT;
 
 === 4.1.1 === released 20220128
 20220122 MooTyper_613 - Would be nice to have a link to index.php on grade pages.
@@ -818,7 +824,7 @@ Moodle Versions
     to: xxx, and Can edit: xxx. After testing, will need to turn Author ID: into
     a language string.
 20220126 MooTyper_442 - Set return url in layouts.php, to return to same MooTyper.
-    Change button url and it appears to be working correctly. 
+    Change button url and it appears to be working correctly.
 20220126 MooTyper_415 - Need a layout add/remove page. Added and tested code. Switched
     to using buttons with popup confirm window.
 

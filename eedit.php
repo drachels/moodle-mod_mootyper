@@ -29,6 +29,7 @@ use mod_mootyper\event\invalid_access_attempt;
 // Changed to this format 20190301.
 require(__DIR__ . '/../../config.php');
 require_once(__DIR__ . '/lib.php');
+require_once($CFG->dirroot . '/repository/lib.php');
 
 global $DB, $OUTPUT, $PAGE, $USER;
 
@@ -37,7 +38,10 @@ $ex = optional_param('ex', 0, PARAM_INT); // Id of exercise to edit.
 $lsnnamepo = '';
 $lessonpo = '';
 
-$cm = get_coursemodule_from_id('mootyper', $id, 0, false, MUST_EXIST);
+$cm = get_coursemodule_from_id('mootyper', $id, 0, false, IGNORE_MISSING);
+if (!$cm) {
+    throw new moodle_exception('invalidcoursemodule');
+}
 $course = $DB->get_record('course', ['id' => $cm->course], '*', MUST_EXIST);
 
 // Looks like these two variables are exact duplicates. Maybe need to combine?
@@ -79,14 +83,34 @@ if (isset($param1) && get_string('fconfirm', 'mootyper') == $param1) {
     $newexercisename = optional_param('exercise_name', '', PARAM_RAW);
     $newtext = optional_param('texttotype', '', PARAM_RAW);
 
-    // Future development.
-    $newdictation = optional_param('dictationdata', '', PARAM_RAW);
+    // Handle dictation audio data from editor.
+    $newdictationeditor = optional_param_array('dictationdata_editor', [], PARAM_RAW);
+    $newdictation = $newdictationeditor['text'] ?? optional_param('dictationdata', '', PARAM_RAW);
+    $newdictationformat = isset($newdictationeditor['format']) ? (int)$newdictationeditor['format'] : FORMAT_HTML;
+    if (empty($newdictationformat)) {
+        $newdictationformat = FORMAT_HTML;
+    }
+    $newdictationitemid = isset($newdictationeditor['itemid']) ? (int)$newdictationeditor['itemid'] : 0;
 
     $rcrd = $DB->get_record('mootyper_exercises', ['id' => $ex], '*', MUST_EXIST);
 
+    // Tiny editor can wrap plain typing content in HTML (for example <p>...</p>).
+    // Convert those wrappers back to plain text so MooTyper compares keystrokes correctly.
+    $preparedtext = $newtext;
+    if (preg_match('/^\s*<(p|div|span|br|h[1-6]|ul|ol|li)\b/i', $preparedtext) || strpos($preparedtext, '</') !== false) {
+        $preparedtext = preg_replace('/<br\s*\/?>/i', "\n", $preparedtext);
+        $preparedtext = preg_replace('/<\/p>/i', "\n", $preparedtext);
+        $preparedtext = strip_tags($preparedtext);
+        $preparedtext = html_entity_decode($preparedtext, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        // Non-breaking spaces from editor HTML should behave like regular spaces when typing.
+        $preparedtext = str_replace("\xC2\xA0", ' ', $preparedtext);
+    }
+    // MooTyper stores visible line breaks as literal \n sequences.
+    $preparedtext = preg_replace('/\R/u', '\\n', $preparedtext);
+
     $updr = new stdClass();
     $updr->id = $rcrd->id;
-    $updr->texttotype = str_replace("\r\n", '\n', $newtext);
+    $updr->texttotype = $preparedtext;
     // 20210327 Added as part of new capability to edit lesson and exercise names.
     $updr->exercisename = str_replace("\r\n", '\n', $newexercisename);
     $lessonname->id = $rcrd->lesson;
@@ -94,7 +118,42 @@ if (isset($param1) && get_string('fconfirm', 'mootyper') == $param1) {
 
     $updr->lesson = $rcrd->lesson;
     $updr->snumber = $rcrd->snumber;
+    // Save dictation audio data.
+    $updr->dictationdata = $newdictation;
+    $updr->dictationdataformat = $newdictationformat;
     $DB->update_record('mootyper_exercises', $updr);
+
+    // Move files from draft to the exercise filearea and rewrite pluginfile URLs.
+    if ($newdictationitemid > 0) {
+        $dictationeditoroptions = [
+            'context' => $context,
+            'enable_filemanagement' => true,
+            'autosave' => true,
+            'maxfiles' => 1,
+            'subdirs' => false,
+            'maxbytes' => $CFG->userquota,
+        ];
+        $editorpostdata = new stdClass();
+        $editorpostdata->dictationdata_editor = [
+            'text' => $updr->dictationdata,
+            'format' => $updr->dictationdataformat,
+            'itemid' => $newdictationitemid,
+        ];
+
+        $editorpostdata = file_postupdate_standard_editor(
+            $editorpostdata,
+            'dictationdata',
+            $dictationeditoroptions,
+            $context,
+            'mod_mootyper',
+            'dictationdata',
+            $updr->id
+        );
+
+        $updr->dictationdata = $editorpostdata->dictationdata;
+        $updr->dictationdataformat = $editorpostdata->dictationdataformat;
+        $DB->update_record('mootyper_exercises', $updr);
+    }
     // 20210327 Added as part of new capability to edit lesson and exercise names.
     $DB->update_record('mootyper_lessons', $lessonname);
 
@@ -136,9 +195,12 @@ echo $OUTPUT->header();
 $exercisetoedit = $DB->get_record(
     'mootyper_exercises',
     ['id' => $ex],
-    'id, texttotype, exercisename, lesson, snumber',
+    'id, texttotype, exercisename, lesson, snumber, dictationdata, dictationdataformat',
     MUST_EXIST
 );
+if (empty($exercisetoedit->dictationdataformat)) {
+    $exercisetoedit->dictationdataformat = FORMAT_HTML;
+}
 
 ?>
 
@@ -253,21 +315,67 @@ echo '<span id="text_holder_span" class=""></span><br>'
     . $align . '">'
     . str_replace('\n', "&#10;", $exercisetoedit->texttotype)
     . '</textarea>';
+// Keep texttotype as plain text (no Tiny editor) so typed characters such as
+// <, >, and explicit line breaks are preserved exactly as authored.
 
-$editor = editors_get_preferred_editor(FORMAT_HTML);
-$attobuttons = 'files = recordrtc' . PHP_EOL . 'list = unorderedlist, orderedlist' . PHP_EOL . 'other = html, htmlplus';
+// Prepare a draft-backed editor value so Tiny uploader gets a valid itemid.
+$dictationeditoroptions = [
+    'context' => $context,
+    'enable_filemanagement' => true,
+    'autosave' => true,
+    'maxfiles' => 1,
+    'subdirs' => false,
+    'maxbytes' => $CFG->userquota,
+];
 
-$editor->use_editor(
-    'exercisetoedit',
-    [
-        'context' => $context,
-        'enable_filemanagement' => true,
-        'autosave' => true,
-        'atto:toolbar' => $attobuttons,
-    ],
-    [
-         'return_types' => "FILE_EXTERNAL",
-    ]
+$exercisetoedit = file_prepare_standard_editor(
+    $exercisetoedit,
+    'dictationdata',
+    $dictationeditoroptions,
+    $context,
+    'mod_mootyper',
+    'dictationdata',
+    $exercisetoedit->id
+);
+
+$dictationdraftitemid = (int)$exercisetoedit->dictationdata_editor['itemid'];
+$fpbase = new stdClass();
+$fpbase->accepted_types = ['video', 'audio'];
+$fpbase->return_types = (FILE_INTERNAL | FILE_EXTERNAL);
+$fpbase->context = $context;
+$fpbase->env = 'editor';
+
+$mediaoptions = initialise_filepicker($fpbase);
+$mediaoptions->context = $context;
+$mediaoptions->client_id = uniqid();
+$mediaoptions->maxbytes = $dictationeditoroptions['maxbytes'];
+$mediaoptions->areamaxbytes = $dictationeditoroptions['maxbytes'];
+$mediaoptions->env = 'editor';
+$mediaoptions->itemid = $dictationdraftitemid;
+
+$fpoptions = ['media' => $mediaoptions];
+
+// Add a text area for adding, editing, or deleting the dictation audio of an exercise.
+echo '<br><span id="audio_holder_span" class=""></span><br>'
+    . get_string('dictationdatalabel', 'mootyper')
+    . ':<br><small>' . get_string('dictationdatalabelhelp', 'mootyper') . '</small><br>'
+    . '<textarea name="dictationdata_editor[text]" id="dictationdata" rows="3" cols="60" style="text-align:'
+    . $align . '">'
+    . ($exercisetoedit->dictationdata_editor['text'] ?? '')
+    . '</textarea>'
+    . '<input type="hidden" name="dictationdata_editor[format]" value="'
+    . (int)($exercisetoedit->dictationdata_editor['format'] ?? FORMAT_HTML)
+    . '">'
+    . '<input type="hidden" name="dictationdata_editor[itemid]" value="'
+    . $dictationdraftitemid
+    . '">';
+
+// Initialize editor for dictation audio content - get fresh editor instance.
+$editor2 = editors_get_preferred_editor(FORMAT_HTML);
+$editor2->use_editor(
+    'dictationdata',
+    $dictationeditoroptions,
+    $fpoptions
 );
 
 // 20220723 Add some details so we know more about this lesson and it's exercises.

@@ -1,0 +1,23 @@
+1 2 3 4 5 6 7 8 9 0 £10 £20 £50.50 100% 25% 1997 2026 01234 567890
+Ym mlwyddyn 2026, cododd y prisiau o 5% i 12%, gan gostio £45.50 mwy.
+Ar y 15fed o Fai, roedd gan 30 o fyfyrwyr dros 90% yn eu profion mathemateg.
+/**/
+Exercise 1: Numbers and Currency (Rhifau ac Arian)
+/**/
+, . ; : ? ! - ( ) " " ' ' Mae'r gath... I'w weld... Dros yr...
+"Ond pam?" gofynnodd Siôn; "Dydy'r gwaith heb ddechrau eto, ydy?"
+Edrychwch ar y ffigurau hyn: 1,250 o bobl (tua 45%) sydd o blaid y cynllun.
+/**/
+Exercise 2: Punctuation and Apostrophes (Atalnodau ac Atgofion)
+/**/
+Mae'r Gymraeg yn un o ieithoedd byw hynaf Ewrop, ac mae'n perthyn i'r teulu Celtaidd. Heddiw, mae miloedd o bobl yn dysgu'r iaith bob blwyddyn, nid yn unig yng Nghymru ond ledled y byd. Drwy ddefnyddio Technoleg Gwybodaeth a meddalwedd fel Moodle, mae modd cyfoethogi addysg ddwyieithog a gwneud dysgu yn hygyrch i bawb, ym mhobman.
+/**/
+Exercise 3: Short Paragraphs - The Welsh Language (Yr Iaith Gymraeg)
+/**/
+Yng nghanol tawelwch y mynyddoedd, mae sŵn y dŵr yn llifo dros y cerrig yn creu caneuon naturiol. O gopaon uchel Eryri i draethau euraidd Penrhyn Gwyr, mae harddwch natur i'w weld ym mhob twll a chornel. Mae teithwyr yn dod o bell ac agos i gerdded y llwybrau hyn, gan fwynhau'r awyr iach a hanes cyfoethog y cestyll hynafol sy'n gwarchod y fro.
+/**/
+Exercise 4: Narrative - Landscape of Wales (Tirlun Cymru)
+/**/
+Yn unol ag Adran 4(b) o'r rheoliadau newydd, rhaid i bob defnyddiwr gofrestru cyn 31/12/2026. Os oes angen cymorth, ffoniwch 0800 123 456 neu anfonwch e-bost i ymholiadau@cymru.cymru. Sylwch: gall telerau ac amodau newid (gweler Atodiad A, tudalennau 14-17 am fanylion llawn am y costau ariannol).
+/**/
+Exercise 5: Advanced Technical and Legal (Testun Technegol a Chymhleth)

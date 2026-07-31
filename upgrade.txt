@@ -66,16 +66,9 @@ GitHub # | GitHub issue title | MooTyper ticket | Upgrade status | Notes
         10.0.6.58 via VNC. Mac/Chromebook runtime checks remain pending.
 20200521 MooTyper_438 - move contents of the csvexport.php file into gview.php file.
 20200521 MooTyper_436 - Lesson import request to change to file upload.
-20200521 MooTyper_437 - Request for new Audio Exercise Mode.
-20200521 MooTyper_445 - Need to change all refs to audio over to dictation.
-20200521 MooTyper_446 - User ownership stops dictation from working.
 20200521 MooTyper_447 - Investigate using Atto for text to type.
-20200521 MooTyper_448 - exercises.php needs mods for audio.
-20200521 MooTyper_449 - eedit.php needs mods for audio.
-20200521 MooTyper_456 - need to modify database tables for MooTyper audio capability.
 20200521 MooTyper_450 - should combine *_form.php's into mod_form.php like Hot Question does.
 20200521 MooTyper_453 - Need to change, text alignment, from an activity setting to exercise setting.
-20200521 MooTyper_455 - view.php needs mods for audio.
 20200521 MooTyper_460 - When viewing page exercises.php, lesson in the URL is wrong number.
 20200521 MooTyper_461 - provider.php file NEEDS REWRITE.
 20200521 MooTyper_464 - lib.php function get_typer_grades_adv sort order needs fixing.
@@ -84,7 +77,6 @@ GitHub # | GitHub issue title | MooTyper ticket | Upgrade status | Notes
 20200521 MooTyper_468 - log link where you have deleted own grade returns to view all grades instead of own grades.
 20200521 MooTyper_470 - Going to add a category does not create nav bar breadcrumb.
 20200607 MooTyper_495 - Need to verify backup as it appears to be broken.
-20200612 MooTyper_537 - discovered dictation stuff in current code that needs to be eliminated.
 20200629 MooTyper_556 - eins.php when dropdown shows Visible to Only me need to hide Can
     edit Any teacher in course.
 20200801 MooTyper_587 - Czech(V5) keyboard layout will not correctly type all characters.
@@ -104,7 +96,6 @@ GitHub # | GitHub issue title | MooTyper ticket | Upgrade status | Notes
         behavior requests remain tracked under MooTyper_1335.
 20210325 MooTyper_650 - Page reload when Continue is showing wipes out current results.
 20201106 MooTyper_651 - suspicion from attempts table should be added to the grades table.
-20210325 MooTyper_690 - Need work on the documentation on Moodle.
 20210327 MooTyper_693 - lessonname and exercisename fields are too large.
 20210418 MooTyper_702 - Tower 1 ansible playbook upgrading MooTyper gave missing string error.
 20210506 MooTyper_713 - Need to modify import to allow/disallow adding lessons/keyboards.
@@ -158,12 +149,97 @@ GitHub # | GitHub issue title | MooTyper ticket | Upgrade status | Notes
 20251118 MooTyper_1385 - Feature Request: Allow teachers to customize CSS class colors (finger1, finger2, finger3, finger4) #131.
 20251122 MooTyper_1387 - Using Amharic in Opera - Mistake details widens the page w/each mistake.
 20260322 MooTyper_1450 - Need to check all the KB layout *.js files for code style errors.
-Moodle Versions
+    2026073006 Quick ESLint scan of layouts/*.js found 1018 issues
+        (711 errors, 307 warnings) across 69 files; defer cleanup until it can be
+        tested slowly, one keyboard layout at a time, without rushing release work.
 
+Moodle Versions
 ===============
 
-=== 5.1.0 === pending
-20200521 MooTyper_435bt - Need to be able to delete un-need lesson files from lesson folder.
+=== 5.1.1 === pending
+20200521 MooTyper_437bt - Request for new Audio Exercise Mode.
+    2026072601 Added dictationdata/dictationdataformat fields, allowed teachers to record or embed
+        audio/video in eedit.php, show player previews in exercises.php, and display the
+        dictation player in view.php with dynamic context handling and hidden text until typed.
+    2026072801 Fixed Tiny RecordRTC attach flow in eedit.php by switching dictation editor
+        handling to draft-item backed editor payloads with filepicker media options and
+        file_postupdate_standard_editor() storage.
+    2026072802 Added dictationdata file serving in mootyper_pluginfile() and exposed
+        dictationdata in mootyper_get_file_areas(), so saved audio/video playback works in
+        exercises.php and view.php.
+    2026072803 Restored end-of-exercise completion/Continue behavior after dictation edits by
+        normalizing texttotype saves to plain typing text (strip Tiny HTML wrappers/entities)
+        and cleaning affected existing exercises that were stored with HTML markup.
+    2026072804 Added automatic short retry for failed first-load dictation video sources in
+        exercises.php and view.php so delayed PoodLL conversions no longer require manual page reload.
+20200521 MooTyper_445bt - Need to change all refs to audio over to dictation.
+    2026073007 Current 5.1.1 dictation work now supports audio, video, and TTS prompts.
+20200521 MooTyper_446bt - User ownership stops dictation from working.
+    2026073008 Current 5.1.1 dictation handling works across saved prompt ownership paths.
+20200521 MooTyper_448bt - exercises.php needs mods for audio.
+    2026073009 exercises.php now renders working dictation audio, video, and TTS prompts.
+20200521 MooTyper_449bt - eedit.php needs mods for audio.
+    2026073010 eedit.php now stores and edits working dictation audio, video, and TTS prompts.
+20200521 MooTyper_455bt - view.php needs mods for audio.
+    2026073012 view.php now displays working dictation audio, video, and TTS prompts.
+20200521 MooTyper_456bt - need to modify database tables for MooTyper audio capability.
+    2026073011 Dictation storage fields now support the restored audio/video prompt workflow.
+20200612 MooTyper_537bt - discovered dictation stuff in current code that needs to be eliminated.
+    2026073013 Reworked old dictation fragments into the current working dictation flow.
+20210325 MooTyper_690bt - Need work on the documentation on Moodle.
+    2026073003 Split the MooTyper docs roadmap into dedicated keyboard, dictation,
+        and media examples pages.
+    2026073004 Copied the updated MooTyper docs pages to the moodledemo Audio/Video
+        Dictation Lessons course.
+20260415  MooTyper_1472bt - Investigate adding a Welsh keyboard layout.
+    2026072101 Created the two basic files based off the English(UKV5) files.
+    2026072201 Did code tuneup and I am able to complete Lesson CY_Wesh1.txt.
+20260514 MooTyper_1482bt - Remove deprecated FEATURE_GROUPMEMBERSONLY support.
+    2026073005 Removed FEATURE_GROUPMEMBERSONLY handling from mootyper_supports()
+        while keeping FEATURE_GROUPS and FEATURE_GROUPINGS behavior unchanged.
+20260729 MooTyper_1521 - Feature Request - Would be nice to implement a Japanese keyboard layout.
+    2026072901 Added Japanese(JPV7) V1 typing scaffold: new layout files
+        (layouts/Japanese(JPV7).php/.js), standalone IME-aware typer(JPV7).js,
+        and view.php routing to load the dedicated typer for Japanese layout.
+    2026072902 Preserved literal trailing backslash behavior in Japanese lesson content by
+        using escaped double backslashes (\\) where a visible single backslash is required.
+    2026072903 Added V1.1 kana-focused key highlighting guidance in
+        layouts/Japanese(JPV7).js while keeping safe skip behavior for unmapped characters.
+    2026073014 Hardened Japanese IME scoring in typer(JPV7).js: ignore in-progress
+        composition keypress events until commit, and process multi-character
+        compositionend commits character-by-character against lesson text. Also
+        bumped JPV7 cache-bust tokens in view.php so browsers reload the update.
+    2026073015 Updated layouts/Japanese(JPV7).php keytops to show kana across
+        the full keyboard, and expanded layouts/Japanese(JPV7).js mapping so
+        kana variants and Japanese punctuation map to representative keys.
+    2026073016 Live validation on MooTyper activity id 9842 confirmed JPV7
+        scoring/highlighting for kana, katakana, voiced and small kana,
+        Japanese punctuation, IME in-progress suppression, and multi-character
+        compositionend commits.
+    2026073017 Added JP_05..JP_10 Japanese manual-test exercises to lesson
+        JP_Japanese KB Testing (lesson id 15), covering hiragana/katakana
+        keytops, voiced and small kana, punctuation, and mixed real-world lines.
+    2026073018 Expanded JPV7 punctuation mapping for additional brackets and
+        full-width forms used in JP_09 so highlight guidance remains available.
+20260730 MooTyper_1522bt - Feature Request - Add filter capability to the audio/video
+    field in mootyper_exercises.
+    2026073001 Enabled Moodle filter rendering for dictationdata in exercises.php
+        and view.php after pluginfile URL rewrite, so supported tags (including
+        PoodLL filter tags) render in dictation prompts and previews.
+    2026073002 Hardened eedit.php dictationdataformat handling by defaulting
+        missing legacy format values to FORMAT_HTML during edit/load and save.
+    2026072904 Fixed text-to-type preprocessing in view.php so literal angle brackets
+        (for example <> and full-width entity equivalents) are not stripped before typing.
+    2026072905 Aligned exercise edit behavior with create behavior by keeping texttotype
+        as plain textarea in eedit.php (Tiny remains for dictationdata only).
+    2026072906 Updated view.php preprocessing to apply strip_tags() only for real
+        editor wrapper tags, preserving plain-text <> character sequences for typing.
+    2026072907 Clarified eedit.php dictation media label/help text so it explicitly
+        states this field is only for Dictation-mode audio/video typing prompts.
+
+
+=== 5.1.0 === (Build: 20260428)
+20200521 MooTyper_435r - Need to be able to delete un-need lesson files from lesson folder.
     20240212 See ticket re:may be in v4.2.4 already! Need to VERIFY.
     2026032104 Verified not fixed: no admin workflow deletes files from mod/mootyper/lessons,
         and lsnimport.php still auto-imports any lesson file present in that folder.
@@ -175,23 +251,23 @@ Moodle Versions
         exercises from lesson completed; admin View all grades and student View my grades both
         refreshed cleanly with grades cleared and lesson fallback set to __Micky__. Added guard
         so stale repeat delete URLs now redirect to exercises instead of throwing an error.
-20200521 MooTyper_439bt - Possible unused function get_typerexercises() and
+20200521 MooTyper_439r - Possible unused function get_typerexercises() and
     get_typerexercisesfull($lsn = 0) in classes/local/lessons.php.
     2026041001 Confirmed no call sites in plugin and removed both functions from
         classes/local/lessons.php.
     2026041002 Completed broader classes/local helper scan; removed additional
         unreferenced methods get_grades_avg() and get_renderer_factory().
-20200521 MooTyper_473bt - Issue #71 Activity heading help does not stay toggled open with Boost.
+20200521 MooTyper_473r - Issue #71 Activity heading help does not stay toggled open with Boost.
     2026040701 Tested against Moodle 3.11 and lower in both Boost and Classic:
         the overview_help icon/string is shown.
     2026040702 Tested against Moodle 4.0 and higher in both Boost and Classic:
         the overview_help display path appears deprecated (icon/string not shown).
-20200521 MooTyper_469bt - Pratice lesson grade remove should check it is last grade before removing.
+20200521 MooTyper_469r - Pratice lesson grade remove should check it is last grade before removing.
     2026041304 Moved from Deferred. Confirmed scope is individual grade deletion order:
         a user can only delete their latest grade first, preventing non-terminal gaps that
         can block lesson completion requirements. This is related to, but distinct from,
         MooTyper_1127 (exercise deletion risk across multiple users).
-20200621 MooTyper_545bt - Evaluate current suspicion setting.
+20200621 MooTyper_545r - Evaluate current suspicion setting.
     2026040901 Moved from Deferred after rework of suspicion evaluation.
     2026040902 Suspicion now tracks counter rollback anomalies and long no-progress gaps
         between check intervals in classes/local/results.php.
@@ -199,20 +275,20 @@ Moodle Versions
         length/timelimit context and uses an early-stall check (good initial pace,
         long idle tail, low completion ratio).
     2026040904 Corrected full-hits tracking in all active typing scripts.
-20220808 MooTyper_900bt - Need a Tamil keyboard layout.
+20220808 MooTyper_900r - Need a Tamil keyboard layout.
     2026041201 Moved from Deferred to 5.1.0 pending after Tamil(V5)e layout and
         typer.js combined-character flow updates passed row-level validation.
     2026041202 Verified left-shift guidance for < and > by updating Tamil(V5)e.js
         shift-side mapping; upper row 2 now highlights and scores correctly in testing.
-20230513 MooTyper_902bt - Settings are incomplete on the settings.php and mod_form.php pages.
+20230513 MooTyper_902r - Settings are incomplete on the settings.php and mod_form.php pages.
     20260405 Folded GitHub issue #133 into MooTyper_902 and moved from Deferred;
         fix was included in v5.0.0 (Build: 2026032100).
-20231019 MooTyper_1102bt - See about changing Suspicion to be based on WPM and character
+20231019 MooTyper_1102r - See about changing Suspicion to be based on WPM and character
     count of the exercise.
     2026041303 Moved from Deferred after linking to MooTyper_545 rework; ticket scope is
         covered by the new suspicion calculation logic added under MooTyper_545 entries
         2026040902 and 2026040903.
-20240218 MooTyper_1209bt - MooTyper - Grades in Moodle are not updated when deleting own MooTyper
+20240218 MooTyper_1209r - MooTyper - Grades in Moodle are not updated when deleting own MooTyper
     exercise grades.
     2026032109 Verified not fixed: attrem.php calls mootyper_update_grades(), but when a user
         has no remaining mootyper_grades rows the update path does not explicitly clear the
@@ -221,11 +297,11 @@ Moodle Versions
         per-user null-grade updates when no rows remain (for both rating and whole-activity
         grade items), and uses per-user aggregate grade updates to avoid stale 100 carryover.
         Verified on moodledev activity id 8382 (Frank Furter): gradebook value cleared to null.
-20241030 MooTyper_1332bt - Need a Vietnamese(VNV5) Keyboard Layout.
+20241030 MooTyper_1332r - Need a Vietnamese(VNV5) Keyboard Layout.
     2026041003 Confirmed layout is installable/selectable via generic layout import.
     2026041004 Fixed Vietnamese(VNV5) and Vietnamese(VNIV5) JS key reset handling and
         corrected VNIV5 layout identifiers/header text.
-20241031 MooTyper_1335bt - Request to Add Telex Input Support for Vietnamese Typing in MooTyper.
+20241031 MooTyper_1335r - Request to Add Telex Input Support for Vietnamese Typing in MooTyper.
     2026041005 Fixed Telex driver runtime defects in combined-character flow
         (showKeyboard variable usage, end handler call, mistake counter, and key reset behavior).
     2026041012 Expanded Telex combined-character detection and normalized Vietnamese
@@ -253,10 +329,10 @@ Moodle Versions
         current position, preventing false mistakes while all letters render correct.
     2026041110 Removed temporary on-page diagnostics (ime/err) after validation and
         confirmed pass on three Vietnamese sentence exercises using Chrome + VIE TL.
-20241126 MooTyper_1342bt - Feature request - A flush button to reset a MooTyper for a user.
+20241126 MooTyper_1342r - Feature request - A flush button to reset a MooTyper for a user.
     2026041111 Expanded teacher/admin flush controls on gview.php to show in Lesson,
         Exam, and Practice modes, so filtered or whole-group resets can be done faster.
-20251118 MooTyper_899bt - Delete all from a lesson also needs to delete the physical file.
+20251118 MooTyper_899r - Delete all from a lesson also needs to delete the physical file.
     20260405 Folded GitHub issue #129 into MooTyper_899 and moved from Deferred;
         started code review of lesson-delete/file-delete path for 5.1.0.
     20260405 Verified with purge/delete of EN - Aesops Fables 11.
@@ -265,9 +341,9 @@ Moodle Versions
         Check 3 passed: exercises tied to that lesson were removed.
         Check 4 passed: related grades/attempt-linked checks for those exercises were cleaned up.
         Check 5 passed: return path landed on Exercises with a valid remaining lesson selected.
-20260322 MooTyper_1467bt - Error in lesson ES - AesopsFables1.txt #132.
+20260322 MooTyper_1467r - Error in lesson ES - AesopsFables1.txt #132.
     20260405 Moved from Deferred; updated files were included in recent 5.0.0 (Build: 2026032100) release.
-20260411 MooTyper_1469bt - The klrem.php file does not fail gracefully if the physical file is
+20260411 MooTyper_1469r - The klrem.php file does not fail gracefully if the physical file is
     already missing .
     2026041101 Hardened klrem.php deletion path to use $CFG->dirroot.'/mod/mootyper'
         instead of getcwd(), and treat already-missing layout files as non-fatal.
@@ -281,7 +357,7 @@ Moodle Versions
     2026041302 Extended fallback logic to also verify layout files actually exist on disk;
         now searches for a complete layout (both .php and .js files present) when the
         requested layout record exists but files are orphaned, or when the record doesn't exist.
-20260413 MooTyper_1470bt - The layout folder contains multiple Danish files - investigate on
+20260413 MooTyper_1470r - The layout folder contains multiple Danish files - investigate on
     what to keep.
     2026041301 Deleted V4 Danish layout files (Danish(DAV4).php/.js and Danish(DKV4).php/.js)
         after verifying they were orphaned and no longer in use.
@@ -291,7 +367,7 @@ Moodle Versions
         Denmark, while DA appears to be a legacy/context-specific label. Initial on-screen
         layout comparison shows no visible differences beyond the name label; physical
         keyboard validation is pending before deciding whether DAV5 should be retired.
-20260414 MooTyper_1471bt - Investigate adding a Cherokee keyboard layout.
+20260414 MooTyper_1471r - Investigate adding a Cherokee keyboard layout.
     2026041401 Moved from Deferred and added initial Cherokee scaffold files:
         layouts/Cherokee(CWYV5).php and layouts/Cherokee(CWYV5).js.
     2026041402 Scaffold is based on English(UKV5) so the ISO-style extra key area
@@ -346,7 +422,7 @@ Moodle Versions
         Cherokee jkey# highlight/token assumptions in Cherokee(CWYV5).js and typer.js,
         while keeping jkeybackslash physical-key fallback tolerant of Backslash/
         IntlBackslash scan codes.
-20260417 MooTyper_1473bt - Feature Request - Relocate mootyper/*.js files to a js folder.
+20260417 MooTyper_1473r - Feature Request - Relocate mootyper/*.js files to a js folder.
     2026041701 Created mod/mootyper/js, moved typer.js + typer(ETV7).js + typer(KNV7).js,
         and updated view.php script includes to the new js/ paths.
     2026041801 Fixed Korean V7 runtime script selection in view.php to treat KNV7/KRV7/KNR7
@@ -355,7 +431,7 @@ Moodle Versions
     2026041802 Normalized Korean V7 naming to KR conventions: renamed layout PHP to
         layouts/Korean(KRV7).php, updated Korean(KRV7).js THE_LAYOUT/labels, and renamed
         standalone typer file to js/typer(KRV7).js with matching loader updates.
-20260422  MooTyper_1474bt - MooTyper - Need a Hindi keyboard layout. Had an old ticket for
+20260422  MooTyper_1474r - MooTyper - Need a Hindi keyboard layout. Had an old ticket for
     this keyboard layout, but closed it so starting this new one. Started development.
     2026042301 Completed Hindi(HIV5) row-level validation and fixed shifted-key highlighting
         for number row, QWERTY row, and home row cluster handling.

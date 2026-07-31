@@ -49,7 +49,6 @@ define('MOOTYPER_EVENT_TYPE_CLOSE', 'close');
  * @uses FEATURE_GRADE_OUTCOMES
  * @uses FEATURE_GROUPS
  * @uses FEATURE_GROUPINGS
- * @uses FEATURE_GROUPMEMBERSONLY
  * @uses FEATURE_MOD_INTRO
  * @uses FEATURE_RATE
  * @uses FEATURE_SHOW_DESCRIPTION
@@ -77,8 +76,6 @@ function mootyper_supports($feature) {
         case FEATURE_GROUPS:
             return true;
         case FEATURE_GROUPINGS:
-            return true;
-        case FEATURE_GROUPMEMBERSONLY:
             return true;
         case FEATURE_MOD_INTRO:
             return true;
@@ -1048,7 +1045,9 @@ function reset_mootyper_instance($mootyperid) {
  * @return array of [(string)filearea] => (string)description
  */
 function mootyper_get_file_areas($course, $cm, $context) {
-    return [];
+    return [
+        'dictationdata' => get_string('dictationdatalabel', 'mootyper'),
+    ];
 }
 
 /**
@@ -1063,14 +1062,40 @@ function mootyper_get_file_areas($course, $cm, $context) {
  * @return void this should never return to the caller
  */
 function mootyper_pluginfile($course, $cm, $context, $filearea, array $args, $forcedownload) {
-    global $DB, $CFG;
+    global $DB;
+
     if ($context->contextlevel != CONTEXT_MODULE) {
         send_file_not_found();
     }
 
     require_login($course, true, $cm);
 
-    send_file_not_found();
+    if ($filearea !== 'dictationdata') {
+        send_file_not_found();
+    }
+
+    $exerciseid = (int)array_shift($args);
+    if (empty($exerciseid) || !$DB->record_exists('mootyper_exercises', ['id' => $exerciseid])) {
+        send_file_not_found();
+    }
+
+    $filename = array_pop($args);
+    if (empty($filename)) {
+        send_file_not_found();
+    }
+
+    $filepath = '/';
+    if (!empty($args)) {
+        $filepath .= implode('/', $args) . '/';
+    }
+
+    $fs = get_file_storage();
+    $file = $fs->get_file($context->id, 'mod_mootyper', $filearea, $exerciseid, $filepath, $filename);
+    if (!$file || $file->is_directory()) {
+        send_file_not_found();
+    }
+
+    send_stored_file($file, 0, 0, $forcedownload);
 }
 
 

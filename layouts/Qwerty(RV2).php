@@ -103,7 +103,9 @@ require_login($course, true, $cm);
 							<div id="jkeyspace" class="key wide_5">Qwerty 2</div>
 							<div id="jkeyaltgr" class="key wide_1"><span class="right"><strong>alt</strong></span></div>
 							<div id="key_right_cmd" class="key wide_1"><span class="right"><strong>cmd</strong></span></div>
-							<div id="jkeyctrlr" class="key wide_1"><span class="right"><strong>ctrl</strong></span></div>					
+							<div id="jkeyctrlr" class="key wide_1">
+								<span class="right"><strong>ctrl</strong></span>
+							</div>
 						</div>
 						<div class="row" style="display:none">
 						

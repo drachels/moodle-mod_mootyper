@@ -288,15 +288,19 @@ if ($mootyper->lesson != null) {
             || (strpos($keyboardjs, 'Korean(KNV7)') !== false)
             || (strpos($keyboardjs, 'Korean(KNR7)') !== false);
         $ishindiv5layout = (strpos($keyboardjs, 'Hindi(HIV5)') !== false);
+        $isjapanesev7layout = (strpos($keyboardjs, 'Japanese(JPV7)') !== false);
         $kbcache = $iskoreanv7layout ? '&knv7kb=20260320a' : '';
         $hindicache = $ishindiv5layout ? '&hiv5kb=20260423a' : '';
-        echo '<script type="text/javascript" src="' . $keyboardjs . '?v=' . $assetversion . $kbcache . $hindicache . '"></script>';
-        // 20241118 If using the Amharic(ETV7) or Korean(KRV7) keyboard layout,
-        // use the appropriate typer JS file; otherwise use the regular typer.js file.
+        $jpcache = $isjapanesev7layout ? '&jpv7kb=20260730c' : '';
+        $keyboardsrc = $keyboardjs . '?v=' . $assetversion . $kbcache . $hindicache . $jpcache;
+        echo '<script type="text/javascript" src="' . $keyboardsrc . '"></script>';
+        // 20241118 If using Amharic(ETV7), Korean(KRV7), or Japanese(JPV7)
+        // keyboard layouts, use dedicated typer JS files; otherwise use typer.js.
         $isamharickeyboard = (strpos($keyboardjs, 'Amharic(ETV7)') !== false);
         // Korean V7 layout files currently exist with multiple naming variants.
         // Use the KRV7 standalone typer for any of those variants.
         $iskoreankeyboard = $iskoreanv7layout;
+        $isjapanesekeyboard = $isjapanesev7layout;
         if ($isamharickeyboard) {
             // 20241118 Using the Amharic(ETV7) keyboard layout so switch to typer(ETV7).js file.
             $scriptsrc = 'js/typer(ETV7).js?v=' . $assetversion . '&t=' . $typercache;
@@ -305,6 +309,10 @@ if ($mootyper->lesson != null) {
             // 20260320 Korean(KRV7) standalone typer - complete replacement for typer.js.
             // Add a dedicated cache-bust token so browsers with stale KRV7 script cache refresh immediately.
             $scriptsrc = 'js/typer(KRV7).js?v=' . $assetversion . '&knv7=20260320b&t=' . $typercache;
+            echo '<script type="text/javascript" src="' . $scriptsrc . '"></script>';
+        } else if ($isjapanesekeyboard) {
+            // 20260729 Japanese(JPV7) standalone typer for IME composition-based input.
+            $scriptsrc = 'js/typer(JPV7).js?v=' . $assetversion . '&jpv7=20260730c&t=' . $typercache;
             echo '<script type="text/javascript" src="' . $scriptsrc . '"></script>';
         } else {
             $hinditypercache = $ishindiv5layout ? '&hiv5typer=20260423a' : '';
@@ -353,6 +361,86 @@ if ($mootyper->lesson != null) {
             . get_string('viewallmootypers', 'mootyper')
             . '</a>';
         echo '<span class="settingsinfo">' . $tempstr . '</span>';
+
+        // Display audio/media content for dictation exercises right after exercise details.
+        if (!empty($exercise->dictationdata)) {
+            $dictationformat = empty($exercise->dictationdataformat) ? FORMAT_HTML : (int)$exercise->dictationdataformat;
+            $dictationcontent = file_rewrite_pluginfile_urls(
+                $exercise->dictationdata,
+                'pluginfile.php',
+                $context->id,
+                'mod_mootyper',
+                'dictationdata',
+                $exercise->id
+            );
+            echo '<br>';
+            $dictationhtml = format_text(
+                $dictationcontent,
+                $dictationformat,
+                ['context' => $context, 'filter' => true, 'para' => false]
+            );
+            echo $dictationhtml . '<br>';
+            echo '<script>
+                (function() {
+                    var maxRetries = 6;
+                    var retryDelayMs = 1200;
+
+                    function addRetry(video) {
+                        if (!video || video.dataset.mootyperRetryBound === "1") {
+                            return;
+                        }
+                        video.dataset.mootyperRetryBound = "1";
+                        var retries = 0;
+
+                        function refreshSources() {
+                            if (retries >= maxRetries) {
+                                return;
+                            }
+                            retries++;
+
+                            var sources = video.querySelectorAll("source[src]");
+                            if (sources.length) {
+                                sources.forEach(function(source) {
+                                    var src = source.getAttribute("src") || "";
+                                    var base = src.split("?")[0];
+                                    source.setAttribute("src", base + "?mtretry=" + Date.now());
+                                });
+                            } else {
+                                var videosrc = video.getAttribute("src") || "";
+                                var videobase = videosrc.split("?")[0];
+                                if (videobase) {
+                                    video.setAttribute("src", videobase + "?mtretry=" + Date.now());
+                                }
+                            }
+
+                            video.load();
+                        }
+
+                        video.addEventListener("error", function() {
+                            setTimeout(refreshSources, retryDelayMs);
+                        });
+
+                        video.addEventListener("loadeddata", function() {
+                            retries = maxRetries;
+                        });
+                    }
+
+                    document.querySelectorAll("video").forEach(addRetry);
+                })();
+            </script>';
+            echo '<style>
+                .txtBlack {
+                    color: ' . $color5 . ';
+                }
+                .txtBlue {
+                    color: ' . $color5 . ';
+                    background-color: ' . $color5 . ';
+                }
+                .txtRed {
+                    background-color: ' . $color6 . ';
+                }
+            </style>';
+        }
 
         ?>
 </h5>
@@ -540,15 +628,29 @@ if ($mootyper->lesson != null) {
 </div>
         <?php // phpcs:ignore
         $texttoinit = '';
-        for ($it = 0; $it < strlen($texttoenter); $it++) {
-            if ($texttoenter[$it] == "\n") {
+        // Strip HTML tags and keep literal typing characters like < and > intact.
+        $cleantext = str_replace(
+            ['<p>', '</p>', '<br>', '<br/>', '<br />', '&nbsp;'],
+            ['', '', "\n", "\n", "\n", ' '],
+            $texttoenter
+        );
+        // Only strip tags when the exercise content appears to contain editor HTML wrappers.
+        // This preserves plain-text sequences like <> that students are expected to type.
+        if (preg_match('/<\/?\s*(p|div|span|br|h[1-6]|ul|ol|li)\b/i', $cleantext)) {
+            $cleantext = strip_tags($cleantext);
+        }
+        $cleantext = html_entity_decode($cleantext, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        $cleantext = str_replace("\xc2\xa0", ' ', $cleantext);
+
+        for ($it = 0; $it < strlen($cleantext); $it++) {
+            if ($cleantext[$it] == "\n") {
                 $texttoinit .= '\n';
-            } else if ($texttoenter[$it] == '"') {
+            } else if ($cleantext[$it] == '"') {
                 $texttoinit .= '\"';
-            } else if ($texttoenter[$it] == "\\") {
+            } else if ($cleantext[$it] == "\\") {
                 $texttoinit .= '\\';
             } else {
-                $texttoinit .= $texttoenter[$it];
+                $texttoinit .= $cleantext[$it];
             }
         }
 

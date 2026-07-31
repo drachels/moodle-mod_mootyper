@@ -305,16 +305,20 @@ foreach ($targetcourseids as $targetid) {
             $announcementcmid = (int)$row->cmid;
         }
 
-        if ($row->modname === 'icontent'
+        if (
+            $row->modname === 'icontent'
             && ($row->itemname === $methodname || $row->itemname === $methodname . ' (copy)')
-            && $methodcmid === 0) {
+            && $methodcmid === 0
+        ) {
             $methodcmid = (int)$row->cmid;
             continue;
         }
 
-        if ($row->modname === 'page'
+        if (
+            $row->modname === 'page'
             && ($row->itemname === $pagename || $row->itemname === $pagename . ' (copy)')
-            && $pagecmid === 0) {
+            && $pagecmid === 0
+        ) {
             $pagecmid = (int)$row->cmid;
             continue;
         }

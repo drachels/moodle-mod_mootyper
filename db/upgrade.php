@@ -465,5 +465,47 @@ function xmldb_mootyper_upgrade($oldversion) {
         // Mootyper savepoint reached.
         upgrade_mod_savepoint(true, 2023100500, 'mootyper');
     }
+
+    // Add audio/dictation fields to mootyper_exercises table.
+    if ($oldversion < 2026072700) {
+        // Define field dictationdata to be added to mootyper_exercises.
+        $table = new xmldb_table('mootyper_exercises');
+        $field = new xmldb_field(
+            'dictationdata',
+            XMLDB_TYPE_TEXT,
+            null,
+            null,
+            null,
+            null,
+            null,
+            'snumber'
+        );
+
+        // Conditionally launch add field dictationdata.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Define field dictationdataformat to be added to mootyper_exercises.
+        $field = new xmldb_field(
+            'dictationdataformat',
+            XMLDB_TYPE_INTEGER,
+            '2',
+            null,
+            null,
+            null,
+            '0',
+            'dictationdata'
+        );
+
+        // Conditionally launch add field dictationdataformat.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Mootyper savepoint reached.
+        upgrade_mod_savepoint(true, 2026072700, 'mootyper');
+    }
+
     return true;
 }

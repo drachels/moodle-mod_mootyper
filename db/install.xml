@@ -99,6 +99,8 @@
         <FIELD NAME="exercisename" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" COMMENT="(Eg.: Exercise 23)"/>
         <FIELD NAME="lesson" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
         <FIELD NAME="snumber" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="dictationdata" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="Audio/media content for dictation exercise"/>
+        <FIELD NAME="dictationdataformat" TYPE="int" LENGTH="2" NOTNULL="false" DEFAULT="0" SEQUENCE="false" COMMENT="Format of dictation data (text format constants)"/>
       </FIELDS>
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>

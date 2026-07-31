@@ -1,0 +1,66 @@
+MooTyper GitHub Issue Accounting Audit
+Generated: 2026-04-05
+Source repo: https://github.com/drachels/moodle-mod_mootyper/issues
+Compared against: upgrade.txt
+
+Summary:
+- GitHub issues (non-PR): 69
+- Issue numbers referenced in upgrade.txt: 14
+- Missing from upgrade.txt: 55
+
+Missing issue list (number, state, title):
+34	closed	Error reading database
+35	closed	On-screen keyboard renders smaller in Boost themes
+36	closed	Font size of J keytop appears larger than other keytop letters
+37	closed	Need to implement backup and restore
+41	closed	continuous typing - space instead of character
+42	open	Special characters not working for swiss french in mac
+43	closed	Problems installing mod_mootyper in 3.1.7 from cli   
+44	closed	styles.css text colors are incorrect
+45	closed	spanish texts can't be added as exercises
+47	closed	SQL injection from unsanitized user input
+50	closed	Remove Lesson does not work
+51	closed	Chart xaxis label "Range" is hard coded - need to convert to a string
+52	closed	Database error when editing activity name on course page
+53	closed	Portuguese PT
+54	closed	css rule on .row class breaks display 
+55	closed	Setup but just get: Not ready yet...please try again later.
+56	closed	T-SQL error: query expected to be of type expression for boolean result
+57	open	Spanish accent marks not working on Linux or Mac
+58	closed	Update for last version
+60	closed	Lesson names/categories list should be in alphabetical order
+61	closed	chinese can't be added in the exercises
+62	closed	Add german translation
+64	closed	Moodle Coding Guidelines
+66	closed	db error delete attempt
+68	closed	problem shwo charts using german language file
+70	closed	New instance not being set at the needed moment for calendar Open event
+71	open	I is only me?
+72	closed	Would be nice to implement owngrades background color
+73	closed	Would be nice to implement view all grades background color
+74	closed	Need to simplify code in gview.php
+75	closed	Its not working
+76	closed	change of color
+77	closed	Safari&Mac 
+82	closed	Why undifined?
+83	closed	New activity not creating a new grade_item
+84	closed	View All Grades and Separate Groups
+85	closed	Ratings permission inside the module activity
+93	closed	Aesop's Fables lesson needs serious cleanup
+94	closed	Add lessons from other languages?
+98	closed	Keyboard not showing
+100	closed	Absolute paths in database
+106	closed	Fatal Error since update to 3.9.13: Declaration of mod_mootyper\privacy\provider::get_metadata
+109	open	german layout v4 switches ö from "finger 4" to normal
+112	closed	Error with grades and database access
+114	open	Scheduled task fails repeatedly with no output
+115	open	Bug: Accent letters not working in German layout
+117	closed	Error reading database adding typing activitie to a course
+122	closed	Multiple php warnings in cron
+123	closed	Directory: MooTyper v4.2.8
+124	closed	Description is not showing
+128	closed	Plugin throws exception during install
+129	open	Lessons cannot be deleted
+130	open	Spanish accent marks not working on Chromebook
+132	open	Error in lesson ES - AesopsFables1.txt
+133	open	Error in settings when install

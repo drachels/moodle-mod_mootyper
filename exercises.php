@@ -158,7 +158,12 @@ echo '<table><tr><td class="style1">' . get_string('ename', 'mootyper') . '</td>
                  <td class="style1">' . $jlink . '</td></tr>';
 
 // Print table row for each of the exercises in the lesson currently being viewed.
-$exercises = $DB->get_records("mootyper_exercises", ['lesson' => $lessonpo]);
+$exercises = $DB->get_records(
+    "mootyper_exercises",
+    ['lesson' => $lessonpo],
+    '',
+    'id, exercisename, texttotype, lesson, snumber, dictationdata, dictationdataformat'
+);
 // 20230110 PostgreSQL gets sloppy with the order, but this seems to fix it.
 sort($exercises);
 foreach ($exercises as $ex) {
@@ -194,16 +199,85 @@ foreach ($exercises as $ex) {
     // 20210326 Shorten displayed exercisename as well as text to type.
     echo '<tr><td class="style2">' . $exnametocut . '</td><td class="style2">' . $strtocut . '</td>';
 
+    // Column 3: Edit/Delete tools and audio player if available.
+    echo '<td class="style1">';
+
+    // Display audio/media player if this exercise has audio/media.
+    if (!empty($ex->dictationdata)) {
+        $dictationformat = empty($ex->dictationdataformat) ? FORMAT_HTML : (int)$ex->dictationdataformat;
+        $dictationcontent = file_rewrite_pluginfile_urls(
+            $ex->dictationdata,
+            'pluginfile.php',
+            $context->id,
+            'mod_mootyper',
+            'dictationdata',
+            $ex->id
+        );
+        echo '<div style="margin: 0 0 8px 0; padding: 0; background: transparent; border: 0; box-shadow: none;">';
+        echo format_text($dictationcontent, $dictationformat, ['context' => $context, 'filter' => true, 'para' => false]);
+        echo '</div>';
+    }
+
     // If the user can edit or delete this lesson and its exercises, then add edit and delete tools.
     if (lessons::is_editable_by_me($USER->id, $id, $lessonpo)) {
-        echo '<td class="style1">' . $jlink2 . ' | ' . $jlink1 . '</td>';
-    } else {
-        // If the user can not edit or delete, show an empty space.
-        echo '<td class="style2"></td>';
+        echo $jlink2 . ' | ' . $jlink1;
     }
+
+    echo '</td>';
     echo '</tr>';
 }
 echo '</table>';
+
+// Some recorder workflows (notably PoodLL video) may need a short delay before
+// the final media file is available. Retry failed video loads automatically.
+echo '<script>
+(function() {
+    var maxRetries = 6;
+    var retryDelayMs = 1200;
+
+    function addRetry(video) {
+        if (!video || video.dataset.mootyperRetryBound === "1") {
+            return;
+        }
+        video.dataset.mootyperRetryBound = "1";
+        var retries = 0;
+
+        function refreshSources() {
+            if (retries >= maxRetries) {
+                return;
+            }
+            retries++;
+
+            var sources = video.querySelectorAll("source[src]");
+            if (sources.length) {
+                sources.forEach(function(source) {
+                    var src = source.getAttribute("src") || "";
+                    var base = src.split("?")[0];
+                    source.setAttribute("src", base + "?mtretry=" + Date.now());
+                });
+            } else {
+                var videosrc = video.getAttribute("src") || "";
+                var videobase = videosrc.split("?")[0];
+                if (videobase) {
+                    video.setAttribute("src", videobase + "?mtretry=" + Date.now());
+                }
+            }
+
+            video.load();
+        }
+
+        video.addEventListener("error", function() {
+            setTimeout(refreshSources, retryDelayMs);
+        });
+
+        video.addEventListener("loadeddata", function() {
+            retries = maxRetries;
+        });
+    }
+
+    document.querySelectorAll("video").forEach(addRetry);
+})();
+</script>';
 
 $url = $CFG->wwwroot . '/mod/mootyper/view.php?id=' . $id;
 // 20241227 Modified so we have the lesson ID for use in two ways in lsnexrem.php.

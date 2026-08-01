@@ -224,6 +224,60 @@ Moodle Versions
     2026073101 Updated lessons/JP_Japanese KB Testing.txt to match the current
         10-exercise Japanese test set, so future sync+import runs carry the
         same lesson content now stored in the database.
+    2026080101 Added ruby-aware normalization for Japanese typing text:
+        when exercise content includes ruby markup, MooTyper now removes
+        rt/rp annotation content and keeps only the base characters for
+        scoring/expected text (for example <ruby>外<rt>そと</rt></ruby> -> 外).
+    2026080102 Added a JPV7 display-layer ruby hint above the typing line in
+        view.php so furigana remains visible/readable for learners while
+        scoring still compares only the base characters.
+    2026080103 Fixed escaped-ruby handling for JPV7 text processing:
+        decode HTML entities before ruby cleanup so sequences like
+        &lt;ruby&gt;...&lt;rt&gt;...&lt;/rt&gt;&lt;/ruby&gt; do not leak tag text into
+        expected typing/scoring.
+    2026080104 Restored pass-gated lesson/practice progression in lib.php:
+        get_exercise_from_mootyper() now advances based on passed exercises
+        (pass=1) so failed exercises are shown again until passed.
+    2026080105 Added JPV7 expected-character guidance in view/typer UI:
+        a live "Expected now:" helper shows the current target character
+        (with [ENTER]/[SPACE] markers) to aid testing where kanji key
+        highlighting is intentionally not mapped.
+    2026080106 Added Behat regression coverage for progression logic:
+        failed grade on current exercise keeps snumber unchanged, and a
+        subsequent passed grade advances to the next snumber.
+    2026080107 Refined JPV7 ruby behavior for classroom use: when ruby tags are
+        present, typing/scoring now targets rt furigana readings, and the
+        live "Expected now" helper includes a mapped key hint when available.
+    2026080108 Hardened JPV7 IME scoring path: ignore premature ASCII keypress
+        events while a non-ASCII Japanese target character is expected, and
+        normalize common punctuation/Unicode comparisons so continuous-type
+        off/on modes no longer mis-score romaji pre-commit input as wrong.
+    2026080109 Split JPV7 display vs scoring text for ruby exercises:
+        texttoenter now renders base ruby words (for example 外, 暑) while
+        scoring continues to use furigana reading keystrokes for progression.
+    2026080110 Refined JPV7 ruby mistake feedback and hint styling:
+        when a mismatch occurs on a hidden ruby keystroke slot, the visible
+        base-character anchor is now marked red (so ruby words do not appear
+        fully green after hidden-slot mistakes), and the ruby hint box now has
+        rounded right corners to match the left.
+    2026080111 Fixed JPV7 non-advance mismatch feedback edge case:
+        when a hidden ruby stroke is wrong and cursor does not advance,
+        MooTyper now marks the visible base-character anchor red immediately
+        instead of leaving the word green.
+    2026080112 Fixed JPV7 duplicate-event suppression edge case where a
+        second IME character could be incorrectly ignored after a first
+        correct character; duplicate filtering now suppresses only the exact
+        repeated composition character.
+    2026080113 Corrected JPV7 displayText initialization order after ruby
+        marker refactor so hidden-slot mapping is reliably active during
+        typing feedback (prevents false-green on second-stroke mismatch).
+    2026080114 Added JPV7 highlight/key mapping for iteration marks ヾ/ゞ
+        so exercise text containing these characters shows guidance instead
+        of appearing unmapped.
+    2026080115 Fixed ruby persistence regression in eedit.php:
+        exercise saves now preserve ruby/rt/rp tags in texttotype instead of
+        flattening them to plain text, so Ruby-hint lessons keep their markup
+        for later display/scoring.
 20260730 MooTyper_1522bt - Feature Request - Add filter capability to the audio/video
     field in mootyper_exercises.
     2026073001 Enabled Moodle filter rendering for dictationdata in exercises.php

@@ -162,6 +162,46 @@ echo '<style>
         border-top-left-radius: 8px ;
         border-bottom-left-radius: 8px ;
     }
+    #texttoenterhint {
+        text-align: ' . $textalign . ';
+        background-color: ' . $color5 . ';
+        padding: 8px 12px;
+        margin-bottom: 8px;
+        border: 1px solid black;
+        box-shadow:
+            0 1px 0 #aaa,
+            0 4px 0 #bbb,
+            0 5px 0px #ddd;
+        border-top-left-radius: 8px;
+        border-bottom-left-radius: 8px;
+        border-top-right-radius: 8px;
+        border-bottom-right-radius: 8px;
+        font-size: 1.42em;
+        line-height: 1.5;
+        letter-spacing: 0.02em;
+        word-break: keep-all;
+        overflow-wrap: anywhere;
+    }
+    #texttoenterhint ruby {
+        ruby-position: over;
+        ruby-align: center;
+        margin-right: 0.06em;
+    }
+    #texttoenterhint rt {
+        font-size: 0.56em;
+        line-height: 1.0;
+        letter-spacing: 0;
+        color: #303030;
+        font-weight: 500;
+    }
+    #expectedcharhint {
+        text-align: ' . $textalign . ';
+        margin: 4px 0 8px 0;
+        padding: 4px 8px;
+        border-left: 4px solid #4d4d4d;
+        background: rgba(255, 255, 255, 0.5);
+        font-size: 1.0em;
+    }
     .tb1 {
         text-align: ' . $textalign . '
     }
@@ -610,6 +650,26 @@ if ($mootyper->lesson != null) {
         echo get_string('chere', 'mootyper') . '...';
         ?>
 </textarea>
+<?php
+        // JPV7 display helper: show furigana as ruby annotations above typing text.
+        // Typing/scoring still uses base text only (rt/rp removed during normalization below).
+        if (!empty($isjapanesekeyboard) && preg_match('/<\s*ruby\b|&lt;\s*ruby\b/i', $texttoenter)) {
+            $rubydisplay = str_replace('\\n', "\n", $texttoenter);
+            $rubydisplay = html_entity_decode($rubydisplay, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+            $rubydisplay = str_replace(['<br>', '<br/>', '<br />'], "\n", $rubydisplay);
+            $rubydisplay = str_ireplace(['</p>', '<p>', '<p/>'], ["\n", '', ''], $rubydisplay);
+            $rubydisplay = strip_tags($rubydisplay, '<ruby><rt><rp><rb>');
+            $rubydisplay = preg_replace('/<(ruby|rt|rp|rb)\b[^>]*>/iu', '<$1>', $rubydisplay);
+            $rubydisplay = str_replace("\xc2\xa0", ' ', $rubydisplay);
+            $rubydisplay = preg_replace('/\R/u', '<br>', $rubydisplay);
+            if (trim(strip_tags($rubydisplay)) !== '') {
+                echo '<div style="float: left; width: 100%;" id="texttoenterhint">' . $rubydisplay . '</div>';
+            }
+        }
+?>
+    <?php if (!empty($isjapanesekeyboard)) { ?>
+    <div style="float: left; width: 100%;" id="expectedcharhint">Expected now: </div>
+    <?php } ?>
 <div style="float: left; padding-bottom: 10px;" id="texttoenter"></div><br />
         <?php // phpcs:ignore
         if ($mootyper->showkeyboard) {
@@ -628,29 +688,107 @@ if ($mootyper->lesson != null) {
 </div>
         <?php // phpcs:ignore
         $texttoinit = '';
+        $displaytoinit = '';
         // Strip HTML tags and keep literal typing characters like < and > intact.
         $cleantext = str_replace(
             ['<p>', '</p>', '<br>', '<br/>', '<br />', '&nbsp;'],
             ['', '', "\n", "\n", "\n", ' '],
             $texttoenter
         );
-        // Only strip tags when the exercise content appears to contain editor HTML wrappers.
-        // This preserves plain-text sequences like <> that students are expected to type.
-        if (preg_match('/<\/?\s*(p|div|span|br|h[1-6]|ul|ol|li)\b/i', $cleantext)) {
-            $cleantext = strip_tags($cleantext);
-        }
+        // Decode entities first so escaped ruby markup is normalized correctly.
         $cleantext = html_entity_decode($cleantext, ENT_QUOTES | ENT_HTML5, 'UTF-8');
         $cleantext = str_replace("\xc2\xa0", ' ', $cleantext);
+        $typingclean = $cleantext;
+        $displayclean = $cleantext;
 
-        for ($it = 0; $it < strlen($cleantext); $it++) {
-            if ($cleantext[$it] == "\n") {
+        // For JPV7 ruby content, type furigana (rt) but display base text in the typing area.
+        if (!empty($isjapanesekeyboard) && preg_match('/<\s*ruby\b/i', $cleantext)) {
+            $rubytokens = [];
+            $tokenindex = 0;
+            $templated = preg_replace_callback('/<ruby\b[^>]*>.*?<\/ruby>/isu', function($matches) use (&$rubytokens, &$tokenindex) {
+                $ruby = $matches[0];
+                $rt = '';
+                if (preg_match('/<rt\b[^>]*>(.*?)<\/rt>/isu', $ruby, $rtmatch)) {
+                    $rt = strip_tags($rtmatch[1]);
+                }
+
+                $base = preg_replace('/<rt\b[^>]*>.*?<\/rt>/isu', '', $ruby);
+                $base = preg_replace('/<rp\b[^>]*>.*?<\/rp>/isu', '', $base);
+                $base = strip_tags($base);
+
+                if ($rt === '') {
+                    $rt = $base;
+                }
+                if ($base === '') {
+                    $base = $rt;
+                }
+
+                $token = '__MT_RUBY_' . $tokenindex . '__';
+                $tokenindex++;
+                $rubytokens[$token] = ['typing' => $rt, 'display' => $base];
+                return $token;
+            }, $cleantext);
+
+            $typingclean = $templated;
+            $displayclean = $templated;
+
+            foreach ($rubytokens as $token => $pair) {
+                $typingpart = $pair['typing'];
+                $displaypart = $pair['display'];
+                $typinglen = core_text::strlen($typingpart);
+                $displaylen = core_text::strlen($displaypart);
+
+                if ($typinglen > $displaylen) {
+                    // Internal JS marker used to create hidden display slots that keep
+                    // scoring-length alignment for multi-keystroke ruby readings.
+                    $displaypart .= str_repeat("\u{E000}", $typinglen - $displaylen);
+                } else if ($typinglen < $displaylen) {
+                    $displaypart = core_text::substr($displaypart, 0, $typinglen);
+                }
+
+                $typingclean = str_replace($token, $typingpart, $typingclean);
+                $displayclean = str_replace($token, $displaypart, $displayclean);
+            }
+        }
+
+        // Strip any remaining ruby wrappers/annotation tags in both paths.
+        $typingclean = preg_replace('/<rt\b[^>]*>.*?<\/rt>/isu', '', $typingclean);
+        $typingclean = preg_replace('/<rp\b[^>]*>.*?<\/rp>/isu', '', $typingclean);
+        $typingclean = preg_replace('/<\/?ruby\b[^>]*>/iu', '', $typingclean);
+        $displayclean = preg_replace('/<rt\b[^>]*>.*?<\/rt>/isu', '', $displayclean);
+        $displayclean = preg_replace('/<rp\b[^>]*>.*?<\/rp>/isu', '', $displayclean);
+        $displayclean = preg_replace('/<\/?ruby\b[^>]*>/iu', '', $displayclean);
+
+        // Only strip tags when the exercise content appears to contain editor HTML wrappers.
+        // This preserves plain-text sequences like <> that students are expected to type.
+        if (preg_match('/<\/?\s*(p|div|span|br|h[1-6]|ul|ol|li|ruby|rt|rp|rb)\b/i', $typingclean)) {
+            $typingclean = strip_tags($typingclean);
+        }
+        if (preg_match('/<\/?\s*(p|div|span|br|h[1-6]|ul|ol|li|ruby|rt|rp|rb)\b/i', $displayclean)) {
+            $displayclean = strip_tags($displayclean);
+        }
+
+        for ($it = 0; $it < strlen($typingclean); $it++) {
+            if ($typingclean[$it] == "\n") {
                 $texttoinit .= '\n';
-            } else if ($cleantext[$it] == '"') {
+            } else if ($typingclean[$it] == '"') {
                 $texttoinit .= '\"';
-            } else if ($cleantext[$it] == "\\") {
+            } else if ($typingclean[$it] == "\\") {
                 $texttoinit .= '\\';
             } else {
-                $texttoinit .= $cleantext[$it];
+                $texttoinit .= $typingclean[$it];
+            }
+        }
+
+        for ($it = 0; $it < strlen($displayclean); $it++) {
+            if ($displayclean[$it] == "\n") {
+                $displaytoinit .= '\n';
+            } else if ($displayclean[$it] == '"') {
+                $displaytoinit .= '\"';
+            } else if ($displayclean[$it] == "\\") {
+                $displaytoinit .= '\\';
+            } else {
+                $displaytoinit .= $displayclean[$it];
             }
         }
 
@@ -662,7 +800,8 @@ if ($mootyper->lesson != null) {
                  . '", ' . $mootyper->showkeyboard
                  . ', ' . $mootyper->continuoustype
                  . ', ' . $mootyper->countmistypedspaces
-                 . ', ' . $mootyper->countmistakes
+                  . ', ' . $mootyper->countmistakes
+                  . ', "' . $displaytoinit . '"'
                  . ');</script>';
         } else {
             echo '<script type="text/javascript">inittexttoenter("' . $texttoinit
@@ -674,7 +813,8 @@ if ($mootyper->lesson != null) {
                  . '", ' . $mootyper->showkeyboard
                  . ', ' . $mootyper->continuoustype
                  . ', ' . $mootyper->countmistypedspaces
-                 . ', ' . $mootyper->countmistakes
+                  . ', ' . $mootyper->countmistakes
+                  . ', "' . $displaytoinit . '"'
                  . ');</script>';
         }
     } else {

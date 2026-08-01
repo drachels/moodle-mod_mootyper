@@ -29,3 +29,14 @@ Feature: Lesson progression persists after viewing grades
     And I should see "MooTyper Progression Test"
     When I am on the "MooTyper Progression Test" "mootyper activity" page
     Then I should see "Exercise = 2"
+
+  Scenario: Failed attempt repeats exercise and pass advances progression
+    Given I log in as "student1"
+    And I am on the "MooTyper Progression Test" "mootyper activity" page
+    And the current mootyper exercise snumber should be 1
+    And I create a failed mootyper grade for the current exercise
+    When I am on the "MooTyper Progression Test" "mootyper activity" page
+    Then the current mootyper exercise snumber should be 1
+    When I create a completed mootyper grade for the current exercise
+    And I am on the "MooTyper Progression Test" "mootyper activity" page
+    Then the current mootyper exercise snumber should be 2

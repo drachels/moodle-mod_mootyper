@@ -108,7 +108,7 @@ function mapJapaneseHighlightChar(chr) {
     }
 
     // Kana iteration marks and prolonged marks fallback.
-    if (chr === '\u309d' || chr === '\u30fd') {
+    if (chr === '\u309d' || chr === '\u309e' || chr === '\u30fd' || chr === '\u30fe') {
         return '/';
     }
 

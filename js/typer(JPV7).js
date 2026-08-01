@@ -14,6 +14,7 @@ var startTime,
     ended = false,
     currentChar,
     fullText,
+    displayText,
     intervalID = -1,
     interval2ID = -1,
     appUrl,
@@ -38,13 +39,31 @@ var startTime,
 // JPV7: set true when compositionend scores a character so a duplicate
 // follow-up keypress for the same IME character can be suppressed.
 var jpv7CompScored = false;
+var jpv7LastCompChar = '';
+var JPV7_HIDDEN_PAD = '\uE000';
 
 /**
  * JPV7: Return true if c is a Japanese IME output character.
  */
 function jpv7IsImeChar(c) {
     return typeof c === 'string' && c.length === 1 &&
-        /[\u3040-\u309F\u30A0-\u30FF\u3400-\u4DBF\u4E00-\u9FFF\uFF66-\uFF9F]/.test(c);
+        /[\u3040-\u309F\u30A0-\u30FF\u3400-\u4DBF\u4E00-\u9FFF\u3000-\u303F\uFF01-\uFF60\uFF66-\uFF9F]/.test(c);
+}
+
+/**
+ * JPV7: Normalize a single character for stable comparison.
+ *
+ * @param {string} ch
+ * @returns {string}
+ */
+function jpv7NormChar(ch) {
+    if (typeof ch !== 'string') {
+        return ch;
+    }
+    if (typeof ch.normalize === 'function') {
+        return ch.normalize('NFC');
+    }
+    return ch;
 }
 
 /**
@@ -58,6 +77,109 @@ function jpv7SetViewer(val) {
 }
 
 /**
+ * JPV7: Show the expected current character to help with non-highlighted kanji.
+ *
+ * @param {string} ch
+ */
+function jpv7SetExpectedChar(ch) {
+    var el = document.getElementById('expectedcharhint');
+    if (!el) {
+        return;
+    }
+    var shown = ch;
+    var keyhint = '';
+    if (shown === '\n' || shown === '\r' || shown === '\r\n' || shown === '\n\r') {
+        shown = '[ENTER]';
+        keyhint = 'ENTER';
+    } else if (shown === ' ') {
+        shown = '[SPACE]';
+        keyhint = 'SPACE';
+    } else if (!shown) {
+        shown = '[END]';
+    } else if (typeof mapJapaneseHighlightChar === 'function') {
+        var mapped = mapJapaneseHighlightChar(shown);
+        if (mapped === ' ') {
+            keyhint = 'SPACE';
+        } else if (mapped) {
+            keyhint = mapped.toUpperCase();
+        }
+    }
+    if (keyhint) {
+        if (/^[A-Z]$/.test(keyhint)) {
+            el.textContent = 'Expected now: ' + shown + ' (key: ' + keyhint + ', case-insensitive)';
+        } else {
+            el.textContent = 'Expected now: ' + shown + ' (key: ' + keyhint + ')';
+        }
+    } else {
+        el.textContent = 'Expected now: ' + shown;
+    }
+}
+
+/**
+ * JPV7: Return true when this display position is a hidden ruby padding slot.
+ *
+ * @param {number} pos
+ * @returns {boolean}
+ */
+function jpv7IsHiddenDisplayPos(pos) {
+    return !!(displayText && pos >= 0 && pos < displayText.length && displayText[pos] === JPV7_HIDDEN_PAD);
+}
+
+/**
+ * JPV7: Move an index forward to the next visible display position.
+ *
+ * @param {number} pos
+ * @returns {number}
+ */
+function jpv7NextVisiblePos(pos) {
+    var p = pos;
+    while (p < fullText.length && jpv7IsHiddenDisplayPos(p)) {
+        p++;
+    }
+    return p;
+}
+
+/**
+ * JPV7: For a hidden display slot, find the nearest previous visible anchor.
+ *
+ * @param {number} pos
+ * @returns {number}
+ */
+function jpv7PrevVisiblePos(pos) {
+    var p = pos;
+    while (p >= 0 && jpv7IsHiddenDisplayPos(p)) {
+        p--;
+    }
+    return p;
+}
+
+/**
+ * JPV7: Mark the current expected display position as wrong.
+ * For hidden ruby slots, also mark the nearest visible base-character anchor.
+ */
+function jpv7MarkCurrentWrong() {
+    var pos = currentPos;
+    if (typeof pos !== 'number' || pos < 0 || pos >= fullText.length) {
+        return;
+    }
+
+    $('#crka' + pos)
+        .removeClass('txtBlack')
+        .removeClass('txtGreen')
+        .addClass('txtRed');
+
+    if (jpv7IsHiddenDisplayPos(pos)) {
+        var anchorPos = jpv7PrevVisiblePos(pos);
+        if (anchorPos >= 0) {
+            $('#crka' + anchorPos)
+                .removeClass('txtBlack')
+                .removeClass('txtGreen')
+                .addClass('txtRed');
+        }
+    }
+}
+
+/**
  * If not the end of fullText, move cursor to next character.
  * Color the previous character according to result.
  *
@@ -65,9 +187,10 @@ function jpv7SetViewer(val) {
  */
 function moveCursor(nextPos) {
     if (nextPos > 0 && nextPos <= fullText.length) {
-        $('#crka' + (nextPos - 1)).removeClass('txtBlue');
+        var prevPos = nextPos - 1;
+        $('#crka' + prevPos).removeClass('txtBlue');
         if (keyResult) {
-            $('#crka' + (nextPos - 1))
+            $('#crka' + prevPos)
                 .removeClass('txtBlack')
                 .removeClass('txtRed')
                 .addClass('txtGreen');
@@ -76,17 +199,30 @@ function moveCursor(nextPos) {
                 mistakes++;
                 mistakestring += currentChar;
             }
-            $('#crka' + (nextPos - 1))
+            $('#crka' + prevPos)
                 .removeClass('txtBlack')
                 .removeClass('txtGreen')
                 .addClass('txtRed');
+
+            // If the mismatch occurred on a hidden ruby padding slot,
+            // also paint the visible base-character anchor as wrong.
+            if (jpv7IsHiddenDisplayPos(prevPos)) {
+                var anchorPos = jpv7PrevVisiblePos(prevPos);
+                if (anchorPos >= 0) {
+                    $('#crka' + anchorPos)
+                        .removeClass('txtBlack')
+                        .removeClass('txtGreen')
+                        .addClass('txtRed');
+                }
+            }
         }
     }
-    if (nextPos < fullText.length) {
-        $('#crka' + nextPos).addClass('txtBlue');
+    var visiblePos = jpv7NextVisiblePos(nextPos);
+    if (visiblePos < fullText.length) {
+        $('#crka' + visiblePos).addClass('txtBlue');
     }
     keyResult = true;
-    scrollToNextLine($('#crka' + nextPos));
+    scrollToNextLine($('#crka' + visiblePos));
 }
 
 /**
@@ -246,6 +382,7 @@ function doTheEnd() {
     $('#tb1').blur();
     $('#btnContinue').prop('disabled', false);
     $('#btnContinue').css('visibility', 'visible');
+    jpv7SetExpectedChar('');
     var finalizeAfterAttemptReady = function(retriesLeft, canCreateAttempt) {
         var rpAttId = $('input[name="rpAttId"]').val();
         if (!rpAttId) {
@@ -379,6 +516,7 @@ function doStart() {
     started = true;
     keyResult = true;
     currentChar = fullText[currentPos];
+    jpv7SetExpectedChar(currentChar);
     intervalID = setInterval(updTimeSpeed, 1000);
     var rpMootyperId = $('input[name="rpSityperId"]').val();
     var rpUser = $('input[name="rpUser"]').val();
@@ -438,12 +576,35 @@ function keyPressed(e) {
     }
 
     var scoreTypedChar = function(keychar) {
-        if (keychar === currentChar || ((currentChar === '\n' || currentChar === '\r\n' ||
+        // Fallback for direct keying: when current Japanese target maps to a
+        // representative physical key, accept that key press as the target char.
+        if (currentChar && !/^[\x20-\x7e]$/.test(currentChar) &&
+            keychar && keychar.length === 1 && /^[\x20-\x7e]$/.test(keychar) &&
+            typeof mapJapaneseHighlightChar === 'function') {
+            var expectedkey = mapJapaneseHighlightChar(currentChar);
+            if (expectedkey && expectedkey.length === 1 &&
+                expectedkey.toLowerCase() === keychar.toLowerCase()) {
+                keychar = currentChar;
+            }
+        }
+
+        // Accept common punctuation fallbacks when Japanese IME emits ASCII punctuation.
+        if (currentChar === '。' && keychar === '.') {
+            keychar = '。';
+        } else if (currentChar === '、' && keychar === ',') {
+            keychar = '、';
+        }
+
+        var normKey = jpv7NormChar(keychar);
+        var normCurrent = jpv7NormChar(currentChar);
+
+        if (normKey === normCurrent || ((currentChar === '\n' || currentChar === '\r\n' ||
             currentChar === '\n\r' || currentChar === '\r') && (keychar === ' '))) {
 
             // JPV7: mark compositionend as scored to suppress duplicate follow-up keypress.
             if (etype === 'compositionend') {
                 jpv7CompScored = true;
+                jpv7LastCompChar = normKey;
             }
 
             moveCursor(currentPos + 1);
@@ -472,6 +633,7 @@ function keyPressed(e) {
             }
             currentChar = fullText[currentPos + 1];
             currentPos++;
+            jpv7SetExpectedChar(currentChar);
             jpv7SetViewer('');
             return true;
 
@@ -482,6 +644,7 @@ function keyPressed(e) {
             // JPV7: mark compositionend as scored even on mismatch.
             if (etype === 'compositionend') {
                 jpv7CompScored = true;
+                jpv7LastCompChar = normKey;
             }
 
             if (countMistakes) {
@@ -489,6 +652,8 @@ function keyPressed(e) {
                 mistakestring += currentChar;
             }
             keyResult = false;
+            // Mark mismatch immediately even if progression does not advance.
+            jpv7MarkCurrentWrong();
             if ((!continuousType && !countMistypedSpaces) || (!continuousType && countMistypedSpaces)) {
                 return false;
             } else if (currentPos < fullText.length - 1) {
@@ -516,6 +681,7 @@ function keyPressed(e) {
             }
             currentChar = fullText[currentPos + 1];
             currentPos++;
+            jpv7SetExpectedChar(currentChar);
             jpv7SetViewer('');
             return true;
         }
@@ -525,8 +691,13 @@ function keyPressed(e) {
     // scored an IME character at this position.
     if (etype === 'keypress' && jpv7CompScored) {
         var k = (e && typeof e.key === 'string') ? e.key : '';
-        jpv7CompScored = false;
+        var suppressDup = false;
         if (jpv7IsImeChar(k)) {
+            suppressDup = (jpv7NormChar(k) === jpv7NormChar(jpv7LastCompChar));
+        }
+        jpv7CompScored = false;
+        jpv7LastCompChar = '';
+        if (suppressDup) {
             return false;
         }
         // Non-IME key (e.g. space): fall through and score normally.
@@ -637,7 +808,7 @@ function escapeExerciseChar(ch) {
  * @param {boolean} tcountmistakes.
  */
 function inittexttoenter(ttext, tinprogress, tmistakes, thits, tstarttime, tattemptid, turl,
-    tshowkeyboard, tcontinuoustype, tcountmistypedspaces, tcountmistakes) {
+    tshowkeyboard, tcontinuoustype, tcountmistypedspaces, tcountmistakes, tdisplaytext) {
     // JPV7: compositionend drives Japanese IME character scoring.
     // compositionupdate keeps the viewer updated during conversion assembly.
     // keypress handles space, punctuation, and non-IME input.
@@ -649,6 +820,11 @@ function inittexttoenter(ttext, tinprogress, tmistakes, thits, tstarttime, tatte
     countMistypedSpaces = tcountmistypedspaces;
     countMistakes = tcountmistakes;
     fullText = ttext;
+    var renderText = ttext;
+    if (typeof tdisplaytext === 'string' && tdisplaytext.length === ttext.length) {
+        renderText = tdisplaytext;
+    }
+    displayText = renderText;
     appUrl = turl;
     var tempStr = "";
     if (tinprogress) {
@@ -657,6 +833,7 @@ function inittexttoenter(ttext, tinprogress, tmistakes, thits, tstarttime, tatte
         mistakes = tmistakes;
         currentPos = (thits - tmistakes);
         currentChar = fullText[currentPos];
+        jpv7SetExpectedChar(currentChar);
         if (showKeyboard) {
             var nextE = new keyboardElement(currentChar);
             nextE.turnOn();
@@ -669,19 +846,27 @@ function inittexttoenter(ttext, tinprogress, tmistakes, thits, tstarttime, tatte
         intervalID = setInterval(updTimeSpeed, 1000);
         interval2ID = setInterval(doCheck, 3000);
         for (var i = 0; i < currentPos; i++) {
-            var tChar = ttext[i];
-            if (tChar === '\n') {
+            var tChar = renderText[i];
+            if (tChar === JPV7_HIDDEN_PAD) {
+                tempStr += "<span id='crka" + i + "' class='txtGreen' style='display:none'>&#8203;</span>";
+            } else if (tChar === '\n') {
                 tempStr += "<span id='crka" + i + "' class='txtGreen'>&darr;</span><br>";
             } else {
                 tempStr += "<span id='crka" + i + "' class='txtGreen'>" +
                     escapeExerciseChar(tChar) + "</span>";
             }
         }
-        tempStr += "<span id='crka" + currentPos + "' class='txtBlue'>" +
-            escapeExerciseChar(currentChar) + "</span>";
+        if (renderText[currentPos] === JPV7_HIDDEN_PAD) {
+            tempStr += "<span id='crka" + currentPos + "' class='txtBlue' style='display:none'>&#8203;</span>";
+        } else {
+            tempStr += "<span id='crka" + currentPos + "' class='txtBlue'>" +
+                escapeExerciseChar(renderText[currentPos]) + "</span>";
+        }
         for (var j = currentPos + 1; j < ttext.length; j++) {
-            var tChar = ttext[j];
-            if (tChar === '\n') {
+            var tChar = renderText[j];
+            if (tChar === JPV7_HIDDEN_PAD) {
+                tempStr += "<span id='crka" + j + "' class='txtBlack' style='display:none'>&#8203;</span>";
+            } else if (tChar === '\n') {
                 tempStr += "<span id='crka" + j + "' class='txtBlack'>&darr;</span><br>";
             } else {
                 tempStr += "<span id='crka" + j + "' class='txtBlack'>" +
@@ -689,15 +874,22 @@ function inittexttoenter(ttext, tinprogress, tmistakes, thits, tstarttime, tatte
             }
         }
     } else {
+        jpv7SetExpectedChar(ttext.length > 0 ? ttext[0] : '');
         for (var i = 0; i < ttext.length; i++) {
-            var tChar = ttext[i];
+            var tChar = renderText[i];
             if (i === 0) {
-                tempStr += "<span id='crka" + i + "' class='txtBlue'>" +
-                    escapeExerciseChar(tChar) + "</span>";
+                if (tChar === JPV7_HIDDEN_PAD) {
+                    tempStr += "<span id='crka" + i + "' class='txtBlue' style='display:none'>&#8203;</span>";
+                } else {
+                    tempStr += "<span id='crka" + i + "' class='txtBlue'>" +
+                        escapeExerciseChar(tChar) + "</span>";
+                }
                 if (isCombined(tChar)) {
                     $("#form1").off("keypress", "#tb1", keyPressed);
                     $("#form1").on("keyup", "#tb1", keyupCombined);
                 }
+            } else if (tChar === JPV7_HIDDEN_PAD) {
+                tempStr += "<span id='crka" + i + "' class='txtBlack' style='display:none'>&#8203;</span>";
             } else if (tChar === '\n') {
                 tempStr += "<span id='crka" + i + "' class='txtBlack'>&darr;</span><br>";
             } else {

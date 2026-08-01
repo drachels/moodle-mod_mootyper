@@ -358,8 +358,9 @@ function get_exercise_from_mootyper($mootyperid, $lessonid, $userid) {
     global $DB;
 
     $table = 'mootyper_grades';
-    // Progression should follow completed exercises, not only passed ones.
-    $select = 'userid=' . $userid . ' AND mootyper=' . $mootyperid; // Is put into the where clause.
+    // Progression follows passed exercises so a failed exercise is shown again
+    // until the learner meets the configured pass criteria.
+    $select = 'userid=' . $userid . ' AND mootyper=' . $mootyperid . ' AND pass=1'; // Is put into the where clause.
     $result = $DB->get_records_select($table, $select);
     // Process result if it is not empty.
     if (!is_null($result) && count($result) > 0) {

@@ -270,6 +270,70 @@ class behat_mod_mootyper extends behat_base {
     }
 
     /**
+     * Create a failed grade record for the current MooTyper exercise shown on page.
+     *
+     * @Given /^I create a failed mootyper grade for the current exercise$/
+     */
+    public function icreateafailedmootypergradeforthecurrentexercise() {
+        global $DB;
+
+        $mootyperid = (int)$this->getSession()->evaluateScript(
+            "parseInt((document.querySelector('input[name=\"rpSityperId\"]') || {}).value || '0', 10);"
+        );
+        $pageuserid = (int)$this->getSession()->evaluateScript(
+            "parseInt((document.querySelector('input[name=\"rpUser\"]') || {}).value || '0', 10);"
+        );
+        if (empty($mootyperid) || empty($pageuserid)) {
+            throw new \Exception('Unable to detect MooTyper id or page user id from current page context.');
+        }
+
+        $mootyper = $DB->get_record('mootyper', ['id' => $mootyperid], '*', MUST_EXIST);
+        $mootyperupdate = new \stdClass();
+        $mootyperupdate->id = $mootyper->id;
+        $mootyperupdate->isexam = '0';
+        $mootyperupdate->lesson = !empty($mootyper->lesson) ? $mootyper->lesson : 1;
+        $DB->update_record('mootyper', $mootyperupdate);
+        $mootyper = $DB->get_record('mootyper', ['id' => $mootyperid], '*', MUST_EXIST);
+        $exercise = $DB->get_record('mootyper_exercises', [
+            'lesson' => $mootyper->lesson,
+            'snumber' => 1,
+        ], '*', MUST_EXIST);
+        $exerciseid = (int)$exercise->id;
+
+        if (empty($exerciseid)) {
+            throw new \Exception('Unable to resolve lesson exercise id for progression setup.');
+        }
+
+        $attempt = (object)[
+            'mootyperid' => $mootyperid,
+            'userid' => $pageuserid,
+            'timetaken' => time() - 5,
+            'inprogress' => 0,
+            'suspicion' => 0,
+        ];
+        $attemptid = $DB->insert_record('mootyper_attempts', $attempt, true);
+
+        $grade = (object)[
+            'mootyper' => $mootyperid,
+            'userid' => $pageuserid,
+            'grade' => 40,
+            'mistakes' => 5,
+            'timeinseconds' => 5,
+            'hitsperminute' => 30,
+            'fullhits' => 5,
+            'precisionfield' => 40,
+            'timetaken' => time(),
+            'exercise' => $exerciseid,
+            'pass' => 0,
+            'attemptid' => $attemptid,
+            'wpm' => 6,
+            'mistakedetails' => 'failed_for_progression_test',
+        ];
+
+        $DB->insert_record('mootyper_grades', $grade, false);
+    }
+
+    /**
      * Seed two completed grades so one is non-latest for delete-guard testing.
      *
      * @Given /^I seed two completed mootyper grades for the current user$/

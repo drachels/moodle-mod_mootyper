@@ -97,11 +97,12 @@ if (isset($param1) && get_string('fconfirm', 'mootyper') == $param1) {
     // Tiny editor can wrap plain typing content in HTML (for example <p>...</p>).
     // Convert those wrappers back to plain text so MooTyper compares keystrokes correctly.
     $preparedtext = $newtext;
+    // Decode entities first so escaped ruby markup can be preserved correctly.
+    $preparedtext = html_entity_decode($preparedtext, ENT_QUOTES | ENT_HTML5, 'UTF-8');
     if (preg_match('/^\s*<(p|div|span|br|h[1-6]|ul|ol|li)\b/i', $preparedtext) || strpos($preparedtext, '</') !== false) {
         $preparedtext = preg_replace('/<br\s*\/?>/i', "\n", $preparedtext);
         $preparedtext = preg_replace('/<\/p>/i', "\n", $preparedtext);
-        $preparedtext = strip_tags($preparedtext);
-        $preparedtext = html_entity_decode($preparedtext, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        $preparedtext = strip_tags($preparedtext, '<ruby><rt><rp><rb>');
         // Non-breaking spaces from editor HTML should behave like regular spaces when typing.
         $preparedtext = str_replace("\xC2\xA0", ' ', $preparedtext);
     }

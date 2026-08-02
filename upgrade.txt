@@ -156,7 +156,7 @@ GitHub # | GitHub issue title | MooTyper ticket | Upgrade status | Notes
 Moodle Versions
 ===============
 
-=== 5.1.1 === pending
+=== 5.1.1 === (Build: 2026073100)
 20200521 MooTyper_437bt - Request for new Audio Exercise Mode.
     2026072601 Added dictationdata/dictationdataformat fields, allowed teachers to record or embed
         audio/video in eedit.php, show player previews in exercises.php, and display the
@@ -197,7 +197,7 @@ Moodle Versions
 20260514 MooTyper_1482bt - Remove deprecated FEATURE_GROUPMEMBERSONLY support.
     2026073005 Removed FEATURE_GROUPMEMBERSONLY handling from mootyper_supports()
         while keeping FEATURE_GROUPS and FEATURE_GROUPINGS behavior unchanged.
-20260729 MooTyper_1521 - Feature Request - Would be nice to implement a Japanese keyboard layout.
+20260729 MooTyper_1521bt - Feature Request - Would be nice to implement a Japanese keyboard layout.
     2026072901 Added Japanese(JPV7) V1 typing scaffold: new layout files
         (layouts/Japanese(JPV7).php/.js), standalone IME-aware typer(JPV7).js,
         and view.php routing to load the dedicated typer for Japanese layout.

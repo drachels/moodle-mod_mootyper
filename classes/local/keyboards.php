@@ -34,6 +34,22 @@ defined('MOODLE_INTERNAL') || die(); // phpcs:ignore
  */
 class keyboards {
     /**
+     * Canonicalize layout names that have historical filename variants.
+     *
+     * @param string $layoutname
+     * @return string
+     */
+    private static function normalize_layout_name(string $layoutname): string {
+        $aliases = [
+            'Korean(KNV7)' => 'Korean(KRV7)',
+            'Korean(KNR7)' => 'Korean(KRV7)',
+            'EspañolLatinAmerica(V5)' => 'EspanolLatinAmerica(V5)',
+            'EspañolLatinAmericaWKeypad(V6)' => 'EspanolLatinAmericaWKeypad(V6)',
+        ];
+        return $aliases[$layoutname] ?? $layoutname;
+    }
+
+    /**
      * Checks if a layout given by name is installed.
      *
      * @param string $layoutname
@@ -42,6 +58,7 @@ class keyboards {
      */
     public static function is_layout_installed(string $layoutname = ''): bool {
         global $DB;
+        $layoutname = self::normalize_layout_name($layoutname);
         $params = ['name' => $layoutname];
         $layouts = $DB->get_records('mootyper_layouts', $params);
         if (empty($layouts)) {
@@ -59,6 +76,7 @@ class keyboards {
      */
     public static function get_id_of_layout_by_layoutname(string $layoutname = ''): string {
         global $DB;
+        $layoutname = self::normalize_layout_name($layoutname);
         if (!self::is_layout_installed($layoutname)) {
             return 0;
         } else {
@@ -100,9 +118,11 @@ class keyboards {
 
         // Try to find a layout with existing files.
         foreach ($layouts as $layout) {
-            $phpfile = $pathtodir . '/' . $layout->name . '.php';
-            $jsfile = $pathtodir . '/' . $layout->name . '.js';
+            $normalizedname = self::normalize_layout_name($layout->name);
+            $phpfile = $pathtodir . '/' . $normalizedname . '.php';
+            $jsfile = $pathtodir . '/' . $normalizedname . '.js';
             if (file_exists($phpfile) && file_exists($jsfile)) {
+                $layout->name = $normalizedname;
                 return $layout;
             }
         }
@@ -123,9 +143,8 @@ class keyboards {
         $dbrec = $DB->get_record('mootyper_layouts', ['id' => $lid]);
         $pathtodir = $CFG->dirroot . '/mod/mootyper/layouts';
 
-        // Handle historical Korean V7 naming drift: KNV7/KNR7 now canonicalized to KRV7.
-        if ($dbrec && ($dbrec->name === 'Korean(KNV7)' || $dbrec->name === 'Korean(KNR7)')) {
-            $dbrec->name = 'Korean(KRV7)';
+        if ($dbrec) {
+            $dbrec->name = self::normalize_layout_name($dbrec->name);
         }
 
         // 20260413 If layout record not found or file is missing, use fallback to prevent crash
@@ -156,9 +175,8 @@ class keyboards {
         $dbrec = $DB->get_record('mootyper_layouts', ['id' => $lid]);
         $pathtodir = $CFG->dirroot . '/mod/mootyper/layouts';
 
-        // Handle historical Korean V7 naming drift: KNV7/KNR7 now canonicalized to KRV7.
-        if ($dbrec && ($dbrec->name === 'Korean(KNV7)' || $dbrec->name === 'Korean(KNR7)')) {
-            $dbrec->name = 'Korean(KRV7)';
+        if ($dbrec) {
+            $dbrec->name = self::normalize_layout_name($dbrec->name);
         }
 
         // 20260413 If layout record not found or file is missing, use fallback to prevent crash

@@ -156,7 +156,7 @@ GitHub # | GitHub issue title | MooTyper ticket | Upgrade status | Notes
 Moodle Versions
 ===============
 
-=== 5.1.1 === (Build: 2026073100)
+=== 5.1.1+ === (Build: 2026080200)
 20200521 MooTyper_437bt - Request for new Audio Exercise Mode.
     2026072601 Added dictationdata/dictationdataformat fields, allowed teachers to record or embed
         audio/video in eedit.php, show player previews in exercises.php, and display the
@@ -297,6 +297,12 @@ Moodle Versions
     2026073101 Modified the page render to give the option to see the page the old, full listing,
     way or with a much more user friendly version that only list new items and reports totals
     for items already in the database.
+    2026080201 CI compatibility fix for Spanish layout filenames: renamed
+        layouts/EspañolLatinAmerica(V5).php/.js and
+        layouts/EspañolLatinAmericaWKeypad(V6).php/.js to ASCII-safe
+        Espanol* filenames, and added runtime alias mapping in
+        classes/local/keyboards.php so existing DB layout names with accents
+        still resolve to the correct files.
 
 === 5.1.0 === (Build: 20260428)
 20200521 MooTyper_435r - Need to be able to delete un-need lesson files from lesson folder.

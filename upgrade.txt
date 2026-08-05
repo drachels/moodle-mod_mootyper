@@ -156,7 +156,7 @@ GitHub # | GitHub issue title | MooTyper ticket | Upgrade status | Notes
 Moodle Versions
 ===============
 
-=== 5.1.1+ === (Build: 2026080200)
+=== 5.1.2 === (Build: 2026080500)
 20200521 MooTyper_437bt - Request for new Audio Exercise Mode.
     2026072601 Added dictationdata/dictationdataformat fields, allowed teachers to record or embed
         audio/video in eedit.php, show player previews in exercises.php, and display the

@@ -380,17 +380,19 @@ $editor2->use_editor(
 );
 
 // 20220723 Add some details so we know more about this lesson and it's exercises.
-$lessonauthor = $DB->get_record("user", ['id' => $actuallesson->authorid]);
-$coursename = $DB->get_record("course", ['id' => $actuallesson->courseid]);
+$lessonauthor = $DB->get_record("user", ['id' => $actuallesson->authorid], 'id,firstname,lastname', IGNORE_MISSING);
+$coursename = $DB->get_record("course", ['id' => $actuallesson->courseid], 'id,fullname', IGNORE_MISSING);
 // Add a number 0, 1, or 2 to get the correct string to use.
 $visible = get_string('vaccess' . $actuallesson->visible, 'mootyper');
 $editable = get_string('eaccess' . $actuallesson->editable, 'mootyper');
+$authorfirstname = $lessonauthor->firstname ?? '?';
+$authorlastname = $lessonauthor->lastname ?? '?';
 echo '<br>' . get_string('authorid', 'mootyper') . ': ' . $actuallesson->authorid . ', '
-           . $lessonauthor->firstname . ' ' . $lessonauthor->lastname . '<br>';
+           . $authorfirstname . ' ' . $authorlastname . '<br>';
 echo get_string('visibility', 'mootyper') . ': ' . $visible . ', ';
 echo get_string('editable', 'mootyper') . ': ' . $editable . '<br>';
 // 20220729 Added check for missing courseid and and name that would indicate the lesson came with MooTyper.
-if ((!$actuallesson->courseid) || (!$coursename->fullname)) {
+if (empty($actuallesson->courseid) || empty($coursename) || empty($coursename->fullname)) {
     echo get_string('lessonincluded', 'mootyper');
 } else {
     echo get_string('createdin', 'mootyper') . $actuallesson->courseid . ', ' . $coursename->fullname;

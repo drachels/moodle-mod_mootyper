@@ -1,4 +1,4 @@
-@mod @mod_mootyper1
+@mod @mod_mootyper
 Feature: Teacher can setup mootyper
   In order to complete mootyper lessons
   As a teacher

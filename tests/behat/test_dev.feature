@@ -1,4 +1,4 @@
-@mod @mod_mootyper1
+@mod @mod_mootyper
 Feature: Development mootyper smoke test
   In order to complete mootyper entries
   As a teacher or student

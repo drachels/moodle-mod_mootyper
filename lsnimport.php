@@ -415,7 +415,8 @@ for ($j = 0; $j < count($res2); $j++) {
         if ($importkbl = $DB->get_record_sql($sql)) {
             // If it's true the name is already in the database, do nothing.
             if ($showexistingitems) {
-                echo "<tr class='table-dark text-dark'><td>$kbl</td><td>" . get_string('kblimportnotadd', 'mootyper') . '</td></tr>';
+                echo "<tr class='table-dark text-dark'><td>$kbl</td><td>"
+                    . get_string('kblimportnotadd', 'mootyper') . '</td></tr>';
             } else {
                 $hiddenlayoutrows++;
             }

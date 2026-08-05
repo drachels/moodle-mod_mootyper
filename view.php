@@ -646,11 +646,11 @@ if ($mootyper->lesson != null) {
     onpaste="return false" onselectstart="return false"
     onCopy="return false" onCut="return false" 
     onDrag="return false" onDrop="return false" autocomplete="off">
-        <?php // phpcs:ignore
+        <?php // phpcs:ignore moodle.Commenting.MissingDocblock.File
         echo get_string('chere', 'mootyper') . '...';
         ?>
 </textarea>
-<?php
+        <?php // phpcs:ignore moodle.Commenting.MissingDocblock.File
         // JPV7 display helper: show furigana as ruby annotations above typing text.
         // Typing/scoring still uses base text only (rt/rp removed during normalization below).
         if (!empty($isjapanesekeyboard) && preg_match('/<\s*ruby\b|&lt;\s*ruby\b/i', $texttoenter)) {
@@ -666,10 +666,10 @@ if ($mootyper->lesson != null) {
                 echo '<div style="float: left; width: 100%;" id="texttoenterhint">' . $rubydisplay . '</div>';
             }
         }
-?>
-    <?php if (!empty($isjapanesekeyboard)) { ?>
+        ?>
+        <?php if (!empty($isjapanesekeyboard)) { // phpcs:ignore moodle.Commenting.MissingDocblock.File ?>
     <div style="float: left; width: 100%;" id="expectedcharhint">Expected now: </div>
-    <?php } ?>
+        <?php } // phpcs:ignore moodle.Commenting.MissingDocblock.File ?>
 <div style="float: left; padding-bottom: 10px;" id="texttoenter"></div><br />
         <?php // phpcs:ignore
         if ($mootyper->showkeyboard) {
@@ -705,29 +705,35 @@ if ($mootyper->lesson != null) {
         if (!empty($isjapanesekeyboard) && preg_match('/<\s*ruby\b/i', $cleantext)) {
             $rubytokens = [];
             $tokenindex = 0;
-            $templated = preg_replace_callback('/<ruby\b[^>]*>.*?<\/ruby>/isu', function($matches) use (&$rubytokens, &$tokenindex) {
-                $ruby = $matches[0];
-                $rt = '';
-                if (preg_match('/<rt\b[^>]*>(.*?)<\/rt>/isu', $ruby, $rtmatch)) {
-                    $rt = strip_tags($rtmatch[1]);
-                }
+            // phpcs:disable moodle.Commenting.FileExpectedTags.CopyrightTagMissing, moodle.Commenting.FileExpectedTags.LicenseTagMissing
+            $templated = preg_replace_callback(
+                '/<ruby\b[^>]*>.*?<\/ruby>/isu',
+                function ($matches) use (&$rubytokens, &$tokenindex) {
+                    $ruby = $matches[0];
+                    $rt = '';
+                    if (preg_match('/<rt\b[^>]*>(.*?)<\/rt>/isu', $ruby, $rtmatch)) {
+                        $rt = strip_tags($rtmatch[1]);
+                    }
 
-                $base = preg_replace('/<rt\b[^>]*>.*?<\/rt>/isu', '', $ruby);
-                $base = preg_replace('/<rp\b[^>]*>.*?<\/rp>/isu', '', $base);
-                $base = strip_tags($base);
+                    $base = preg_replace('/<rt\b[^>]*>.*?<\/rt>/isu', '', $ruby);
+                    $base = preg_replace('/<rp\b[^>]*>.*?<\/rp>/isu', '', $base);
+                    $base = strip_tags($base);
 
-                if ($rt === '') {
-                    $rt = $base;
-                }
-                if ($base === '') {
-                    $base = $rt;
-                }
+                    if ($rt === '') {
+                        $rt = $base;
+                    }
+                    if ($base === '') {
+                        $base = $rt;
+                    }
 
-                $token = '__MT_RUBY_' . $tokenindex . '__';
-                $tokenindex++;
-                $rubytokens[$token] = ['typing' => $rt, 'display' => $base];
-                return $token;
-            }, $cleantext);
+                    $token = '__MT_RUBY_' . $tokenindex . '__';
+                    $tokenindex++;
+                    $rubytokens[$token] = ['typing' => $rt, 'display' => $base];
+                    return $token;
+                },
+                $cleantext
+            );
+            // phpcs:enable
 
             $typingclean = $templated;
             $displayclean = $templated;
@@ -741,7 +747,7 @@ if ($mootyper->lesson != null) {
                 if ($typinglen > $displaylen) {
                     // Internal JS marker used to create hidden display slots that keep
                     // scoring-length alignment for multi-keystroke ruby readings.
-                    $displaypart .= str_repeat("\u{E000}", $typinglen - $displaylen);
+                    $displaypart .= str_repeat(core_text::code2utf8(0xE000), $typinglen - $displaylen);
                 } else if ($typinglen < $displaylen) {
                     $displaypart = core_text::substr($displaypart, 0, $typinglen);
                 }

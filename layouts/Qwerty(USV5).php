@@ -31,7 +31,7 @@
 echo (isset($displaynone) && ($displaynone == true)) ? 'display:none;' : '';
 ?>php
 ">
-<div id="keyboard" class="keyboardback">Qwerty(V5) Keyboard Layout<br>
+<div id="keyboard" class="keyboardback">Qwerty(USV5) Keyboard Layout<br>
     <section>
         <div class="mtrow" style='float: left; margin-left:5px; font-size: 15px !important; line-height: 15px'>
             <div id="jkeytildo" class="normal"><em>~</em><br><strong>`</strong></div>

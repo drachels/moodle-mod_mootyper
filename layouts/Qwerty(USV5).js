@@ -1,5 +1,5 @@
 ﻿/**
- * @fileOverview Qwerty(V5) keyboard driver.
+ * @fileOverview Qwerty(USV5) keyboard driver.
  * @author <a href="mailto:drachels@drachels.com">AL Rachels</a>
  * @version 5.0
  * @since 03/04/2019

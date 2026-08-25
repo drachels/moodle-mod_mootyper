@@ -117,7 +117,9 @@ class backup_mootyper_activity_structure_step extends backup_activity_structure_
             ['texttotype',
                                                  'exercisename',
                                                  'lesson',
-                                                 'snumber', ]
+                                                 'snumber',
+                                                 'dictationdata',
+                                                 'dictationdataformat', ]
         );
 
         $layouts = new backup_nested_element('layouts');
@@ -236,6 +238,8 @@ class backup_mootyper_activity_structure_step extends backup_activity_structure_
         // Define file annotations.
         // These file areas don't have an itemid.
         $mootyper->annotate_files('mod_mootyper', 'intro', null);
+        // 20260825 Dictation media files are stored per exercise id in the activity context.
+        $exercise->annotate_files('mod_mootyper', 'dictationdata', 'id');
 
         // Return the root element (mootyper), wrapped into standard activity structure.
         return $this->prepare_activity_structure($mootyper);

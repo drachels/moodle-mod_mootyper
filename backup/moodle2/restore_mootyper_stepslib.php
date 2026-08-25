@@ -203,7 +203,7 @@ class restore_mootyper_activity_structure_step extends restore_activity_structur
                     && ($exercise->snumber = $data->snumber)
                 ) {
                     $newexercisedata->id = $exercise->id;
-                    $this->set_mapping('mootyper_exercise', $oldid, $exercise->id);
+                    $this->set_mapping('mootyper_exercise', $oldid, $exercise->id, true);
                     // 20241020 Modified and changed to double equal signs.
                     // If this mootyper is an exam, update the exam exerciseid in the mootyper.
                     if (($newmootyper->isexam == 1) && ($newmootyper->exercise == $oldid)) {
@@ -221,7 +221,7 @@ class restore_mootyper_activity_structure_step extends restore_activity_structur
 
             $newitemid = $DB->insert_record('mootyper_exercises', $data);
 
-            $this->set_mapping('mootyper_exercise', $oldid, $newitemid);
+            $this->set_mapping('mootyper_exercise', $oldid, $newitemid, true);
             $data->id = $newitemid;
         }
     }
@@ -256,5 +256,7 @@ class restore_mootyper_activity_structure_step extends restore_activity_structur
         // Add mootyper related files, no need to match by itemname (just internally handled context).
         $this->add_related_files('mod_mootyper', 'intro', null);
         $this->add_related_files('mod_mootyper', 'introattachment', null);
+        // 20260825 Restore per-exercise dictation media using the exercise id mapping.
+        $this->add_related_files('mod_mootyper', 'dictationdata', 'mootyper_exercise');
     }
 }

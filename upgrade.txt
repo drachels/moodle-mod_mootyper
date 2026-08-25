@@ -155,6 +155,25 @@ GitHub # | GitHub issue title | MooTyper ticket | Upgrade status | Notes
 
 Moodle Versions
 ===============
+=== 5.1.3 === pending
+20200607 MooTyper_495 - Need to verify backup as it appears to be broken.
+    2026082503 Verified fixed: current backup/restore code correctly preserves
+        dictation exercises and media on Sharing Cart copy and course restore,
+        including the Record RTC audio/video prompt files used by dictation.
+        This verification was completed via MooTyper_1532 testing.
+20260825 MooTyper_1532 - Backup and restore of dictation exercises using Record RTC fail to work.
+    2026082501 Installed Sharing Cart and on moodledemo copied the activity,
+    https://drachels.net/moodledemo/mod/mootyper/view.php?id=10765 from it's location to a new one
+    at, https://drachels.net/moodledemo/mod/mootyper/view.php?id=10765, and got the same results.
+    PoodLL works and Record RTC fails.
+    2026082502 Fixed backup/restore for dictation media by adding
+        dictationdata/dictationdataformat to the exercise backup structure,
+        annotating per-exercise dictation files in backup, and restoring them
+        with the proper exercise file mapping so restored activities keep
+        working audio/video prompts. This fix also verifies MooTyper_495.
+
+
+
 
 === 5.1.2 === (Build: 2026080500)
 20200521 MooTyper_437bt - Request for new Audio Exercise Mode.

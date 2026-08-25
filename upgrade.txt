@@ -58,7 +58,8 @@ sending an email, leave a comment at
 
 GitHub issue to MooTyper ticket mapping table:
 GitHub # | GitHub issue title | MooTyper ticket | Upgrade status | Notes
-115 | Bug: Accent letters not working in German layout | MooTyper_1466 | pending-triage | Confidence: High. Rationale: Tracked as 20231026 MooTyper_1466 - Bug: Accent letters not working in German layout #115.
+115 | Bug: Accent letters not working in German layout | MooTyper_1466 | pending-triage | Confidence: High. Rationale: Tracked as
+20231026 MooTyper_1466 - Bug: Accent letters not working in German layout #115.
 
 20170704 MooTyper_1465 - Special characters not working for swiss french in mac #42.
 20180315 MooTyper_1468 - Spanish accent marks not working on Linux or Mac #57 nor Chromebooks #130.
@@ -593,7 +594,7 @@ Moodle Versions
 20250103 MooTyper_1348r - Feature request - along with time limit, precision, and WPM, list
     continuous, spaces, and keystrokes. Added the needed lines of code in view.php. 320-325.
     Created new span class to change format of the settings information. Added same info to
-	gview.php and owngrades.php files.
+    gview.php and owngrades.php files.
     2026032116 Verified fixed: view.php, gview.php, and owngrades.php all display
         timelimit, requiredgoal, requiredwpm, continuoustype, countmistypedspaces,
         and countmistakes; styles.css includes the settingsinfo formatting class for view.php.

@@ -156,7 +156,7 @@ GitHub # | GitHub issue title | MooTyper ticket | Upgrade status | Notes
 
 Moodle Versions
 ===============
-=== 5.1.3 === (Build: 2026082500)
+=== 5.1.3 === (Build: 2026082501)
 20200607 MooTyper_495 - Need to verify backup as it appears to be broken.
     2026082503 Verified fixed: current backup/restore code correctly preserves
         dictation exercises and media on Sharing Cart copy and course restore,
@@ -172,6 +172,11 @@ Moodle Versions
         annotating per-exercise dictation files in backup, and restoring them
         with the proper exercise file mapping so restored activities keep
         working audio/video prompts. This fix also verifies MooTyper_495.
+20260731 MooTyper_1523 - Feature Request - Make the lsnimport.php file UI more user friendly.
+    2026082504 Marketplace phplint failure fix: the MooTyper_1523 accented-to-ASCII
+        Spanish layout filename rename had copied instead of moved the files, leaving
+        both variants in layouts/; deleted the four leftover accented duplicates so
+        only the ASCII Espanol* files remain.
 
 
 

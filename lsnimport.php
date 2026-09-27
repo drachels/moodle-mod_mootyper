@@ -75,11 +75,14 @@ function read_lessons_file($dafile, $authoridarg, $visiblearg, $editablearg, $co
     // Break lesson into an array of separate exercises.
     $splitted = explode('/**/', $haha);
     // 20210328 Changed for loop to count by two so we can get exercise name along with the exercise text.
-    for ($j = 0; $j + 1 < count($splitted); $j += 2) {
+    for ($j = 0; $j < count($splitted); $j += 2) {
         // Remove whitespace from both sides of $splitted.
         $exercise = trim($splitted[$j]);
+        if ($exercise === '' && !isset($splitted[$j + 1])) {
+            continue;
+        }
         // 20210328 Added same cleanup for exercisename.
-        $exercisename = trim($splitted[$j + 1]);
+        $exercisename = isset($splitted[$j + 1]) ? trim($splitted[$j + 1]) : '';
 
         $allowed = ['ё', 'ë', '¸', 'á', 'é',
                     'í', 'ï', 'ó', 'ú', '\\',
@@ -173,10 +176,13 @@ function update_exercises_file($dafile, $lsnid, $lsn) {
         // Break lesson into an array of separate exercises followed by exercise names.
         $splitted = explode('/**/', $haha);
 
-        for ($j = 0; $j + 1 < count($splitted); $j += 2) {
+        for ($j = 0; $j < count($splitted); $j += 2) {
             // Remove whitespace from both sides of $splitted.
             $fexercise = trim($splitted[$j]);
-            $fexercisename = trim($splitted[$j + 1]);
+            if ($fexercise === '' && !isset($splitted[$j + 1])) {
+                continue;
+            }
+            $fexercisename = isset($splitted[$j + 1]) ? trim($splitted[$j + 1]) : '';
 
             // Create sql to see how many exercises are in this lesson.
             $sql = "SELECT id, texttotype, exercisename, lesson, snumber

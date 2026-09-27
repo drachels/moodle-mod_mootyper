@@ -244,7 +244,20 @@ $string['median'] = 'Median';
 $string['mistakedetails'] = 'Mistake details: ';
 $string['mode'] = 'Mode';
 $string['modulename'] = 'MooTyper';
-$string['modulename_help'] = 'The mootyper module allows us to learn how to type';
+$string['modulename_help'] = '###### Key features
+- Present lesson exercises in practice mode that allows student reset to achieve highest grade possible
+- Present lesson exercises in lesson mode that evaluates student progress and capability
+- Present one lesson exercises in exam mode that grades student capability
+- Allow teacher creation of lesson exercises
+- Allow lesson exercises to be presented in dictation mode
+
+###### Ways to use it
+- Present lesson exercises in practice mode that allows for individual training at the students own pace, with student reset capability
+- Present lesson exercises that allows for individual evaluation at the students own pace, with teacher reset capability
+- Present a single lesson exercise that allows for evaluation of the students typing capability, with teacher reset capability
+- Add an audio or video narration track to any exercise, that will automatically convert the exercise to dictation mode';
+$string['modulename_summary'] = 'A MooTyper activity enables students to study and learn touch-typing, at their own pace with the mode controlling the grading.';
+$string['modulename_tip'] = 'Use MooTyper activities to allow student self-paced study and review of touch typing in their native language.';
 $string['modulenameplural'] = 'MooTypers';
 $string['mootyper'] = 'mootyper';
 $string['mootyper:addinstance'] = 'Add instance';

@@ -59,7 +59,7 @@ function mootyper_supports($feature) {
     global $CFG;
     if ((int)$CFG->branch > 311) {
         if ($feature === FEATURE_MOD_PURPOSE) {
-            return MOD_PURPOSE_COLLABORATION;
+            return MOD_PURPOSE_ASSESSMENT;
         }
     }
     switch ($feature) {

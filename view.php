@@ -329,10 +329,12 @@ if ($mootyper->lesson != null) {
             || (strpos($keyboardjs, 'Korean(KNR7)') !== false);
         $ishindiv5layout = (strpos($keyboardjs, 'Hindi(HIV5)') !== false);
         $isjapanesev7layout = (strpos($keyboardjs, 'Japanese(JPV7)') !== false);
+        $isazcv5layout = (strpos($keyboardjs, 'AzerbaijaniCyrillic(AZCV5)') !== false);
         $kbcache = $iskoreanv7layout ? '&knv7kb=20260320a' : '';
         $hindicache = $ishindiv5layout ? '&hiv5kb=20260423a' : '';
         $jpcache = $isjapanesev7layout ? '&jpv7kb=20260730c' : '';
-        $keyboardsrc = $keyboardjs . '?v=' . $assetversion . $kbcache . $hindicache . $jpcache;
+        $azcv5cache = $isazcv5layout ? '&azcv5kb=20260927b' : '';
+        $keyboardsrc = $keyboardjs . '?v=' . $assetversion . $kbcache . $hindicache . $jpcache . $azcv5cache;
         echo '<script type="text/javascript" src="' . $keyboardsrc . '"></script>';
         // 20241118 If using Amharic(ETV7), Korean(KRV7), or Japanese(JPV7)
         // keyboard layouts, use dedicated typer JS files; otherwise use typer.js.

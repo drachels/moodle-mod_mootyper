@@ -112,8 +112,11 @@ function read_lessons_file($dafile, $authoridarg, $visiblearg, $editablearg, $co
     for ($j = 0; $j < count($splitted); $j += 2) {
         // Remove whitespace from both sides of $splitted.
         $exercise = trim($splitted[$j]);
+        if ($exercise === '' && !isset($splitted[$j + 1])) {
+            continue;
+        }
         // 20210328 Added same cleanup for exercisename.
-        $exercisename = trim($splitted[$j + 1]);
+        $exercisename = isset($splitted[$j + 1]) ? trim($splitted[$j + 1]) : '';
 
 		// phpcs:ignore
         $allowed = array('ё', 'ë', '¸','á', 'é', 'í', 'ï', 'ó', 'ú', '\\', '~', '!', '@', '#', '$', '%', '^', '&', '(', ')', '*', '_', '+', ':', ';', '"', '{', '}', '>', '<', '?', '\'', '-', '/', '=', '.', ',', ' ', '|', '¡', '`', 'ç', 'ñ', 'º', '¿', 'ª', '·', '\n', '\r', '\r\n', '\n\r', ']', '[', '¬', '´', '`', '§', '°', '€', '¦', '¢', '£', '?', '¹', '²', '³', '¨', '?', 'ù', 'µ', 'û','÷', '×', 'ł', 'Ł', 'ß', '¤', '«', '»');

@@ -8,6 +8,7 @@ var startTime,
     endTime,
     mistakes,
     mistakestring = "",
+    mistakeCounted = false,
     currentPos,
     keyResult,
     started = false,
@@ -86,10 +87,6 @@ function moveCursor(nextPos) {
                 .removeClass('txtRed')
                 .addClass('txtGreen');
         } else {
-            if (!(countMistakes)) {
-                mistakes++;
-                mistakestring += currentChar;
-            }
             $('#crka' + (nextPos - 1))
                 .removeClass('txtBlack')
                 .removeClass('txtGreen')
@@ -100,7 +97,23 @@ function moveCursor(nextPos) {
         $('#crka' + nextPos).addClass('txtBlue');
     }
     keyResult = true;
+    mistakeCounted = false;
     scrollToNextLine($('#crka' + nextPos));
+}
+
+function recordMistake() {
+    if (countMistakes || !mistakeCounted) {
+        mistakes++;
+        mistakestring += currentChar;
+        mistakeCounted = true;
+    }
+}
+
+function markCurrentWrong() {
+    $('#crka' + currentPos)
+        .removeClass('txtBlack')
+        .removeClass('txtGreen')
+        .addClass('txtRed');
 }
 
 /**
@@ -397,6 +410,7 @@ function doStart() {
     startTime = new Date();
     mistakes = 0;
     mistakestring = "";
+    mistakeCounted = false;
     currentPos = 0;
     started = true;
     keyResult = true;
@@ -503,14 +517,13 @@ function keyPressed(e) {
             knv7CompScored = true;
         }
 
-        if (countMistakes) {
-            mistakes++;
-            mistakestring += currentChar;
-        }
-        keyResult = false;
+        recordMistake();
+        markCurrentWrong();
         if ((!continuousType && !countMistypedSpaces) || (!continuousType && countMistypedSpaces)) {
             return false;
-        } else if (currentPos < fullText.length - 1) {
+        }
+        keyResult = false;
+        if (currentPos < fullText.length - 1) {
             var nextChar = fullText[currentPos + 1];
             if (showKeyboard) {
                 var thisE = new keyboardElement(currentChar);
@@ -614,6 +627,7 @@ function inittexttoenter(ttext, tinprogress, tmistakes, thits, tstarttime, tatte
     fullText = ttext;
     appUrl = turl;
     var tempStr = "";
+    mistakeCounted = false;
     if (tinprogress) {
         $('input[name="rpAttId"]').val(tattemptid);
         startTime = new Date(tstarttime * 1000);

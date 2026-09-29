@@ -321,7 +321,7 @@ if ($mootyper->lesson != null) {
         }
         $keyboardjs = keyboards::get_instance_layout_js_file($mootyper->layout);
         $assetversion = (string)$CFG->version;
-        $typercache = '20260409c';
+        $typercache = '20260929a';
         // 20260320 For Korean(KRV7) layout, append a dedicated cache-bust token so stale layout
         // scripts (which only had onset highlighting) are replaced immediately.
         $iskoreanv7layout = (strpos($keyboardjs, 'Korean(KRV7)') !== false)

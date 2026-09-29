@@ -2,6 +2,7 @@ var startTime,
     endTime,
     mistakes,
     mistakestring = "",
+    mistakeCounted = false,
     currentPos,
     keyResult,
     started = false,
@@ -47,11 +48,6 @@ function moveCursor(nextPos) {
             .removeClass('txtRed')
             .addClass('txtGreen');
         } else {
-            if (!(countMistakes)) {
-                // Even with multiple keystrokes on the wrong key, only one mistake is counted.
-                mistakes++;
-                mistakestring += currentChar; // Keep a copy of the wrong letter.
-            }
             $('#crka' + (nextPos - 1))
             .removeClass('txtBlack')
             .removeClass('txtGreen')
@@ -62,7 +58,23 @@ function moveCursor(nextPos) {
         $('#crka' + nextPos).addClass('txtBlue');
     }
     keyResult = true;
+    mistakeCounted = false;
     scroll_to_next_line($('#crka' + nextPos));
+}
+
+function recordMistake() {
+    if (countMistakes || !mistakeCounted) {
+        mistakes++;
+        mistakestring += currentChar;
+        mistakeCounted = true;
+    }
+}
+
+function markCurrentWrong() {
+    $('#crka' + currentPos)
+        .removeClass('txtBlack')
+        .removeClass('txtGreen')
+        .addClass('txtRed');
 }
 
 /**
@@ -370,6 +382,7 @@ function doStart() {
     startTime = new Date();
     mistakes = 0;
     mistakestring = "";
+    mistakeCounted = false;
     currentPos = 0;
     started = true;
     keyResult = true;
@@ -477,21 +490,16 @@ function keyCharPressed(e) {
     prevInput = keychar;
         return false;
     } else {
-        if (countMistakes) {
-            // With multiple keystrokes on the wrong key, each wrong keystroke is counted.
-            // Typed the wrong letter so increment mistake count.
-            mistakes++;
-            // Keep a copy of the wrong letter.
-            mistakestring += currentChar;
-        }
-        // Mistake count increased after correct key is typed if disabled and line 37 enabled.
-        keyResult = false;
+        recordMistake();
+        markCurrentWrong();
         // If not set for continuous typing, wait for correct letter.
         if ((!continuousType && !countMistypedSpaces) || (!continuousType && countMistypedSpaces)) {
             prevInput = keychar;
         return false;
         // If continuous typing, show wrong letter and move on.
-        } else if (currentPos < fullText.length - 1) {
+        }
+        keyResult = false;
+        if (currentPos < fullText.length - 1) {
                 var nextChar = fullText[currentPos + 1];
             if (showKeyboard) {
                     var thisE = new keyboardElement(currentChar);
@@ -632,11 +640,8 @@ function keyCompPressed(e) {
             prevInput = inputStr;
             return true;
         } else { // Not expected input for the current char, restart highlighting from sequence
-            if (countMistakes) {
-                mistakes++;
-                mistakestring += currentChar;
-            }
-            keyResult = false;
+            recordMistake();
+            markCurrentWrong();
             if ((!continuousType && !countMistypedSpaces) || (!continuousType && countMistypedSpaces)) {
                 if (showKeyboard) {
                     // PrevElem.turnOff(); // may not be the currentChar
@@ -666,21 +671,16 @@ function keyCompPressed(e) {
             return false;
         }
     } else {
-        if (countMistakes) {
-            // With multiple keystrokes on the wrong key, each wrong keystroke is counted.
-            // Typed the wrong letter so increment mistake count.
-            mistakes++;
-            // Keep a copy of the wrong letter.
-            mistakestring += currentChar;
-        }
-        // Mistake count increased after correct key is typed if disabled and line 37 enabled.
-        keyResult = false;
+        recordMistake();
+        markCurrentWrong();
         // If not set for continuous typing, wait for correct letter.
         if ((!continuousType && !countMistypedSpaces) || (!continuousType && countMistypedSpaces)) {
         prevInput = inputStr;
             return false;
         // If continuous typing, show wrong letter and move on.
-        } else if (currentPos < fullText.length - 1) {
+        }
+        keyResult = false;
+        if (currentPos < fullText.length - 1) {
             var nextChar = fullText[currentPos + 1];
             if (showKeyboard) {
                 var thisE = new keyboardElement(currentChar);
@@ -784,6 +784,7 @@ function inittexttoenter(ttext, tinprogress, tmistakes, thits, tstarttime, tatte
     fullText = ttext;
     appUrl = turl;
     var tempStr = "";
+    mistakeCounted = false;
     prevInput = "";
     if (tinprogress) {
         $('input[name="rpAttId"]').val(tattemptid);

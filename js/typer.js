@@ -4,6 +4,7 @@ var startTime,
     endTime,
     mistakes,
     mistakestring = "",
+    mistakeCounted = false,
     currentPos,
     keyResult,
     started = false,
@@ -81,11 +82,6 @@ function moveCursor(nextPos) {
                 .addClass('txtRed');
             }
         }
-        if (!keyResult && !(countMistakes)) {
-            // Even with multiple keystrokes on the wrong key, only one mistake is counted.
-            mistakes++;
-            mistakestring += currentChar; // Keep a copy of the wrong letter.
-        }
     }
 
     var visiblePos = nextPos;
@@ -96,6 +92,7 @@ function moveCursor(nextPos) {
         $('#crka' + visiblePos).addClass('txtBlue');
     }
     keyResult = true;
+    mistakeCounted = false;
     scrollToNextLine($('#crka' + visiblePos));
 }
 
@@ -450,6 +447,7 @@ function doStart() {
     startTime = new Date();
     mistakes = 0;
     mistakestring = "";
+    mistakeCounted = false;
     currentPos = 0;
     started = true;
     keyResult = true;
@@ -681,14 +679,23 @@ function keyPressed(e) {
             mistakes++;
             // Keep a copy of the wrong letter.
             mistakestring += currentChar;
+        } else if (!mistakeCounted) {
+            mistakes++;
+            mistakestring += currentChar;
+            mistakeCounted = true;
         }
+        $('#crka' + currentPos)
+            .removeClass('txtBlack')
+            .removeClass('txtGreen')
+            .addClass('txtRed');
         // If not set for continuous typing, wait for correct letter.
         if ((!continuousType && !countMistypedSpaces) || (!continuousType && countMistypedSpaces)) {
             return false;
         // If continuous typing, show wrong letter and move on.
-        } else if (currentPos < fullText.length - 1) {
+        } else {
+            keyResult = false;
+            if (currentPos < fullText.length - 1) {
                 // For continuous typing, mark this position as incorrect and advance.
-                keyResult = false;
                 var nextPos = nextVisiblePos(currentPos + 1);
                 var nextChar = fullText[nextPos];
             if (showKeyboard) {
@@ -700,6 +707,7 @@ function keyPressed(e) {
             if (isCombined(nextChar)) {
                 $("#form1").off("keypress", "#tb1", keyPressed);
                 $("#form1").on("keyup", "#tb1", keyupFirst);
+            }
             }
         }
         var nextPos = nextVisiblePos(currentPos + 1);

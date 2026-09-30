@@ -135,7 +135,10 @@ $(document).ready(function() {
 
         var finalizeAndSubmit = function(attid) {
             if (attid) {
-                var finishUrl = appUrl + "/mod/mootyper/atchk.php?status=3&attemptid=" + attid;
+                var finishUrl = appUrl + "/mod/mootyper/atchk.php?status=3&attemptid=" + attid +
+                    "&cmid=" + $('input[name="rpCmid"]').val() +
+                    "&sesskey=" + $('input[name="sesskey"]').val() +
+                    "&mistakes=" + mistakes + "&hits=" + (currentPos + mistakes);
                 $.ajax({
                     url: finishUrl,
                     method: 'GET',
@@ -157,7 +160,9 @@ $(document).ready(function() {
         var rpUser = $('input[name="rpUser"]').val();
         var stime = startTime ? (startTime.getTime() / 1000) : (new Date().getTime() / 1000);
         var startUri = appUrl + "/mod/mootyper/atchk.php?status=1&mootyperid=" + rpMootyperId +
-            "&userid=" + rpUser + "&time=" + stime;
+            "&userid=" + rpUser + "&time=" + stime +
+            "&cmid=" + $('input[name="rpCmid"]').val() +
+            "&sesskey=" + $('input[name="sesskey"]').val();
         $.get(startUri, function(data) {
             if (data) {
                 $('input[name="rpAttId"]').val(data);
@@ -256,7 +261,9 @@ function doTheEnd() {
             var rpUser = $('input[name="rpUser"]').val();
             var stime = startTime ? (startTime.getTime() / 1000) : (new Date().getTime() / 1000);
             var startUri = appUrl + "/mod/mootyper/atchk.php?status=1&mootyperid=" + rpMootyperId +
-                "&userid=" + rpUser + "&time=" + stime;
+                "&userid=" + rpUser + "&time=" + stime +
+                "&cmid=" + $('input[name="rpCmid"]').val() +
+                "&sesskey=" + $('input[name="sesskey"]').val();
             $.get(startUri, function(data) {
                 if (data) {
                     $('input[name="rpAttId"]').val(data);
@@ -267,7 +274,10 @@ function doTheEnd() {
             return;
         }
 
-        endSaveUrl = appUrl + "/mod/mootyper/atchk.php?status=3&attemptid=" + rpAttId;
+        endSaveUrl = appUrl + "/mod/mootyper/atchk.php?status=3&attemptid=" + rpAttId +
+            "&cmid=" + $('input[name="rpCmid"]').val() +
+            "&sesskey=" + $('input[name="sesskey"]').val() +
+            "&mistakes=" + mistakes + "&hits=" + (currentPos + mistakes);
 
         $.ajax({
             url: endSaveUrl,
@@ -370,7 +380,9 @@ function focusSet() {
 function doCheck() {
     var rpAttId = $('input[name="rpAttId"]').val();
     var juri = appUrl + "/mod/mootyper/atchk.php?status=2&attemptid=" + rpAttId +
-        "&mistakes=" + mistakes + "&hits=" + (currentPos + mistakes);
+        "&mistakes=" + mistakes + "&hits=" + (currentPos + mistakes) +
+        "&cmid=" + $('input[name="rpCmid"]').val() +
+        "&sesskey=" + $('input[name="sesskey"]').val();
     $.get(juri);
 }
 
@@ -391,7 +403,9 @@ function doStart() {
     var rpMootyperId = $('input[name="rpSityperId"]').val();
     var rpUser = $('input[name="rpUser"]').val();
     var juri = appUrl + "/mod/mootyper/atchk.php?status=1&mootyperid=" + rpMootyperId +
-        "&userid=" + rpUser + "&time=" + (startTime.getTime() / 1000);
+        "&userid=" + rpUser + "&time=" + (startTime.getTime() / 1000) +
+        "&cmid=" + $('input[name="rpCmid"]').val() +
+        "&sesskey=" + $('input[name="sesskey"]').val();
     $.get(juri, function(data) {
         $('input[name="rpAttId"]').val(data);
     });

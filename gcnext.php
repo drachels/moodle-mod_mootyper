@@ -36,60 +36,38 @@ require_once(__DIR__ . '/lib.php');
 global $CFG, $DB, $USER;
     require_once($CFG->libdir . '/completionlib.php');
 
-$cmid = optional_param('cmid', 0, PARAM_INT); // Course_module ID.
+$cmid = required_param('cmid', PARAM_INT); // Course_module ID.
 $lsnname = optional_param('lsnname', '', PARAM_RAW); // MooTyper lesson name.
 $exercisename = optional_param('exercisename', 0, PARAM_INT); // MooTyper exercise name (It is just a number.).
 $mtmode = optional_param('mtmode', 0, PARAM_INT); // MooTyper activity mode. 0 = Lesson, 1 = Exam, 2 = Practice.
 $count = optional_param('count', 0, PARAM_INT); // Number of exercises in this lesson.
 
-if ($cmid) {
-    $cm = get_coursemodule_from_id('mootyper', $cmid, 0, false, MUST_EXIST);
-    $courseid = $cm->course;
-    $context = context_module::instance($cm->id);
+$cm = get_coursemodule_from_id('mootyper', $cmid, 0, false, MUST_EXIST);
+$course = $DB->get_record('course', ['id' => $cm->course], '*', MUST_EXIST);
+$mootyper = $DB->get_record('mootyper', ['id' => $cm->instance], '*', MUST_EXIST);
+$courseid = $course->id;
+/** @var context $context */
+$context = context_module::instance($cm->id);
+if (!($context instanceof context_module)) {
+    throw new moodle_exception('invalidaccess', 'mootyper', '', null);
 }
 
-require_login(0, true, null, false);
+require_login($course, true, $cm);
+require_sesskey();
+require_capability('mod/mootyper:view', $context);
 
-// Set pass flag to control background color when viewing grades.
-// Check to see if accuracy was good enough to pass.
-if (optional_param('rpAccInput', '', PARAM_FLOAT) >= optional_param('rpGoal', '', PARAM_FLOAT)) {
-    $passfield = 1;
-} else {
-    $passfield = 0;
-}
-
-// Check to see if wpm rate was good enough to pass.
-if (($passfield == 1) && (optional_param('rpWpmInput', '', PARAM_FLOAT) >= optional_param('rpWPM', '', PARAM_FLOAT))) {
-    $passfield = 1;
-} else {
-    $passfield = 0;
-}
-
-// Need to add some code here to generate the $record->grade entry based on whether the grade is
-// based on both precision and wpm, just precision, or just wpm.
 $record = new stdClass();
-$record->mootyper = optional_param('rpSityperId', '', PARAM_INT);
+$record->mootyper = (int)$mootyper->id;
 $record->userid = $USER->id;
-// 20200915 Changed from float to int.
-$record->grade = optional_param('rpAccInput', '', PARAM_INT);
-$record->mistakes = optional_param('rpMistakesInput', '', PARAM_INT);
-$record->timeinseconds = optional_param('rpTimeInput', '', PARAM_INT);
-$record->hitsperminute = optional_param('rpSpeedInput', '', PARAM_FLOAT);
-$record->fullhits = optional_param('rpFullHits', '', PARAM_INT);
-$record->precisionfield = optional_param('rpAccInput', '', PARAM_FLOAT);
 $record->timetaken = time();
 $record->exercise = optional_param('rpExercise', '', PARAM_INT);
-$record->pass = $passfield;
+$record->pass = 0;
 $record->attemptid = optional_param('rpAttId', '', PARAM_INT);
-$record->wpm = (max(0, optional_param('rpWpmInput', '', PARAM_FLOAT)));
 $record->mistakedetails = optional_param('rpMistakeDetailsInput', '', PARAM_CLEAN);
 // 20200111 Check to see if there were no mistakes made and change undefined to nomistakes string.
 if (stripos($record->mistakedetails, "undefined") !== false) {
     $record->mistakedetails = get_string('nomistakes', 'mootyper');
 }
-
-// 20200808 Added code for using MooTyper exercise grades as Moodle Ratings.
-$mootyper = $DB->get_record('mootyper', ['id' => $record->mootyper], '*', MUST_EXIST);
 
 // Require a valid, finalized attempt before accepting and storing grade data.
 if (empty($record->attemptid)) {
@@ -113,65 +91,78 @@ if (!empty($attempt->inprogress)) {
     redirect($returnurl, get_string('attemptsubmitblockedinprogress', 'mootyper'));
 }
 
+if ($DB->record_exists('mootyper_grades', ['attemptid' => $attempt->id])) {
+    throw new moodle_exception('invalidaccess', 'mootyper', '', null);
+}
+
+if ((string)$mootyper->isexam === '1') {
+    if ((int)$record->exercise !== (int)$mootyper->exercise) {
+        throw new moodle_exception('invalidaccess', 'mootyper', '', null);
+    }
+    $exercise = get_exercise_record($mootyper->exercise);
+} else {
+    $exercise = $DB->get_record('mootyper_exercises', [
+        'id' => $record->exercise,
+        'lesson' => $mootyper->lesson,
+    ]);
+    if (!$exercise) {
+        throw new moodle_exception('invalidaccess', 'mootyper', '', null);
+    }
+}
+
+$checks = $DB->get_records('mootyper_checks', ['attemptid' => $attempt->id], 'checktime DESC, id DESC', '*', 0, 1);
+$latestcheck = reset($checks);
+if (!$latestcheck) {
+    throw new moodle_exception('invalidaccess', 'mootyper', '', null);
+}
+
+$record->mistakes = max(0, (int)$latestcheck->mistakes);
+$record->fullhits = max($record->mistakes, (int)$latestcheck->hits);
+$correcthits = max(0, $record->fullhits - $record->mistakes);
+$record->precisionfield = $record->fullhits > 0
+    ? ($correcthits * 100 / $record->fullhits)
+    : 0;
+$elapsedserver = max(1, (int)$latestcheck->checktime - (int)$attempt->timetaken);
+$record->timeinseconds = $elapsedserver;
+$speedhits = !empty($mootyper->continuoustype) ? $correcthits : $record->fullhits;
+$record->hitsperminute = ($speedhits * 60) / $elapsedserver;
+$record->wpm = max(0, ($record->hitsperminute / 5) - ($record->mistakes / ($elapsedserver / 60)));
+
+if (
+    $record->precisionfield >= (int)$mootyper->requiredgoal
+    && $record->wpm >= (int)$mootyper->requiredwpm
+) {
+    $record->pass = 1;
+}
+
 // Enforce time limit on the server to prevent client-side timer bypass.
 if (!empty($mootyper->timelimit)) {
     $timelimitseconds = (int)$mootyper->timelimit * 60;
     $graceseconds = 5;
-    $islate = false;
-    $elapsedsubmitted = max((int)$record->timeinseconds, 0);
-
-    if (!empty($record->attemptid)) {
-        $attempt = $DB->get_record('mootyper_attempts', [
-            'id' => $record->attemptid,
-            'mootyperid' => $record->mootyper,
-            'userid' => $record->userid,
-        ]);
-        if ($attempt) {
-            $elapsedserver = max(0, time() - (int)$attempt->timetaken);
-            // If the attempt is still marked active and already beyond limit, reject.
-            if (!empty($attempt->inprogress) && $elapsedserver > ($timelimitseconds + $graceseconds)) {
-                $islate = true;
-            }
-            // Always reject if submitted elapsed time itself exceeds configured limit.
-            if ($elapsedsubmitted > ($timelimitseconds + $graceseconds)) {
-                $islate = true;
-            }
-        } else if ($elapsedsubmitted > ($timelimitseconds + $graceseconds)) {
-            // Fall back to submitted elapsed time if attempt row is missing.
-            $islate = true;
-        }
-    } else if ($elapsedsubmitted > ($timelimitseconds + $graceseconds)) {
-        $islate = true;
-    }
-
-    if ($islate) {
+    if ($elapsedserver > ($timelimitseconds + $graceseconds)) {
         $returnurl = new moodle_url('/mod/mootyper/view.php', ['n' => $record->mootyper]);
         $message = get_string('timesubmissionrejected', 'mootyper', [
             'limit' => $timelimitseconds,
-            'elapsed' => $elapsedsubmitted,
+            'elapsed' => $elapsedserver,
         ]);
         redirect($returnurl, $message);
     }
 
     // Keep persisted elapsed time aligned with the configured hard limit.
-    $record->timeinseconds = min($record->timeinseconds, $timelimitseconds);
+    $record->timeinseconds = min($elapsedserver, $timelimitseconds);
 }
 
-// 20230102 Update $record->grade and $record->mistakedetails as needed to get the correct grade or rating.
+// Calculate the stored grade from server-recorded attempt counters.
 if (($mootyper->requiredgoal == 0) && ($mootyper->requiredwpm > 0)) {
-    // Results for WPM only.
-    // This gives incorrect results as it does not take into account the scale value!
-    $record->grade = (min($mootyper->scale, ($mootyper->scale * ((max(0, optional_param('rpWpmInput', '', PARAM_FLOAT)))
-                     / $mootyper->requiredwpm))));
+    $record->grade = min($mootyper->scale, $mootyper->scale * ($record->wpm / $mootyper->requiredwpm));
 } else if (($mootyper->requiredgoal > 0) && ($mootyper->requiredwpm > 0)) {
     // Results for both goal and wpm.
     $halfscale = $mootyper->scale / 2;
-    $record->grade = (min(100, ($halfscale * (optional_param('rpAccInput', '', PARAM_FLOAT) / 100))
-                     + min($halfscale, ($halfscale * ((max(0, optional_param('rpWpmInput', '', PARAM_FLOAT)))
-                     / $mootyper->requiredwpm)))));
+    $record->grade = min(100, ($halfscale * ($record->precisionfield / 100))
+                     + min($halfscale, ($halfscale * ($record->wpm / $mootyper->requiredwpm))));
 } else if (($mootyper->requiredgoal > 0) && ($mootyper->requiredwpm == 0)) {
     // Results for goal only.
-    $record->grade = (min(100, ($mootyper->scale * (optional_param('rpAccInput', '', PARAM_FLOAT) / 100))));
+    $record->grade = min(100, $mootyper->scale * ($record->precisionfield / 100));
 } else if (($mootyper->requiredgoal == 0) && ($mootyper->requiredwpm == 0)) {
     // Results for no goal and no wpm.
     $record->grade = null;
@@ -215,6 +206,7 @@ if ($mootyper->assessed) {
     // 20240902 Added, $record->userid.
     mootyper_update_grades($mootyper, $record->userid);
 }
+$DB->delete_records('mootyper_checks', ['attemptid' => $attempt->id]);
 
 // 20191129 Added trigger for exercise_completed event.
 // 20191201 Added modification to also trigger exam_completed event.

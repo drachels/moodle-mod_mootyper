@@ -40,8 +40,18 @@ require_once(__DIR__ . '/lib.php');
 
 global $DB, $USER;
 
-// For security, added the following 20190202 and things seem to be working correctly.
-require_login();
+$cmid = required_param('cmid', PARAM_INT);
+$cm = get_coursemodule_from_id('mootyper', $cmid, 0, false, MUST_EXIST);
+$course = $DB->get_record('course', ['id' => $cm->course], '*', MUST_EXIST);
+/** @var context $context */
+$context = context_module::instance($cm->id);
+if (!($context instanceof context_module)) {
+    throw new moodle_exception('invalidaccess', 'mootyper', '', null);
+}
+
+require_login($course, true, $cm);
+require_sesskey();
+require_capability('mod/mootyper:view', $context);
 
 $record = new stdClass();
 
@@ -52,9 +62,9 @@ $record = new stdClass();
 $st = optional_param('status', '', PARAM_INT);
 
 if ($st == 1) {
-    $record->mootyperid = optional_param('mootyperid', 0, PARAM_INT);
+    $record->mootyperid = (int)$cm->instance;
     $record->userid = $USER->id;
-    $record->timetaken = optional_param('time', 0, PARAM_INT);
+    $record->timetaken = time();
     $record->inprogress = 1;
     $record->suspicion = 0;
 
@@ -76,14 +86,29 @@ if ($st == 1) {
     $newid = $DB->insert_record('mootyper_attempts', $record, true);
     echo $newid;
 } else if ($st == 2) {
-    $record->attemptid = optional_param('attemptid', '', PARAM_INT);
+    $attemptid = required_param('attemptid', PARAM_INT);
+    $attempt = $DB->get_record('mootyper_attempts', [
+        'id' => $attemptid,
+        'mootyperid' => $cm->instance,
+        'userid' => $USER->id,
+        'inprogress' => 1,
+    ], '*', MUST_EXIST);
+    $record->attemptid = $attempt->id;
     $record->mistakes = optional_param('mistakes', 0, PARAM_INT);
     $record->hits = optional_param('hits', 0, PARAM_INT);
+    if ($record->mistakes < 0 || $record->hits < $record->mistakes) {
+        throw new moodle_exception('invalidaccess', 'mootyper', '', null);
+    }
     $record->checktime = time();
     $DB->insert_record('mootyper_checks', $record, false);
 } else if ($st == 3) {
-    $attid = optional_param('attemptid', 0, PARAM_INT);
-    $attemptold = $DB->get_record('mootyper_attempts', ['id' => $attid], '*', MUST_EXIST);
+    $attid = required_param('attemptid', PARAM_INT);
+    $attemptold = $DB->get_record('mootyper_attempts', [
+        'id' => $attid,
+        'mootyperid' => $cm->instance,
+        'userid' => $USER->id,
+        'inprogress' => 1,
+    ], '*', MUST_EXIST);
     $mootyper = $DB->get_record('mootyper', ['id' => $attemptold->mootyperid], '*', MUST_EXIST);
     $attemptnew = new stdClass();
     $attemptnew->id = $attemptold->id;
@@ -91,6 +116,17 @@ if ($st == 1) {
     $attemptnew->userid = $attemptold->userid;
     $attemptnew->timetaken = $attemptold->timetaken;
     $attemptnew->inprogress = 0;
+    $finalmistakes = required_param('mistakes', PARAM_INT);
+    $finalhits = required_param('hits', PARAM_INT);
+    if ($finalmistakes < 0 || $finalhits < $finalmistakes) {
+        throw new moodle_exception('invalidaccess', 'mootyper', '', null);
+    }
+    $DB->insert_record('mootyper_checks', (object)[
+        'attemptid' => $attemptold->id,
+        'mistakes' => $finalmistakes,
+        'hits' => $finalhits,
+        'checktime' => time(),
+    ], false);
     $dbchcks = $DB->get_records('mootyper_checks', ['attemptid' => $attemptold->id]);
     $checks = [];
     foreach ($dbchcks as $c) {
@@ -116,6 +152,4 @@ if ($st == 1) {
     }
     // Exercise completed so update the attemp record.
     $DB->update_record('mootyper_attempts', $attemptnew);
-    // Exercise completed so remove all the checks for this attempt.
-    $DB->delete_records('mootyper_checks', ['attemptid' => $attid]);
 }

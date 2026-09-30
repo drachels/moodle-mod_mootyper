@@ -490,6 +490,10 @@ if ($mootyper->lesson != null) {
 <div id="reportDiv" align="left">
 <input name='rpCourseId' type='hidden' value='<?php // phpcs:ignore
         echo $course->id; ?>'>
+<input name='rpCmid' type='hidden' value='<?php // phpcs:ignore
+    echo $cm->id; ?>'>
+<input name='sesskey' type='hidden' value='<?php // phpcs:ignore
+    echo sesskey(); ?>'>
 <input name='rpSityperId' type='hidden' value='<?php // phpcs:ignore
         echo $mootyper->id; ?>'>
 <input name='rpUser' type='hidden' value='<?php // phpcs:ignore

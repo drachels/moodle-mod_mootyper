@@ -154,11 +154,7 @@ GitHub # | GitHub issue title | MooTyper ticket | Upgrade status | Notes
     2026073006 Quick ESLint scan of layouts/*.js found 1018 issues
         (711 errors, 307 warnings) across 69 files; defer cleanup until it can be
         tested slowly, one keyboard layout at a time, without rushing release work.
-20260929 MooTyper_1553 - #322 Grade submission endpoint accepts client-supplied scores for any activity
-    from any logged-in user.
-20260929 MooTyper_1554 - #323 Activity settings page authorises against one activity and writes to another.
-20260929 MooTyper_1555 - #324 Attempt-tracking endpoint lets any logged-in user create and mutate other
-    users' attempt records.
+
 20260929 MooTyper_1556 - #325 Backup restore stores an unvalidated keyboard-layout name that is later
     used to build filesystem paths.
 20260929 MooTyper_1557 - #326 CSV grade export releases every student's name and results for any activity
@@ -185,6 +181,8 @@ GitHub # | GitHub issue title | MooTyper ticket | Upgrade status | Notes
     grades outside the approved context.
 20260929 MooTyper_1568 - #337 Activity colour settings are emitted unescaped into a stylesheet
     and into form attributes/
+
+
 Moodle Versions
 ===============
 === 5.2.0 === Pending
@@ -195,9 +193,32 @@ Moodle Versions
     2026090301 Added the three needed new strings.
 20260903 MooTyper_1548 - FEATURE_MOD_PURPOSE is incorrectly set to COLLABORATION should be ASSESSMENT.
     2026090301 Changed the code in lib.php/62 to become MOD_PURPOSE_ASSESSMENT.
+20260929 MooTyper_1553 - #322 Grade submission endpoint accepts client-supplied
+    scores for any activity from any logged-in user.
+    2026093001 Grade and attempt endpoints now require activity access and sesskey validation,
+        scope attempts to the current user and activity, validate exercise membership, reject
+        replays, and calculate stored metrics from finalized attempt samples and server elapsed
+        time.
+        Files: atchk.php, gcnext.php, view.php, js/typer.js,
+            js/typer(ETV7).js, js/typer(KRV7).js, js/typer(JPV7).js.
+    2026093002 End-of-exercise duration now ends at the server-timestamped final sample,
+        excluding time paused before the student clicks Continue.
+20260929 MooTyper_1554 - #323 Activity settings page authorises against one activity and
+    writes to another.
+    2026093001 Bind settings updates to the resolved activity instance, ignore conflicting
+        request IDs, and require sesskey validation on Confirm.
+        Files: mod_setup.php.
+20260929 MooTyper_1555 - #324 Attempt-tracking endpoint lets any logged-in user create and
+    mutate other users' attempt records.
+    2026093001 Scope attempt creation to the authorized activity and current user; require a
+        sesskey and verify ownership, activity, and in-progress state before recording or
+        finalizing attempts.
+        Files: atchk.php, js/typer.js, js/typer(ETV7).js,
+            js/typer(KRV7).js, js/typer(JPV7).js.
 20260929 MooTyper_1569 - Errors are no longer being registered in MooTyper Issue#134.
     2026092901 Fixed immediate error counting and color feedback across the shared,
         Amharic, and Korean typing engines, including Amharic sequence composition.
+        Files: js/typer.js, js/typer(ETV7).js, js/typer(KRV7).js.
 
 
 

@@ -44,6 +44,7 @@ if ($id) {
     $cm = get_coursemodule_from_id('mootyper', $id, 0, false, MUST_EXIST);
     $course = $DB->get_record('course', ['id' => $cm->course], '*', MUST_EXIST);
     $mootyper = $DB->get_record('mootyper', ['id' => $cm->instance], '*', MUST_EXIST);
+    $n = (int)$mootyper->id;
 } else if ($n) {
     $mootyper = $DB->get_record('mootyper', ['id' => $n], '*', MUST_EXIST);
     $course = $DB->get_record('course', ['id' => $mootyper->course], '*', MUST_EXIST);
@@ -269,6 +270,7 @@ $texterrorcolorpo = optional_param('texterrorcolor', $dftexterrorcolor, PARAM_CL
 // Check to see if Confirm button is clicked and returning 'Confirm' to trigger insert record.
 $param1 = optional_param('button', '', PARAM_TEXT);
 if (isset($param1) && get_string('fconfirm', 'mootyper') == $param1) {
+    require_sesskey();
     $modepo = optional_param('mode', null, PARAM_INT);
     $lessonpo = optional_param('lesson', null, PARAM_INT);
     $timelimitpo = optional_param('timelimit', null, PARAM_INT);
@@ -290,7 +292,6 @@ if (isset($param1) && get_string('fconfirm', 'mootyper') == $param1) {
 
     global $DB, $CFG;
     // Update all the settings for this MooTyper instance when Confirm is clicked.
-    $mootyper = $DB->get_record('mootyper', ['id' => $n], '*', MUST_EXIST);
     $mootyper->lesson = $lessonpo;
     $mootyper->isexam = $modepo;
     if ($modepo == 1) {
@@ -341,6 +342,7 @@ function removeAtts() {
 }
 </script>';
 $htmlout .= '<form id="setupform" onsubmit="removeAtts();" name="setupform" method="POST">';
+$htmlout .= '<input type="hidden" name="sesskey" value="' . sesskey() . '">';
 
 // 20200801 Admin can change Mode and Lesson name at any time. All others just during first setup.
 if (is_siteadmin()) {

@@ -32,28 +32,26 @@ require_once(__DIR__ . '/lib.php');
 
 global $CFG, $DB, $USER;
 
-$id = optional_param('id', 0, PARAM_INT); // Course ID.
-$lsn = optional_param('lsn', 0, PARAM_INT); // Lesson ID to download.
+$id = required_param('id', PARAM_INT); // Course-module ID.
+$lsn = required_param('lsn', PARAM_INT); // Lesson ID to download.
 
-if ($id) {
-    $course = $DB->get_record('course', ['id' => $id], '*', MUST_EXIST);
-} else {
-    throw new moodle_exception(get_string('mootypererror', 'mootyper'));
-}
-require_login($course, true);
-$context = context_course::instance($id);
+$cm = get_coursemodule_from_id('mootyper', $id, 0, false, MUST_EXIST);
+$course = $DB->get_record('course', ['id' => $cm->course], '*', MUST_EXIST);
+require_login($course, true, $cm);
+/** @var context $context */
+$context = context_module::instance($cm->id);
+require_capability('mod/mootyper:aftersetup', $context);
 
 $data = new StdClass();
 $data->mootyper = $id;
 
-$params = [];
-$params[] = $lsn;
+$params = ['lessonid' => $lsn];
 // Get name of lesson to export based on incoming lesson id.
 $sql = "SELECT lessonname
         FROM {mootyper_lessons}
-        WHERE id = ?";
+    WHERE id = :lessonid";
 // 20200613 Changed $sql to use $params.
-$fname = $DB->get_record_sql($sql, $params);
+$fname = $DB->get_record_sql($sql, $params, MUST_EXIST);
 $filename = $fname->lessonname;
 
 // Check to see if we need GMT added to filename based on lesson export filename setting.
@@ -74,7 +72,7 @@ $sqlc = "SELECT COUNT(mte.texttotype)
         FROM {mootyper_lessons} mtl
         LEFT JOIN {mootyper_exercises} mte
         ON mte.lesson =  mtl.id
-        WHERE mtl.id = ?";
+        WHERE mtl.id = :lessonid";
 // 20200613 Changed $sqlc to use $params.
 $count = $DB->count_records_sql($sqlc, $params);
 // Added mte.id so exercises CAN be duplicates without getting debug message in output file.
@@ -82,7 +80,7 @@ $sql = "SELECT mte.id, mte.texttotype, mte.exercisename
         FROM {mootyper_lessons} mtl
         LEFT JOIN {mootyper_exercises} mte
         ON mte.lesson =  mtl.id
-        WHERE mtl.id = ?";
+        WHERE mtl.id = :lessonid";
 
 // 20200613 Changed $sql to use $params.
 if ($exercise = $DB->get_records_sql($sql, $params)) {

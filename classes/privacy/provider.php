@@ -384,15 +384,21 @@ class provider implements
             return; // MooTyper module not installed.
         }
 
-        // Prepare SQL to gather all completed IDs.
+        $instanceid = $DB->get_field('course_modules', 'instance', ['id' => $context->instanceid], MUST_EXIST);
+
+        // Restrict both tables to the approved activity context and users.
         $userids = $userlist->get_userids();
         [$insql, $inparams] = $DB->get_in_or_equal($userids, SQL_PARAMS_NAMED);
 
-        // Delete user-created personal mootypers.
         $DB->delete_records_select(
             'mootyper_grades',
-            "userid $insql",
-            $inparams
+            "mootyper = :mootyper AND userid $insql",
+            ['mootyper' => $instanceid] + $inparams
+        );
+        $DB->delete_records_select(
+            'mootyper_attempts',
+            "mootyperid = :mootyper AND userid $insql",
+            ['mootyper' => $instanceid] + $inparams
         );
     }
     /**

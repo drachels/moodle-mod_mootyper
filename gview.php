@@ -95,7 +95,7 @@ if (!has_capability('mod/mootyper:viewgrades', context_module::instance($cm->id)
     $event = viewed_all_grades::create($params);
     $event->trigger();
     // The following needs to retrieve keybdbgc for setting this background.
-    $color3 = $mootyper->keybdbgc;
+    $color3 = mootyper_clean_color((string)$mootyper->keybdbgc);
 
     $PAGE->set_url('/mod/mootyper/gview.php', ['id' => $cm->id]);
     $PAGE->set_title(format_string($mootyper->name));
@@ -394,6 +394,7 @@ if (!has_capability('mod/mootyper:viewgrades', context_module::instance($cm->id)
                     . optional_param('id', 0, PARAM_INT)
                     . '&m_id=' . $n
                     . '&returnanchor=grades-table'
+                    . '&sesskey=' . sesskey()
                     . '&g=' . $gr->id;
                 $deletemsg = get_string('deletegradeconfirm', 'mootyper')
                     . $gr->firstname . ' '

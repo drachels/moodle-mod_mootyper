@@ -25,6 +25,11 @@
 define('CLI_SCRIPT', true);
 // phpcs:disable moodle.Files.MoodleInternal
 
+if (PHP_SAPI !== 'cli') {
+    http_response_code(403);
+    exit(1);
+}
+
 /**
  * Write an error message to STDERR and exit.
  *
@@ -98,19 +103,12 @@ function render_template_string(string $template, array $vars, array &$missing):
 
 $args = parse_args($argv);
 
-$moodleroot = $args['moodleroot'] ?? '';
 $icontentid = isset($args['icontentid']) ? (int)$args['icontentid'] : 0;
 $cmid = isset($args['cmid']) ? (int)$args['cmid'] : 0;
 $varsfile = $args['vars'] ?? '';
 $templatefile = $args['template'] ?? (__DIR__ . '/intro_pages_template.json');
 $dryrun = !empty($args['dry-run']) && $args['dry-run'] !== '0';
 
-if ($moodleroot === '') {
-    fail('Missing --moodleroot=/path/to/moodle');
-}
-if (!is_file($moodleroot . '/config.php')) {
-    fail('Could not find config.php in --moodleroot path');
-}
 if ($icontentid <= 0) {
     fail('Missing or invalid --icontentid=<int>');
 }
@@ -165,7 +163,7 @@ if ($dryrun) {
     exit(0);
 }
 
-require_once($moodleroot . '/config.php');
+require_once(__DIR__ . '/../../../../config.php');
 
 global $DB;
 

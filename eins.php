@@ -165,7 +165,7 @@ if (has_capability('mod/mootyper:editall', context_course::instance($course->id)
 }
 
 // 20200625 Get the current MooTyper keyboard background default color for our page background here.
-$color3 = $mootyper->keybdbgc;
+$color3 = mootyper_clean_color((string)$mootyper->keybdbgc);
 // Add colored background with border.
 echo '<div align="center" style="font-size:1em;
     font-weight:bold;background: ' . $color3 . ';

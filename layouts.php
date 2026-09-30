@@ -37,6 +37,9 @@ $course = $DB->get_record('course', ['id' => $cm->course], '*', MUST_EXIST);
 require_login($course, true, $cm);
 
 $context = context_module::instance($cm->id);
+/** @var context $systemcontext */
+$systemcontext = context_system::instance();
+require_capability('moodle/site:config', $systemcontext);
 
 $mootyper = $DB->get_record('mootyper', ['id' => $cm->instance], '*', MUST_EXIST);
 
@@ -57,7 +60,7 @@ echo $OUTPUT->heading(get_string('loheading', 'mootyper'));
 
 // 20200226 Switched from course id to current MooTyper id so
 // that I can use the current MooTyper keyboard background color.
-$color3 = $mootyper->keybdbgc;
+$color3 = mootyper_clean_color((string)$mootyper->keybdbgc);
 
 echo '<div align="left" style="font-size:1em;
      font-weight:bold;background: ' . $color3 . ';
@@ -66,9 +69,6 @@ echo '<div align="left" style="font-size:1em;
      -moz-border-radius:16px;border-radius:16px;"><table>';
 
 $layouts = keyboards::get_keyboard_layouts_db();
-// 20220126 Set up a return to page link to use after deleting a layout.
-$jlinkklrem = $CFG->wwwroot . '/mod/mootyper/klrem.php?id=' . $id;
-
 echo '<div class="container">';
 echo '<table class="table table-hover">';
 echo '<thead><tr><th>' . get_string('layout', 'mootyper') . '</th><th>' . get_string('deletekb', 'mootyper') . '</th>';
@@ -90,11 +90,20 @@ for ($i = 0; $i < $layoutcount; $i++) {
         $nextanchor = 'layout-' . preg_replace('/[^a-zA-Z0-9_-]/', '', $layoutnames[$i - 1]);
     }
     $anchorparam = $nextanchor ? ('&anchor=' . $nextanchor) : '';
-    echo '<tr id="' . $anchorid . '"><td>' . $lo . '</td><td>'
-        . '<a onclick="return confirm(\'' . get_string('deletelsnconfirm', 'mootyper') . $lo
-        . '\')" href="' . $jlinkklrem . '&kb=' . $lo . $anchorparam . '#' . $anchorid
+    $deleteurl = new moodle_url('/mod/mootyper/klrem.php', [
+        'id' => $id,
+        'kb' => $lo,
+        'anchor' => $nextanchor,
+        'sesskey' => sesskey(),
+    ]);
+    $confirm = json_encode(
+        get_string('deletelsnconfirm', 'mootyper') . $lo,
+        JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT
+    );
+    echo '<tr id="' . s($anchorid) . '"><td>' . s($lo) . '</td><td>'
+        . '<a onclick="return confirm(' . $confirm . ')" href="' . $deleteurl->out(false) . '#' . s($anchorid)
         . '" class="btn btn-warning" style="border-radius: 8px">'
-        . get_string('deletekblo', 'mootyper', $lo)
+        . get_string('deletekblo', 'mootyper', s($lo))
         . '</a></td></tr>';
 }
 echo '</tbody>';

@@ -105,7 +105,6 @@ GitHub # | GitHub issue title | MooTyper ticket | Upgrade status | Notes
 20220405 MooTyper_837 - Exercise X of X in view.php needs to be changed to a function.
 20220723 MooTyper_826 - The Moodle Mobile app is not supported.
 20220816 MooTyper_909 - In MooTyper in 10.0.6.136/moodle400 generates two grade_grade entries for each user.
-20221207 MooTyper_974 - Direct access to eedit.php via url should be checked and prevented if not editable by me.
 20230119 MooTyper_994 - Make install of lessons optional during an upgrade.
 20230302 MooTyper_988 - Need a new graph class to do the actual graph for owngrades.php and gview.php.
 20230720 MooTyper_1060 - Completion field null/not null status needs to be checked.
@@ -154,46 +153,69 @@ GitHub # | GitHub issue title | MooTyper ticket | Upgrade status | Notes
     2026073006 Quick ESLint scan of layouts/*.js found 1018 issues
         (711 errors, 307 warnings) across 69 files; defer cleanup until it can be
         tested slowly, one keyboard layout at a time, without rushing release work.
-
-20260929 MooTyper_1556 - #325 Backup restore stores an unvalidated keyboard-layout name that is later
-    used to build filesystem paths.
-20260929 MooTyper_1557 - #326 CSV grade export releases every student's name and results for any activity
-    to any logged-in user.
-20260929 MooTyper_1558 - #327 Exercise and lesson text is written into the typing page without escaping,
-    allowing script injection across courses.
-20260929 MooTyper_1559 - #328 Exercise editor accepts any exercise id site-wide and renames the
-    shared lesson.
-20260929 MooTyper_1560 - #329 Grade deletion ownership check is gated on an attacker-controlled
-    request parameter.
-20260929 MooTyper_1561 - #330 Keyboard-layout deletion has no capability check and removes files
-    from the plugin directory.
-20260929 MooTyper_1562 - #331 Lesson and exercise deletion has no capability check, letting any
-    enrolled user destroy shared content and everyone's grades.
-20260929 MooTyper_1563 - #332 Command-line tools shipped inside the web root declare CLI_SCRIPT
-    and include a caller-supplied config.php.
-20260929 MooTyper_1564 - #333 Lesson deletion unlinks a path built from an unsanitised, author-
-    controlled lesson name.
-20260929 MooTyper_1565 - #334 Lesson enrolment helper ignores the course it is asked about, so it
-    authorises every lesson.
-20260929 MooTyper_1566 - #335 Lesson export lets any enrolled user download the full text of any
-    lesson, including exam content.
-20260929 MooTyper_1567 - #336 Privacy provider erasure targets a non-existent column and deletes
-    grades outside the approved context.
-20260929 MooTyper_1568 - #337 Activity colour settings are emitted unescaped into a stylesheet
-    and into form attributes/
-
+    2026093002 Fresh ESLint scan found 1056 issues (735 errors, 321 warnings) across all
+        72 layout files. Dominant rules are no-unused-vars (474), no-undef (149),
+        camelcase (139), complexity (79), and no-useless-escape (77); keep resolving
+        in staged layout batches before marking as being tested.
 
 Moodle Versions
 ===============
 === 5.2.0 === Pending
-20260829 MooTyper_1537 - Undefined array key and trim null warnings in db/install.php and lsnimport.php.
+20221207 MooTyper_974bt - Direct access to eedit.php is checked and prevented when the
+    requested exercise's lesson is not editable by the current user.
+    2026093001 Verified CM login, aftersetup capability, lesson edit policy, and sesskey save
+        checks in eedit.php; this coverage is retained alongside the later editor hardening.
+        Files: eedit.php.
+20260829 MooTyper_1537bt - Undefined array key and trim null warnings in db/install.php and lsnimport.php.
     2026082901 db/install.php: Added safety checks to guard against missing array keys and skip empty
     trailing /**/ splits when parsing lesson files. lsnimport.php: Applied the same checks in both import loops.
-20260902 MooTyper_1543 - Feature Request - Need to implement modulename_summary language string.
+20260902 MooTyper_1543bt - Feature Request - Need to implement modulename_summary language string.
     2026090301 Added the three needed new strings.
-20260903 MooTyper_1548 - FEATURE_MOD_PURPOSE is incorrectly set to COLLABORATION should be ASSESSMENT.
+20260903 MooTyper_1548bt - FEATURE_MOD_PURPOSE is incorrectly set to COLLABORATION should be ASSESSMENT.
     2026090301 Changed the code in lib.php/62 to become MOD_PURPOSE_ASSESSMENT.
-20260929 MooTyper_1553 - #322 Grade submission endpoint accepts client-supplied
+20260926 MooTyper_1552bt - Feature Request - Develop Azerbaijan Cyrillic and Latin KB Layouts.
+    2026092501 Gemini says most used type of KB layout is Azerbaijani Latin so developing it first.
+        Created the two files, AzerbaijaniLatin(AZEV5).php and AzerbaijaniLatin(AZEV5).js base off
+        the French(FRV5) files. Got the layout looking correct in the .php file now working on key
+        names and code in the .js file.
+    2026092502 Started over using a different set of files as the starting basis for the Latin
+        version. I think they were the English(USV5) files.
+    2026092601 Created two files for the Cyrillic layout. Both versions appear to work correctly.
+        Files: AzerbaijaniLatin(AZEV5).php, AzerbaijaniLatin(AZEV5).js, AzerbaijaniCyrillic(AZCV5).js,
+            AzerbaijaniCyrillic(AZCV5).php
+20260929 MooTyper_1563bt - #332 Command-line tools shipped inside the web root declare CLI_SCRIPT
+    and include a caller-supplied config.php.
+    2026093001 Added an early CLI-only guard and changed all four tools to load the fixed
+        Moodle config.php path relative to their source files; removed --moodleroot bootstrap input.
+        Files: tools/mootyper_XX_course_populate.php, tools/mootyper_cleanup_announcements_forum.php,
+            tools/icontent_intro/deploy_icontent_intro.php,
+            tools/icontent_intro/apply_general_section_baseline.php.
+20260929 MooTyper_1564bt - #333 Lesson deletion unlinks a path built from an unsanitised, author-
+    controlled lesson name.
+    2026093001 Require a plain lesson filename and verify the resolved deletion path remains
+        inside the plugin lessons directory before unlinking it.
+        Files: lsnexrem.php.
+20260929 MooTyper_1565bt - #334 Lesson enrolment helper ignores the course it is asked about, so it
+    authorises every lesson.
+    2026093001 Scope enrollment checks to the requested course and active enrolment time window.
+        Files: classes/local/lessons.php.
+20260929 MooTyper_1566bt - #335 Lesson export lets any enrolled user download the full text of any
+    lesson, including exam content.
+    2026093001 Require the resolved MooTyper activity and aftersetup capability for exports;
+        bind export callers and lesson queries to the activity context.
+        Files: lsnexport.php, exercises.php.
+20260929 MooTyper_1567bt - #336 Privacy provider erasure targets a non-existent column and deletes
+    grades outside the approved context.
+    2026093001 Scope approved user erasure to the activity context and delete matching grades and
+        attempts using their valid activity columns.
+        Files: classes/privacy/provider.php.
+20260929 MooTyper_1568bt - #337 Activity colour settings are emitted unescaped into a stylesheet
+    and into form attributes.
+    2026093001 Sanitize stored colours before CSS interpolation and HTML-escape colour form values
+        across activity pages and the settings form.
+        Files: lib.php, view.php, eedit.php, eins.php, exercises.php, gview.php, layouts.php,
+            owngrades.php, mod_setup.php.
+20260929 MooTyper_1553bt - #322 Grade submission endpoint accepts client-supplied
     scores for any activity from any logged-in user.
     2026093001 Grade and attempt endpoints now require activity access and sesskey validation,
         scope attempts to the current user and activity, validate exercise membership, reject
@@ -203,19 +225,56 @@ Moodle Versions
             js/typer(ETV7).js, js/typer(KRV7).js, js/typer(JPV7).js.
     2026093002 End-of-exercise duration now ends at the server-timestamped final sample,
         excluding time paused before the student clicks Continue.
-20260929 MooTyper_1554 - #323 Activity settings page authorises against one activity and
+20260929 MooTyper_1554bt - #323 Activity settings page authorises against one activity and
     writes to another.
     2026093001 Bind settings updates to the resolved activity instance, ignore conflicting
         request IDs, and require sesskey validation on Confirm.
         Files: mod_setup.php.
-20260929 MooTyper_1555 - #324 Attempt-tracking endpoint lets any logged-in user create and
+20260929 MooTyper_1555bt - #324 Attempt-tracking endpoint lets any logged-in user create and
     mutate other users' attempt records.
     2026093001 Scope attempt creation to the authorized activity and current user; require a
         sesskey and verify ownership, activity, and in-progress state before recording or
         finalizing attempts.
         Files: atchk.php, js/typer.js, js/typer(ETV7).js,
             js/typer(KRV7).js, js/typer(JPV7).js.
-20260929 MooTyper_1569 - Errors are no longer being registered in MooTyper Issue#134.
+20260929 MooTyper_1556bt - #325 Backup restore stores an unvalidated keyboard-layout name
+    that is later used to build filesystem paths.
+    2026093001 Reject unsafe layout names during restore and validate stored names before
+        keyboard file paths are built or layout files are deleted.
+        Files: backup/moodle2/restore_mootyper_stepslib.php, classes/local/keyboards.php,
+            klrem.php.
+20260929 MooTyper_1557bt - #326 CSV grade export releases every student's name and results
+    for any activity to any logged-in user.
+    2026093001 Require grade-view capability for the resolved activity and restrict exported
+        rows to the current group; build export metadata from the resolved activity records.
+        Files: csvexport.php.
+20260929 MooTyper_1558bt - #327 Exercise and lesson text is written into the typing page
+    without escaping, allowing script injection across courses.
+    2026093001 Encode typing/display strings as JSON-safe JavaScript literals and escape stored
+        lesson/exercise content in typing, editing, and exercise-list HTML output.
+        Files: view.php, exercises.php, eedit.php.
+20260929 MooTyper_1559bt - #328 Exercise editor accepts any exercise id site-wide and renames
+    the shared lesson.
+    2026093001 Authorize the resolved exercise through its lesson's edit policy and require
+        sesskey validation on saves.
+        Files: eedit.php.
+20260929 MooTyper_1560bt - #329 Grade deletion ownership check is gated on an attacker-controlled
+    request parameter.
+    2026093001 Require sesskey and grade-view capabilities; enforce grade ownership for users
+        without manage-grades capability regardless of the requested return mode.
+        Files: attrem.php, gview.php, owngrades.php,
+            tests/behat/behat_mod_mootyper.php, tests/behat/remove_grade.feature.
+20260929 MooTyper_1561bt - #330 Keyboard-layout deletion has no capability check and removes files
+    from the plugin directory.
+    2026093001 Restrict layout management and deletion to site configurators, require sesskey,
+        and safely encode layout names in deletion links while retaining path validation.
+        Files: layouts.php, klrem.php.
+20260929 MooTyper_1562bt - #331 Lesson and exercise deletion has no capability check, letting any
+    enrolled user destroy shared content and everyone's grades.
+    2026093001 Require aftersetup capability and sesskey, bind targets to the activity's lesson,
+        and reject cross-activity lesson/exercise deletion requests.
+        Files: lsnexrem.php, exercises.php.
+20260929 MooTyper_1569bt - Errors are no longer being registered in MooTyper Issue#134.
     2026092901 Fixed immediate error counting and color feedback across the shared,
         Amharic, and Korean typing engines, including Amharic sequence composition.
         Files: js/typer.js, js/typer(ETV7).js, js/typer(KRV7).js.

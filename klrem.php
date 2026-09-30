@@ -27,29 +27,38 @@
  */
 
 use mod_mootyper\event\layout_deleted;
+use mod_mootyper\local\keyboards;
 
 // Changed to this newer format 20190301.
 require(__DIR__ . '/../../config.php');
 
 global $DB;
-$id = optional_param('id', 0, PARAM_INT); // Course_module ID.
-$kb = optional_param('kb', '', PARAM_TEXT); // Name of the keyboard layout to delete.
+$id = required_param('id', PARAM_INT); // Course_module ID.
+$kb = required_param('kb', PARAM_TEXT); // Name of the keyboard layout to delete.
+$sesskey = required_param('sesskey', PARAM_ALPHANUM);
 
 $cm = get_coursemodule_from_id('mootyper', $id, 0, false, MUST_EXIST);
 $course = $DB->get_record('course', ['id' => $cm->course], '*', MUST_EXIST);
 
-require_login($course, true);
+require_login($course, true, $cm);
 $context = context_module::instance($cm->id);
+require_sesskey();
+/** @var context $systemcontext */
+$systemcontext = context_system::instance();
+require_capability('moodle/site:config', $systemcontext);
 // 20220126 If we have a layout name, run the delete code.
 if ($kb) {
     // 20220126 Search and retrieve the layout by name.
     $kbrecord = $DB->get_record('mootyper_layouts', ['name' => $kb], '*', MUST_EXIST);
+    if (!keyboards::is_valid_layout_name((string)$kbrecord->name)) {
+        throw new moodle_exception('invaliddata', 'error', '', null);
+    }
 
     // 20260411 Use plugin dirroot so deletion path is independent of runtime cwd.
     $pathtodir = $CFG->dirroot . '/mod/mootyper';
     // 20220126 Create an absolute pointer to the php and js files that are to be deleted.
-    $filepointer1 = $pathtodir . '/layouts/' . $kb . '.php';
-    $filepointer2 = $pathtodir . '/layouts/' . $kb . '.js';
+    $filepointer1 = $pathtodir . '/layouts/' . $kbrecord->name . '.php';
+    $filepointer2 = $pathtodir . '/layouts/' . $kbrecord->name . '.js';
 
     // 20220126 Delete physical layout files when present; missing files are allowed.
     if (file_exists($filepointer1) && !unlink($filepointer1)) {

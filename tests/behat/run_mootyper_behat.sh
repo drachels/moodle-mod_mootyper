@@ -7,6 +7,7 @@ cd "$ROOT_DIR"
 BEHAT_CFG_DEFAULT="/var/moodledata/behatmoodledatadev/behatrun/behat/behat.yml"
 BEHAT_CFG_IN="${BEHAT_CONFIG:-$BEHAT_CFG_DEFAULT}"
 BEHAT_CFG_PATCHED="/tmp/mootyper-behat-gecko.yml"
+PHP_BIN="${PHP_BIN:-php83}"
 
 if [[ ! -f "$BEHAT_CFG_IN" ]]; then
     echo "Behat config not found: $BEHAT_CFG_IN" >&2
@@ -30,4 +31,4 @@ if [[ $# -eq 0 ]]; then
     set -- mod/mootyper/tests/behat/continue_gate.feature
 fi
 
-"$ROOT_DIR/../vendor/bin/behat" --config "$BEHAT_CFG_PATCHED" "$@"
+"$PHP_BIN" "$ROOT_DIR/../vendor/bin/behat" --config "$BEHAT_CFG_PATCHED" "$@"

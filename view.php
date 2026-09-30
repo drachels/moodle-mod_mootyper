@@ -93,13 +93,13 @@ $mootyperoutput = $PAGE->get_renderer('mod_mootyper');
 echo $mootyperoutput->header($mootyper, $cm);
 
 // Get the color and text alignment configuration settings and use them in the MooTyper activity.
-$color1 = $mootyper->statsbgc;
-$color7 = $mootyper->keytoptextc;
-$color2 = $mootyper->keytopbgc;
-$color3 = $mootyper->keybdbgc;
-$color4 = $mootyper->cursorcolor;
-$color5 = $mootyper->textbgc;
-$color6 = $mootyper->texterrorcolor;
+$color1 = mootyper_clean_color((string)$mootyper->statsbgc);
+$color7 = mootyper_clean_color((string)$mootyper->keytoptextc);
+$color2 = mootyper_clean_color((string)$mootyper->keytopbgc);
+$color3 = mootyper_clean_color((string)$mootyper->keybdbgc);
+$color4 = mootyper_clean_color((string)$mootyper->cursorcolor);
+$color5 = mootyper_clean_color((string)$mootyper->textbgc);
+$color6 = mootyper_clean_color((string)$mootyper->texterrorcolor);
 $mistakessetting = $mootyper->countmistakes;
 
 $gettextalign = $mootyper->textalign;
@@ -113,6 +113,7 @@ foreach ($aligns as $akey => $aval) {
         $textalign = $aval;
     }
 }
+$textalign = s($textalign ?? 'left');
 // Apply colors and text alignment to current MooTyper.
 echo '<style>
     .keyboardback {
@@ -281,12 +282,13 @@ if ($mootyper->lesson != null) {
     // If we have an exercise ready to type, create a grade entry link to use, later when the page is posted.
     if (isset($texttoenter)) {
         // 20191130 Modified to pass data required by exercise_, exam_, and lesson_completed events.
-        $insertdir = $CFG->wwwroot
-                     . '/mod/mootyper/gcnext.php?cmid=' . $cm->id
-                     . '&lsnname=' . $lsnname->id
-                     . '&exercisename=' . $exercise->exercisename
-                     . '&mtmode=' . $mtmode
-                     . '&count=' . $count;
+        $insertdir = (new moodle_url('/mod/mootyper/gcnext.php', [
+            'cmid' => $cm->id,
+            'lsnname' => $lsnname->id,
+            'exercisename' => $exercise->exercisename,
+            'mtmode' => $mtmode,
+            'count' => $count,
+        ]))->out();
     }
 
     if (exam_already_done($mootyper, $USER->id) && $mtmode === '1') {
@@ -383,9 +385,9 @@ if ($mootyper->lesson != null) {
                 . get_string('practice', 'mootyper');
         }
         $tempstr = $tempstr . '&nbsp;&nbsp; '
-            . get_string('lsnname', 'mootyper') . ' = ' . $lsnname->lessonname
+            . get_string('lsnname', 'mootyper') . ' = ' . s($lsnname->lessonname)
             . '&nbsp;'
-            . get_string('exercise', 'mootyper', $exercise->exercisename) . $count;
+            . get_string('exercise', 'mootyper', s($exercise->exercisename)) . $count;
         $tempstr = $tempstr . '<br>'
             . get_string('timelimit', 'mootyper') . ' (' . $reqiredtimelimit . ':00)'
             . '&nbsp;'
@@ -693,8 +695,6 @@ if ($mootyper->lesson != null) {
 
 </div>
         <?php // phpcs:ignore
-        $texttoinit = '';
-        $displaytoinit = '';
         // Strip HTML tags and keep literal typing characters like < and > intact.
         $cleantext = str_replace(
             ['<p>', '</p>', '<br>', '<br/>', '<br />', '&nbsp;'],
@@ -780,54 +780,32 @@ if ($mootyper->lesson != null) {
             $displayclean = strip_tags($displayclean);
         }
 
-        for ($it = 0; $it < strlen($typingclean); $it++) {
-            if ($typingclean[$it] == "\n") {
-                $texttoinit .= '\n';
-            } else if ($typingclean[$it] == '"') {
-                $texttoinit .= '\"';
-            } else if ($typingclean[$it] == "\\") {
-                $texttoinit .= '\\';
-            } else {
-                $texttoinit .= $typingclean[$it];
-            }
-        }
-
-        for ($it = 0; $it < strlen($displayclean); $it++) {
-            if ($displayclean[$it] == "\n") {
-                $displaytoinit .= '\n';
-            } else if ($displayclean[$it] == '"') {
-                $displaytoinit .= '\"';
-            } else if ($displayclean[$it] == "\\") {
-                $displaytoinit .= '\\';
-            } else {
-                $displaytoinit .= $displayclean[$it];
-            }
-        }
+        $jsonflags = JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_INVALID_UTF8_SUBSTITUTE;
+        $texttoinit = json_encode($typingclean, $jsonflags);
+        $displaytoinit = json_encode($displayclean, $jsonflags);
+        $siteurl = json_encode($CFG->wwwroot, $jsonflags);
 
         // 20200418 Moved function to ..classes/local/results.php.
         $record = results::get_last_check($mootyper->id);
         if (is_null($record)) {
-            echo '<script type="text/javascript">inittexttoenter("' . $texttoinit . '", 0, 0, 0, 0, 0, "'
-                 . $CFG->wwwroot
-                 . '", ' . $mootyper->showkeyboard
-                 . ', ' . $mootyper->continuoustype
-                 . ', ' . $mootyper->countmistypedspaces
-                  . ', ' . $mootyper->countmistakes
-                  . ', "' . $displaytoinit . '"'
-                 . ');</script>';
+              echo '<script type="text/javascript">inittexttoenter(' . $texttoinit . ', 0, 0, 0, 0, 0, '
+                  . $siteurl . ', ' . (int)$mootyper->showkeyboard
+                  . ', ' . (int)$mootyper->continuoustype
+                  . ', ' . (int)$mootyper->countmistypedspaces
+                  . ', ' . (int)$mootyper->countmistakes
+                  . ', ' . $displaytoinit . ');</script>';
         } else {
-            echo '<script type="text/javascript">inittexttoenter("' . $texttoinit
-                 . '", 1, ' . $record->mistakes
-                 . ', ' . $record->hits
-                 . ', ' . $record->timetaken
-                 . ', ' . $record->attemptid
-                 . ', "' . $CFG->wwwroot
-                 . '", ' . $mootyper->showkeyboard
-                 . ', ' . $mootyper->continuoustype
-                 . ', ' . $mootyper->countmistypedspaces
-                  . ', ' . $mootyper->countmistakes
-                  . ', "' . $displaytoinit . '"'
-                 . ');</script>';
+              echo '<script type="text/javascript">inittexttoenter(' . $texttoinit
+                 . ', 1, ' . (int)$record->mistakes
+                 . ', ' . (int)$record->hits
+                 . ', ' . (int)$record->timetaken
+                 . ', ' . (int)$record->attemptid
+                  . ', ' . $siteurl
+                  . ', ' . (int)$mootyper->showkeyboard
+                  . ', ' . (int)$mootyper->continuoustype
+                  . ', ' . (int)$mootyper->countmistypedspaces
+                  . ', ' . (int)$mootyper->countmistakes
+                  . ', ' . $displaytoinit . ');</script>';
         }
     } else {
         echo get_string('endlesson', 'mootyper');

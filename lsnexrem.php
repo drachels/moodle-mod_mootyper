@@ -35,19 +35,31 @@ require(__DIR__ . '/../../config.php');
 
 global $DB;
 
-$id = optional_param('id', 0, PARAM_INT); // Course_module ID.
+$id = required_param('id', PARAM_INT); // Course_module ID.
 $cm = get_coursemodule_from_id('mootyper', $id, 0, false, MUST_EXIST);
 $course = $DB->get_record('course', ['id' => $cm->course], '*', MUST_EXIST);
+$mootyper = $DB->get_record('mootyper', ['id' => $cm->instance], '*', MUST_EXIST);
 // If re is set we remove an exercise.
 // If rl is set we remove a lesson and all its exercises.
-$exerciseid = optional_param('re', '', PARAM_TEXT);
-$lessonid = optional_param('rl', '', PARAM_TEXT);
+$exerciseid = optional_param('re', 0, PARAM_INT);
+$lessonid = optional_param('rl', 0, PARAM_INT);
 // Added cmid so can exit back to MooTyper activity we came from.
 $cmid = optional_param('cmid', '0', PARAM_INT); // Course Module ID.
 
 require_login($course, true, $cm);
+require_sesskey();
 
+/** @var context $context */
 $context = context_module::instance($cm->id);
+if (!($context instanceof context_module)) {
+    throw new moodle_exception('invalidaccess', 'mootyper', '', null);
+}
+require_capability('mod/mootyper:aftersetup', $context);
+$webdir = $CFG->wwwroot . '/mod/mootyper/exercises.php?id=' . $id;
+
+if (!$lessonid && !$exerciseid) {
+    throw new moodle_exception('invalidaccess', 'mootyper', '', null);
+}
 
 // 0 Find the lesson being used.
 // 1 Find all the MooTypers using this lessons ID first.
@@ -68,6 +80,9 @@ $exes = lessons::get_exercises_by_lesson($lessonpo);
 // 20241231 Block of code to delete a lesson and all of the exercises in it.
 if ($lessonid) {
     $lessonid = (int)$lessonid;
+    if ((int)$mootyper->lesson !== $lessonid) {
+        throw new moodle_exception('invalidaccess', 'mootyper', '', null);
+    }
     $lessonrecord = $DB->get_record('mootyper_lessons', ['id' => $lessonid], '*', IGNORE_MISSING);
 
     // Handle stale repeat requests where the lesson has already been deleted.
@@ -96,7 +111,7 @@ if ($lessonid) {
 
     // Protect non-admin users from breaking multiple activities at once.
     if (($mootyperscount > 1) && !is_siteadmin()) {
-        throw new moodle_exception(get_string('mootyperlessonerror', 'mootyper'));
+        throw new moodle_exception('mootyperlessonerror', 'mootyper', '', null);
     }
 
     // If any activity points to this lesson, re-point to another lesson first.
@@ -107,7 +122,7 @@ if ($lessonid) {
                ORDER BY LOWER(lessonname) ASC";
         $fallbacklesson = $DB->get_record_sql($sql, ['lessonid' => $lessonid], IGNORE_MULTIPLE);
         if (!$fallbacklesson) {
-            throw new moodle_exception(get_string('mootyperlessonerror', 'mootyper'));
+            throw new moodle_exception('mootyperlessonerror', 'mootyper', '', null);
         }
 
         foreach ($mootypers as $mootyper) {
@@ -116,10 +131,26 @@ if ($lessonid) {
         }
     }
 
-    // Delete the physical lesson file only after validations pass.
-    $lessonfilepath = $CFG->dirroot . '/mod/mootyper/lessons/' . $lessonrecord->lessonname . '.txt';
-    if (is_file($lessonfilepath) && !unlink($lessonfilepath)) {
-        throw new moodle_exception('errorcannotdeletefile', 'moodle', '', $lessonfilepath);
+    // Delete the physical lesson file only when the stored name is a safe filename in the lesson directory.
+    $lessondir = realpath($CFG->dirroot . '/mod/mootyper/lessons');
+    $lessonname = (string)$lessonrecord->lessonname;
+    if (
+        $lessondir !== false
+        && $lessonname !== ''
+        && basename($lessonname) === $lessonname
+        && strpbrk($lessonname, "/\\") === false
+        && preg_match('/[\x00-\x1F\x7F]/', $lessonname) === 0
+    ) {
+        $lessonfilepath = $lessondir . DIRECTORY_SEPARATOR . $lessonname . '.txt';
+        $resolvedlessonfilepath = realpath($lessonfilepath);
+        if (
+            $resolvedlessonfilepath !== false
+            && dirname($resolvedlessonfilepath) === $lessondir
+            && is_file($resolvedlessonfilepath)
+            && !unlink($resolvedlessonfilepath)
+        ) {
+            throw new moodle_exception('errorcannotdeletefile', 'moodle', '', $resolvedlessonfilepath);
+        }
     }
 
     $transaction = $DB->start_delegated_transaction();
@@ -189,6 +220,11 @@ if ($lessonid) {
 
 // 20250828 Below here works and Will delete the selected exercise.
 if ($exerciseid) {
+    $exerciseid = (int)$exerciseid;
+    $targetexercise = $DB->get_record('mootyper_exercises', ['id' => $exerciseid], 'id,lesson', MUST_EXIST);
+    if ((int)$targetexercise->lesson !== (int)$mootyper->lesson) {
+        throw new moodle_exception('invalidaccess', 'mootyper', '', null);
+    }
     // 20241229 Get all the mootyper_grades that have this exercise listed no matter if it is passing or not.
     $orphanedgrades = $DB->get_records('mootyper_grades', ['exercise' => $exerciseid]);
 

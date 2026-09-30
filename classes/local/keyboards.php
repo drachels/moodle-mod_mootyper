@@ -34,6 +34,19 @@ defined('MOODLE_INTERNAL') || die(); // phpcs:ignore
  */
 class keyboards {
     /**
+     * Check that a layout name is safe to use as a filename fragment.
+     *
+     * @param string $layoutname
+     * @return bool
+     */
+    public static function is_valid_layout_name(string $layoutname): bool {
+        if ($layoutname === '' || $layoutname !== trim($layoutname) || $layoutname === '.' || $layoutname === '..') {
+            return false;
+        }
+        return preg_match('/[\/\\\\:\x00-\x1F\x7F]/', $layoutname) === 0;
+    }
+
+    /**
      * Canonicalize layout names that have historical filename variants.
      *
      * @param string $layoutname
@@ -119,6 +132,9 @@ class keyboards {
         // Try to find a layout with existing files.
         foreach ($layouts as $layout) {
             $normalizedname = self::normalize_layout_name($layout->name);
+            if (!self::is_valid_layout_name($normalizedname)) {
+                continue;
+            }
             $phpfile = $pathtodir . '/' . $normalizedname . '.php';
             $jsfile = $pathtodir . '/' . $normalizedname . '.js';
             if (file_exists($phpfile) && file_exists($jsfile)) {
@@ -127,10 +143,6 @@ class keyboards {
             }
         }
 
-        // No complete layout found; return first one and hope it has files.
-        if ($layouts) {
-            return reset($layouts);
-        }
         return false;
     }
 
@@ -145,6 +157,9 @@ class keyboards {
 
         if ($dbrec) {
             $dbrec->name = self::normalize_layout_name($dbrec->name);
+            if (!self::is_valid_layout_name($dbrec->name)) {
+                $dbrec = false;
+            }
         }
 
         // 20260413 If layout record not found or file is missing, use fallback to prevent crash
@@ -177,6 +192,9 @@ class keyboards {
 
         if ($dbrec) {
             $dbrec->name = self::normalize_layout_name($dbrec->name);
+            if (!self::is_valid_layout_name($dbrec->name)) {
+                $dbrec = false;
+            }
         }
 
         // 20260413 If layout record not found or file is missing, use fallback to prevent crash

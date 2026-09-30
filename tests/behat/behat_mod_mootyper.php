@@ -431,6 +431,60 @@ class behat_mod_mootyper extends behat_base {
     }
 
     /**
+     * Seed a latest grade for a named user in the current activity.
+     *
+     * @Given /^I seed a completed mootyper grade for user "([^"]+)"$/
+     * @param string $username
+     */
+    public function iseedacompletedmootypergradeforuser(string $username): void {
+        global $DB;
+
+        $mootyperid = (int)$this->getSession()->evaluateScript(
+            "parseInt((document.querySelector('input[name=\"rpSityperId\"]') || {}).value || '0', 10);"
+        );
+        $mootyper = $DB->get_record('mootyper', ['id' => $mootyperid], '*', MUST_EXIST);
+        $user = $DB->get_record('user', ['username' => $username], 'id', MUST_EXIST);
+        $exercise = $DB->get_record_sql(
+            "SELECT id
+               FROM {mootyper_exercises}
+              WHERE lesson = :lesson
+           ORDER BY snumber ASC, id ASC",
+            ['lesson' => $mootyper->lesson],
+            IGNORE_MULTIPLE
+        );
+        if (!$exercise) {
+            throw new \Exception('Unable to resolve an exercise for the current MooTyper lesson.');
+        }
+        $attempt = (object)[
+            'mootyperid' => $mootyperid,
+            'userid' => $user->id,
+            'timetaken' => time() - 60,
+            'inprogress' => 0,
+            'suspicion' => 0,
+        ];
+        $attemptid = $DB->insert_record('mootyper_attempts', $attempt, true);
+        $grade = (object)[
+            'mootyper' => $mootyperid,
+            'userid' => $user->id,
+            'grade' => 100,
+            'mistakes' => 0,
+            'timeinseconds' => 1,
+            'hitsperminute' => 60,
+            'fullhits' => 1,
+            'precisionfield' => 100,
+            'timetaken' => time() - 60,
+            'exercise' => $exercise->id,
+            'pass' => 1,
+            'attemptid' => $attemptid,
+            'wpm' => 12,
+            'mistakedetails' => get_string('nomistakes', 'mootyper'),
+        ];
+        $this->seededmootyperid = $mootyperid;
+        $this->seededuserid = (int)$user->id;
+        $this->seededoldergradeid = (int)$DB->insert_record('mootyper_grades', $grade, true);
+    }
+
+    /**
      * Request deletion of the older seeded grade via view-all mode URL.
      *
      * @When /^I request deletion of the older seeded mootyper grade in view-all mode$/
@@ -444,9 +498,11 @@ class behat_mod_mootyper extends behat_base {
 
         $mootyper = $DB->get_record('mootyper', ['id' => $this->seededmootyperid], '*', MUST_EXIST);
         $cm = get_coursemodule_from_instance('mootyper', $mootyper->id, $mootyper->course, false, MUST_EXIST);
+        $sesskey = $this->getSession()->evaluateScript('M.cfg.sesskey');
         $url = $CFG->wwwroot . '/mod/mootyper/attrem.php?c_id=' . (int)$cm->id
             . '&m_id=' . (int)$mootyper->id
-            . '&g=' . (int)$this->seededoldergradeid;
+            . '&g=' . (int)$this->seededoldergradeid
+            . '&sesskey=' . rawurlencode((string)$sesskey);
 
         $this->getSession()->visit($url);
     }
@@ -476,6 +532,19 @@ class behat_mod_mootyper extends behat_base {
                 . ' newer=' . (int)$newer
                 . ' count=' . $count
             );
+        }
+    }
+
+    /**
+     * Assert a seeded peer grade remains after an unauthorized deletion attempt.
+     *
+     * @Then /^the seeded peer mootyper grade should still exist$/
+     */
+    public function theseededpeermootypergradeshouldstillexist(): void {
+        global $DB;
+
+        if (empty($this->seededoldergradeid) || !$DB->record_exists('mootyper_grades', ['id' => $this->seededoldergradeid])) {
+            throw new \Exception('The peer grade was deleted despite the ownership guard.');
         }
     }
 

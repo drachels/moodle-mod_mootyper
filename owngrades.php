@@ -73,7 +73,7 @@ if (!has_capability('mod/mootyper:viewmygrades', context_module::instance($cm->i
     redirect('view.php?id=' . $id, get_string('invalidaccess', 'mootyper'));
 } else {
     // The following retrieves keybdbgc for setting this background.
-    $color3 = $mootyper->keybdbgc;
+    $color3 = mootyper_clean_color((string)$mootyper->keybdbgc);
 
     $PAGE->set_url('/mod/mootyper/owngrades.php', ['id' => $cm->id]);
     $PAGE->set_title(format_string($mootyper->name));
@@ -274,6 +274,7 @@ if (!has_capability('mod/mootyper:viewmygrades', context_module::instance($cm->i
                     . '&m_id=' . optional_param('n', 0, PARAM_INT)
                     . '&mtmode=' . $mtmode
                     . '&returnanchor=grades-table'
+                    . '&sesskey=' . sesskey()
                     . '&g=' . $gr->id;
                 $deletemsg = get_string('deletegradeconfirm', 'mootyper')
                     . $gr->firstname . ' '
@@ -287,6 +288,7 @@ if (!has_capability('mod/mootyper:viewmygrades', context_module::instance($cm->i
                     . optional_param('id', 0, PARAM_INT)
                     . '&m_id=' . optional_param('n', 0, PARAM_INT)
                     . '&returnanchor=grades-table'
+                    . '&sesskey=' . sesskey()
                     . '&g=' . $gr->id;
                 $deletemsg = get_string('deletegradeconfirm', 'mootyper')
                     . $gr->firstname . ' '

@@ -90,6 +90,16 @@ function mootyper_supports($feature) {
 }
 
 /**
+ * Return a stored colour only when it is a CSS hexadecimal colour.
+ *
+ * @param string $color Stored colour value.
+ * @return string Safe colour value or an empty string.
+ */
+function mootyper_clean_color(string $color): string {
+    return preg_match('/\A#[0-9a-fA-F]{3,8}\z/D', $color) === 1 ? $color : '';
+}
+
+/**
  * Get users for this MooTyper.
  *
  * @param int $mootyperid

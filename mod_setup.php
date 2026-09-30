@@ -533,31 +533,31 @@ foreach ($layouts as $lkey => $lval) {
 
 // Add input box for statistics background color.
 $htmlout .= '</td></tr><tr><td>' . get_string('statsbgc', 'mootyper') . '</td><td>';
-$htmlout .= '<input value="' . $statscolorpo . '" style="width: 135px;" type="text" name="statsbgc"></td></tr>';
+$htmlout .= '<input value="' . s($statscolorpo) . '" style="width: 135px;" type="text" name="statsbgc"></td></tr>';
 
 // Add input box for normal keytoptextc color.
 $htmlout .= '</td></tr><tr><td>' . get_string('keytoptextc', 'mootyper') . '</td><td>';
-$htmlout .= '<input value="' . $keytoptextcpo . '" style="width: 135px;" type="text" name="keytoptextc"></td></tr>';
+$htmlout .= '<input value="' . s($keytoptextcpo) . '" style="width: 135px;" type="text" name="keytoptextc"></td></tr>';
 
 // Add input box for normal keytop color.
 $htmlout .= '</td></tr><tr><td>' . get_string('keytopbgc', 'mootyper') . '</td><td>';
-$htmlout .= '<input value="' . $keytopcolorpo . '" style="width: 135px;" type="text" name="keytopbgc"></td></tr>';
+$htmlout .= '<input value="' . s($keytopcolorpo) . '" style="width: 135px;" type="text" name="keytopbgc"></td></tr>';
 
 // Add input box for keyboard background color.
 $htmlout .= '</td></tr><tr><td>' . get_string('keybdbgc', 'mootyper') . '</td><td>';
-$htmlout .= '<input value="' . $backgroundcolorpo . '" style="width: 135px;" type="text" name="keybdbgc"></td></tr>';
+$htmlout .= '<input value="' . s($backgroundcolorpo) . '" style="width: 135px;" type="text" name="keybdbgc"></td></tr>';
 
 // Add input box for cursorcolor.
 $htmlout .= '</td></tr><tr><td>' . get_string('cursorcolor', 'mootyper') . '</td><td>';
-$htmlout .= '<input value="' . $cursorcolorpo . '" style="width: 135px;" type="text" name="cursorcolor"></td></tr>';
+$htmlout .= '<input value="' . s($cursorcolorpo) . '" style="width: 135px;" type="text" name="cursorcolor"></td></tr>';
 
 // Add input box for textbgc.
 $htmlout .= '</td></tr><tr><td>' . get_string('textbgc', 'mootyper') . '</td><td>';
-$htmlout .= '<input value="' . $textbgcpo . '" style="width: 135px;" type="text" name="textbgc"></td></tr>';
+$htmlout .= '<input value="' . s($textbgcpo) . '" style="width: 135px;" type="text" name="textbgc"></td></tr>';
 
 // Add input box for texterrorcolor.
 $htmlout .= '</td></tr><tr><td>' . get_string('texterrorcolor', 'mootyper') . '</td><td>';
-$htmlout .= '<input value="' . $texterrorcolorpo . '" style="width: 135px;" type="text" name="texterrorcolor"></td></tr>';
+$htmlout .= '<input value="' . s($texterrorcolorpo) . '" style="width: 135px;" type="text" name="texterrorcolor"></td></tr>';
 
 // Finish adding html to our page.
 $htmlout .= '</select>';

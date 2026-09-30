@@ -25,6 +25,11 @@
 define('CLI_SCRIPT', true);
 // phpcs:disable moodle.Files.MoodleInternal
 
+if (PHP_SAPI !== 'cli') {
+    http_response_code(403);
+    exit(1);
+}
+
 /**
  * Get CLI --key=value argument.
  *
@@ -53,18 +58,14 @@ function fail(string $message, int $code = 1): void {
     exit($code);
 }
 
-$moodleroot = arg_value($argv, 'moodleroot');
 $courseid = (int)(arg_value($argv, 'courseid', '0'));
 $apply = (int)(arg_value($argv, 'apply', '0')) === 1;
 
-if (!$moodleroot || !is_file($moodleroot . '/config.php')) {
-    fail('Missing/invalid --moodleroot');
-}
 if ($courseid <= 0) {
     fail('Missing/invalid --courseid');
 }
 
-require($moodleroot . '/config.php');
+require(__DIR__ . '/../../../config.php');
 require_once($CFG->dirroot . '/course/lib.php');
 
 global $DB, $USER;

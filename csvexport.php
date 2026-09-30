@@ -34,30 +34,30 @@ use mod_mootyper\event\export_viewallgrades_to_csv;
 require(__DIR__ . '/../../config.php');
 require_once(__DIR__ . '/lib.php');
 
-require_login(0, true, null, false);
+global $DB;
 
 /**
  * The function for exporting results data from this MooTyper.
  *
- * @param array $array All the grade data for this MooTyper
+ * @param array $array All the grade data for this MooTyper.
+ * @param stdClass $course The course containing the activity.
+ * @param cm_info $cm The course module for the activity.
+ * @param stdClass $mootyper The resolved MooTyper activity.
+ * @param string $lessonname The resolved lesson name.
  * @param string $filename
  * @param string $delimiter
  * @return array, false if none.
  */
-function array_to_csv_download($array, $filename = "export.csv", $delimiter = ";") {
-    $mootyperid = optional_param('mootyperid', 0, PARAM_INT); // Get the id for this MooTyper.
-    $id = optional_param('id', 0, PARAM_INT); // Get the course module id for this MooTyper.
-    $coursename = optional_param('coursename', '', PARAM_RAW); // Get the course name for this MooTyper.
-    $mtname = optional_param('mtname', '', PARAM_TEXT); // Get the activity name for this MooTyper.
-    $misexam = optional_param('isexam', 0, PARAM_INT); // Get the mode for this MooTyper.
-    $lsnname = optional_param('lsnname', '', PARAM_RAW); // Get the lesson name for this MooTyper.
-    $timelimit = optional_param('timelimit', 0, PARAM_INT); // Get the timelimit for this MooTyper.
-    $requiredgoal = optional_param('requiredgoal', 0, PARAM_INT); // Get the required precision goal for this MooTyper.
-    $requiredwpm = optional_param('requiredwpm', 0, PARAM_INT); // Get the required precision goal for this MooTyper.
-    $scale = optional_param('scale', 0, PARAM_INT); // Get the scale for this MooTyper.
-
-    $cm = get_coursemodule_from_id('mootyper', $id, 0, false, MUST_EXIST);
+function array_to_csv_download($array, $course, $cm, $mootyper, $lessonname, $filename = "export.csv", $delimiter = ";") {
+    $id = $cm->id;
+    $coursename = get_string('course') . " = " . format_string($course->fullname);
+    $mtname = get_string('activity') . " = " . format_string($mootyper->name);
+    $misexam = $mootyper->isexam;
     $context = context_module::instance($cm->id);
+    $timelimit = $mootyper->timelimit;
+    $requiredgoal = $mootyper->requiredgoal;
+    $requiredwpm = $mootyper->requiredwpm;
+    $scale = $mootyper->scale;
 
     // Start building a row 1 entry of the course name, activity name, mode, lesson name, required precision, and required WPM.
     $coursename = get_string('course') . " = " . $coursename;
@@ -79,10 +79,10 @@ function array_to_csv_download($array, $filename = "export.csv", $delimiter = ";
     }
 
     // Create a spreadsheet csv filename based on the lesson name.
-    $filename = get_string('flesson', 'mootyper') . "_" . $lsnname . '_' . gmdate("Ymd_Hi") . 'GMT.csv';
+    $filename = get_string('flesson', 'mootyper') . "_" . $lessonname . '_' . gmdate("Ymd_Hi") . 'GMT.csv';
 
     // Get the lesson name, required precision, and required WPM for the csv spreadsheet row 1 entry.
-    $lsnname = get_string('flesson', 'mootyper') . " = " . $lsnname;
+    $lsnname = get_string('flesson', 'mootyper') . " = " . $lessonname;
     $timelimit = get_string('timelimit', 'mootyper') . " = " . $timelimit . ":00 " . get_string('minutes');
     $requiredgoal = get_string('requiredgoal', 'mootyper') . ' = ' . $requiredgoal . '%';
     $requiredwpm = get_string('requiredwpm', 'mootyper') . ' = ' . $requiredwpm;
@@ -151,11 +151,40 @@ function array_to_csv_download($array, $filename = "export.csv", $delimiter = ";
     fclose($f);
 }
 
-$mid = optional_param('mootyperid', 0, PARAM_INT);
+$id = required_param('id', PARAM_INT); // Course module ID.
+$cm = get_coursemodule_from_id('mootyper', $id, 0, false, MUST_EXIST);
+$course = $DB->get_record('course', ['id' => $cm->course], '*', MUST_EXIST);
+$mootyper = $DB->get_record('mootyper', ['id' => $cm->instance], '*', MUST_EXIST);
+$lesson = $DB->get_record('mootyper_lessons', ['id' => $mootyper->lesson], '*', MUST_EXIST);
+
+require_login($course, true, $cm);
+/** @var context $context */
+$context = context_module::instance($cm->id);
+if (!($context instanceof context_module)) {
+    throw new moodle_exception('invalidaccess', 'mootyper', '', null);
+}
+require_capability('mod/mootyper:viewgrades', $context);
+
+// Match the grade page's current group so CSV export cannot bypass group mode.
+$currentgroup = groups_get_activity_group($cm, true);
+
 // Fourth item determines sort order of the data.
 // 2 is lastname. 10 is exercise name, ($mid, 0, 0, 10, 0).
 // The function get_typer_grades_adv needs further work on sorting.
-$grds = get_typer_grades_adv($mid, 0, 0, 2, 0);
+$grds = get_typer_grades_adv($mootyper->id, 0, 0, 2, 0);
+if ($grds === false) {
+    $grds = [];
+}
+
+if ($currentgroup) {
+    $groupgrades = [];
+    foreach ($grds as $grade) {
+        if (groups_is_member($currentgroup, $grade->u_id)) {
+            $groupgrades[] = $grade;
+        }
+    }
+    $grds = $groupgrades;
+}
 
 // Add suspicion mark to first name for each suspicious entry.
 foreach ($grds as $gr) {
@@ -164,4 +193,4 @@ foreach ($grds as $gr) {
     }
 }
 
-array_to_csv_download($grds, get_string('gradesfilename', 'mootyper'));
+array_to_csv_download($grds, $course, $cm, $mootyper, $lesson->lessonname, get_string('gradesfilename', 'mootyper'));

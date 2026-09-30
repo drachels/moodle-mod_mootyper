@@ -192,18 +192,28 @@ class lessons {
      * Check to see if user is enrolled in current course.
      * @param int $usr
      * @param int $crs
-     * @return string
+     * @return int
      */
     public static function is_user_enrolled($usr, $crs) {
-        global $DB, $CFG;
+        global $DB;
 
-        $params = [];
-        $params[] = $usr;
-        $sql2 = "SELECT * FROM " . $CFG->prefix . "user_enrolments
-                 WHERE userid = ?";
-        $enrolls = $DB->get_records_sql($sql2, $params);
-        $rt = count($enrolls) > 0 ? 1 : 0;
+        $now = time();
+        $params = [
+            'userid' => (int)$usr,
+            'courseid' => (int)$crs,
+            'timestart' => $now,
+            'timeend' => $now,
+        ];
+        $sql = "SELECT 1
+                  FROM {user_enrolments} ue
+                  JOIN {enrol} e ON e.id = ue.enrolid
+                 WHERE ue.userid = :userid
+                   AND e.courseid = :courseid
+                   AND ue.status = 0
+                   AND e.status = 0
+                   AND (ue.timestart = 0 OR ue.timestart <= :timestart)
+                   AND (ue.timeend = 0 OR ue.timeend > :timeend)";
 
-        return $rt;
+        return $DB->record_exists_sql($sql, $params) ? 1 : 0;
     }
 }

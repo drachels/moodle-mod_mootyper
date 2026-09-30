@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * This file defines the Telugu(V4.1)keyboard layout.
+ * This file defines the Telugu(TEV5) keyboard layout.
  *
  * @package    mod_mootyper
  * @copyright  2012 Jaka Luthar (jaka.luthar@gmail.com)
@@ -31,7 +31,7 @@
 echo (isset($displaynone) && ($displaynone == true)) ? 'display:none;' : '';
 ?>
 ">
-<div id="keyboard" class="keyboardback">Telugu(V4) Keyboard Layout<br>
+<div id="keyboard" class="keyboardback">Telugu(TEV5) Keyboard Layout<br>
     <section>
         <div class="mtrow" style='float: left; margin-left:5px; font-size: 15px !important; line-height: 15px'>
             <div id="jkeybackquote" class="normal" style="text-align:left;">`&nbsp;&nbsp;&nbsp;&nbsp;ఒ

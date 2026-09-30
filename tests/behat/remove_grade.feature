@@ -1,4 +1,4 @@
-@mod @mod_mootyper
+@mod @mod_mootyper @javascript
 Feature: Teacher can remove mootyper grades
   In order to remove mootyper grades
   As a teacher
@@ -15,16 +15,15 @@ Feature: Teacher can remove mootyper grades
       | user | course | role |
       | teacher1 | C1 | editingteacher |
     And I log in as "teacher1"
-    And I follow "Course 1"
-    And I turn editing mode on
+    And I am on "Course 1" course homepage with editing mode on
 
   Scenario: A teacher creates a mootyper activity
     # Teacher 1 adds mootyper activity.
-    Given I add a "mootyper" to section "1" and I fill the form with:
+    Given I add a "mootyper" activity to course "Course 1" section "1" and I fill the form with:
       | Name | mootyper name |
       | Description | A mootyper for testing |
-    And I follow "mootyper name"
-    And I should see "Setup"
+    And I am on the "mootyper name" "mootyper activity" page
+    And I should see "mootyper name"
     Then I log out
 
   Scenario: Non-latest grade delete is blocked in view all grades
@@ -34,11 +33,11 @@ Feature: Teacher can remove mootyper grades
     And the following "course enrolments" exist:
       | user | course | role |
       | student1 | C1 | student |
-    And I add a "mootyper" to section "1" and I fill the form with:
+    And I add a "mootyper" activity to course "Course 1" section "1" and I fill the form with:
       | Name | mootyper guard test |
       | Description | Guard regression test |
-    And I follow "mootyper guard test"
-    And I should see "Setup"
+    And I am on the "mootyper guard test" "mootyper activity" page
+    And I should see "mootyper guard test"
     And I log out
     And I log in as "student1"
     And I am on the "mootyper guard test" "mootyper activity" page
@@ -49,3 +48,24 @@ Feature: Teacher can remove mootyper grades
     When I request deletion of the older seeded mootyper grade in view-all mode
     Then I should see "Delete blocked. You may delete only the latest completed exercise result for that user in this lesson."
     And the seeded mootyper grades should both still exist
+
+  Scenario: Student cannot delete a peer grade by changing the return mode
+    Given the following "users" exist:
+      | username | firstname | lastname | email |
+      | student1 | Student | 1 | student1@example.com |
+      | student2 | Student | 2 | student2@example.com |
+    And the following "course enrolments" exist:
+      | user | course | role |
+      | student1 | C1 | student |
+      | student2 | C1 | student |
+    And I add a "mootyper" activity to course "Course 1" section "1" and I fill the form with:
+      | Name | mootyper ownership test |
+      | Description | Ownership regression test |
+    And I am on the "mootyper ownership test" "mootyper activity" page
+    And I should see "mootyper ownership test"
+    And I log out
+    And I log in as "student1"
+    And I am on the "mootyper ownership test" "mootyper activity" page
+    And I seed a completed mootyper grade for user "student2"
+    When I request deletion of the older seeded mootyper grade in view-all mode
+    Then the seeded peer mootyper grade should still exist

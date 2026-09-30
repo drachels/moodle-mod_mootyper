@@ -1,5 +1,5 @@
 /**
- * @fileOverview Telugu(V4.1) keyboard driver.
+ * @fileOverview Thai(THV5) keyboard driver.
  * @author <a href="mailto:drachels@drachels.com">AL Rachels</a>
  * @version 4.1
  * @since 02/18/2018
@@ -40,13 +40,22 @@ function keyboardElement(ltr) {
     this.chr = ltr.toLowerCase();
     this.alt = false;
     // Phpcs:ignore
-    if (ltr.match(/[ఒఔ()ఃఋఔఐఆఈఊభఙఘధఝఢఞఓఏఅఇఉఫఱఖథఛఠఎఁణళశష]/)) {
-        this.shift = true;
-    } else {
-        this.shift = false;
-    }
-    if (ltr.match(/[౧౨౩౪౫౬౭౮౯౦ౄ]/)) {
-        this.alt = true;
+    this.shift = ltr.match(/[ู฿ํ๊็ฺ๋์%+๑๒๓๔๕๖๗๘๙๐"ฎฑธณฯญฐ,ฅฤฆฏโฌษศซ.()ฉฮ?ฒฬฦ]/) !== null;
+    this.shiftright = false;
+    this.shiftleft = false;
+    if (this.shift) {
+        const keyid = getKeyID(this.chr);
+        const leftsidekeys = [
+            'jkeybackquote', 'jkey1', 'jkey2', 'jkey3', 'jkey4', 'jkey5',
+            'jkeyq', 'jkeyw', 'jkeye', 'jkeyr', 'jkeyt',
+            'jkeya', 'jkeys', 'jkeyd', 'jkeyf', 'jkeyg',
+            'jkeyz', 'jkeyx', 'jkeyc'
+        ];
+        if (leftsidekeys.includes(keyid)) {
+            this.shiftright = true;
+        } else {
+            this.shiftleft = true;
+        }
     }
 
     this.turnOn = function() {
@@ -60,18 +69,20 @@ function keyboardElement(ltr) {
         if (this.chr === '\n' || this.chr === '\r\n' || this.chr === '\n\r' || this.chr === '\r') {
             document.getElementById('jkeyenter').className = "next4";
         }
-        if (this.shift) {
-            document.getElementById('jkeyshiftd').className = "next4";
+        if (this.shiftright) {
+            document.getElementById('jkeyshiftr').className = "next4";
+        }
+        if (this.shiftleft) {
             document.getElementById('jkeyshiftl').className = "next4";
         }
         if (this.alt) {
-            document.getElementById('jkeyaltgr').className = "next2";
+            document.getElementById('jkeyaltgr').className = "nextSpace";
         }
     };
     this.turnOff = function() {
         if (isLetter(this.chr)) {
         // Phpcs:ignore
-            if (this.chr.match(/[ోే్ిరకతచ]/i)) {
+            if (this.chr.match(/[่้็๋ฟหกดเาสวฤฆฏโฌษศซ]/i)) {
                 document.getElementById(getKeyID(this.chr)).className = "finger" + thenFinger(this.chr.toLowerCase());
             } else {
                 document.getElementById(getKeyID(this.chr)).className = "normal";
@@ -82,8 +93,10 @@ function keyboardElement(ltr) {
         if (this.chr === '\n' || this.chr === '\r\n' || this.chr === '\n\r' || this.chr === '\r') {
             document.getElementById('jkeyenter').classname = "normal";
         }
-        if (this.shift) {
-            document.getElementById('jkeyshiftd').className = "normal";
+        if (this.shiftright) {
+            document.getElementById('jkeyshiftr').className = "normal";
+        }
+        if (this.shiftleft) {
             document.getElementById('jkeyshiftl').className = "normal";
         }
         if (this.alt) {
@@ -101,17 +114,16 @@ function thenFinger(tCrka) {
     if (tCrka === ' ') {
         return 5; // Highlight the spacebar.
     // phpcs:ignore
-    // } else if (tCrka.match(/[ొఒ1౧ౌఔోఓెఎ0)౦-ఃృఋౄజఝౙచఛౘయ]/i)) {
-    } else if (tCrka.match(/[ొఒ1౧ౌఔఓెోఎ0)౦జఝడఢఞ\-ఃృఋౄయచఛటఠ]/i)) {
+    } else if (tCrka.match(/[_%ๅ+ๅ๐ๆฟฤผ(จ๗ยญวซฝฦข๘บฐง.ช๙ล,ฃฅ]/i)) {
         return 4; // Highlight the correct key above in red.
     // phpcs:ignore
-    } else if (tCrka.match(/[2౨ైఐేఏంఁ9(౯దధతథ.]/i)) {
+    } else if (tCrka.match(/[/๑ไ"หฆป)ต๖นฯสศใฬ]/i)) {
         return 3; // Highlight the correct key above in green.
     // phpcs:ignore
-    } else if (tCrka.match(/[3౩ాఆ్అమణ8౮గఘకఖ,ష]/i)) {
+    } else if (tCrka.match(/[-๒ำฎกฏแฉค๕รณาษมฒ]/i)) {
         return 2; // Highlight the correct key above in yellow.
     // phpcs:ignore
-    } else if (tCrka.match(/[4౪ీఈిఇనన5౫ూఊుఉవ6౬బభపఫలళ7౭హఙరఱసశ]/i)) {
+    } else if (tCrka.match(/[ฺุึัี้่ิืูํ้็ื์฿ี๊่๋ท?ภ๓พฑดโอฮถ๔ะธเฌ]/i)) {
         return 1; // Highlight the correct key above in blue.
     } else {
         return 6; // Do not change any highlight.
@@ -128,97 +140,99 @@ function getKeyID(tCrka) {
         return "jkeyspace";
     } else if (tCrka === '\n') {
         return "jkeyenter";
-    } else if (tCrka === 'ొ' || tCrka === 'ఒ') {
+    } else if (tCrka === '_' || tCrka === '%') {
         return "jkeybackquote";
-    } else if (tCrka === '1' || tCrka === '౧') {
+    } else if (tCrka === 'ๅ' || tCrka === '+') {
         return "jkey1";
-    } else if (tCrka === '2' || tCrka === '౨') {
+    } else if (tCrka === '/' || tCrka === '๑') {
         return "jkey2";
-    } else if (tCrka === '3' || tCrka === '౩') {
+    } else if (tCrka === '-' || tCrka === '๒') {
         return "jkey3";
-    } else if (tCrka === '4' || tCrka === '౪') {
+    } else if (tCrka === 'ภ' || tCrka === '๓') {
         return "jkey4";
-    } else if (tCrka === '5' || tCrka === '౫') {
+    } else if (tCrka === 'ถ' || tCrka === '๔') {
         return "jkey5";
-    } else if (tCrka === '6' || tCrka === '౬') {
+    } else if (tCrka === 'ุ' || tCrka === 'ู') {
         return "jkey6";
-    } else if (tCrka === '7' || tCrka === '౭') {
+    } else if (tCrka === 'ึ' || tCrka === '฿') {
         return "jkey7";
-    } else if (tCrka === '8' || tCrka === '౮') {
+    } else if (tCrka === 'ค' || tCrka === '๕') {
         return "jkey8";
-    } else if (tCrka === '9' || tCrka === '(' || tCrka === '౯') {
+    } else if (tCrka === 'ต' || tCrka === '๖') {
         return "jkey9";
-    } else if (tCrka === '0' || tCrka === ')' || tCrka === '౦') {
+    } else if (tCrka === 'จ' || tCrka === '๗') {
         return "jkey0";
-    } else if (tCrka === '-' || tCrka === 'ః') {
+    } else if (tCrka === 'ข' || tCrka === '๘') {
         return "jkeyminus";
-    } else if (tCrka === 'ృ' || tCrka === 'ఋ' || tCrka === 'ౄ') {
+    } else if (tCrka === 'ช' || tCrka === '๙') {
         return "jkeyequals";
-    } else if (tCrka === 'ౌ' || tCrka === 'ఔ') {
+    } else if (tCrka === 'ๆ' || tCrka === '๐') {
         return "jkeyq";
-    } else if (tCrka === 'ై' || tCrka === 'ఐ') {
+    } else if (tCrka === 'ไ' || tCrka === '"') {
         return "jkeyw";
-    } else if (tCrka === 'ా' || tCrka === 'ఆ') {
+    } else if (tCrka === 'ำ' || tCrka === 'ฎ') {
         return "jkeye";
-    } else if (tCrka === 'ీ' || tCrka === 'ఈ') {
+    } else if (tCrka === 'พ' || tCrka === 'ฑ') {
         return "jkeyr";
-    } else if (tCrka === 'ూ' || tCrka === 'ఊ') {
+    } else if (tCrka === 'ะ' || tCrka === 'ธ') {
         return "jkeyt";
-    } else if (tCrka === 'బ' || tCrka === 'భ') {
+    } else if (tCrka === 'ั' || tCrka === 'ํ') {
         return "jkeyy";
-    } else if (tCrka === 'హ' || tCrka === 'ఙ') {
+    } else if (tCrka === 'ี' || tCrka === '๊') {
         return "jkeyu";
-    } else if (tCrka === 'గ' || tCrka === 'ఘ') {
+    } else if (tCrka === 'ร' || tCrka === 'ณ') {
         return "jkeyi";
-    } else if (tCrka === 'ద' || tCrka === 'ధ') {
+    } else if (tCrka === 'น' || tCrka === 'ฯ') {
         return "jkeyo";
-    } else if (tCrka === 'జ' || tCrka === 'ఝ') {
+    } else if (tCrka === 'ย' || tCrka === 'ญ') {
         return "jkeyp";
-    } else if (tCrka === 'డ' || tCrka === 'ఢ') {
+    } else if (tCrka === 'บ' || tCrka === 'ฐ') {
         return "jkeybracketl";
-    } else if (tCrka === 'ఞ') {
+    } else if (tCrka === 'ล' || tCrka === ',') {
         return "jkeybracketr";
-    } else if (tCrka === 'ో' || tCrka === 'ఓ') {
+    } else if (tCrka === 'ฃ' || tCrka === 'ฅ') {
+        return "jkeybackslash";
+    } else if (tCrka === 'ฟ' || tCrka === 'ฤ') {
         return "jkeya";
-    } else if (tCrka === 'ే' || tCrka === 'ఏ') {
+    } else if (tCrka === 'ห' || tCrka === 'ฆ') {
         return "jkeys";
-    } else if (tCrka === '్' || tCrka === 'అ') {
+    } else if (tCrka === 'ก' || tCrka === 'ฏ') {
         return "jkeyd";
-    } else if (tCrka === 'ి' || tCrka === 'ఇ') {
+    } else if (tCrka === 'ด' || tCrka === 'โ') {
         return "jkeyf";
-    } else if (tCrka === 'ు' || tCrka === 'ఉ') {
+    } else if (tCrka === 'เ' || tCrka === 'ฌ') {
         return "jkeyg";
-    } else if (tCrka === 'ప' || tCrka === 'ఫ') {
+    } else if (tCrka === '้' || tCrka === '็') {
         return "jkeyh";
-    } else if (tCrka === 'ర' || tCrka === 'ఱ') {
+    } else if (tCrka === '่' || tCrka === '๋') {
         return "jkeyj";
-    } else if (tCrka === 'క' || tCrka === 'ఖ') {
+    } else if (tCrka === 'า' || tCrka === 'ษ') {
         return "jkeyk";
-    } else if (tCrka === 'త' || tCrka === 'థ') {
+    } else if (tCrka === 'ส' || tCrka === 'ศ') {
         return "jkeyl";
-    } else if (tCrka === 'చ' || tCrka === 'ఛ') {
+    } else if (tCrka === 'ว' || tCrka === 'ซ') {
         return "jkeysemicolon";
-    } else if (tCrka === 'ట' || tCrka === 'ఠ') {
+    } else if (tCrka === 'ง' || tCrka === '.') {
         return "jkeyapostrophe";
-    } else if (tCrka === 'ె' || tCrka === 'ఎ') {
+    } else if (tCrka === 'ผ' || tCrka === '(') {
         return "jkeyz";
-    } else if (tCrka === 'ం' || tCrka === 'ఁ') {
+    } else if (tCrka === 'ป' || tCrka === ')') {
         return "jkeyx";
-    } else if (tCrka === 'మ' || tCrka === 'ణ') {
+    } else if (tCrka === 'แ' || tCrka === 'ฉ') {
         return "jkeyc";
-    } else if (tCrka === 'న' || tCrka === 'న') {
+    } else if (tCrka === 'อ' || tCrka === 'ฮ') {
         return "jkeyv";
-    } else if (tCrka === 'వ') {
+    } else if (tCrka === 'ิ' || tCrka === 'ฺ') {
         return "jkeyb";
-    } else if (tCrka === 'ల' || tCrka === 'ళ') {
+    } else if (tCrka === 'ื' || tCrka === '์') {
         return "jkeyn";
-    } else if (tCrka === 'స' || tCrka === 'శ') {
+    } else if (tCrka === 'ท' || tCrka === '?') {
         return "jkeym";
-    } else if (tCrka === ',' || tCrka === 'ష') {
+    } else if (tCrka === 'ม' || tCrka === 'ฒ') {
         return "jkeycomma";
-    } else if (tCrka === '.') {
+    } else if (tCrka === 'ใ' || tCrka === 'ฬ') {
         return "jkeyperiod";
-    } else if (tCrka === 'య') {
+    } else if (tCrka === 'ฝ' || tCrka === 'ฦ') {
         return "jkeyslash";
     } else {
         return "jkey" + tCrka;

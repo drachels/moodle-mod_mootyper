@@ -25,6 +25,11 @@
 define('CLI_SCRIPT', true);
 // phpcs:disable moodle.Files.MoodleInternal
 
+if (PHP_SAPI !== 'cli') {
+    http_response_code(403);
+    exit(1);
+}
+
 /**
  * Write an error message to STDERR and exit.
  *
@@ -156,7 +161,6 @@ function clone_activity_to_course(int $sourcecmid, int $targetcourseid, int $use
 
 $args = parse_args($argv);
 
-$moodleroot = $args['moodleroot'] ?? '';
 $targetcsv = $args['targetcourseids'] ?? '';
 $rootcategoryid = isset($args['rootcategoryid']) ? (int)$args['rootcategoryid'] : 0;
 $sourcecourseid = isset($args['sourcecourseid']) ? (int)$args['sourcecourseid'] : 1081;
@@ -166,12 +170,6 @@ $methodname = $args['methodname'] ?? 'Method of carrying out the exercises';
 $pagename = $args['pagename'] ?? 'Initial position of the fingers on the keyboard';
 $dryrun = !empty($args['dry-run']) && $args['dry-run'] !== '0';
 
-if ($moodleroot === '') {
-    fail('Missing --moodleroot=/path/to/moodle');
-}
-if (!is_file($moodleroot . '/config.php')) {
-    fail('Could not find config.php in --moodleroot path');
-}
 if ($targetcsv === '' && $rootcategoryid <= 0) {
     fail('Missing target scope: provide --targetcourseids=<id1,id2,...> and/or --rootcategoryid=<int>');
 }
@@ -187,7 +185,7 @@ if ($targetcsv !== '') {
     $targetcourseids = parse_csv_ints($targetcsv);
 }
 
-require_once($moodleroot . '/config.php');
+require_once(__DIR__ . '/../../../../config.php');
 require_once($CFG->dirroot . '/course/lib.php');
 
 global $DB, $USER;

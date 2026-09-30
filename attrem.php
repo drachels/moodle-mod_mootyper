@@ -40,19 +40,31 @@ global $DB, $USER;
 // 20240218 Yeah, but I don't thing the completions are getting updated then.
 // When a student deletes their own grade, the completion state is NOT getting updated!
 
-$mid = optional_param('m_id', 0, PARAM_INT);  // MooTyper id (mdl_mootyper).
-$cid = optional_param('c_id', 0, PARAM_INT);  // Course module id (mdl_course_modules).
-$context = optional_param('context', 0, PARAM_INT);  // MooTyper id (mdl_mootyper).
-$gradeid = optional_param('g', 0, PARAM_INT);
+$mid = required_param('m_id', PARAM_INT);  // MooTyper id (mdl_mootyper).
+$cid = required_param('c_id', PARAM_INT);  // Course module id (mdl_course_modules).
+$gradeid = required_param('g', PARAM_INT);
 $mtmode = optional_param('mtmode', 0, PARAM_INT);
 $returnanchor = optional_param('returnanchor', '', PARAM_ALPHANUMEXT);
 
+$cm = get_coursemodule_from_id('mootyper', $cid, 0, false, MUST_EXIST);
+if ((int)$cm->instance !== $mid) {
+    throw new moodle_exception('invalidaccess', 'mootyper', '', null);
+}
+$mid = (int)$cm->instance;
+$course = $DB->get_record('course', ['id' => $cm->course], '*', MUST_EXIST);
 $mootyper = $DB->get_record('mootyper', ['id' => $mid], '*', MUST_EXIST);
-$course = $mootyper->course;
-$cm = get_coursemodule_from_instance('mootyper', $mootyper->id, $course, false, MUST_EXIST);
 
-$context = context_module::instance($cm->id);
 require_login($course, true, $cm);
+/** @var context $context */
+$context = context_module::instance($cm->id);
+if (!($context instanceof context_module)) {
+    throw new moodle_exception('invalidaccess', 'mootyper', '', null);
+}
+require_sesskey();
+$canmanagegrades = has_capability('mod/mootyper:viewgrades', $context);
+if (!$canmanagegrades) {
+    require_capability('mod/mootyper:viewmygrades', $context);
+}
 
 
 if (isset($gradeid)) {
@@ -81,7 +93,7 @@ if (isset($gradeid)) {
     }
 
     // In own-grades mode, users may delete only their own result.
-    if ($mtmode == 2 && (int)$dbgrade->userid !== (int)$USER->id) {
+    if (!$canmanagegrades && (int)$dbgrade->userid !== (int)$USER->id) {
         $params = [
             'objectid' => $mootyper->id,
             'context' => $context,

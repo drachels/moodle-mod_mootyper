@@ -141,6 +141,9 @@ class restore_mootyper_activity_structure_step extends restore_activity_structur
         $mootyper = $this->currentattemptdata;
         $newmootyper = $this->newmootyperdata;
         $oldid = $data->id;
+        if (!\mod_mootyper\local\keyboards::is_valid_layout_name((string)($data->name ?? ''))) {
+            throw new moodle_exception('invaliddata', 'error', '', null);
+        }
         $layout = $DB->get_record('mootyper_layouts', ['name' => $data->name]);
         if (!$layout) {
             $data->mootyper = $this->get_new_parentid('mootyper');

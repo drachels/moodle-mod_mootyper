@@ -26,6 +26,11 @@
 define('CLI_SCRIPT', true);
 // phpcs:disable moodle.Files.MoodleInternal
 
+if (PHP_SAPI !== 'cli') {
+    http_response_code(403);
+    exit(1);
+}
+
 /**
  * Get CLI --key=value argument.
  *
@@ -54,7 +59,6 @@ function fail(string $message, int $code = 1): void {
     exit($code);
 }
 
-$moodleroot = arg_value($argv, 'moodleroot');
 $donorcourseid = (int)(arg_value($argv, 'donorcourseid', '0'));
 $targetcourseid = (int)(arg_value($argv, 'targetcourseid', '0'));
 $create = (int)(arg_value($argv, 'create', '0')) === 1;
@@ -66,9 +70,6 @@ $categoryid = (int)(arg_value($argv, 'categoryid', '0'));
 $targetlanguage = strtolower((string)arg_value($argv, 'targetlanguage', 'nl'));
 $layoutoverride = arg_value($argv, 'layoutname', '');
 
-if (!$moodleroot || !is_file($moodleroot . '/config.php')) {
-    fail('Missing/invalid --moodleroot');
-}
 if ($donorcourseid <= 0) {
     fail('Missing/invalid --donorcourseid');
 }
@@ -112,7 +113,7 @@ if ($layoutoverride !== '') {
     $layoutname = 'Belgium(DutchV5)';
 }
 
-require($moodleroot . '/config.php');
+require(__DIR__ . '/../../../config.php');
 require_once($CFG->dirroot . '/course/lib.php');
 require_once($CFG->dirroot . '/course/modlib.php');
 require_once($CFG->libdir . '/gradelib.php');
@@ -1923,7 +1924,7 @@ $sqllessontotal = "SELECT COUNT(1) FROM {mootyper} m"
     . " WHERE cm.course=? AND cm.module=? AND cs.section=2";
 $lessontotal = $DB->count_records_sql($sqllessontotal, [$targetcourseid, $modulemootyperid]);
 
-$populateok = "POPULATE_OK moodleroot={$moodleroot} donor={$donorcourseid}";
+$populateok = "POPULATE_OK donor={$donorcourseid}";
 $populateok .= " target={$targetcourseid} lang={$targetlanguage} layout={$resolvedlayoutname}";
 echo $populateok . "\n";
 foreach ($secrows as $row) {

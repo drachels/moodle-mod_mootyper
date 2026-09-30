@@ -33,28 +33,23 @@ require_once($CFG->dirroot . '/repository/lib.php');
 
 global $DB, $OUTPUT, $PAGE, $USER;
 
-$id = optional_param('id', 0, PARAM_INT); // Course ID.
-$ex = optional_param('ex', 0, PARAM_INT); // Id of exercise to edit.
+$id = required_param('id', PARAM_INT); // Course module ID.
+$ex = required_param('ex', PARAM_INT); // Exercise ID to edit.
 $lsnnamepo = '';
 $lessonpo = '';
 
 $cm = get_coursemodule_from_id('mootyper', $id, 0, false, IGNORE_MISSING);
 if (!$cm) {
-    throw new moodle_exception('invalidcoursemodule');
+    throw new moodle_exception('invalidcoursemodule', 'error', '', null);
 }
 $course = $DB->get_record('course', ['id' => $cm->course], '*', MUST_EXIST);
 
-// Looks like these two variables are exact duplicates. Maybe need to combine?
-$exercise = $DB->get_record('mootyper_exercises', ['id' => $ex], '*', MUST_EXIST);
-$rcrd = $DB->get_record('mootyper_exercises', ['id' => $ex], '*', MUST_EXIST);
-
-// Get the id of the lesson name from the current exercise, and then use it to get the lesson name.
-$lesson = $DB->get_record('mootyper_exercises', ['id' => $ex], 'lesson', MUST_EXIST);
-$lessonname = $DB->get_record('mootyper_lessons', ['id' => $lesson->lesson], 'lessonname', MUST_EXIST);
-$actuallesson = $DB->get_record('mootyper_lessons', ['id' => $lesson->lesson]);
-
 // This context->id will be used for the path to file storage.
+/** @var context $context */
 $context = context_module::instance($cm->id);
+if (!($context instanceof context_module)) {
+    throw new moodle_exception('invalidcoursemodule', 'error', '', null);
+}
 $mootyper = $DB->get_record('mootyper', ['id' => $cm->instance], '*', MUST_EXIST);
 
 require_login($course, true, $cm);
@@ -74,10 +69,25 @@ if (!(has_capability('mod/mootyper:aftersetup', $context))) {
     redirect('../../course/view.php?id=' . $course->id, get_string('invalidaccessexp', 'mootyper'));
 }
 
+$exercise = $DB->get_record('mootyper_exercises', ['id' => $ex], '*', MUST_EXIST);
+$rcrd = $exercise;
+$lessonname = $DB->get_record('mootyper_lessons', ['id' => $exercise->lesson], '*', MUST_EXIST);
+$actuallesson = $lessonname;
+
+// Apply the lesson's edit policy, not just the capability on the supplied module.
+$caneditlesson = is_siteadmin()
+    || (int)$actuallesson->editable === 0
+    || ((int)$actuallesson->editable === 1 && (int)$actuallesson->courseid === (int)$course->id)
+    || ((int)$actuallesson->editable === 2 && (int)$actuallesson->authorid === (int)$USER->id);
+if (!$caneditlesson) {
+    throw new moodle_exception('nopermissions', 'error', '', null);
+}
+
 // Check to see if Confirm button is clicked and returning 'Confirm' to trigger update record.
 $param1 = optional_param('button', '', PARAM_TEXT);
 
 if (isset($param1) && get_string('fconfirm', 'mootyper') == $param1) {
+    require_sesskey();
     // 20210325 Added as part of capability to edit lesson and exercise names.
     $newlessonname = optional_param('lesson_name', '', PARAM_RAW);
     $newexercisename = optional_param('exercise_name', '', PARAM_RAW);
@@ -259,7 +269,7 @@ function clClick() {
 </script>
 <?php // phpcs:ignore
 // 20200625 Get the current MooTyper keyboard background default color for our page background here.
-$color3 = $mootyper->keybdbgc;
+$color3 = mootyper_clean_color((string)$mootyper->keybdbgc);
 echo '<div align="center" style="font-size:1em;
      font-weight:bold;background: ' . $color3 . ';
      border:2px solid black;
@@ -267,17 +277,18 @@ echo '<div align="center" style="font-size:1em;
      -moz-border-radius:16px;border-radius:16px;">';
 
 echo '<form method="POST">';
+echo '<input type="hidden" name="sesskey" value="' . sesskey() . '">';
 
 // 20210327 Add a text area for editing the name of the lesson.
 echo '<label>' . get_string('lsnname', 'mootyper')
     . ' = <input type="text" name="lesson_name" value="'
-    . str_replace('\n', "&#10;", $lessonname->lessonname)
+    . str_replace('\n', "&#10;", s($lessonname->lessonname))
     . '"</label><br />';
 
 // 20210327 Add a text area for editing the name of the exercise.
 echo '<label>' . get_string('exercise_name', 'mootyper')
     . ' = <input type="text" name="exercise_name" value="'
-    . str_replace('\n', "&#10;", $exercisetoedit->exercisename)
+    . str_replace('\n', "&#10;", s($exercisetoedit->exercisename))
     . '"</label><br />';
 
 // Get our alignment strings and add a selector for text alignment.
@@ -314,7 +325,7 @@ echo '<span id="text_holder_span" class=""></span><br>'
     . ':<br>'
     . '<textarea name="texttotype" id="texttotype" rows="3" cols="60" style="text-align:'
     . $align . '">'
-    . str_replace('\n', "&#10;", $exercisetoedit->texttotype)
+    . str_replace('\n', "&#10;", s($exercisetoedit->texttotype))
     . '</textarea>';
 // Keep texttotype as plain text (no Tiny editor) so typed characters such as
 // <, >, and explicit line breaks are preserved exactly as authored.
@@ -362,7 +373,7 @@ echo '<br><span id="audio_holder_span" class=""></span><br>'
     . ':<br><small>' . get_string('dictationdatalabelhelp', 'mootyper') . '</small><br>'
     . '<textarea name="dictationdata_editor[text]" id="dictationdata" rows="3" cols="60" style="text-align:'
     . $align . '">'
-    . ($exercisetoedit->dictationdata_editor['text'] ?? '')
+    . s($exercisetoedit->dictationdata_editor['text'] ?? '')
     . '</textarea>'
     . '<input type="hidden" name="dictationdata_editor[format]" value="'
     . (int)($exercisetoedit->dictationdata_editor['format'] ?? FORMAT_HTML)

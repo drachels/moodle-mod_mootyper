@@ -701,6 +701,16 @@ if ($mootyper->lesson != null) {
             ['', '', "\n", "\n", "\n", ' '],
             $texttoenter
         );
+        // Stored text uses JS-style escapes (\n, \\, ...) that json_encode would otherwise output literally.
+        $cleantext = preg_replace_callback(
+            '/\\\\(\\\\|n|r|"|\')/',
+            function ($m) {
+                $map = ['\\' => '\\', 'n' => "\n", 'r' => "\r", '"' => '"', "'" => "'"];
+                return $map[$m[1]];
+            },
+            $cleantext
+        );
+        $cleantext = str_replace(["\r\n", "\n\r", "\r"], "\n", $cleantext);
         // Decode entities first so escaped ruby markup is normalized correctly.
         $cleantext = html_entity_decode($cleantext, ENT_QUOTES | ENT_HTML5, 'UTF-8');
         $cleantext = str_replace("\xc2\xa0", ' ', $cleantext);

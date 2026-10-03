@@ -83,7 +83,7 @@ if ($directionality === 'rtl') {
             <div id="jkeycaps" class="normal" style="width: 80px;  font-size: 12px !important;">Caps Lock</div>
         </div>
         <div class="mtrow" style='float: left; margin-left:5px; font-size: 15px !important; line-height: 15px'>
-            <div id="jkeyshiftd" class="normal" style="width: 115px;">Shift</div>
+            <div id="jkeyshiftr" class="normal" style="width: 115px;">Shift</div>
             <div id="jkeyئ" class="normal" style='text-align:left;'>؟<br>ئ&nbsp; &nbsp; &nbsp;</div>
             <div id="jkey." class="normal" style='text-align:left;'><b>&gt;<br>.&nbsp; &nbsp; &nbsp;</b></div>
             <div id="jkey،" class="normal" style='text-align:left;'><b>&lt;<br>،&nbsp; &nbsp; &nbsp;</b></div>
@@ -174,7 +174,7 @@ if ($directionality === 'rtl') {
             <div id="jkey،" class="normal" style='text-align:left;'><b>&gt;<br>&nbsp; &nbsp; &nbsp;،</b></div>
             <div id="jkey." class="normal" style='text-align:left;'><b>&lt;<br>&nbsp; &nbsp; &nbsp;.</b></div>
             <div id="jkeyئ" class="normal" style='text-align:left;'>؟<br>&nbsp; &nbsp; &nbsp;ئ</div>
-            <div id="jkeyshiftd" class="normal" style="width: 115px;">Shift</div>
+            <div id="jkeyshiftr" class="normal" style="width: 115px;">Shift</div>
         </div>
         <div class="mtrow" style='float: left; margin-left:5px;'>
             <div id="jkeyctrll" class="normal" style="width: 60px;">Ctrl</div>

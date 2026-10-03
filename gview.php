@@ -391,8 +391,8 @@ if (!has_capability('mod/mootyper:viewgrades', context_module::instance($cm->id)
 
                 $fcol = get_string('exercise_abreviation', 'mootyper') . '-' . $fcol;  // This gets the exercise number.
                 $deleteurl = $CFG->wwwroot . '/mod/mootyper/attrem.php?c_id='
-                    . optional_param('id', 0, PARAM_INT)
-                    . '&m_id=' . $n
+                    . $cm->id
+                    . '&m_id=' . $mootyper->id
                     . '&returnanchor=grades-table'
                     . '&sesskey=' . sesskey()
                     . '&g=' . $gr->id;

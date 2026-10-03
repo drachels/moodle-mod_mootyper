@@ -91,7 +91,7 @@ function keyboardElement(ltr) {
             document.getElementById(getKeyID(this.chr)).className = "normal";
         }
         if (this.chr === '\n' || this.chr === '\r\n' || this.chr === '\n\r' || this.chr === '\r') {
-            document.getElementById('jkeyenter').classname = "normal";
+            document.getElementById('jkeyenter').className = "normal";
         }
         if (this.shiftright) {
             document.getElementById('jkeyshiftr').className = "normal";

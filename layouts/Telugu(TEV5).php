@@ -105,7 +105,7 @@ echo (isset($displaynone) && ($displaynone == true)) ? 'display:none;' : '';
             <div id="jkeycomma" class="normal" style='text-align:right;'>&nbsp;ష<br>&nbsp;&nbsp;&nbsp;,</div>
             <div id="jkeyperiod" class="normal" style='text-align:right;'>&nbsp;<br>&nbsp;&nbsp;&nbsp;.</div>
             <div id="jkeyslash" class="normal" style='text-align:right;'>&nbsp;<br>&nbsp;&nbsp;&nbsp;య</div>
-            <div id="jkeyshiftd" class="normal" style="width: 115px;">Shift</div>
+            <div id="jkeyshiftr" class="normal" style="width: 115px;">Shift</div>
         </div>
         <div class="mtrow" style='float: left; margin-left:5px;'>
             <div id="jkeyctrll" class="normal" style="width: 60px;">Ctrl</div>

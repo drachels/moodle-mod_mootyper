@@ -87,10 +87,21 @@ GitHub # | GitHub issue title | MooTyper ticket | Upgrade status | Notes
 20210318 MooTyper_684 - Need Telugu(TEV5) keyboard layout.
     2026032120 Verified not fixed: no Telugu(TEV5) layout files are present;
         current repo contains Telugu(V4).php/.js only.
+    2026100101 Fixed Telugu(TEV5).php top row rendering slightly too tall: the jkeyequals
+        keytop (ఋ/ౄ/ృ) used font-size 14px; reduced to 10px so the row height matches.
+        Verified with admin, teacher, and two student accounts.
+        Files: layouts/Telugu(TEV5).php.
 20210318 MooTyper_685 - Need Thai(THV5) keyboard layout.
 20210318 MooTyper_688 - Need Uyghur(UG_LTV5) keyboard layout.
     2026032121 Verified not fixed: no Uyghur(UG_LTV5) layout files are present;
         current repo contains Uyghur(V4).php/.js only.
+    2026093001 Copilot Pro+ created the two needed files but will need to do manual testing.
+        Files: Uyghur(UG_LTV5).js and Uyghur(UG_LTV5).php
+    2026100101 Manual testing fails when trying to complete the first exercise at:
+        https://drachels.net/moodledev/mod/mootyper/view.php?id=9919. Lower case types the
+        top row correctly both when my desktop is set to use ENG (US) or to use Uyghur, but
+        neither one can type even the first character of the top row upper case. The needed
+        shift right is never highlighted.
 20210318 MooTyper_689 - Need Vietnamese(VIV5) keyboard layout.
     2026032122 Verified fixed for layout availability: Vietnamese(VNIV5).php/.js are present,
         and Vietnamese(VNTelexV5).php/.js also exist for Telex-style input; additional multimode
@@ -160,7 +171,7 @@ GitHub # | GitHub issue title | MooTyper ticket | Upgrade status | Notes
 
 Moodle Versions
 ===============
-=== 5.2.0 === Pending
+=== 5.2.0 === (Build: 2026100300)
 20221207 MooTyper_974bt - Direct access to eedit.php is checked and prevented when the
     requested exercise's lesson is not editable by the current user.
     2026093001 Verified CM login, aftersetup capability, lesson edit policy, and sesskey save
@@ -253,6 +264,10 @@ Moodle Versions
     2026093001 Encode typing/display strings as JSON-safe JavaScript literals and escape stored
         lesson/exercise content in typing, editing, and exercise-list HTML output.
         Files: view.php, exercises.php, eedit.php.
+    2026100101 Fixed regression from the JSON encoding change: exercises showed a literal \n
+        instead of the Enter-key down arrow. Stored texttotype uses JS-style escapes (\n, \\),
+        so view.php now decodes \n, \r, \\, \" and \' to real characters before json_encode().
+        Files: view.php.
 20260929 MooTyper_1559bt - #328 Exercise editor accepts any exercise id site-wide and renames
     the shared lesson.
     2026093001 Authorize the resolved exercise through its lesson's edit policy and require
@@ -278,7 +293,15 @@ Moodle Versions
     2026092901 Fixed immediate error counting and color feedback across the shared,
         Amharic, and Korean typing engines, including Amharic sequence composition.
         Files: js/typer.js, js/typer(ETV7).js, js/typer(KRV7).js.
-
+20261001 MooTyper_1570 - Can't find record in database when trying to delete exercise results.
+    2026100101 Delete links built c_id/m_id from raw id/n request params, so pages opened
+        without id sent c_id=0 to attrem.php (dml_missing_record_exception). Links now use the
+        resolved $cm->id and $mootyper->id.
+        Files: owngrades.php, gview.php.
+    2026100102 Repeat seen from a grades page rendered before the fix. attrem.php now treats
+        c_id as optional and resolves the course module from m_id when c_id is 0/missing;
+        login, capability, sesskey, and ownership checks are unchanged.
+        Files: attrem.php.
 
 
 === 5.1.3 === (Build: 2026082501)

@@ -270,8 +270,8 @@ if (!has_capability('mod/mootyper:viewmygrades', context_module::instance($cm->i
             if ($mtmode == 2) {
                 $deleteurl = $CFG->wwwroot
                     . '/mod/mootyper/attrem.php?c_id='
-                    . optional_param('id', 0, PARAM_INT)
-                    . '&m_id=' . optional_param('n', 0, PARAM_INT)
+                    . $cm->id
+                    . '&m_id=' . $mootyper->id
                     . '&mtmode=' . $mtmode
                     . '&returnanchor=grades-table'
                     . '&sesskey=' . sesskey()
@@ -285,8 +285,8 @@ if (!has_capability('mod/mootyper:viewmygrades', context_module::instance($cm->i
                     . get_string('delete', 'mootyper') . '</a>';
             } else {
                 $deleteurl = $CFG->wwwroot . '/mod/mootyper/attrem.php?c_id='
-                    . optional_param('id', 0, PARAM_INT)
-                    . '&m_id=' . optional_param('n', 0, PARAM_INT)
+                    . $cm->id
+                    . '&m_id=' . $mootyper->id
                     . '&returnanchor=grades-table'
                     . '&sesskey=' . sesskey()
                     . '&g=' . $gr->id;

@@ -41,12 +41,17 @@ global $DB, $USER;
 // When a student deletes their own grade, the completion state is NOT getting updated!
 
 $mid = required_param('m_id', PARAM_INT);  // MooTyper id (mdl_mootyper).
-$cid = required_param('c_id', PARAM_INT);  // Course module id (mdl_course_modules).
+$cid = optional_param('c_id', 0, PARAM_INT);  // Course module id (mdl_course_modules).
 $gradeid = required_param('g', PARAM_INT);
 $mtmode = optional_param('mtmode', 0, PARAM_INT);
 $returnanchor = optional_param('returnanchor', '', PARAM_ALPHANUMEXT);
 
-$cm = get_coursemodule_from_id('mootyper', $cid, 0, false, MUST_EXIST);
+if ($cid) {
+    $cm = get_coursemodule_from_id('mootyper', $cid, 0, false, MUST_EXIST);
+} else {
+    $cm = get_coursemodule_from_instance('mootyper', $mid, 0, false, MUST_EXIST);
+    $cid = (int)$cm->id;
+}
 if ((int)$cm->instance !== $mid) {
     throw new moodle_exception('invalidaccess', 'mootyper', '', null);
 }

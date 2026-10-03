@@ -31,4 +31,4 @@ $plugin->cron = 60; // Period for cron to check this module (secs).
 $plugin->component = 'mod_mootyper';
 $plugin->maturity = MATURITY_STABLE;
 $plugin->release = '5.2.0 (Build: 2026100300)';
-$plugin->supported = [405, 502];
+$plugin->supported = [405, 503];

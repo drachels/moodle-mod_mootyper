@@ -41,6 +41,7 @@ require_login($course, true, $cm);
 /** @var context $context */
 $context = context_module::instance($cm->id);
 require_capability('mod/mootyper:aftersetup', $context);
+\mod_mootyper\local\lessons::require_available_to_me($USER->id, $course->id, $lsn);
 
 $data = new StdClass();
 $data->mootyper = $id;

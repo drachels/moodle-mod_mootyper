@@ -216,4 +216,19 @@ class lessons {
 
         return $DB->record_exists_sql($sql, $params) ? 1 : 0;
     }
+
+    /**
+     * Require that the lesson is one of the lessons the user is offered in the given course.
+     *
+     * @param int $usr The user ID.
+     * @param int $courseid The ID of the course the user is acting in.
+     * @param int $lsn The lesson ID.
+     * @throws \moodle_exception If the lesson does not exist or is not available to the user.
+     */
+    public static function require_available_to_me($usr, $courseid, $lsn): void {
+        $available = array_map('intval', array_column(self::get_mootyperlessons($usr, $courseid), 'id'));
+        if (!in_array((int)$lsn, $available, true)) {
+            throw new \moodle_exception('invalidaccess', 'mootyper');
+        }
+    }
 }

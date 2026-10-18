@@ -339,12 +339,16 @@ class provider implements
     public static function delete_data_for_all_users_in_context(\context $context) {
         global $DB;
 
-        if (empty($context)) {
+        if (!$context instanceof context_module) {
             return;
         }
         $instanceid = $DB->get_field('course_modules', 'instance', ['id' => $context->instanceid], MUST_EXIST);
+        $attemptids = $DB->get_fieldset_select('mootyper_attempts', 'id', 'mootyperid = ?', [$instanceid]);
+        if ($attemptids) {
+            $DB->delete_records_list('mootyper_checks', 'attemptid', $attemptids);
+        }
         $DB->delete_records('mootyper_grades', ['mootyper' => $instanceid]);
-        $DB->delete_records('mootyper_attempts', ['mootyper' => $instanceid]);
+        $DB->delete_records('mootyper_attempts', ['mootyperid' => $instanceid]);
     }
 
     /**

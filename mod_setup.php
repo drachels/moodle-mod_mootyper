@@ -329,7 +329,7 @@ echo $OUTPUT->header();
 echo $OUTPUT->heading($mootyper->name);
 $htmlout = '';
 $htmlout .= '<div align="center" style="font-size:1em;
-    font-weight:bold;background: ' . $backgroundcolorpo . ';
+    font-weight:bold;background: ' . mootyper_clean_color((string)$backgroundcolorpo) . ';
     border:2px solid black;
     -webkit-border-radius:16px;
     -moz-border-radius:16px;

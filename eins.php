@@ -158,7 +158,7 @@ if (has_capability('mod/mootyper:editall', context_course::instance($course->id)
     $lessons = [];
     // If a teacher, only get ones they can edit.
     foreach ($lessonsg as $lsng) {
-        if (lessons::is_editable_by_me($USER->id, $id, $lsng['id'])) {
+        if (lessons::is_editable_by_me($USER->id, $course->id, $lsng['id'])) {
             $lessons[] = $lsng;
         }
     }

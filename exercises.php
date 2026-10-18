@@ -92,7 +92,7 @@ echo '<div align="center" style="font-size:1em;
      -webkit-border-radius:16px;
      -moz-border-radius:16px;border-radius:16px;">';
 
-$lessons = lessons::get_mootyperlessons($USER->id, $id);
+$lessons = lessons::get_mootyperlessons($USER->id, $course->id);
 
 if ($lessonpo == 0 && count($lessons) > 0) {
     $lessonpo = $lessons[0]['id'];
@@ -117,7 +117,7 @@ echo '</select>';
 
 // Preload not editable by me message for the current user.
 $jlink = get_string('noteditablebyme', 'mootyper');
-if (lessons::is_editable_by_me($USER->id, $id, $lessonpo)) {
+if (lessons::is_editable_by_me($USER->id, $course->id, $lessonpo)) {
     echo '<br>';
     echo '</form><br>';
     // Build a link with course id and lsn options to use when exporting the current Lesson.
@@ -252,7 +252,7 @@ foreach ($exercises as $ex) {
     }
 
     // If the user can edit or delete this lesson and its exercises, then add edit and delete tools.
-    if (lessons::is_editable_by_me($USER->id, $id, $lessonpo)) {
+    if (lessons::is_editable_by_me($USER->id, $course->id, $lessonpo)) {
         echo $jlink2 . ' | ' . $jlink1;
     }
 
@@ -353,7 +353,7 @@ echo ' ' . html_writer::link($exporturl, get_string('export', 'mootyper') . ' - 
     'style' => 'border-radius: 8px',
 ]);
 
-if (lessons::is_editable_by_me($USER->id, $id, $lessonpo)) {
+if (lessons::is_editable_by_me($USER->id, $course->id, $lessonpo)) {
     // 20200613 Added a, Delete all from, this lesson button.
     $selectedlessonname = $lessons[$selectedlessonindex]['lessonname'];
     $deleteconfirm = json_encode(

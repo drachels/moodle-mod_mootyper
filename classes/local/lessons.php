@@ -77,7 +77,7 @@ class lessons {
         $sql = "SELECT id, lessonname
             FROM " . $CFG->prefix . "mootyper_lessons
             WHERE ((visible = 2 AND authorid = " . $u . ") OR
-                (visible = 1 AND " . self::is_user_enrolled($u, $c) . " = 1) OR
+                (visible = 1 AND courseid = " . (int)$c . " AND " . self::is_user_enrolled($u, $c) . " = 1) OR
                 (visible = 0 AND " . self::is_user_enrolled($u, $c) . " = 1) OR
                 (" . self::can_view_edit_all($u, $c) . " = 1))
             ORDER BY lessonname";
@@ -116,7 +116,7 @@ class lessons {
      * Check if current user can edit.
      *
      * @param int $usr
-     * @param int $id
+     * @param int $id The ID of the course the user is acting in.
      * @param int $lsn
      * @return boolean
      */
@@ -132,7 +132,7 @@ class lessons {
         if (
             ($lesson->editable == 0)
             // 20200625 Fix for ticket MooTyper_548. When editable is 1, changed second $id to $crs.
-            || (($lesson->editable == 1) && (self::is_user_enrolled($usr, $id)) && ($crs == $lesson->courseid))
+            || (($lesson->editable == 1) && (self::is_user_enrolled($usr, $id)) && ((int)$crs === (int)$id))
             || (($lesson->editable == 2) && ($lesson->authorid == $usr))
             || (self::can_view_edit_all($usr, $crs))
         ) {

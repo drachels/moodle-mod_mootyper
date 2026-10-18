@@ -556,7 +556,7 @@ if ($mootyper->lesson != null) {
         // 20200628 Added check to hide button if the lesson is NOT editable by current user.
         if (
             (has_capability('mod/mootyper:aftersetup', context_module::instance($cm->id)))
-            && (lessons::is_editable_by_me($USER->id, $mootyper->id, $lsnname->id))
+            && (lessons::is_editable_by_me($USER->id, $course->id, $lsnname->id))
         ) {
             $jlnk6 = $CFG->wwwroot . "/mod/mootyper/mod_setup.php?n=" . $mootyper->id . "&e=1";
             echo '<a href="' . $jlnk6

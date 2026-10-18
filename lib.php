@@ -1284,7 +1284,7 @@ function mootyper_extend_settings_navigation(settings_navigation $settingsnav, n
         $lesson = $DB->get_record('mootyper_lessons', ['id' => $mootyper->lesson], '*');
         // 20200627 Modified to show link only if user can edit the current lesson.
         if ($lesson) {
-            if (lessons::is_editable_by_me($USER->id, $mootyper->id, $lesson->id)) {
+            if (lessons::is_editable_by_me($USER->id, $course->id, $lesson->id)) {
                 $link = new moodle_url('/mod/mootyper/exercises.php', ['id' => $cm->id, 'lesson' => $mootyper->lesson]);
                 $linkname = get_string('editexercises', 'mootyper');
                 $icon = new pix_icon('icon', '', 'mootyper', ['class' => 'icon']);

@@ -1712,8 +1712,8 @@ foreach ($lessonsused as $lr) {
     if (!$lesson) {
         continue;
     }
-    $filepath = $CFG->dirroot . '/mod/mootyper/lessons/' . $lesson->lessonname . '.txt';
-    if (!file_exists($filepath)) {
+    $filepath = \mod_mootyper\local\lessons::get_lesson_file_path((string)$lesson->lessonname);
+    if ($filepath !== null && !file_exists($filepath)) {
         $exs = $DB->get_records('mootyper_exercises', ['lesson' => $lesson->id], 'snumber ASC,id ASC', 'texttotype');
         $chunks = [];
         foreach ($exs as $ex) {
@@ -1801,13 +1801,15 @@ foreach ($sourcelessons as $srcid => $srcname) {
         }
     }
 
-    $filepath = $CFG->dirroot . '/mod/mootyper/lessons/' . $targetlesson->lessonname . '.txt';
-    $targetex = $DB->get_records('mootyper_exercises', ['lesson' => $targetlesson->id], 'snumber ASC,id ASC', 'texttotype');
-    $chunks = [];
-    foreach ($targetex as $te) {
-        $chunks[] = trim((string)$te->texttotype);
+    $filepath = \mod_mootyper\local\lessons::get_lesson_file_path((string)$targetlesson->lessonname);
+    if ($filepath !== null) {
+        $targetex = $DB->get_records('mootyper_exercises', ['lesson' => $targetlesson->id], 'snumber ASC,id ASC', 'texttotype');
+        $chunks = [];
+        foreach ($targetex as $te) {
+            $chunks[] = trim((string)$te->texttotype);
+        }
+        file_put_contents($filepath, implode("\n\n", $chunks) . "\n");
     }
-    file_put_contents($filepath, implode("\n\n", $chunks) . "\n");
 }
 
 $updated = 0;

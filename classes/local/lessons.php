@@ -143,6 +143,21 @@ class lessons {
     }
 
     /**
+     * Get the path of the text file of a lesson, but only if the lesson name is a plain file name.
+     *
+     * @param string $lessonname The stored lesson name.
+     * @return string|null The path inside the lessons directory, or null if the name is not a plain file name.
+     */
+    public static function get_lesson_file_path(string $lessonname): ?string {
+        global $CFG;
+
+        if ($lessonname === '' || clean_param($lessonname, PARAM_FILE) !== $lessonname) {
+            return null;
+        }
+        return $CFG->dirroot . '/mod/mootyper/lessons/' . $lessonname . '.txt';
+    }
+
+    /**
      * Get current exercise for current lesson.
      *
      * @param int $less

@@ -71,6 +71,27 @@ if (!$canmanagegrades) {
     require_capability('mod/mootyper:viewmygrades', $context);
 }
 
+if (!$canmanagegrades && (string)$mootyper->isexam !== '2') {
+    $params = [
+        'objectid' => $mootyper->id,
+        'context' => $context,
+        'relateduserid' => $USER->id,
+        'other' => [
+            'reason' => 'mode_not_practice',
+            'gradeid' => $gradeid,
+            'exercise' => 0,
+            'mode' => $mootyper->isexam,
+        ],
+    ];
+    $event = grade_delete_blocked::create($params);
+    $event->trigger();
+
+    $target = $CFG->wwwroot . '/mod/mootyper/owngrades.php?id=' . $cid . '&n=' . $mid;
+    if ($returnanchor !== '') {
+        $target .= '#' . $returnanchor;
+    }
+    redirect($target, get_string('invalidaccess', 'mootyper'));
+}
 
 if (isset($gradeid)) {
     $dbgrade = $DB->get_record('mootyper_grades', ['id' => $gradeid, 'mootyper' => $mid]);
@@ -88,7 +109,7 @@ if (isset($gradeid)) {
         $event = grade_delete_blocked::create($params);
         $event->trigger();
 
-        $target = ($mtmode == 2)
+        $target = ((string)$mootyper->isexam === '2')
             ? ($CFG->wwwroot . '/mod/mootyper/owngrades.php?id=' . $cid . '&n=' . $mid)
             : ($CFG->wwwroot . '/mod/mootyper/gview.php?id=' . $cid . '&n=' . $mid);
         if ($returnanchor !== '') {
@@ -145,7 +166,7 @@ if (isset($gradeid)) {
         $event = grade_delete_blocked::create($params);
         $event->trigger();
 
-        $target = ($mtmode == 2)
+        $target = ((string)$mootyper->isexam === '2')
             ? ($CFG->wwwroot . '/mod/mootyper/owngrades.php?id=' . $cid . '&n=' . $mid)
             : ($CFG->wwwroot . '/mod/mootyper/gview.php?id=' . $cid . '&n=' . $mid);
         if ($returnanchor !== '') {
@@ -173,7 +194,7 @@ if (isset($gradeid)) {
 }
 
 // Return to the View my grades or View all grades page.
-if ($mtmode == 2) {
+if ((string)$mootyper->isexam === '2') {
     // 20230517 Added to recalculate grades when user deletes one of their entries.
     mootyper_update_grades($mootyper, $dbgrade->userid);
 

@@ -68,6 +68,8 @@ $lsnname = $DB->get_record('mootyper_lessons', ['id' => $mootyper->lesson], '*',
 $mtmode = $mootyper->isexam;
 require_login($course, true, $cm);
 $context = context_module::instance($cm->id);
+$canmanagegrades = has_capability('mod/mootyper:viewgrades', $context);
+$candeletegrades = $canmanagegrades || (string)$mtmode === '2';
 
 if (!has_capability('mod/mootyper:viewmygrades', context_module::instance($cm->id))) {
     redirect('view.php?id=' . $id, get_string('invalidaccess', 'mootyper'));
@@ -258,8 +260,9 @@ if (!has_capability('mod/mootyper:viewmygrades', context_module::instance($cm->i
             <td><a href="?id=' . $id . '&n=' . $n . '&orderby=13' . $lnkadd . '">'
             . get_string('gradenoun') . $arrtextadds[13] . '</a></td>
             <td><a href="?id=' . $id . '&n=' . $n . '&orderby=9' . $lnkadd . '">'
-            . get_string('timetaken', 'mootyper') . $arrtextadds[9] . '</a></td>
-            <td>' . get_string('delete', 'mootyper') . '</td></tr>';
+            . get_string('timetaken', 'mootyper') . $arrtextadds[9] . '</a></td>'
+            . ($candeletegrades ? '<td>' . get_string('delete', 'mootyper') . '</td>' : '')
+            . '</tr>';
 
         foreach ($grds as $gr) {
             if ($gr->pass) {
@@ -267,7 +270,8 @@ if (!has_capability('mod/mootyper:viewmygrades', context_module::instance($cm->i
             } else {
                 $stil = 'background-color: ' . (get_config('mod_mootyper', 'failbgc')) . ';';
             }
-            if ($mtmode == 2) {
+            $removelnk = '';
+            if ($candeletegrades && $mtmode == 2) {
                 $deleteurl = $CFG->wwwroot
                     . '/mod/mootyper/attrem.php?c_id='
                     . $cm->id
@@ -283,7 +287,7 @@ if (!has_capability('mod/mootyper:viewmygrades', context_module::instance($cm->i
                     . $gr->exercisename . '.';
                 $removelnk = '<a href="' . $deleteurl . '" class="mootyper-delete-link" data-confirm="' . s($deletemsg) . '">'
                     . get_string('delete', 'mootyper') . '</a>';
-            } else {
+            } else if ($candeletegrades) {
                 $deleteurl = $CFG->wwwroot . '/mod/mootyper/attrem.php?c_id='
                     . $cm->id
                     . '&m_id=' . $mootyper->id
@@ -322,9 +326,9 @@ if (!has_capability('mod/mootyper:viewmygrades', context_module::instance($cm->i
                 <td>' . format_float($gr->precisionfield) . '%</td>
                 <td>' . format_float($gr->wpm) . '</td>
                 <td>' . format_float($gr->grade) . '</td>
-                <td>' . date(get_config('mod_mootyper', 'dateformat'), $gr->timetaken) . '</td>
-                <td>' . $removelnk . '</td>
-                <td>' . ' ' . '</td>
+                <td>' . date(get_config('mod_mootyper', 'dateformat'), $gr->timetaken) . '</td>'
+                . ($candeletegrades ? '<td>' . $removelnk . '</td>' : '')
+                . '<td>' . ' ' . '</td>
                 </tr>';
             $labels[] = $fcol;  // This gets the exercise number to use in the chart.
             $serieshitsperminute[] = $gr->hitsperminute; // Get the hits per minute value.

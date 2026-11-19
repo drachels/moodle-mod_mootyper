@@ -166,6 +166,7 @@ GitHub # | GitHub issue title | MooTyper ticket | Upgrade status | Notes
 Moodle Versions
 ===============
 === 5.3.0 === pending
+20261117 MooTyper_1582 - Students can delete exercises on lesson and exam mode #140.
 
 
 === 5.2.0 === (Build: 2026100300)
